@@ -1,6 +1,6 @@
 ﻿namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectSignatureClient
+    public class DirectClient
     {
     }
 }

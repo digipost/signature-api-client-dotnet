@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DirectSignatureClient.cs" />
+    <Compile Include="DirectJobStatusResponse.cs" />
+    <Compile Include="DirectClient.cs" />
+    <Compile Include="DirectJob.cs" />
+    <Compile Include="DirectJobReference.cs" />
+    <Compile Include="DirectJobResponse.cs" />
+    <Compile Include="DirectJobStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

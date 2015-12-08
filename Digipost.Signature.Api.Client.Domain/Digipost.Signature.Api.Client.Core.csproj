@@ -7,8 +7,8 @@
     <ProjectGuid>{2D13F732-6A85-4165-AE2F-A87C09750398}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Digipost.Signature.Api.Client.Domain</RootNamespace>
-    <AssemblyName>Digipost.Signature.Api.Client.Domain</AssemblyName>
+    <RootNamespace>Digipost.Signature.Api.Client.Core</RootNamespace>
+    <AssemblyName>Digipost.Signature.Api.Client.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.TestClient", "Digipost.Signature.Api.Client.TestClient\Digipost.Signature.Api.Client.TestClient.csproj", "{469E8C38-800F-4107-8779-CC918AE0DA23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.CoreTests", "Digipost.Signature.Api.Client.CoreTests\Digipost.Signature.Api.Client.CoreTests.csproj", "{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{469E8C38-800F-4107-8779-CC918AE0DA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{469E8C38-800F-4107-8779-CC918AE0DA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{469E8C38-800F-4107-8779-CC918AE0DA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

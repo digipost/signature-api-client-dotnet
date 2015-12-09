@@ -54,11 +54,19 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ClientConfiguration.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="FileType.cs" />
     <Compile Include="Internal\ClientHelper.cs" />
+    <Compile Include="PadesReference.cs" />
+    <Compile Include="Signer.cs" />
+    <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

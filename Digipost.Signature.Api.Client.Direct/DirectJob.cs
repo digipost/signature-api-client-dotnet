@@ -1,6 +1,13 @@
-﻿namespace Digipost.Signature.Api.Client.Direct
+﻿using Digipost.Signature.Api.Client.Core;
+
+namespace Digipost.Signature.Api.Client.Direct
 {
-    class DirectJob
+    public class DirectJob
     {
+        public DirectJob(string id, Signer signer, Document document)
+        {
+            
+        }
+
     }
 }

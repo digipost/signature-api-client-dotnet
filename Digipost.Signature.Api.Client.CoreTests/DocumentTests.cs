@@ -36,7 +36,7 @@ namespace Digipost.Signature.Api.Client.CoreTests
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(fileName, document.FileName);
                 Assert.AreEqual(fileType, document.FileType);
-                Assert.AreEqual(fileType, document.FileType);
+                Enumerable.SequenceEqual(pdfDocumentBytes, document.Bytes);
             }
             
             [TestMethod]

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Core", "Digipost.Signature.Api.Client.Domain\Digipost.Signature.Api.Client.Core.csproj", "{2D13F732-6A85-4165-AE2F-A87C09750398}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Direct", "Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj", "{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.DirectTests", "Digipost.Signature.Api.Client.Tests\Digipost.Signature.Api.Client.DirectTests.csproj", "{75F9C13B-BE37-4608-AF13-7468D56EF804}"
@@ -20,16 +18,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.CoreTests", "Digipost.Signature.Api.Client.CoreTests\Digipost.Signature.Api.Client.CoreTests.csproj", "{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Core", "Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj", "{2D13F732-6A85-4165-AE2F-A87C09750398}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2D13F732-6A85-4165-AE2F-A87C09750398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D13F732-6A85-4165-AE2F-A87C09750398}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D13F732-6A85-4165-AE2F-A87C09750398}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D13F732-6A85-4165-AE2F-A87C09750398}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,6 +46,10 @@ Global
 		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D13F732-6A85-4165-AE2F-A87C09750398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D13F732-6A85-4165-AE2F-A87C09750398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D13F732-6A85-4165-AE2F-A87C09750398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D13F732-6A85-4165-AE2F-A87C09750398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

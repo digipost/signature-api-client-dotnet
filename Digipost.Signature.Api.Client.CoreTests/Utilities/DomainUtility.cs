@@ -1,5 +1,4 @@
-﻿using System;
-using ApiClientShared;
+﻿using ApiClientShared;
 
 namespace Digipost.Signature.Api.Client.Core
 {

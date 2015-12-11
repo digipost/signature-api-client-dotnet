@@ -76,13 +76,13 @@
       <Project>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</Project>
       <Name>Digipost.Signature.Api.Client.CoreTests</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
+      <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
+      <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj">
       <Project>{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}</Project>
       <Name>Digipost.Signature.Api.Client.Direct</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Domain\Digipost.Signature.Api.Client.Core.csproj">
-      <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
-      <Name>Digipost.Signature.Api.Client.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

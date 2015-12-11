@@ -7,8 +7,7 @@ namespace Digipost.Signature.Api.Client.Core
         public string Subject { get; }
         public string Message { get; }
         public string FileName { get; set; }
-
-        public FileType FileType { get; }
+        public FileType FileType { get; set; }
         public byte[] Bytes { get; set; }
 
         public Document(string subject, string message, string fileName, FileType fileType, byte[] documentBytes)

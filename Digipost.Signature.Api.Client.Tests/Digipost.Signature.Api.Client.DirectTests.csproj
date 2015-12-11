@@ -6,8 +6,8 @@
     <ProjectGuid>{75F9C13B-BE37-4608-AF13-7468D56EF804}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Digipost.Signature.Api.Client.Tests</RootNamespace>
-    <AssemblyName>Digipost.Signature.Api.Client.Tests</AssemblyName>
+    <RootNamespace>Digipost.Signature.Api.Client.DirectTests</RootNamespace>
+    <AssemblyName>Digipost.Signature.Api.Client.DirectTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -66,10 +66,16 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DirectClientTests.cs" />
+    <Compile Include="DirectJobTests.cs" />
+    <Compile Include="ExitUrlsTests.cs" />
     <Compile Include="Log4NetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.CoreTests\Digipost.Signature.Api.Client.CoreTests.csproj">
+      <Project>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</Project>
+      <Name>Digipost.Signature.Api.Client.CoreTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj">
       <Project>{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}</Project>
       <Name>Digipost.Signature.Api.Client.Direct</Name>

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Direct", "Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj", "{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Tests", "Digipost.Signature.Api.Client.Tests\Digipost.Signature.Api.Client.Tests.csproj", "{75F9C13B-BE37-4608-AF13-7468D56EF804}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.DirectTests", "Digipost.Signature.Api.Client.Tests\Digipost.Signature.Api.Client.DirectTests.csproj", "{75F9C13B-BE37-4608-AF13-7468D56EF804}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Asice", "Digipost.Signature.Api.Client.Asice\Digipost.Signature.Api.Client.Asice.csproj", "{CA2CD6DF-9BE7-46E4-832F-28BB4297E713}"
 EndProject

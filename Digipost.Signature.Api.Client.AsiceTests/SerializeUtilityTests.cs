@@ -23,6 +23,7 @@ namespace Digipost.Signature.Api.Client.AsiceTests
             public void SerializeManifestProperly()
             {
                 //Arrange
+                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://signering.digipost.no/schema/v1/signature-job\"><signers><signer><personal-identification-number>1234567890</personal-identification-number></signer></signers><sender><organization>123456789</organization></sender><primary-document href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document></manifest>";
                 var manifest = new ManifestDataTranferObject()
                 {
                     SignersDataTransferObjects = new List<SignerDataTranferObject>()
@@ -39,22 +40,25 @@ namespace Digipost.Signature.Api.Client.AsiceTests
                     PrimaryDocumentDataTransferObject = new PrimaryDocumentDataTransferObject()
                     {
                         Title = "Tittel",
-                        Descritpion = "Melding til signatar"
+                        Descritpion = "Melding til signatar",
+                        Href = "document.pdf",
+                        Mime = "application/pdf"
                     }
                 };
 
                 //Act
-                var serialized = SerializeUtility.Serialize(manifest);
-                Trace.WriteLine(SerializeUtility.FormatXml(serialized));
+                var result = SerializeUtility.Serialize(manifest);
+                Trace.WriteLine(SerializeUtility.FormatXml(result));
                 
                 //Assert
+                Assert.AreEqual(expectedResult, result);
             }
 
             [TestMethod]
             public void SerializePrimaryDocumentProperly()
             {
                 //Arrange
-                var expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><primary-document xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document>";
+                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><primary-document xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document>";
                 var document = new PrimaryDocumentDataTransferObject()
                 {
                     Title = "Tittel",
@@ -75,8 +79,7 @@ namespace Digipost.Signature.Api.Client.AsiceTests
             public void SerializeSenderProperly()
             {
                 //Arrange
-                var expectedResult =
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?><sender xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><organization>123456789</organization></sender>";
+                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><sender xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><organization>123456789</organization></sender>";
                 var sender = new SenderDataTransferObject {Organization = "123456789"};
 
                 //Act
@@ -91,9 +94,8 @@ namespace Digipost.Signature.Api.Client.AsiceTests
             public void SerializeSignerProperly()
             {
                 //Arrange
-                var expectedResult =
-                    "<?xml version=\"1.0\" encoding=\"utf-8\"?><signer xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><personal-identification-number>1234567890</personal-identification-number></signer>";
-                SignerDataTranferObject signer = new SignerDataTranferObject()
+                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><signer xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"><personal-identification-number>1234567890</personal-identification-number></signer>";
+                var signer = new SignerDataTranferObject()
                 {
                     PersonalIdentificationNumber = "1234567890" 
                 };
@@ -105,72 +107,6 @@ namespace Digipost.Signature.Api.Client.AsiceTests
                 //Assert
                 Assert.AreEqual(expectedResult, result);
             }
-        }
-
-        [TestClass]
-        public class DeserializeMethod : SerializeUtilityTests
-        {
-            [TestMethod]
-            public void DeserializeManifestProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-            [TestMethod]
-            public void DeserializePersonProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-            [TestMethod]
-            public void DeserializePrimaryDocumentProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-            [TestMethod]
-            public void DeDeserializeSenderProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-            [TestMethod]
-            public void DeDeserializeSignerProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-            [TestMethod]
-            public void DeserializeTitleProperly()
-            {
-                //Arrange
-
-
-                //Act
-
-                //Assert
-            }
-
         }
     }
 }

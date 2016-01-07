@@ -53,13 +53,34 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Manifest\ManifestDataTranferObject.cs" />
+    <Compile Include="Manifest\PersonDataTransferObject.cs" />
+    <Compile Include="Manifest\PrimaryDocumentDataTransferObject.cs" />
+    <Compile Include="Manifest\SenderDataTransferObject.cs" />
+    <Compile Include="Manifest\SignerDataTranferObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializeUtility.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Manifest\" />
     <Folder Include="Signature\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\submodules\signature-api-specification\src\main\xsd\common.xsd">
+      <Link>Xsd\common.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\submodules\signature-api-specification\src\main\xsd\portal-signature-job.xsd">
+      <Link>Xsd\portal-signature-job.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\submodules\signature-api-specification\src\main\xsd\signature-document.xsd">
+      <Link>Xsd\signature-document.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\submodules\signature-api-specification\src\main\xsd\signature-job.xsd">
+      <Link>Xsd\signature-job.xsd</Link>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

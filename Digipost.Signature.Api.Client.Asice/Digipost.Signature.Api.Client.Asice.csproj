@@ -36,12 +36,21 @@
     <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ApiClientShared, Version=1.0.5637.25994, Culture=neutral, PublicKeyToken=6e0e24e0c7886562, processorArchitecture=MSIL">
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5814.19419\lib\net45\ApiClientShared.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Difi.Felles.Utility, Version=0.2.5814.19419, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5814.19419\lib\net45\Difi.Felles.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,17 +62,18 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Manifest\ManifestDataTranferObject.cs" />
-    <Compile Include="Manifest\PersonDataTransferObject.cs" />
-    <Compile Include="Manifest\PrimaryDocumentDataTransferObject.cs" />
-    <Compile Include="Manifest\SenderDataTransferObject.cs" />
-    <Compile Include="Manifest\SignerDataTranferObject.cs" />
+    <Compile Include="IAsiceAttachable.cs" />
+    <Compile Include="AsiceManifest\Manifest.cs" />
+    <Compile Include="AsiceManifest\ManifestDataTranferObject.cs" />
+    <Compile Include="AsiceManifest\PersonDataTransferObject.cs" />
+    <Compile Include="AsiceManifest\PrimaryDocumentDataTransferObject.cs" />
+    <Compile Include="AsiceManifest\SenderDataTransferObject.cs" />
+    <Compile Include="AsiceManifest\SignerDataTranferObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializeUtility.cs" />
+    <Compile Include="AsiceSignature\SignatureGenerator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Signature\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\submodules\signature-api-specification\src\main\xsd\common.xsd">
       <Link>Xsd\common.xsd</Link>

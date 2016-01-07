@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Digipost.Signature.Api.Client.Asice.Manifest
+namespace Digipost.Signature.Api.Client.Asice.AsiceManifest
 {
     [Serializable]
     [XmlRoot(Namespace = "http://signering.digipost.no/schema/v1/signature-job", IsNullable = false)]

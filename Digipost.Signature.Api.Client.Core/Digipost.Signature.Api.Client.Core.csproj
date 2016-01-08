@@ -66,6 +66,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\AsiceManifest\Manifest.cs" />
     <Compile Include="Asice\DataTransferObjects\ManifestDataTranferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />

@@ -5,11 +5,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
 using Difi.Felles.Utility.Utilities;
-using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Core.Utilities;
 
-namespace Difi.SikkerDigitalPost.Klient.Security
+namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class QualifyingPropertiesObject : DataObject
     {

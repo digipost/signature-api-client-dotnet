@@ -7,25 +7,27 @@ using System.Text;
 using System.Xml;
 using Difi.Felles.Utility.Security;
 using Difi.Felles.Utility.Utilities;
-using Difi.SikkerDigitalPost.Klient.Security;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
-    internal class Signatur : IAsiceAttachable
+    internal class SignaturGenerator : IAsiceAttachable
     {
-        private readonly Document _document;
-        //private readonly Forsendelse _forsendelse;
-        private readonly Manifest _manifest;
-        private readonly X509Certificate2 _sertifikat;
+
+        public Document Document { get; }
+
+        public Manifest Manifest { get; }
+
+        public X509Certificate2 Certificate { get; }
+
         private XmlDocument _xml;
 
-        public Signatur(Document document, Manifest manifest, X509Certificate2 sertifikat)
+        public SignaturGenerator(Document document, Manifest manifest, X509Certificate2 certificate)
         {
-            _document = document;
-            _manifest = manifest;
-            _sertifikat = sertifikat;
+            Document = document;
+            Manifest = manifest;
+            Certificate = certificate;
         }
 
         public string FileName
@@ -66,10 +68,10 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
                 var signaturnode = Signaturnode();
 
-                IEnumerable<IAsiceAttachable> referanser = Referanser(_document, _manifest);
+                IEnumerable<IAsiceAttachable> referanser = Referanser(Document, Manifest);
                 OpprettReferanser(signaturnode, referanser);
 
-                var keyInfoX509Data = new KeyInfoX509Data(_sertifikat, X509IncludeOption.WholeChain);
+                var keyInfoX509Data = new KeyInfoX509Data(Certificate, X509IncludeOption.WholeChain);
                 signaturnode.KeyInfo.AddClause(keyInfoX509Data);
                 signaturnode.ComputeSignature();
 
@@ -96,7 +98,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private SignedXml Signaturnode()
         {
-            SignedXml signedXml = new SignedXmlWithAgnosticId(_xml, _sertifikat);
+            SignedXml signedXml = new SignedXmlWithAgnosticId(_xml, Certificate);
             signedXml.SignedInfo.CanonicalizationMethod = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
             signedXml.Signature.Id = "Signature";
             return signedXml;
@@ -129,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
             signaturnode.AddObject(
                 new QualifyingPropertiesObject(
-                    _sertifikat, "#Signature", referanser.ToArray(), _xml.DocumentElement)
+                    Certificate, "#Signature", referanser.ToArray(), _xml.DocumentElement)
                     );
 
             signaturnode.AddReference(SignedPropertiesReferanse());

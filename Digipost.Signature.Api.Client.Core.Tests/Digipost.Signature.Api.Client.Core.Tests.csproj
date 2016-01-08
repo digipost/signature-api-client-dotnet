@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="Asice\AsiceManifest\ManifestTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
+    <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
     <Compile Include="Asice\SerializeUtilityTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
@@ -84,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.cer" />
+    <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.p12" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Documents\Dokument.pdf">
@@ -97,6 +100,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

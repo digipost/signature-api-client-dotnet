@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Digipost.Signature.Api.Client.Asice.AsiceManifest
+namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
 {
     public class PersonDataTransferObject
     {

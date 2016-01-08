@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
+namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
 {
     [Serializable]
     [XmlType(TypeName = "primary-document")]

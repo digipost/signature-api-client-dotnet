@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
+namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
 {
     [Serializable]
     [XmlRoot(Namespace = "http://signering.digipost.no/schema/v1/signature-job", IsNullable = false)]
@@ -18,6 +18,5 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
 
         [XmlElement("primary-document")]
         public PrimaryDocumentDataTransferObject PrimaryDocumentDataTransferObject { get; set; }
-
     }
 }

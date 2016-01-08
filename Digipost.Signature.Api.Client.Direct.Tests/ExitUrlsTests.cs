@@ -1,8 +1,7 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.DirectTests
+namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
     public class ExitUrlsTests

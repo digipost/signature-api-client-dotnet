@@ -1,8 +1,7 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.CoreTests
+namespace Digipost.Signature.Api.Client.Core.Tests
 {
     [TestClass()]
     public class XadesReferenceTests

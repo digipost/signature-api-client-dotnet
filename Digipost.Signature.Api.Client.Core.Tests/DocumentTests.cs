@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Reflection;
-using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.CoreTests
+namespace Digipost.Signature.Api.Client.Core.Tests
 {
     [TestClass()]
     public class DocumentTests

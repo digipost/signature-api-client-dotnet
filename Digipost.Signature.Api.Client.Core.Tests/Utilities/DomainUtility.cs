@@ -1,6 +1,6 @@
 ﻿using ApiClientShared;
 
-namespace Digipost.Signature.Api.Client.Core
+namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
     public static class DomainUtility
     {

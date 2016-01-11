@@ -59,6 +59,7 @@
     <Compile Include="DirectJobReference.cs" />
     <Compile Include="DirectJobResponse.cs" />
     <Compile Include="DirectJobStatus.cs" />
+    <Compile Include="DocumentBundle.cs" />
     <Compile Include="ExitUrls.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseUrls.cs" />

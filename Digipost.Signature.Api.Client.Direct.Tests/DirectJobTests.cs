@@ -28,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 DirectJob directJob = new DirectJob(id, signer, document, exitUrls);
                 
                 //Assert
-                Assert.AreEqual(id, directJob.Id);
+                Assert.AreEqual(id, directJob.Reference);
                 Assert.AreEqual(signer, directJob.Signer);
                 Assert.AreEqual(document, directJob.Document);
                 Assert.AreEqual(exitUrls, directJob.ExitUrls);

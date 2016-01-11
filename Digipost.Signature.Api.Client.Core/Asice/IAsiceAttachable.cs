@@ -6,8 +6,6 @@
 
         byte[] Bytes { get; }
 
-        FileType FileType { get; }
-
         string Id { get; }
 
         string MimeType { get; }

@@ -1,0 +1,8 @@
+
+//Creates a self signed certificate (-r) and expires in year 2200, and is exportable (-pe).
+"C:\Program Files (x86)\Windows Kits\10\bin\x64\makecert" -pe -sv DigipostCert.pvk -n "CN=Sample" "DigipostCert.cer" -e 12/31/2200 -r 
+
+//Gives a private key in p12 format.
+"C:\Program Files (x86)\Windows Kits\10\bin\x64\pvk2pfx" -pvk DigipostCert.pvk -spc DigipostCert.cer -pfx DigipostCert.p12"
+
+//Note: ...Kits\10\... is for windows 10. For windows 8, use 8.1.

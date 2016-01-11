@@ -72,6 +72,7 @@
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
     <Compile Include="Asice\SerializeUtilityTests.cs" />
+    <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />

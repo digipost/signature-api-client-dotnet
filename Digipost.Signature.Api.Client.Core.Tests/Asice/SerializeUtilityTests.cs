@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -68,7 +68,6 @@
     <Compile Include="DirectClientTests.cs" />
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobTests.cs" />
-    <Compile Include="DocumentBundleTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />
     <Compile Include="Log4NetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

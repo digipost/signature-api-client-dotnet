@@ -72,6 +72,7 @@
     <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\PrimaryDocumentDataTransferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
+    <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />

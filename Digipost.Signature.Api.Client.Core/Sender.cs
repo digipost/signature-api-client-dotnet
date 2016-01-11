@@ -2,11 +2,11 @@
 {
     public class Sender
     {
-        public string Type { get; set; }
+        public string OrganizationNumber { get; set; }
 
         public Sender(string organizationNumber)
         {
-            
+            OrganizationNumber = organizationNumber;
         }
     }
 }

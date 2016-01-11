@@ -99,6 +99,10 @@
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj">
+      <Project>{fc8fc326-4bc7-43b8-a56e-1bbdccc820d5}</Project>
+      <Name>Digipost.Signature.Api.Client.Direct</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

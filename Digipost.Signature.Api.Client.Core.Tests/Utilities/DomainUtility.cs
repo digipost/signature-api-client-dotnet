@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
+using Digipost.Signature.Api.Client.Direct;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -50,6 +51,20 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), password: "", keyStorageFlags: X509KeyStorageFlags.Exportable);
+        }
+
+        public static ResponseUrls GetResponseUrls()
+        {
+            //Arrange
+            var redirectUrl = new Uri("http://responseurl.no");
+            var statusUrl = new Uri("http://statusurl.no");
+
+
+            //Act
+            return new ResponseUrls(
+                redirectUrl,
+                statusUrl
+                );
         }
     }
 }

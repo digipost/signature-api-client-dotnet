@@ -1,6 +1,19 @@
-﻿namespace Digipost.Signature.Api.Client.Direct
+﻿using System;
+
+namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectJobResponse
     {
+        public long JobId { get; internal set; }
+
+        public ResponseUrls ResponseUrls { get; internal set; }
+
+        public DirectJobResponse(long jobId, ResponseUrls responseUrls)
+        {
+            JobId = jobId;
+            ResponseUrls = responseUrls;
+        }
     }
+
+
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.CodeDom;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -20,6 +21,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const string message = "message";
                 const string fileName = "NavnPåFil";
                 const FileType fileType = FileType.Pdf;
+                const string expectedMimeType = "application/pdf";
                 var pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes();
 
                 //Act
@@ -35,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(subject, document.Subject);
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(fileName, document.FileName);
-                Assert.AreEqual(fileType, document.FileType);
+                Assert.AreEqual(expectedMimeType, document.MimeType);
                 Enumerable.SequenceEqual(pdfDocumentBytes, document.Bytes);
             }
             
@@ -46,7 +48,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const string subject = "subject";
                 const string message = "message";
                 const string fileName = "NavnPåFil";
-                const FileType fileType = FileType.Pdf;
+                const FileType fileType = FileType.Txt;
+                const string expectedMimeType = "text/plain";
+
 
                 var documentPath = DocumentFilePath();
 
@@ -65,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(subject, document.Subject);
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(fileName, document.FileName);
-                Assert.AreEqual(fileType, document.FileType);
+                Assert.AreEqual(expectedMimeType, document.MimeType);
                 Enumerable.SequenceEqual(pdfDocumentBytes, document.Bytes);
             }
 

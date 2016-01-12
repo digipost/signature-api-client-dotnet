@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                     {
                         Organization = "123456789"
                     },
-                    PrimaryDocumentDataTransferObject = new PrimaryDocumentDataTransferObject()
+                    DocumentDataTransferObject = new DocumentDataTransferObject()
                     {
                         Title = "Tittel",
                         Descritpion = "Melding til signatar",
@@ -59,7 +59,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
             {
                 //Arrange
                 const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><primary-document xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document>";
-                var document = new PrimaryDocumentDataTransferObject()
+                var document = new DocumentDataTransferObject()
                 {
                     Title = "Tittel",
                     Descritpion = "Melding til signatar",

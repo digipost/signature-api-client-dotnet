@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
 {
     [Serializable]
     [XmlType(TypeName = "primary-document")]
-    public class PrimaryDocumentDataTransferObject
+    public class DocumentDataTransferObject
     {
         [XmlElement("title")]
         public string Title { get; set; }

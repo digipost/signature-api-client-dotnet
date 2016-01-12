@@ -17,6 +17,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
         public SenderDataTransferObject SenderDataTransferObject { get; set; }
 
         [XmlElement("primary-document")]
-        public PrimaryDocumentDataTransferObject PrimaryDocumentDataTransferObject { get; set; }
+        public DocumentDataTransferObject DocumentDataTransferObject { get; set; }
     }
 }

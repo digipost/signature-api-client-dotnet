@@ -10,13 +10,13 @@ namespace Digipost.Signature.Api.Client.Core
 
         public string Message { get; }
 
-        public string FileName { get; set; }
+        public string FileName { get; }
 
         public string Id { get; }
 
         public string MimeType { get; }
 
-        public byte[] Bytes { get; set; }
+        public byte[] Bytes { get;}
 
         public Document(string subject, string message, string fileName, FileType fileType, byte[] documentBytes)
         {

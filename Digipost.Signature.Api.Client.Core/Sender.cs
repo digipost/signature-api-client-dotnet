@@ -2,7 +2,7 @@
 {
     public class Sender
     {
-        public string OrganizationNumber { get; set; }
+        public string OrganizationNumber { get; }
 
         public Sender(string organizationNumber)
         {

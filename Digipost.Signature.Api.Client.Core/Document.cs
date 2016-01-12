@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Extensions;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -9,22 +10,20 @@ namespace Digipost.Signature.Api.Client.Core
 
         public string Message { get; }
 
-        public string FileName { get; set; }
-
-        public FileType FileType { get; set; }
+        public string FileName { get; }
 
         public string Id { get; }
 
         public string MimeType { get; }
 
-        public byte[] Bytes { get; set; }
+        public byte[] Bytes { get;}
 
         public Document(string subject, string message, string fileName, FileType fileType, byte[] documentBytes)
         {
             Subject = subject;
             Message = message;
             FileName = fileName;
-            FileType = fileType;
+            MimeType = fileType.ToMimeType();
             Bytes = documentBytes;
         }
         

@@ -5,13 +5,13 @@ namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
 {
     [Serializable]
     [XmlType(TypeName = "primary-document")]
-    public class PrimaryDocumentDataTransferObject
+    public class DocumentDataTransferObject
     {
         [XmlElement("title")]
         public string Title { get; set; }
         
         [XmlElement("description")]
-        public string Descritpion { get; set; }
+        public string Description { get; set; }
 
         [XmlAttribute("href")]
         public string Href { get; set; }

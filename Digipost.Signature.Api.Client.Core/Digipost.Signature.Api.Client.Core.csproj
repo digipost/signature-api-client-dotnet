@@ -68,9 +68,11 @@
     </Compile>
     <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\AsiceManifest\Manifest.cs" />
+    <Compile Include="Asice\AsiceManifest\ManifestGenerator.cs" />
+    <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Asice\DataTransferObjects\ManifestDataTranferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\PrimaryDocumentDataTransferObject.cs" />
+    <Compile Include="Asice\DataTransferObjects\DocumentDataTransferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="Signer.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="PadesReference.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="Utilities\DateUtility.cs" />
+    <Compile Include="Extensions\FileTypeExtensions.cs" />
     <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public DirectJobResponse Create(DirectJob directJob)
         {
             var signers = new List<Signer> {directJob.Signer};
-            var documentBundle = AsiceGenerator.CreateAsice(directJob.Document, signers, ClientConfiguration.Sender, ClientConfiguration.Certificate);
+            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
 
             //Serialize job and send
 

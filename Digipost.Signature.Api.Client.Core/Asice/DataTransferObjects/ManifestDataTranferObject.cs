@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
 {
     [Serializable]
-    [XmlRoot(Namespace = "http://signering.digipost.no/schema/v1/signature-job", IsNullable = false)]
+    [XmlRoot(Namespace = "http://signering.posten.no/schema/v1", IsNullable = false)]
     [XmlType(TypeName = "manifest")]
     public class ManifestDataTranferObject
     {
@@ -17,6 +17,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
         public SenderDataTransferObject SenderDataTransferObject { get; set; }
 
         [XmlElement("primary-document")]
-        public PrimaryDocumentDataTransferObject PrimaryDocumentDataTransferObject { get; set; }
+        public DocumentDataTransferObject DocumentDataTransferObject { get; set; }
     }
 }

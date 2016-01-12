@@ -1,24 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
 {
     public class Manifest : IAsiceAttachable
     {
+        public Sender Sender { get; }
+        public Document Document { get; }
+        public IEnumerable<Signer> Signers { get; }
+
         public Manifest(Sender sender, Document document, IEnumerable<Signer> signers)
         {
-            
+            Sender = sender;
+            Document = document;
+            Signers = signers;
         }
 
-        public Manifest(byte[] bytes)
+        public byte[] Bytes
         {
-            Bytes = bytes;
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        public byte[] Bytes { get; }
-
-        public FileType FileType { get; }
-
-        public string Id { get; }
+        public string Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public string FileName
         {

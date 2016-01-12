@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.DataTransferObjects
                     DocumentDataTransferObject = new DocumentDataTransferObject()
                     {
                         Title = documentSubject,
-                        Descritpion = documentMessage,
+                        Description = documentMessage,
                         Href = documentFileName,
                         Mime = expectedMimeType
                     },
@@ -102,7 +102,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.DataTransferObjects
                 var expected = new DocumentDataTransferObject()
                 {
                     Title = subject,
-                    Descritpion = message,
+                    Description = message,
                     Href = fileName,
                     Mime = "application/pdf"
                 };

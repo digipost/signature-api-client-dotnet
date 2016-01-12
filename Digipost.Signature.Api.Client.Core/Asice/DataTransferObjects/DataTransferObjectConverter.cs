@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects
             return new DocumentDataTransferObject()
             {
                 Title = document.Subject,
-                Descritpion = document.Message,
+                Description = document.Message,
                 Href = document.FileName,
                 Mime = document.MimeType
             };

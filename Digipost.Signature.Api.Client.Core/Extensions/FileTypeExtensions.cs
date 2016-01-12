@@ -10,9 +10,6 @@ namespace Digipost.Signature.Api.Client.Core.Extensions
 
             switch (fileType)
             {
-                case FileType.None:
-                    mimeType = "none";
-                    break;
                 case FileType.Pdf:
                     mimeType = "application/pdf";
                     break;

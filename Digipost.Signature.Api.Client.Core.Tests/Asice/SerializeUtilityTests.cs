@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                     DocumentDataTransferObject = new DocumentDataTransferObject()
                     {
                         Title = "Tittel",
-                        Descritpion = "Melding til signatar",
+                        Description = "Melding til signatar",
                         Href = "document.pdf",
                         Mime = "application/pdf"
                     }
@@ -62,7 +62,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 var document = new DocumentDataTransferObject()
                 {
                     Title = "Tittel",
-                    Descritpion = "Melding til signatar",
+                    Description = "Melding til signatar",
                     Href = "document.pdf",
                     Mime = "application/pdf"
                 };

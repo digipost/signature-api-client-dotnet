@@ -2,7 +2,6 @@
 {
     public enum FileType
     {
-        None,
         Pdf,
         Txt
     }

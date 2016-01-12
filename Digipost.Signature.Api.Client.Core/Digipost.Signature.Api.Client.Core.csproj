@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\AsiceManifest\Manifest.cs" />
+    <Compile Include="Asice\AsiceManifest\ManifestGenerator.cs" />
     <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Asice\DataTransferObjects\ManifestDataTranferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />

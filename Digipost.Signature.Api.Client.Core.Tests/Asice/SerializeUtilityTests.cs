@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
             public void SerializeManifestProperly()
             {
                 //Arrange
-                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://signering.digipost.no/schema/v1/signature-job\"><signers><signer><personal-identification-number>1234567890</personal-identification-number></signer></signers><sender><organization>123456789</organization></sender><primary-document href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document></manifest>";
+                const string expectedResult = "<?xml version=\"1.0\" encoding=\"utf-8\"?><manifest xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"http://signering.posten.no/schema/v1\"><signers><signer><personal-identification-number>1234567890</personal-identification-number></signer></signers><sender><organization>123456789</organization></sender><primary-document href=\"document.pdf\" mime=\"application/pdf\"><title>Tittel</title><description>Melding til signatar</description></primary-document></manifest>";
                 var manifest = new ManifestDataTranferObject()
                 {
                     SignersDataTransferObjects = new List<SignerDataTranferObject>()

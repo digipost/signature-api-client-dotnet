@@ -71,13 +71,14 @@
     <Compile Include="Asice\AsiceManifest\ManifestGeneratorTests.cs" />
     <Compile Include="Asice\AsiceManifest\ManifestTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
-    <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
+    <Compile Include="Asice\AsiceSignature\SignatureTests.cs" />
     <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
     <Compile Include="Asice\SerializeUtilityTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
+    <Compile Include="Integration\DirectClientIntegrationTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />

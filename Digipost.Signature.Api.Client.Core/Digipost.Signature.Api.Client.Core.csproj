@@ -79,7 +79,7 @@
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
-    <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
+    <Compile Include="Asice\AsiceSignature\Signature.cs" />
     <Compile Include="Asice\IAsiceAttachable.cs" />
     <Compile Include="Asice\SerializeUtility.cs" />
     <Compile Include="ClientConfiguration.cs" />

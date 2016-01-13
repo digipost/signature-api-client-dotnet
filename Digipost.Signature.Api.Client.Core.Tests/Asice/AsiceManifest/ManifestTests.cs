@@ -16,8 +16,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             public void SimpleConstructor()
             {
                 //Arrange
-                const string fileName = "manifest.xml";
-                const string mimeType = "application/xml";
                 var sender = DomainUtility.GetSender();
                 var document = DomainUtility.GetDocument();
                 var signers = DomainUtility.GetSigners(3);
@@ -26,13 +24,63 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
                 var manifest = new Manifest(sender, document, signers);
 
                 //Assert
-                Assert.AreEqual(fileName, manifest.FileName);
-                Assert.AreEqual(mimeType, manifest.MimeType);
                 Assert.AreEqual(sender, manifest.Sender);
                 Assert.AreEqual(document, manifest.Document);
                 Assert.AreEqual(signers, manifest.Signers);
             }
         }
+
+        [TestClass]
+        public class FileNameMethod : ManifestTests
+        {
+            [TestMethod]
+            public void ReturnsCorrectStaticString()
+            {
+                //Arrange
+                const string fileName = "manifest.xml";
+                var manifest = DomainUtility.GetManifest();
+
+                //Act
+
+                //Assert
+                Assert.AreEqual(fileName, manifest.FileName);
+            } 
+        }
+
+        [TestClass]
+        public class MimeTypeMethod : ManifestTests
+        {
+            [TestMethod]
+            public void ReturnsCorrectStaticString()
+            {
+                //Arrange
+                const string mimeType = "application/xml";
+                var manifest = DomainUtility.GetManifest();
+
+                //Act
+
+                //Assert
+                Assert.AreEqual(mimeType, manifest.MimeType);
+            }
+        }
+
+        [TestClass]
+        public class IdMethod : ManifestTests
+        {
+            [TestMethod]
+            public void ReturnsCorrectStaticString()
+            {
+                //Arrange
+                const string id = "Id_1";
+                var manifest = DomainUtility.GetManifest();
+
+                //Act
+
+                //Assert
+                Assert.AreEqual(id, manifest.Id);
+            }
+        }
+
 
         [TestClass]
         public class BytesMethod : ManifestTests

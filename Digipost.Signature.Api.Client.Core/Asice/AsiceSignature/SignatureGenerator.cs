@@ -12,7 +12,7 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
-    internal class Signature : IAsiceAttachable
+    internal class SignatureGenerator : IAsiceAttachable
     {
         public Document Document { get; }
 
@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private XmlDocument _xml;
 
-        public Signature(Document document, Manifest manifest, X509Certificate2 certificate)
+        public SignatureGenerator(Document document, Manifest manifest, X509Certificate2 certificate)
         {
             Document = document;
             Manifest = manifest;

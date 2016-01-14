@@ -1,6 +1,8 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+﻿using System.Diagnostics;
+using System.Reflection;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Core.Xsd;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
@@ -21,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 var x509Certificate2 = DomainUtility.GetCertificate();
 
                 //Act
-                var signatur = new Core.Asice.AsiceSignature.Signature(document, manifest, x509Certificate2);
+                var signatur = new Core.Asice.AsiceSignature.SignatureGenerator(document, manifest, x509Certificate2);
 
                 //Assert
                 Assert.AreEqual(document, signatur.Document);
@@ -68,26 +70,28 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         public class XmlMethod : SignatureTests
         {
             [TestMethod]
-            public void GeneratesCorrectXml()
+            public void GeneratesValidSignatureXml()
             {
                 //Arrange
-                
+                var signatureGenerator = DomainUtility.GetSignature();
+                var signatureValidator = new SignatureValidator();
 
                 //Act
+                var isValidSignature = signatureValidator.ValiderDokumentMotXsd(signatureGenerator.Xml().InnerXml);
 
                 //Assert
-                Assert.Fail();
+                Assert.IsTrue(isValidSignature);
             }
 
         }
 
-        internal Core.Asice.AsiceSignature.Signature GetSignaturGenerator()
+        internal Core.Asice.AsiceSignature.SignatureGenerator GetSignaturGenerator()
         {
             var document = DomainUtility.GetDocument();
             var sender = DomainUtility.GetSender();
             var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
             var x509Certificate2 = DomainUtility.GetCertificate();
-            var signaturGenerator = new Core.Asice.AsiceSignature.Signature(document, manifest, x509Certificate2);
+            var signaturGenerator = new Core.Asice.AsiceSignature.SignatureGenerator(document, manifest, x509Certificate2);
             return signaturGenerator;
         }
     }

@@ -20,10 +20,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Integration
 
                 //Act
                 directClient.Create(DomainUtility.GetDirectJob());
-
-
+                
                 //Assert
-
             }
         }
 

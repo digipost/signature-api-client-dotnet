@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
@@ -11,6 +12,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
     public static class DomainUtility
     {
         static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
+
+        internal static SignatureGenerator GetSignature()
+        {
+            return new SignatureGenerator(GetDocument(), GetManifest(), GetCertificate());
+        } 
 
         public static Manifest GetManifest()
         {

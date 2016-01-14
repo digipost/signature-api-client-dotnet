@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
+﻿using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Xsd;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,10 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
 {
     [TestClass]
-    public class SignatureTests
+    public class SignatureGeneratorTests
     {
         [TestClass]
-        public class ConstructorMethod : SignatureTests
+        public class ConstructorMethod : SignatureGeneratorTests
         {
             [TestMethod]
             public void InitializesWithDocumentManifestAndCertificate()
@@ -33,14 +31,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         }
 
         [TestClass]
-        public class FileNameMethod : SignatureTests
+        public class FileNameMethod : SignatureGeneratorTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticFileName()
             {
                 //Arrange
                 var signaturGenerator = GetSignaturGenerator();
-                var expectedFileName = "META-INF/signatures.xml";
+                const string expectedFileName = "META-INF/signatures.xml";
 
                 //Act
 
@@ -50,14 +48,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         }
 
         [TestClass]
-        public class IdMethod : SignatureTests
+        public class IdMethod : SignatureGeneratorTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticId()
             {
                 //Arrange
                 var signaturGenerator = GetSignaturGenerator();
-                var expectedId = "Id_0";
+                const string expectedId = "Id_0";
 
                 //Act
 
@@ -67,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         }
 
         [TestClass]
-        public class XmlMethod : SignatureTests
+        public class XmlMethod : SignatureGeneratorTests
         {
             [TestMethod]
             public void GeneratesValidSignatureXml()

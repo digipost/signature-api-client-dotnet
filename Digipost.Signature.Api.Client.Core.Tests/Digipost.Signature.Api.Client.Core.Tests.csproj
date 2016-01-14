@@ -68,7 +68,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Asice\AsiceManifest\ManifestGeneratorTests.cs" />
     <Compile Include="Asice\AsiceManifest\ManifestTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureTests.cs" />

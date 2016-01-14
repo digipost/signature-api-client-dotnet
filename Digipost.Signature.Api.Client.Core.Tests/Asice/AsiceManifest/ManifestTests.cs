@@ -81,7 +81,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             }
         }
 
-
         [TestClass]
         public class BytesMethod : ManifestTests
         {

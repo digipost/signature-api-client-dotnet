@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
 {
@@ -20,16 +22,16 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
         {
             get
             {
-                throw new NotImplementedException();
+                var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(this);
+                var serializedManifest = SerializeUtility.Serialize(manifestDataTranferObject);
+
+                return Encoding.UTF8.GetBytes(serializedManifest);
             }
         }
 
         public string Id
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return "Id_1"; }
         }
 
         public string FileName

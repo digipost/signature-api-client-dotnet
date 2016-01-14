@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
@@ -20,6 +21,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
+        public static DirectJob GetDirectJob()
+        {
+            return new DirectJob("Reference", GetSigner(), GetDocument(), GetExitUrls());
+        }
+
         public static Document GetDocument()
         {
             return new Document("Testdocument", "A test document from domain Utility", "TestFileName", FileType.Pdf, GetPdfDocumentBytes());
@@ -28,6 +34,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         public static Sender GetSender()
         {
             return new Sender("123456789");
+        }
+
+        public static Signer GetSigner()
+        {
+            return GetSigners(1).First();
         }
 
         public static List<Signer> GetSigners(int count)
@@ -76,5 +87,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 statusUrl
                 );
         }
+
+        public static ExitUrls GetExitUrls()
+        {
+            var completionUrl = new Uri("http://localhost/completion");
+            var cancellationUrl = new Uri("http://localhost/cancellation");
+            var errorUrl = new Uri("http://localhost/error");
+
+            return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
+        }
+
     }
 }

@@ -12,9 +12,8 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
-    internal class SignaturGenerator : IAsiceAttachable
+    internal class Signature : IAsiceAttachable
     {
-
         public Document Document { get; }
 
         public Manifest Manifest { get; }
@@ -23,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private XmlDocument _xml;
 
-        public SignaturGenerator(Document document, Manifest manifest, X509Certificate2 certificate)
+        public Signature(Document document, Manifest manifest, X509Certificate2 certificate)
         {
             Document = document;
             Manifest = manifest;
@@ -34,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         {
             get { return "META-INF/signatures.xml"; }
         }
-
+        
         public byte[] Bytes
         {
             get

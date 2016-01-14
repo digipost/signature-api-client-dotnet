@@ -1,3 +1,0 @@
-[submodule "submodules/signature-api-specification"]
-	path = submodules/signature-api-specification
-	url = git@github.com:digipost/signature-api-specification.git

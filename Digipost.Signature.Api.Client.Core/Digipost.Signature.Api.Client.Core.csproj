@@ -40,11 +40,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ApiClientShared, Version=1.0.5637.25994, Culture=neutral, PublicKeyToken=6e0e24e0c7886562, processorArchitecture=MSIL">
-      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5814.19419\lib\net45\ApiClientShared.dll</HintPath>
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5857.18209\lib\net45\ApiClientShared.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Difi.Felles.Utility, Version=0.2.5814.19419, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5814.19419\lib\net45\Difi.Felles.Utility.dll</HintPath>
+    <Reference Include="Difi.Felles.Utility, Version=0.2.5857.18209, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5857.18209\lib\net45\Difi.Felles.Utility.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -78,7 +78,7 @@
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
-    <Compile Include="Asice\AsiceSignature\Signature.cs" />
+    <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
     <Compile Include="Asice\IAsiceAttachable.cs" />
     <Compile Include="Asice\SerializeUtility.cs" />
     <Compile Include="ClientConfiguration.cs" />
@@ -95,38 +95,41 @@
     <Compile Include="Extensions\FileTypeExtensions.cs" />
     <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Xsd\SignatureValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\common.xsd">
-      <Link>Asice\Xsd\common.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\direct-and-portal.xsd">
-      <Link>Asice\Xsd\direct-and-portal.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\direct-signature-job.xsd">
-      <Link>Asice\Xsd\direct-signature-job.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\direct.xsd">
-      <Link>Asice\Xsd\direct.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\portal-signature-job.xsd">
-      <Link>Asice\Xsd\portal-signature-job.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\portal.xsd">
-      <Link>Asice\Xsd\portal.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="..\submodules\signature-api-specification\src\main\xsd\signature-document.xsd">
-      <Link>Asice\Xsd\signature-document.xsd</Link>
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Xsd\common.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\direct-and-portal.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\direct-signature-job.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\direct.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\portal-signature-job.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\portal.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\signature-document.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\Thirdparty\ts_102918v010201.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\Thirdparty\XAdES.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\Thirdparty\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

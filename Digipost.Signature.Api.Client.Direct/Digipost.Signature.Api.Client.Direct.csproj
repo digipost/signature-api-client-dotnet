@@ -53,6 +53,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataTransferObjects\DirectJobDataTranferObject.cs" />
+    <Compile Include="DataTransferObjects\ExitUrlsDataTranferObject.cs" />
     <Compile Include="DirectJobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />
     <Compile Include="DirectJob.cs" />

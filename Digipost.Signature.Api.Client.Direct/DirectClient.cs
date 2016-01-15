@@ -20,10 +20,12 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public DirectJobResponse Create(DirectJob directJob)
         {
+            //Todo: Serialize DirectJob
+
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
 
-            //Serialize job and send
+            //Todo:Serialize job and send
 
             throw new NotImplementedException();
         }

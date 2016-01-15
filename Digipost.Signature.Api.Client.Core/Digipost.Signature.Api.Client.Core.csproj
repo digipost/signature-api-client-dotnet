@@ -74,6 +74,10 @@
     <Compile Include="Asice\DataTransferObjects\DocumentDataTransferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
+    <Compile Include="Internal\CreateAction.cs" />
+    <Compile Include="Internal\DigipostAction.cs" />
+    <Compile Include="Internal\IRequestContent.cs" />
+    <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />

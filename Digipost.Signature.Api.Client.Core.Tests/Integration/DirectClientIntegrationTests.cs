@@ -22,8 +22,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Integration
                 directClient.Create(DomainUtility.GetDirectJob());
                 
                 //Assert
+                Assert.Fail();
             }
         }
-
     }
 }

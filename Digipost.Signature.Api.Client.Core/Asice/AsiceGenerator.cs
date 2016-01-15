@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
             
             var attachables = new List<IAsiceAttachable> {manifest, document};
 
-            var signature = new AsiceSignature.SignatureGenerator(document, manifest, certificate);
+            var signature = new AsiceSignature.SignatureGenerator(certificate, document, manifest);
             
 
             var result = signature.Bytes;

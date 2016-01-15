@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -14,22 +12,22 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class SignatureGenerator : IAsiceAttachable
     {
-        public Document Document { get; }
 
-        public Manifest Manifest { get; }
-
-        public X509Certificate2 Certificate { get; }
 
         private XmlDocument _xml;
         private SignedXml _signatureNode;
 
-        public SignatureGenerator(Document document, Manifest manifest, X509Certificate2 certificate)
+        public SignatureGenerator(X509Certificate2 certificate, params IAsiceAttachable[] attachables)
         {
-            Document = document;
-            Manifest = manifest;
             Certificate = certificate;
+            Attachables = attachables;
         }
 
+        public X509Certificate2 Certificate { get; }
+
+
+        public IAsiceAttachable[] Attachables { get; }
+        
         public string FileName
         {
             get { return "META-INF/signatures.xml"; }
@@ -77,7 +75,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             _xml = CreateXadesSignatureElement();
             _signatureNode = CreateSignatureElement();
 
-            AddReferences(Manifest, Document);
+            AddReferences();
             AddKeyInfo();
 
             _signatureNode.ComputeSignature();
@@ -105,9 +103,9 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             return signedXml;
         }
 
-        private void AddReferences(params IAsiceAttachable[] asiceAttachables)
+        private void AddReferences()
         {
-            foreach (var item in asiceAttachables)
+            foreach (var item in Attachables)
             {
                 _signatureNode.AddReference(Sha256Reference(item));
             }
@@ -116,7 +114,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
                 new QualifyingPropertiesObject(
                     Certificate, 
                     target: "#Signature", 
-                    references: asiceAttachables,
+                    references: Attachables,
                     context: _xml.DocumentElement
                     )
                 );

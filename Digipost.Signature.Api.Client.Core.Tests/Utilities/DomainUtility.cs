@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(GetDocument(), GetManifest(), GetCertificate());
+            return new SignatureGenerator(GetCertificate(), GetDocument(), GetManifest());
         } 
 
         public static Manifest GetManifest()

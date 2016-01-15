@@ -1,4 +1,6 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
+﻿using System.Linq;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Xsd;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -21,11 +23,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 var x509Certificate2 = DomainUtility.GetCertificate();
 
                 //Act
-                var signatur = new Core.Asice.AsiceSignature.SignatureGenerator(document, manifest, x509Certificate2);
+                var signatur = new SignatureGenerator(x509Certificate2, document, manifest);
 
                 //Assert
-                Assert.AreEqual(document, signatur.Document);
-                Assert.AreEqual(manifest, signatur.Manifest);
+                Assert.AreEqual(document, signatur.Attachables.ElementAt(0));
+                Assert.AreEqual(manifest, signatur.Attachables.ElementAt(1));
                 Assert.AreEqual(x509Certificate2, signatur.Certificate);
             }
         }
@@ -80,18 +82,18 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
 
                 //Assert
                 Assert.IsTrue(isValidSignatureXml);
-                Assert.IsTrue(signatureLength > 3200);
+                Assert.IsTrue(signatureLength > 3200);                
             }
 
         }
 
-        internal Core.Asice.AsiceSignature.SignatureGenerator GetSignaturGenerator()
+        internal SignatureGenerator GetSignaturGenerator()
         {
             var document = DomainUtility.GetDocument();
             var sender = DomainUtility.GetSender();
             var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
             var x509Certificate2 = DomainUtility.GetCertificate();
-            var signaturGenerator = new Core.Asice.AsiceSignature.SignatureGenerator(document, manifest, x509Certificate2);
+            var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;
         }
     }

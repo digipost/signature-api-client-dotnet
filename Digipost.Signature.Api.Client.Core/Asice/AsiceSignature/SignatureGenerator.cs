@@ -21,6 +21,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         public X509Certificate2 Certificate { get; }
 
         private XmlDocument _xml;
+        private SignedXml _signatureNode;
 
         public SignatureGenerator(Document document, Manifest manifest, X509Certificate2 certificate)
         {
@@ -42,8 +43,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             }
         }
 
-        public FileType FileType { get; }
-
         public string MimeType
         {
             get { return "application/xml"; }
@@ -63,18 +62,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
             try
             {
-                _xml = OpprettXmlDokument();
-
-                var signaturnode = Signaturnode();
-
-                IEnumerable<IAsiceAttachable> referanser = Referanser(Document, Manifest);
-                OpprettReferanser(signaturnode, referanser);
-
-                var keyInfoX509Data = new KeyInfoX509Data(Certificate, X509IncludeOption.WholeChain);
-                signaturnode.KeyInfo.AddClause(keyInfoX509Data);
-                signaturnode.ComputeSignature();
-
-                _xml.DocumentElement.AppendChild(_xml.ImportNode(signaturnode.GetXml(), deep: true));
+                CreateXadesSignature();
             }
             catch (Exception e)
             {
@@ -84,18 +72,32 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             return _xml;
         }
 
-        private XmlDocument OpprettXmlDokument()
+        private void CreateXadesSignature()
         {
-            var signaturXml = new XmlDocument { PreserveWhitespace = true };
-            var xmlDeclaration = signaturXml.CreateXmlDeclaration("1.0", "UTF-8", null);
-            signaturXml.AppendChild(signaturXml.CreateElement("xades", "XAdESSignatures", NavneromUtility.UriEtsi121));
-            signaturXml.DocumentElement.SetAttribute("xmlns:ns11", NavneromUtility.UriEtsi132);
+            _xml = CreateXadesSignatureElement();
+            _signatureNode = CreateSignatureElement();
 
-            signaturXml.InsertBefore(xmlDeclaration, signaturXml.DocumentElement);
-            return signaturXml;
+            AddReferences(Manifest, Document);
+            AddKeyInfo();
+
+            _signatureNode.ComputeSignature();
+
+            AddSignatureToDocument();
         }
 
-        private SignedXml Signaturnode()
+        private XmlDocument CreateXadesSignatureElement()
+        {
+            var signatureDocument = new XmlDocument { PreserveWhitespace = true };
+            var xmlDeclaration = signatureDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
+            signatureDocument.AppendChild(signatureDocument.CreateElement("xades", "XAdESSignatures", NavneromUtility.UriEtsi121));
+            signatureDocument.DocumentElement.SetAttribute("xmlns", NavneromUtility.UriEtsi132);
+
+            //Todo: Legg til foerst
+            signatureDocument.InsertBefore(xmlDeclaration, signatureDocument.DocumentElement);
+            return signatureDocument;
+        }
+
+        private SignedXml CreateSignatureElement()
         {
             SignedXml signedXml = new SignedXmlWithAgnosticId(_xml, Certificate);
             signedXml.SignedInfo.CanonicalizationMethod = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
@@ -103,15 +105,32 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             return signedXml;
         }
 
-        private static IEnumerable<IAsiceAttachable> Referanser(Document document, Manifest manifest)
+        private void AddReferences(params IAsiceAttachable[] asiceAttachables)
         {
-            var referanser = new List<IAsiceAttachable>();
-            referanser.Add(document);
-            referanser.Add(manifest);
-            return referanser;
+            foreach (var item in asiceAttachables)
+            {
+                _signatureNode.AddReference(Sha256Reference(item));
+            }
+
+            _signatureNode.AddObject(
+                new QualifyingPropertiesObject(
+                    Certificate, 
+                    target: "#Signature", 
+                    references: asiceAttachables,
+                    context: _xml.DocumentElement
+                    )
+                );
+
+            _signatureNode.AddReference(SignedPropertiesReference());
         }
 
-        private static Sha256Reference SignedPropertiesReferanse()
+        private void AddKeyInfo()
+        {
+            var keyInfoX509Data = new KeyInfoX509Data(Certificate, X509IncludeOption.WholeChain);
+            _signatureNode.KeyInfo.AddClause(keyInfoX509Data);
+        }
+
+        private static Sha256Reference SignedPropertiesReference()
         {
             var signedPropertiesReference = new Sha256Reference("#SignedProperties")
             {
@@ -121,28 +140,19 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             return signedPropertiesReference;
         }
 
-        private void OpprettReferanser(SignedXml signaturnode, IEnumerable<IAsiceAttachable> referanser)
-        {
-            foreach (var item in referanser)
-            {
-                signaturnode.AddReference(Sha256Referanse(item));
-            }
-
-            signaturnode.AddObject(
-                new QualifyingPropertiesObject(
-                    Certificate, "#Signature", referanser.ToArray(), _xml.DocumentElement)
-                    );
-
-            signaturnode.AddReference(SignedPropertiesReferanse());
-        }
-
-        private Sha256Reference Sha256Referanse(IAsiceAttachable document)
+        private Sha256Reference Sha256Reference(IAsiceAttachable document)
         {
             return new Sha256Reference(document.Bytes)
             {
                 Uri = document.FileName,
                 Id = document.Id
             };
+        }
+
+        private void AddSignatureToDocument()
+        {
+            var xml = _signatureNode.GetXml().InnerXml;
+             _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), deep: true));
         }
     }
 }

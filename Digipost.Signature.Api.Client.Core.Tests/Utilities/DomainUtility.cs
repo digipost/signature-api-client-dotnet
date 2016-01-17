@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static DirectJob GetDirectJob()
         {
-            return new DirectJob("Reference", GetSigner(), GetDocument(), GetExitUrls());
+            return new DirectJob(GetSender(), GetDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
         public static Document GetDocument()

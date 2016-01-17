@@ -4,6 +4,7 @@ using System.IO;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Internal;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -20,13 +21,12 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public DirectJobResponse Create(DirectJob directJob)
         {
-            //Todo: Serialize DirectJob
+            var serializedjob = DataTransferObjectConverter.ToDataTransferObject(directJob);
 
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
 
-            //Todo:Serialize job and send
-
+            //Todo: pack and send.
             throw new NotImplementedException();
         }
 

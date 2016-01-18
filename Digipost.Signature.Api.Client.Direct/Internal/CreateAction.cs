@@ -23,25 +23,25 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             var message = RequestContent as DirectJob;
             var boundary = Guid.NewGuid().ToString();
 
-            var multipartFormDataContent = new MultipartFormDataContent(boundary);
+            _multipartFormDataContent = new MultipartFormDataContent(boundary);
 
             var mediaTypeHeaderValue = new MediaTypeHeaderValue("multipart/mixed");
             mediaTypeHeaderValue.Parameters.Add(new NameValueWithParametersHeaderValue("boundary", boundary));
-            multipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
+            _multipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
 
             AddBodyToContent(message);
             AddDocumentBundle();
 
-            return multipartFormDataContent; ;
+            return _multipartFormDataContent; ;
         }
 
-        private void AddBodyToContent(DirectJob message)
+        private void AddBodyToContent(DirectJob directJob)
         {
-            var messageDataTransferObject = DataTransferObjectConverter.ToDataTransferObject(message);
-            var xmlMessage = SerializeUtility.Serialize(messageDataTransferObject);
+            var directJobDataTransferObject = DataTransferObjectConverter.ToDataTransferObject(directJob);
+            var directJobSerialized = SerializeUtility.Serialize(directJobDataTransferObject);
 
-            var directJobContent = new StringContent(xmlMessage);
-            directJobContent.Headers.ContentType = new MediaTypeHeaderValue("SOMETHINGSOMETHIN"); //Todo: Set value
+            var directJobContent = new StringContent(directJobSerialized);
+            directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
             directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
                 FileName = "\"message\""
@@ -53,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
         private void AddDocumentBundle()
         {
             var documentBundleContent = new ByteArrayContent(_documentBundle.BundleBytes);
-            documentBundleContent.Headers.ContentType = new MediaTypeHeaderValue("SOMETHINGSOMETHING"); //Todo: Set value
+            documentBundleContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             documentBundleContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
                 FileName = "documentBundle"

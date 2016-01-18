@@ -31,6 +31,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         internal HttpClient ThreadSafeHttpClient
         {
+            //Todo: Set TLS2 settings like in example project
             get
             {
                 lock (_threadLock)

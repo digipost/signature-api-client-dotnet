@@ -70,6 +70,8 @@
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />
+    <Compile Include="Integration\DirectClientIntegrationTests.cs" />
+    <Compile Include="Internal\ClientHelperTests.cs" />
     <Compile Include="Log4NetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseUrlsTests.cs" />

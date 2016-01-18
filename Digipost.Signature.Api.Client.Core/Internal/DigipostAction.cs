@@ -8,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal abstract class DigipostAction
     {
-        private readonly string _uri;
+        private readonly Uri _signatureServiceRoot;
         private HttpClient _httpClient;
         private readonly object _threadLock = new object();
 
@@ -21,12 +21,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         public IRequestContent RequestContent { get; set; }
 
 
-        protected DigipostAction(IRequestContent requestContent, ClientConfiguration clientConfig, X509Certificate2 businessCertificate, string uri)
+        protected DigipostAction(IRequestContent requestContent, X509Certificate2 businessCertificate, Uri signatureServiceRoot)
         {
             RequestContent = requestContent;
             InitializeRequestXmlContent();
-            _uri = uri;
-            ClientConfig = clientConfig;
+            _signatureServiceRoot = signatureServiceRoot;
             BusinessCertificate = businessCertificate;
         }
 
@@ -43,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                     _httpClient = new HttpClient(loggingHandler)
                     {
                         Timeout = TimeSpan.FromMilliseconds(5000),
-                        BaseAddress = new Uri(ClientConfig.SignatureServiceRoot.AbsoluteUri)
+                        BaseAddress = new Uri(_signatureServiceRoot.AbsoluteUri)
                     };
 
                     return _httpClient;
@@ -59,12 +58,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             }
         }
 
-        internal Task<HttpResponseMessage> PostAsync(IRequestContent requestContent)
+        internal Task<HttpResponseMessage> PostAsync()
         {
             //Todo: Log request starting
             try
             {
-                return ThreadSafeHttpClient.PostAsync(_uri, Content());
+                return ThreadSafeHttpClient.PostAsync(_signatureServiceRoot, Content());
             }
             finally
             {
@@ -77,7 +76,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             try
             {
                 //Todo: Log request starting
-                return ThreadSafeHttpClient.GetAsync(_uri);
+                return ThreadSafeHttpClient.GetAsync(_signatureServiceRoot);
             }
             finally
             {

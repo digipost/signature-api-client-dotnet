@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
-using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
@@ -15,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
         private readonly DocumentBundle _documentBundle;
         private MultipartFormDataContent _multipartFormDataContent;
 
-        public CreateAction(IRequestContent requestContent, ClientConfiguration clientConfig, X509Certificate2 businessCertificate, string uri, DocumentBundle documentBundle) : base(requestContent, clientConfig, businessCertificate, uri)
+        public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot)
         {
             _documentBundle = documentBundle;
         }

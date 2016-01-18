@@ -83,7 +83,6 @@
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Integration\ApiIntegrationTests.cs" />
-    <Compile Include="Integration\DirectClientIntegrationTests.cs" />
     <Compile Include="Internal\DigipostActionTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />

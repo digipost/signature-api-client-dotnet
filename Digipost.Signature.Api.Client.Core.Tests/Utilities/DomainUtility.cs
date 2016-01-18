@@ -27,6 +27,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
+        public static ClientConfiguration GetClientConfiguration()
+        {
+            return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetCertificate());
+        }
+
         public static DirectJob GetDirectJob()
         {
             return new DirectJob(GetSender(), GetDocument(), GetSigner(), "Reference", GetExitUrls());

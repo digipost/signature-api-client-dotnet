@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Core.Tests.Integration
+namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
 {
     [TestClass]
     public class DirectClientIntegrationTests
@@ -16,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Integration
             public void RunsWithoutExceptions()
             {
                 //Arrange
-               var directClient = new DirectClient(new ClientConfiguration(new Uri("http://serviceRoot.no"), DomainUtility.GetSender(), DomainUtility.GetCertificate()));
+               var directClient = new DirectClient(new ClientConfiguration(new Uri("http://serviceRoot.no"), DomainUtility.GetSender(), DomainUtility.GetTestCertificate()));
 
                 //Act
                 directClient.Create(DomainUtility.GetDirectJob());

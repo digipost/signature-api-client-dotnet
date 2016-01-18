@@ -28,12 +28,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 
                 var source = new DirectJob(
                     sender,
-                    document, 
-                    signer, 
-                    reference, 
+                    document,
+                    signer,
+                    reference,
                     exitUrls);
 
-                var result = new DirectJobDataTranferObject()
+                var expected = new DirectJobDataTranferObject()
                 {
                     Reference = reference,
                     SenderDataTransferObject = new SenderDataTransferObject()
@@ -53,14 +53,36 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     },
                     ExitUrlsDataTranferObject = new ExitUrlsDataTranferObject()
                     {
-                        CancellationUrl = exitUrls.CancellationUrl,
-                        CompletionUrl = exitUrls.CompletionUrl,
-                        ErrorUrl = exitUrls.ErrorUrl
+                        CancellationUrl = exitUrls.CancellationUrl.AbsoluteUri,
+                        CompletionUrl = exitUrls.CompletionUrl.AbsoluteUri,
+                        ErrorUrl = exitUrls.ErrorUrl.AbsoluteUri
                     }
                 };
 
                 //Act
-                var expected = DataTransferObjectConverter.ToDataTransferObject(source);
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result , out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void ConvertsExitUrlsSuccessfully()
+            {
+                //Arrange
+                var source = DomainUtility.GetExitUrls();
+                var expected = new ExitUrlsDataTranferObject()
+                {
+                    CompletionUrl = source.CompletionUrl.AbsoluteUri,
+                    CancellationUrl = source.CancellationUrl.AbsoluteUri,
+                    ErrorUrl = source.ErrorUrl.AbsoluteUri
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
 
                 //Assert
                 var comparator = new Comparator();

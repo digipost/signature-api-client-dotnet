@@ -23,9 +23,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             return new ExitUrlsDataTranferObject()
             {
-                CancellationUrl = exitUrls.CancellationUrl,
-                CompletionUrl = exitUrls.CompletionUrl,
-                ErrorUrl = exitUrls.ErrorUrl
+                CancellationUrl = exitUrls.CancellationUrl.AbsoluteUri,
+                CompletionUrl = exitUrls.CompletionUrl.AbsoluteUri,
+                ErrorUrl = exitUrls.ErrorUrl.AbsoluteUri
             };
         }
     }

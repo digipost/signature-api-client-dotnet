@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
                 var sender = DomainUtility.GetSender();
-                var x509Certificate2 = DomainUtility.GetCertificate();
+                var x509Certificate2 = DomainUtility.GetTestCertificate();
                 var clientConfiguration = new ClientConfiguration(
                     signatureServiceRoot, sender, x509Certificate2); 
                 

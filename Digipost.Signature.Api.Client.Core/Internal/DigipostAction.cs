@@ -10,17 +10,21 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         private readonly string _uri;
         private HttpClient _httpClient;
+        private readonly object _threadLock = new object();
 
         public ClientConfiguration ClientConfig { get; set; }
 
         public X509Certificate2 BusinessCertificate { get; set; }
-        public XmlDocument RequestContent { get; internal set; }
 
-        private readonly object _threadLock = new object();
+        public XmlDocument RequestContentXml { get; internal set; }
+
+        public IRequestContent RequestContent { get; set; }
+
 
         protected DigipostAction(IRequestContent requestContent, ClientConfiguration clientConfig, X509Certificate2 businessCertificate, string uri)
         {
-            InitializeRequestXmlContent(requestContent);
+            RequestContent = requestContent;
+            InitializeRequestXmlContent();
             _uri = uri;
             ClientConfig = clientConfig;
             BusinessCertificate = businessCertificate;
@@ -60,7 +64,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             //Todo: Log request starting
             try
             {
-                return ThreadSafeHttpClient.PostAsync(_uri, Content(requestContent));
+                return ThreadSafeHttpClient.PostAsync(_uri, Content());
             }
             finally
             {
@@ -81,18 +85,17 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             }
         }
 
-        protected abstract HttpContent Content(IRequestContent requestContent);
+        protected abstract HttpContent Content();
 
-        protected abstract string Serialize(IRequestContent requestContent);
+        protected abstract string Serialize();
 
-        private void InitializeRequestXmlContent(IRequestContent requestContent)
+        private void InitializeRequestXmlContent()
         {
-            if (requestContent == null) return;
+            if (RequestContent == null) return;
 
             var document = new XmlDocument();
-            var serialized = Serialize(requestContent);
-            document.LoadXml(serialized);
-            RequestContent = document;
+            document.LoadXml(Serialize());
+            RequestContentXml = document;
         }
     }
 }

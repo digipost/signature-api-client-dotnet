@@ -7,12 +7,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     public class ExitUrlsDataTranferObject
     {
         [XmlElement("completion-url")]
-        public Uri CompletionUrl { get; set; }
+        public string CompletionUrl { get; set; }
 
-        [XmlElement("completion-url")]
-        public Uri CancellationUrl { get; set; }
+        [XmlElement("cancellation-url")]
+        public string CancellationUrl { get; set; }
 
-        [XmlElement("completion-url")]
-        public Uri ErrorUrl { get; set; }
+        [XmlElement("error-url")]
+        public string ErrorUrl { get; set; }
     }
 }

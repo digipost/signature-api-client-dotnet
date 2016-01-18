@@ -16,6 +16,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
         {
             var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
             createAction.PostAsync();
+
+            return null;
         } 
     }
 }

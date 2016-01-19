@@ -62,7 +62,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
             var signers = new List<Signer>();
 
-            const string basePersonalIdentificationNumber = "01234567890";
+            const string basePersonalIdentificationNumber = "1234567890";
             for (var i = 0; i < count; i++)
             {
                 signers.Add(new Signer(basePersonalIdentificationNumber + i));

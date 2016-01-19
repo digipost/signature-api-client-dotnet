@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Direct.Internal;
@@ -18,14 +20,14 @@ namespace Digipost.Signature.Api.Client.Direct
             _clientHelper = new ClientHelper(clientConfiguration);
         }
 
-        public DirectJobResponse Create(DirectJob directJob)
+        public async Task<HttpResponseMessage> Create(DirectJob directJob)
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
 
-            _clientHelper.SendDirectJobRequest(directJob, documentBundle);
+            return await _clientHelper.SendDirectJobRequest(directJob, documentBundle);
 
-            throw new NotImplementedException();
+            //Todo:Return DirectJobResponse instead of HttpResponseMessage
         }
 
         public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)

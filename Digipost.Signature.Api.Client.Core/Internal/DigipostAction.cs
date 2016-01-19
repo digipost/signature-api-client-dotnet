@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Xml;
@@ -31,20 +34,24 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         internal HttpClient ThreadSafeHttpClient
         {
-            //Todo: Set TLS2 settings like in example project
+            
             get
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 lock (_threadLock)
                 {
-                    if (_httpClient != null) return _httpClient;
-
-                    var loggingHandler = new LoggingHandler(new HttpClientHandler());
-
-                    _httpClient = new HttpClient(loggingHandler)
+                    if (_httpClient == null)
                     {
-                        Timeout = TimeSpan.FromMilliseconds(5000),
-                        BaseAddress = new Uri(_signatureServiceRoot.AbsoluteUri)
-                    };
+                        var mutualTlsHandler = MutualTlsHandler();
+                        var loggingHandler = new LoggingHandler(mutualTlsHandler);
+
+                        _httpClient = new HttpClient(loggingHandler)
+                        {
+                            Timeout = TimeSpan.FromMilliseconds(5000),
+                            BaseAddress = _signatureServiceRoot
+                        };
+                    }
 
                     return _httpClient;
                 }
@@ -59,12 +66,28 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             }
         }
 
-        internal Task<HttpResponseMessage> PostAsync()
+        private WebRequestHandler MutualTlsHandler()
+        {
+            var certificateCollection = new X509Certificate2Collection() {BusinessCertificate};
+            var mutualTlsHandler = new WebRequestHandler();
+            mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
+            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
+            return mutualTlsHandler;
+        }
+
+        private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        {
+            //Todo: Implement server certificate validation
+            return true;
+        }
+
+        internal Task<HttpResponseMessage> PostAsync(Uri requestUri)
         {
             //Todo: Log request starting
             try
             {
-                return ThreadSafeHttpClient.PostAsync(_signatureServiceRoot, Content());
+                return ThreadSafeHttpClient.PostAsync(requestUri, Content());
+                
             }
             finally
             {

@@ -22,6 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const string fileName = "NavnPåFil";
                 const FileType fileType = FileType.Pdf;
                 const string expectedMimeType = "application/pdf";
+                
                 var pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes();
 
                 //Act
@@ -79,6 +80,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var executablePath = Path.GetDirectoryName(executingAssembly.Location);
                 var documentPath = Path.Combine(executablePath, "Resources", "Documents", "Dokument.pdf");
                 return documentPath;
+            }
+        }
+
+        [TestClass]
+        public class IdMethod : DocumentTests
+        {
+            [TestMethod]
+            public void ReturnsCorrectStaticString()
+            {
+                //Arrange
+                var id = "Id_0";
+
+                //Act
+                var document = DomainUtility.GetDocument();
+
+                //Assert
+                Assert.AreEqual(id, document.Id);
             }
         }
     }

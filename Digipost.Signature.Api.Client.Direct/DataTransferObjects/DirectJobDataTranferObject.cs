@@ -18,9 +18,6 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         [XmlElement("sender")]
         public SenderDataTransferObject SenderDataTransferObject { get; set; }
 
-        [XmlElement("primary-document")]
-        public DocumentDataTransferObject DocumentDataTransferObject { get; set; }
-
         [XmlElement("exit-urls")]
         public ExitUrlsDataTranferObject ExitUrlsDataTranferObject { get; set; }
     }

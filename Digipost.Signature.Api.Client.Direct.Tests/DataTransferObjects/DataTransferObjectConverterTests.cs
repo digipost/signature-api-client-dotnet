@@ -44,13 +44,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     {
                         PersonalIdentificationNumber = signer.PersonalIdentificationNumber
                     },
-                    DocumentDataTransferObject = new DocumentDataTransferObject()
-                    {
-                        Title = document.Subject,
-                        Description = document.Message,
-                        Mime = document.MimeType,
-                        Href = document.FileName
-                    },
                     ExitUrlsDataTranferObject = new ExitUrlsDataTranferObject()
                     {
                         CancellationUrl = exitUrls.CancellationUrl.AbsoluteUri,

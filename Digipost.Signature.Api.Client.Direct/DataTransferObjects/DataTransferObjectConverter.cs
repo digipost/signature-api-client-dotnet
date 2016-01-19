@@ -12,10 +12,8 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 Reference = directJob.Reference,
                 SenderDataTransferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Sender),
-                DocumentDataTransferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Document),
                 SignerDataTranferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Signer),
-                ExitUrlsDataTranferObject = ToDataTransferObject(directJob.ExitUrls),
-
+                ExitUrlsDataTranferObject = ToDataTransferObject(directJob.ExitUrls)
             };
         }
 

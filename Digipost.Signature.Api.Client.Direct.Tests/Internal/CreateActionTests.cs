@@ -1,7 +1,9 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice;
+﻿using System.Net.Http;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
+using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
@@ -20,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var document = DomainUtility.GetDocument();
                 var enumerable = DomainUtility.GetSigners(1);
                 var businessCertificate = DomainUtility.GetTestCertificate();
-                var signatureServiceRoot = DomainUtility.GetSignatureServiceRoot();
+                var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
                 var directJob = DomainUtility.GetDirectJob();
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
@@ -33,13 +35,53 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                         businessCertificate,
                         signatureServiceRoot
                     );
-
+                
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
                 Assert.AreEqual(businessCertificate, action.BusinessCertificate);
                 Assert.AreEqual(signatureServiceRoot, action.SignatureServiceRoot);
-
                 Assert.AreEqual(serializedDirectJob, action.RequestContentXml.InnerXml);
+
+                Assert.AreEqual(null, action.MultipartFormDataContent);
+            }
+        }
+
+        [TestClass]
+        public class ContentMethod : CreateActionTests
+        {
+            [TestMethod]
+            public void SetsMultipartFormDataContent()
+            {
+                //Arrange
+                var createAction = GetAction();
+                createAction.ThreadSafeHttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse());
+
+                //Act
+                createAction.PostAsync(DomainUtility.GetSignatureServiceRootUri());
+
+                //Assert
+                Assert.IsNotNull(createAction.MultipartFormDataContent);
+            }
+
+            private static CreateAction GetAction()
+            {
+                var sender = DomainUtility.GetSender();
+                var document = DomainUtility.GetDocument();
+                var enumerable = DomainUtility.GetSigners(1);
+                var businessCertificate = DomainUtility.GetTestCertificate();
+                var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
+                var directJob = DomainUtility.GetDirectJob();
+
+                var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
+
+                //Act
+                var action = new CreateAction(
+                    directJob,
+                    asiceBundle,
+                    businessCertificate,
+                    signatureServiceRoot
+                    );
+                return action;
             }
         }
     }

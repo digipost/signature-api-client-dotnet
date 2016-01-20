@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
@@ -11,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
     internal class CreateAction : DigipostAction
     {
         private readonly DocumentBundle _documentBundle;
-        private MultipartFormDataContent _multipartFormDataContent;
+        public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
         public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot)
         {
@@ -23,16 +24,16 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             var message = RequestContent as DirectJob;
             var boundary = Guid.NewGuid().ToString();
 
-            _multipartFormDataContent = new MultipartFormDataContent(boundary);
+            MultipartFormDataContent = new MultipartFormDataContent(boundary);
 
             var mediaTypeHeaderValue = new MediaTypeHeaderValue("multipart/mixed");
             mediaTypeHeaderValue.Parameters.Add(new NameValueWithParametersHeaderValue("boundary", boundary));
-            _multipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
+            MultipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
 
             AddBodyToContent(message);
             AddDocumentBundle();
-
-            return _multipartFormDataContent; ;
+            
+            return MultipartFormDataContent; ;
         }
 
         private void AddBodyToContent(DirectJob directJob)
@@ -47,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
                 FileName = "\"message\""
             };
 
-            _multipartFormDataContent.Add(directJobContent);
+            MultipartFormDataContent.Add(directJobContent);
         }
 
         private void AddDocumentBundle()
@@ -58,7 +59,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             {
                 FileName = "documentBundle"
             };
-            _multipartFormDataContent.Add(documentBundleContent);
+            MultipartFormDataContent.Add(documentBundleContent);
         }
 
         protected override string Serialize()

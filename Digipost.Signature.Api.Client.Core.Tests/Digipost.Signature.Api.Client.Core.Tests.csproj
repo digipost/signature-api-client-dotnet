@@ -84,7 +84,6 @@
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Integration\ApiIntegrationTests.cs" />
-    <Compile Include="Internal\DigipostActionTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
@@ -116,7 +115,9 @@
       <Name>Digipost.Signature.Api.Client.Direct</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Internal\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
   </ItemGroup>

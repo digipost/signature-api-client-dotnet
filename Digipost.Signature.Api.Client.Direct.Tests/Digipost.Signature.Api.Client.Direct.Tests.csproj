@@ -72,6 +72,8 @@
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Integration\DirectClientIntegrationTests.cs" />
     <Compile Include="Internal\ClientHelperTests.cs" />
     <Compile Include="Internal\CreateActionTests.cs" />

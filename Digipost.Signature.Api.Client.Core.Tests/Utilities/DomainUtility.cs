@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
         }
 
-        public static Uri GetSignatureServiceRoot()
+        public static Uri GetSignatureServiceRootUri()
         {
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }

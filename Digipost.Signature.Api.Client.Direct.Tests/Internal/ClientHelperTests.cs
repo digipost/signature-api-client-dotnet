@@ -32,15 +32,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             [TestMethod]
             public void SendsProperRequest()
             {
-                //Arrange
-                var clientConfiguration = DomainUtility.GetClientConfiguration();
-                var clientHelper = new ClientHelper(clientConfiguration);
-
-                //Act
-
-
-                //Assert
-                Assert.Fail();
+               //Does only forward the request to Create action, so check CreateAction`s unit test for behavior.
             } 
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
@@ -12,6 +11,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
     internal class CreateAction : DigipostAction
     {
         private readonly DocumentBundle _documentBundle;
+        private string _serializedBody;
+
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
         public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot)
@@ -21,7 +22,6 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 
         protected override HttpContent Content()
         {
-            var message = RequestContent as DirectJob;
             var boundary = Guid.NewGuid().ToString();
 
             MultipartFormDataContent = new MultipartFormDataContent(boundary);
@@ -30,18 +30,15 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             mediaTypeHeaderValue.Parameters.Add(new NameValueWithParametersHeaderValue("boundary", boundary));
             MultipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
 
-            AddBodyToContent(message);
+            AddBodyToContent();
             AddDocumentBundle();
             
             return MultipartFormDataContent; ;
         }
 
-        private void AddBodyToContent(DirectJob directJob)
+        private void AddBodyToContent()
         {
-            var directJobDataTransferObject = DataTransferObjectConverter.ToDataTransferObject(directJob);
-            var directJobSerialized = SerializeUtility.Serialize(directJobDataTransferObject);
-
-            var directJobContent = new StringContent(directJobSerialized);
+            var directJobContent = new StringContent(Serialize());
             directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
             directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
             {
@@ -64,9 +61,13 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 
         protected override string Serialize()
         {
-            //TODO: This method does duplicate work, just for convenience of Xml-Validation. Fix!
-            var directJobDataTranferObject = DataTransferObjectConverter.ToDataTransferObject((DirectJob)RequestContent );
-            return SerializeUtility.Serialize(directJobDataTranferObject);
+            if (_serializedBody == null)
+            {
+                var directJobDataTranferObject = DataTransferObjectConverter.ToDataTransferObject((DirectJob)RequestContent);
+                return _serializedBody = SerializeUtility.Serialize(directJobDataTranferObject);
+            }
+
+            return _serializedBody;
         }
     }
 }

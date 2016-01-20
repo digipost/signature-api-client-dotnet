@@ -11,25 +11,22 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal abstract class DigipostAction
     {
-        private readonly Uri _signatureServiceRoot;
-        private HttpClient _httpClient;
         private readonly object _threadLock = new object();
+        private HttpClient _httpClient;
 
-        public ClientConfiguration ClientConfig { get; set; }
+        public IRequestContent RequestContent { get; }
 
-        public X509Certificate2 BusinessCertificate { get; set; }
+        public X509Certificate2 BusinessCertificate { get; }
 
+        public Uri SignatureServiceRoot { get;  }
         public XmlDocument RequestContentXml { get; internal set; }
-
-        public IRequestContent RequestContent { get; set; }
-
 
         protected DigipostAction(IRequestContent requestContent, X509Certificate2 businessCertificate, Uri signatureServiceRoot)
         {
             RequestContent = requestContent;
-            InitializeRequestXmlContent();
-            _signatureServiceRoot = signatureServiceRoot;
+            SignatureServiceRoot = signatureServiceRoot;
             BusinessCertificate = businessCertificate;
+            InitializeRequestXmlContent();
         }
 
         internal HttpClient ThreadSafeHttpClient
@@ -49,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                         _httpClient = new HttpClient(loggingHandler)
                         {
                             Timeout = TimeSpan.FromMilliseconds(5000),
-                            BaseAddress = _signatureServiceRoot
+                            BaseAddress = SignatureServiceRoot
                         };
                     }
 
@@ -64,21 +61,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                     _httpClient = value;
                 }
             }
-        }
-
-        private WebRequestHandler MutualTlsHandler()
-        {
-            var certificateCollection = new X509Certificate2Collection() {BusinessCertificate};
-            var mutualTlsHandler = new WebRequestHandler();
-            mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
-            return mutualTlsHandler;
-        }
-
-        private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
-        {
-            //Todo: Implement server certificate validation
-            return true;
         }
 
         internal Task<HttpResponseMessage> PostAsync(Uri requestUri)
@@ -100,7 +82,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             try
             {
                 //Todo: Log request starting
-                return ThreadSafeHttpClient.GetAsync(_signatureServiceRoot);
+                return ThreadSafeHttpClient.GetAsync(SignatureServiceRoot);
             }
             finally
             {
@@ -119,6 +101,21 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             var document = new XmlDocument();
             document.LoadXml(Serialize());
             RequestContentXml = document;
+        }
+
+        private WebRequestHandler MutualTlsHandler()
+        {
+            var certificateCollection = new X509Certificate2Collection() {BusinessCertificate};
+            var mutualTlsHandler = new WebRequestHandler();
+            mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
+            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
+            return mutualTlsHandler;
+        }
+
+        private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        {
+            //Todo: Implement server certificate validation
+            return true;
         }
     }
 }

@@ -10,54 +10,30 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         public class ConstructorMethod : Sha256ReferenceTests
         {
             [TestMethod]
-            public void SimpleConstructor()
-            {
-                //Arrange
-                Sha256Reference reference = new Sha256Reference();
-
-                //Act
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            public void StreamConstructor()
-            {
-                //Arrange
-                    
-
-                //Act
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
             public void UriConstructor()
             {
                 //Arrange
-
+                var reference = new Sha256Reference("uri");
+                var digestMethod = "http://www.w3.org/2001/04/xmlenc#sha256";
 
                 //Act
 
                 //Assert
-                Assert.Fail();
+                Assert.AreEqual(digestMethod,reference.DigestMethod);
             }
 
             [TestMethod]
             public void BytesConstructor()
             {
                 //Arrange
-
+                var reference = new Sha256Reference(new byte[]{ 0xb, 0xc});
+                var digestMethod = "http://www.w3.org/2001/04/xmlenc#sha256";
 
                 //Act
 
                 //Assert
-                Assert.Fail();
+                Assert.AreEqual(digestMethod, reference.DigestMethod);
             }
-
-
         }
     }
 }

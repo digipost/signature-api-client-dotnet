@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
@@ -29,14 +30,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJob = new DirectJob(sender, DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
 
                 //Act
-
                 var result = await directClient.Create(directJob);
-
                 Trace.WriteLine("result is:" + result.Content.ReadAsStringAsync().Result + "Reason:" + result.ReasonPhrase);
-                
-                throw new NotImplementedException();
 
                 //Assert
+                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
             }
         }
     }

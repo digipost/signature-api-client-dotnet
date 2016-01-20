@@ -62,8 +62,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
             var signers = new List<Signer>();
 
-            const string basePersonalIdentificationNumber = "01013300001";
-            for (var i = 0; i < count; i++)
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
             {
                 signers.Add(new Signer(basePersonalIdentificationNumber + i));
             }
@@ -117,6 +117,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             var errorUrl = new Uri("http://localhost/error");
 
             return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
+        }
+
+        public static Uri GetSignatureServiceRoot()
+        {
+            return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
     }

@@ -33,8 +33,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void SendsProperRequest()
             {
                 //Arrange
-                
+                var clientConfiguration = DomainUtility.GetClientConfiguration();
+                var clientHelper = new ClientHelper(clientConfiguration);
+
                 //Act
+
 
                 //Assert
                 Assert.Fail();

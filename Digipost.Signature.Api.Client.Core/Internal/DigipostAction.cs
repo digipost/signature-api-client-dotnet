@@ -29,6 +29,10 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             InitializeRequestXmlContent();
         }
 
+        protected abstract HttpContent Content();
+
+        protected abstract string Serialize();
+
         internal HttpClient ThreadSafeHttpClient
         {
             
@@ -65,39 +69,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         internal Task<HttpResponseMessage> PostAsync(Uri requestUri)
         {
-            //Todo: Log request starting
-            try
-            {
-                return ThreadSafeHttpClient.PostAsync(requestUri, Content());
-                
-            }
-            finally
-            {
-                //Todo: Log request ending
-            }
+            return ThreadSafeHttpClient.PostAsync(requestUri, Content());
         }
 
         internal Task<HttpResponseMessage> GetAsync()
         {
-            try
-            {
-                //Todo: Log request starting
-                return ThreadSafeHttpClient.GetAsync(SignatureServiceRoot);
-            }
-            finally
-            {
-                //Todo: Log request ending
-            }
+            return ThreadSafeHttpClient.GetAsync(SignatureServiceRoot);
         }
-
-        protected abstract HttpContent Content();
-
-        protected abstract string Serialize();
 
         private void InitializeRequestXmlContent()
         {
-            if (RequestContent == null) return;
-
             var document = new XmlDocument();
             document.LoadXml(Serialize());
             RequestContentXml = document;
@@ -109,6 +90,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
             mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
+
             return mutualTlsHandler;
         }
 

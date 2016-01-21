@@ -12,8 +12,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class SignatureGenerator : IAsiceAttachable
     {
-
-
         private XmlDocument _xml;
         private SignedXml _signatureNode;
 
@@ -24,8 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         }
 
         public X509Certificate2 Certificate { get; }
-
-
+        
         public IAsiceAttachable[] Attachables { get; }
         
         public string FileName

@@ -53,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void SetsMultipartFormDataContent()
             {
                 //Arrange
-                var createAction = GetAction();
+                var createAction = GetCreateAction();
                 createAction.ThreadSafeHttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse());
 
                 //Act
@@ -63,26 +63,46 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 Assert.IsNotNull(createAction.MultipartFormDataContent);
             }
 
-            private static CreateAction GetAction()
-            {
-                var sender = DomainUtility.GetSender();
-                var document = DomainUtility.GetDocument();
-                var enumerable = DomainUtility.GetSigners(1);
-                var businessCertificate = DomainUtility.GetTestCertificate();
-                var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
-                var directJob = DomainUtility.GetDirectJob();
+        }
 
-                var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
+        [TestClass]
+        public class SerializeMethod : CreateActionTests
+        {
+            [TestMethod]
+            public void SerializesDirectJob()
+            {
+                //Arrange
+                var directJob = DomainUtility.GetDirectJob();
+                var expected = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
                 //Act
-                var action = new CreateAction(
-                    directJob,
-                    asiceBundle,
-                    businessCertificate,
-                    signatureServiceRoot
-                    );
-                return action;
+                var result = CreateAction.SerializeFunc(directJob);
+
+                //Assert
+                Assert.AreEqual(expected, result);
             }
         }
+
+        internal CreateAction GetCreateAction()
+        {
+            var sender = DomainUtility.GetSender();
+            var document = DomainUtility.GetDocument();
+            var enumerable = DomainUtility.GetSigners(1);
+            var businessCertificate = DomainUtility.GetTestCertificate();
+            var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
+            var directJob = DomainUtility.GetDirectJob();
+
+            var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
+
+            //Act
+            var action = new CreateAction(
+                directJob,
+                asiceBundle,
+                businessCertificate,
+                signatureServiceRoot
+                );
+            return action;
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
             public void RunsWithoutExceptions()
             {
                 //Arrange
-               var directClient = new DirectClient(new ClientConfiguration(new Uri("http://serviceRoot.no"), DomainUtility.GetSender(), DomainUtility.GetTestCertificate()));
+                var directClient = new DirectClient(new ClientConfiguration(new Uri("http://serviceRoot.no"), DomainUtility.GetSender(), DomainUtility.GetTestCertificate()));
 
                 //Act
                 directClient.Create(DomainUtility.GetDirectJob());

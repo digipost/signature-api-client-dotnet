@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
@@ -16,38 +14,9 @@ namespace Digipost.Signature.Api.Client.Core.Asice
             _attachables = attachables;
         }
 
-        public string Filnavn
-        {
-            get { return "post.asice.zip"; }
-        }
-
         public byte[] Bytes
         {
-            get
-            {
-                if (_bytes != null)
-                    return _bytes;
-
-                return _bytes = CreateBytes();
-            }
-        }
-
-        public string Innholdstype
-        {
-            get { return "application/cms"; }
-        }
-
-        public string ContentId
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public string TransferEncoding
-        {
-            get { return "binary"; }
+            get { return _bytes ?? (_bytes = CreateBytes()); }
         }
 
         private byte[] CreateBytes()

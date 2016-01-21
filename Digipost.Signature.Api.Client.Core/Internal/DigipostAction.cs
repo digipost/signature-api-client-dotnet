@@ -21,21 +21,20 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         public Uri SignatureServiceRoot { get;  }
         public XmlDocument RequestContentXml { get; internal set; }
 
-        protected DigipostAction(IRequestContent requestContent, X509Certificate2 businessCertificate, Uri signatureServiceRoot)
+        protected DigipostAction(IRequestContent requestContent, X509Certificate2 businessCertificate, Uri signatureServiceRoot, Func<IRequestContent,string> serializeFunc)
         {
             RequestContent = requestContent;
             SignatureServiceRoot = signatureServiceRoot;
             BusinessCertificate = businessCertificate;
-            InitializeRequestXmlContent();
+            InitializeRequestXmlContent(serializeFunc);
         }
+
+        protected string SerializedBody { get; set; }
 
         protected abstract HttpContent Content();
 
-        protected abstract string Serialize();
-
         internal HttpClient ThreadSafeHttpClient
         {
-            
             get
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -77,10 +76,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return ThreadSafeHttpClient.GetAsync(SignatureServiceRoot);
         }
 
-        private void InitializeRequestXmlContent()
+        private void InitializeRequestXmlContent(Func<IRequestContent, string> serializeFunc)
         {
             var document = new XmlDocument();
-            document.LoadXml(Serialize());
+            SerializedBody = serializeFunc(RequestContent);
+            document.LoadXml(SerializedBody);
             RequestContentXml = document;
         }
 

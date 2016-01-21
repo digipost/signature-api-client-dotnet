@@ -31,7 +31,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 //Act
                 var result = await directClient.Create(directJob);
-                Trace.WriteLine("result is:" + result.Content.ReadAsStringAsync().Result + "Reason:" + result.ReasonPhrase);
 
                 //Assert
                 Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);

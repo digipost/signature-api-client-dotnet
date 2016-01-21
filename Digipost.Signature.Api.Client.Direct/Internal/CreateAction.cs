@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
@@ -10,12 +12,13 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 {
     internal class CreateAction : DigipostAction
     {
+        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((DirectJob) content));
+
         private readonly DocumentBundle _documentBundle;
-        private string _serializedBody;
 
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
-        public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot)
+        public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot, SerializeFunc)
         {
             _documentBundle = documentBundle;
         }
@@ -30,44 +33,28 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             mediaTypeHeaderValue.Parameters.Add(new NameValueWithParametersHeaderValue("boundary", boundary));
             MultipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
 
-            AddBodyToContent();
-            AddDocumentBundle();
-            
-            return MultipartFormDataContent; ;
+            MultipartFormDataContent.Add(BodyContent());
+            MultipartFormDataContent.Add(AddDocumentBundle());
+
+            return MultipartFormDataContent;
         }
 
-        private void AddBodyToContent()
+        private StringContent BodyContent()
         {
-            var directJobContent = new StringContent(Serialize());
+            var directJobContent = new StringContent(SerializedBody);
             directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-            directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = "\"message\""
-            };
+            directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
 
-            MultipartFormDataContent.Add(directJobContent);
+            return directJobContent;
         }
 
-        private void AddDocumentBundle()
+        private ByteArrayContent AddDocumentBundle()
         {
             var documentBundleContent = new ByteArrayContent(_documentBundle.BundleBytes);
             documentBundleContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            documentBundleContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-            {
-                FileName = "documentBundle"
-            };
-            MultipartFormDataContent.Add(documentBundleContent);
-        }
+            documentBundleContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
 
-        protected override string Serialize()
-        {
-            if (_serializedBody == null)
-            {
-                var directJobDataTranferObject = DataTransferObjectConverter.ToDataTransferObject((DirectJob)RequestContent);
-                return _serializedBody = SerializeUtility.Serialize(directJobDataTranferObject);
-            }
-
-            return _serializedBody;
+            return documentBundleContent;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 var document = DomainUtility.GetDocument();
                 var sender = DomainUtility.GetSender();
                 var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
-                var x509Certificate2 = DomainUtility.GetCertificate();
+                var x509Certificate2 = DomainUtility.GetTestCertificate();
 
                 //Act
                 var signatur = new SignatureGenerator(x509Certificate2, document, manifest);
@@ -92,7 +92,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
             var document = DomainUtility.GetDocument();
             var sender = DomainUtility.GetSender();
             var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
-            var x509Certificate2 = DomainUtility.GetCertificate();
+            var x509Certificate2 = DomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;
         }

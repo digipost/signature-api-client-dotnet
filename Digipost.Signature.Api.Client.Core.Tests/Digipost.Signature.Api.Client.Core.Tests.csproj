@@ -55,6 +55,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Security" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
@@ -73,6 +76,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Asice\AsiceArchiveTests.cs" />
     <Compile Include="Asice\AsiceManifest\ManifestTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
@@ -82,7 +86,6 @@
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
-    <Compile Include="Integration\DirectClientIntegrationTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
@@ -114,7 +117,9 @@
       <Name>Digipost.Signature.Api.Client.Direct</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Internal\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
   </ItemGroup>

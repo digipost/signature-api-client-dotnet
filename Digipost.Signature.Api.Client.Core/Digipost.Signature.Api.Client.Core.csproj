@@ -53,6 +53,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +68,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Asice\AsiceArchive.cs" />
     <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\AsiceManifest\Manifest.cs" />
     <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
@@ -74,6 +77,10 @@
     <Compile Include="Asice\DataTransferObjects\DocumentDataTransferObject.cs" />
     <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
+    <Compile Include="BaseClient.cs" />
+    <Compile Include="Internal\DigipostAction.cs" />
+    <Compile Include="Internal\IRequestContent.cs" />
+    <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
@@ -88,7 +95,6 @@
     <Compile Include="Exceptions\XmlParseException.cs" />
     <Compile Include="Extensions\XmlElementExtensions.cs" />
     <Compile Include="FileType.cs" />
-    <Compile Include="Internal\ClientHelper.cs" />
     <Compile Include="PadesReference.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="Utilities\DateUtility.cs" />

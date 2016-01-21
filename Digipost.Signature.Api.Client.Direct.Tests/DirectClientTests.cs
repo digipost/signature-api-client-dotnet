@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net.Http;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
@@ -15,18 +17,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
-                var sender = DomainUtility.GetSender();
-                var x509Certificate2 = DomainUtility.GetCertificate();
-                var clientConfiguration = new ClientConfiguration(
-                    signatureServiceRoot, sender, x509Certificate2); 
-                
+                var clientConfiguration = DomainUtility.GetClientConfiguration();
+         
                 //Act
                 var client = new DirectClient(clientConfiguration);
 
-
                 //Assert
                 Assert.AreEqual(clientConfiguration, client.ClientConfiguration);
+                Assert.IsNotNull(client.HttpClient);
+                Assert.IsNotNull(client.HttpClient);
             }
         }
     }

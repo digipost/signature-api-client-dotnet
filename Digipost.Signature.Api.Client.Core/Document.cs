@@ -12,7 +12,10 @@ namespace Digipost.Signature.Api.Client.Core
 
         public string FileName { get; }
 
-        public string Id { get; }
+        public string Id
+        {
+            get { return "Id_0"; }
+        }
 
         public string MimeType { get; }
 

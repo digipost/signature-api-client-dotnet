@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
+using ApiClientShared.Enums;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
@@ -15,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(GetCertificate(), GetDocument(), GetManifest());
+            return new SignatureGenerator(GetTestCertificate(), GetDocument(), GetManifest());
         } 
 
         public static Manifest GetManifest()
@@ -27,14 +28,19 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
+        public static ClientConfiguration GetClientConfiguration()
+        {
+            return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetTestCertificate());
+        }
+
         public static DirectJob GetDirectJob()
         {
-            return new DirectJob("Reference", GetSigner(), GetDocument(), GetExitUrls());
+            return new DirectJob(GetSender(), GetDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
         public static Document GetDocument()
         {
-            return new Document("Testdocument", "A test document from domain Utility", "TestFileName", FileType.Pdf, GetPdfDocumentBytes());
+            return new Document("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
         }
 
         public static Sender GetSender()
@@ -56,8 +62,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
             var signers = new List<Signer>();
 
-            const string basePersonalIdentificationNumber = "01234567890";
-            for (var i = 0; i < count; i++)
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
             {
                 signers.Add(new Signer(basePersonalIdentificationNumber + i));
             }
@@ -70,9 +76,19 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return ResourceUtility.ReadAllBytes(true, "Documents", "Dokument.pdf");
         }
 
-        public static X509Certificate2 GetCertificate()
+        public static X509Certificate2 GetTestCertificate()
         {
             return EternalTestCertificateWithPrivateKey();
+        }
+
+        public static X509Certificate2 GetTestIntegrasjonSertifikat()
+        {
+            return BringTestSertifikat();
+        }
+
+        private static X509Certificate2 BringTestSertifikat()
+        {
+            return CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed", Language.English);
         }
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
@@ -101,6 +117,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             var errorUrl = new Uri("http://localhost/error");
 
             return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
+        }
+
+        public static Uri GetSignatureServiceRootUri()
+        {
+            return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
     }

@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Internal;
+using Digipost.Signature.Api.Client.Direct.Internal;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectClient
+    public class DirectClient : BaseClient
     {
-        private ClientHelper _clientHelper;
-        public ClientConfiguration ClientConfiguration { get; }
+        private static readonly Uri DirectJobSubPath = new Uri("/api/signature-jobs", UriKind.Relative);
 
         public DirectClient(ClientConfiguration clientConfiguration)
+            :base(clientConfiguration)
         {
-            ClientConfiguration = clientConfiguration;
-            _clientHelper = new ClientHelper();
         }
 
-        public DirectJobResponse Create(DirectJob directJob)
+        public async Task<HttpResponseMessage> Create(DirectJob directJob)
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
+            var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
 
-            //Serialize job and send
-
-            throw new NotImplementedException();
+            return await createAction.PostAsync(HttpClient, DirectJobSubPath);
         }
 
         public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)
@@ -42,6 +41,5 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             throw new NotImplementedException();
         }
-
     }
 }

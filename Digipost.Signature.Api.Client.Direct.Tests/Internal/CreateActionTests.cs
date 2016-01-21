@@ -47,25 +47,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
         }
 
         [TestClass]
-        public class ContentMethod : CreateActionTests
-        {
-            [TestMethod]
-            public void SetsMultipartFormDataContent()
-            {
-                //Arrange
-                var createAction = GetCreateAction();
-                createAction.ThreadSafeHttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse());
-
-                //Act
-                createAction.PostAsync(DomainUtility.GetSignatureServiceRootUri());
-
-                //Assert
-                Assert.IsNotNull(createAction.MultipartFormDataContent);
-            }
-
-        }
-
-        [TestClass]
         public class SerializeMethod : CreateActionTests
         {
             [TestMethod]

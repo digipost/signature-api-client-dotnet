@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,7 +54,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Internal\ClientHelper.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="DataTransferObjects\DirectJobDataTranferObject.cs" />

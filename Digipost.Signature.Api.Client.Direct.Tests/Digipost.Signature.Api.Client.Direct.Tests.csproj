@@ -75,7 +75,6 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Integration\DirectClientIntegrationTests.cs" />
-    <Compile Include="Internal\ClientHelperTests.cs" />
     <Compile Include="Internal\CreateActionTests.cs" />
     <Compile Include="Log4NetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

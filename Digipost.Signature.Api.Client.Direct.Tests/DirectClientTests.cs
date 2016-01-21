@@ -18,13 +18,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             {
                 //Arrange
                 var clientConfiguration = DomainUtility.GetClientConfiguration();
-                
+         
                 //Act
                 var client = new DirectClient(clientConfiguration);
 
-
                 //Assert
                 Assert.AreEqual(clientConfiguration, client.ClientConfiguration);
+                Assert.IsNotNull(client.HttpClient);
+                Assert.IsNotNull(client.HttpClient);
             }
 
         }

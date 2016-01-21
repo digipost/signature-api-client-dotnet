@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
@@ -18,11 +19,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 //Arrange
                 var clientConfiguration = DomainUtility.GetClientConfiguration();
                 var directClient = new DirectClient(clientConfiguration);
-                var signatureServiceRootUri = DomainUtility.GetSignatureServiceRootUri();
 
                 directClient.HttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse())
                 {
-                    BaseAddress = signatureServiceRootUri
+                    BaseAddress = new Uri("http://fakesignatureserviceroot.digipost.no")
                 };
 
                 var directJob = DomainUtility.GetDirectJob();

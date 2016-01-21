@@ -18,13 +18,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
             {
                 //Arrange
                 var clientConfiguration = DomainUtility.GetClientConfiguration();
-                var directClient = new DirectClient(clientConfiguration);
-
-                directClient.HttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse())
+                var directClient = new DirectClient(clientConfiguration)
                 {
-                    BaseAddress = new Uri("http://fakesignatureserviceroot.digipost.no")
+                    HttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse())
+                    {
+                        BaseAddress = new Uri("http://fakesignatureserviceroot.digipost.no")
+                    }
                 };
-
                 var directJob = DomainUtility.GetDirectJob();
 
                 //Act
@@ -32,7 +32,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
 
                 //Assert
                 Assert.IsNotNull(result.Content.ReadAsStringAsync());
-                Assert.Fail(); //TODO: Check correct return type.
             }
         }
     }

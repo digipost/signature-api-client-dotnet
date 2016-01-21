@@ -27,7 +27,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.IsNotNull(client.HttpClient);
                 Assert.IsNotNull(client.HttpClient);
             }
-
         }
     }
 }

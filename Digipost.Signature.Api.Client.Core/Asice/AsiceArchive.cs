@@ -3,23 +3,20 @@ using System.IO.Compression;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
-    internal class AsiceArchive//
+    internal class AsiceArchive
     {
         private readonly IAsiceAttachable[] _attachables;
-        private byte[] _bytes;
+        public byte[] Bytes { get; set; }
+
         private ZipArchive _zipArchive;
 
         public AsiceArchive(params IAsiceAttachable[] attachables)
         {
             _attachables = attachables;
+            Bytes = CreateArchiveBytes();
         }
 
-        public byte[] Bytes
-        {
-            get { return _bytes ?? (_bytes = CreateBytes()); }
-        }
-
-        private byte[] CreateBytes()
+        private byte[] CreateArchiveBytes()
         {
             var stream = new MemoryStream();
             _zipArchive = new ZipArchive(stream, ZipArchiveMode.Create);
@@ -33,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 
             return stream.ToArray();
         }
-
+        
         private void AddToArchive(string filename, byte[] data)
         {
             var entry = _zipArchive.CreateEntry(filename, CompressionLevel.Optimal);

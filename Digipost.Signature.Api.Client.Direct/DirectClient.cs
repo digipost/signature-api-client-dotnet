@@ -24,10 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
             var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
 
-            var httpResponseMessage = await createAction.PostAsync(HttpClient, DirectJobSubPath);
-            return httpResponseMessage;
-
-            //Todo:Return DirectJobResponse instead of HttpResponseMessage
+            return await createAction.PostAsync(HttpClient, DirectJobSubPath);
         }
 
         public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)

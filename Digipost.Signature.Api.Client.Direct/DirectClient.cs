@@ -11,21 +11,23 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient
     {
-        private ClientHelper _clientHelper;
+        private static readonly Uri DirectJobSubPath = new Uri("/api/signature-jobs", UriKind.Relative);
+
         public ClientConfiguration ClientConfiguration { get; }
 
         public DirectClient(ClientConfiguration clientConfiguration)
         {
             ClientConfiguration = clientConfiguration;
-            _clientHelper = new ClientHelper(clientConfiguration);
         }
 
         public async Task<HttpResponseMessage> Create(DirectJob directJob)
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
+            var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
 
-            return await _clientHelper.SendDirectJobRequest(directJob, documentBundle);
+            var httpResponseMessage = await createAction.PostAsync(DirectJobSubPath);
+            return httpResponseMessage;
 
             //Todo:Return DirectJobResponse instead of HttpResponseMessage
         }

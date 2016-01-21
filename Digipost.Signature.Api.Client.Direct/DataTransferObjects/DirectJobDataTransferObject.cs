@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     [Serializable]
     [XmlRoot(Namespace = "http://signering.posten.no/schema/v1", IsNullable = false)]
     [XmlType(TypeName = "direct-signature-job-request")]
-    public class DirectJobDataTranferObject
+    public class DirectJobDataTransferObject
     {
         [XmlElement("reference")]
         public string Reference { get; set; }

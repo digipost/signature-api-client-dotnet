@@ -31,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var result = await directClient.Create(directJob);
 
                 //Assert
-                Assert.IsNotNull(result.Content.ReadAsStringAsync());
+                Assert.IsNotNull(result.JobId);
             }
         }
     }

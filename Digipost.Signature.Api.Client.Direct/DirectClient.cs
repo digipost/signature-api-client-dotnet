@@ -18,13 +18,14 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public async Task<HttpResponseMessage> Create(DirectJob directJob)
+        public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
             var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
-
-            return await createAction.PostAsync(HttpClient, DirectJobSubPath);
+            var requestResult = await createAction.PostAsync(HttpClient, DirectJobSubPath);
+            
+            return CreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
         public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)

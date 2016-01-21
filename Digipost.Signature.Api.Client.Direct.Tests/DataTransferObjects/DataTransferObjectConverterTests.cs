@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
@@ -15,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
     public class DataTransferObjectConverterTests
     {
         [TestClass]
-        public class ToDataTranferObjectMethod : DataTransferObjectConverterTests
+        public class ToDataTransferObjectMethod : DataTransferObjectConverterTests
         {
             [TestMethod]
             public void ConvertsDirectJobSuccessfully()
@@ -33,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     reference,
                     exitUrls);
 
-                var expected = new DirectJobDataTranferObject()
+                var expected = new DirectJobDataTransferObject()
                 {
                     Reference = reference,
                     SenderDataTransferObject = new SenderDataTransferObject()
@@ -76,6 +75,41 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 
                 //Act
                 var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+        }
+
+        [TestClass]
+        public class FromDataTransferObjectMethod : DataTransferObjectConverterTests
+        {
+            [TestMethod]
+            public void ConvertsDirectJobSuccessfully()
+            {
+                //Arrange
+                var source = new DirectJobResponseDataTransferObject()
+                {
+                    SignatureJobId = "77",
+                    RedirectUrl = "https://localhost:9000/redirect/#/c316e5b62df86a5d80e517b3ff4532738a9e7e43d4ae6075d427b1b58355bc63",
+                    StatusUrl = "https://localhost:8443/api/signature-jobs/77/status"
+                };
+
+                var jobId = Int64.Parse(source.SignatureJobId);
+
+                var expected = new DirectJobResponse(
+                    jobId, 
+                    new ResponseUrls(
+                        redirectUrl: new Uri(source.RedirectUrl), 
+                        statusUrl: new Uri(source.StatusUrl)
+                        )
+                    );
+
+                //Act
+                var result = DataTransferObjectConverter.FromDataTransferObject(source);
 
                 //Assert
                 var comparator = new Comparator();

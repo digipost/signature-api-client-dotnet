@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -33,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var result = await directClient.Create(directJob);
 
                 //Assert
-                Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+                Assert.IsNotNull(result.JobId);
             }
         }
     }

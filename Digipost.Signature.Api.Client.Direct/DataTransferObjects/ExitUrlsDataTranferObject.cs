@@ -1,6 +1,4 @@
-﻿using System;
-using System.Xml;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {

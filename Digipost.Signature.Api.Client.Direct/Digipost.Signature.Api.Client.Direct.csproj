@@ -54,9 +54,10 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DataTransferObjects\DirectJobResponseDataTransferObject.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="DataTransferObjects\DirectJobDataTranferObject.cs" />
+    <Compile Include="DataTransferObjects\DirectJobDataTransferObject.cs" />
     <Compile Include="DataTransferObjects\ExitUrlsDataTranferObject.cs" />
     <Compile Include="DirectJobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />

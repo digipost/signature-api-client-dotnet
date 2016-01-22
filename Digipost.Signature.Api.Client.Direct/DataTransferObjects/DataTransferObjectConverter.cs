@@ -1,5 +1,5 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
@@ -37,6 +37,23 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                     new Uri(directJobResponseDataTransferObject.StatusUrl)
                   )
                );
+        }
+
+        public static DirectJobStatusResponse FromDataTransferObject(DirectJobStatusResponseDataTransferObject directJobStatusResponseDataTransferObject)
+        {
+            var source = directJobStatusResponseDataTransferObject;
+
+            var jobId = Int64.Parse(source.JobId);
+            var jobStatus = (JobStatus) Enum.Parse(typeof (JobStatus), source.Status, ignoreCase: true);
+            
+            return new DirectJobStatusResponse(
+                jobId,
+                jobStatus,
+                new StatusResponseUrls(
+                confirmation: new Uri(source.ComfirmationUrl),
+                xades: new Uri(source.XadesUrl),
+                pades: new Uri(source.PadesUrl))
+              );
         }
     }
 }

@@ -124,5 +124,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
+        public static StatusResponseUrls GetStatusResponseUrls()
+        {
+            return new StatusResponseUrls(
+                new Uri("http://signatureRoot.digipost.no/confirmation"),
+                new Uri("http://signatureRoot.digipost.no/xades"),
+                new Uri("http://signatureRoot.digipost.no/pades"));
+
+        }
+
     }
 }

@@ -15,8 +15,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var redirectUrl = new Uri("http://responseurl.no");
                 var statusUrl = new Uri("http://statusurl.no");
-
-
+                
                 //Act
                 var responseUrls = new ResponseUrls(
                     redirectUrl,

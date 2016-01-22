@@ -5,12 +5,13 @@ using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataTransferObjectConverter = Digipost.Signature.Api.Client.Direct.DataTransferObjects.DataTransferObjectConverter;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 {
-    [TestClass()]
+    [TestClass]
     public class DataTransferObjectConverterTests
     {
         [TestClass]
@@ -117,6 +118,41 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 comparator.AreEqual(expected, result, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
+
+            [TestMethod]
+            public void ConvertsDirectJobStatusSuccessfully()
+            {
+                //Arrange
+                var source = new DirectJobStatusResponseDataTransferObject()
+                {
+                    JobId = "77",
+                    Status = "SIGNED",
+                    ComfirmationUrl = "http://signatureRoot.digipost.no/confirmation",
+                    XadesUrl = "http://signatureRoot.digipost.no/xades",
+                    PadesUrl = "http://signatureRoot.digipost.no/pades"
+                };
+
+                var jobId = Int64.Parse(source.JobId);
+
+                var expected = new DirectJobStatusResponse(
+                    jobId, 
+                    JobStatus.Signed,
+                    new StatusResponseUrls(
+                        confirmation: new Uri(source.ComfirmationUrl), 
+                        xades: new Uri(source.XadesUrl), 
+                        pades: new Uri(source.PadesUrl))
+                      );
+                        
+                //Act
+                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
         }
+
     }
 }

@@ -55,6 +55,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataTransferObjects\DirectJobResponseDataTransferObject.cs" />
+    <Compile Include="DataTransferObjects\DirectJobStatusResponseDataTransferObject.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="DataTransferObjects\DirectJobDataTransferObject.cs" />
@@ -66,8 +67,10 @@
     <Compile Include="DirectJobResponse.cs" />
     <Compile Include="DirectJobStatus.cs" />
     <Compile Include="ExitUrls.cs" />
+    <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseUrls.cs" />
+    <Compile Include="StatusResponseUrls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

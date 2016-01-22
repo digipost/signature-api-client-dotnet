@@ -34,5 +34,32 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 Assert.IsNotNull(result.JobId);
             }
         }
+
+        [TestClass]
+        public class GetStatusMethod : DirectClientTests
+        {
+            [TestMethod]
+            public async Task SendsSuccessfully()
+            {
+                //Arrange
+                var clientConfiguration = DomainUtility.GetClientConfiguration();
+                var directClient = new DirectClient(clientConfiguration)
+                {
+                    HttpClient = new HttpClient(new FakeHttpClientHandlerGetStatusResponse())
+                    {
+                        BaseAddress = new Uri("http://fakesignatureserviceroot.digipost.no")
+                    }
+                };
+
+                var directJob = DomainUtility.GetDirectJobResponse();
+
+                //Act
+                var result = await directClient.GetStatus(directJob.DirectJobReference);
+
+                //Assert
+                Assert.IsNotNull(result.JobId);
+            }
+        }
+
     }
 }

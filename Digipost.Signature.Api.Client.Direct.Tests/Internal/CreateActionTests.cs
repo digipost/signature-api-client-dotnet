@@ -23,7 +23,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var document = DomainUtility.GetDocument();
                 var enumerable = DomainUtility.GetSigners(1);
                 var businessCertificate = DomainUtility.GetTestCertificate();
-                var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
                 var directJob = DomainUtility.GetDirectJob();
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
@@ -32,15 +31,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 //Act
                 var action = new CreateAction(
                         directJob,
-                        asiceBundle,
-                        businessCertificate,
-                        signatureServiceRoot
+                        asiceBundle
                     );
                 
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
-                Assert.AreEqual(businessCertificate, action.BusinessCertificate);
-                Assert.AreEqual(signatureServiceRoot, action.SignatureServiceRoot);
                 Assert.AreEqual(serializedDirectJob, action.RequestContentXml.InnerXml);
 
                 Assert.AreEqual(null, action.MultipartFormDataContent);
@@ -97,7 +92,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             var document = DomainUtility.GetDocument();
             var enumerable = DomainUtility.GetSigners(1);
             var businessCertificate = DomainUtility.GetTestCertificate();
-            var signatureServiceRoot = DomainUtility.GetSignatureServiceRootUri();
             var directJob = DomainUtility.GetDirectJob();
 
             var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
@@ -105,9 +99,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             //Act
             var action = new CreateAction(
                 directJob,
-                asiceBundle,
-                businessCertificate,
-                signatureServiceRoot
+                asiceBundle
                 );
             return action;
         }

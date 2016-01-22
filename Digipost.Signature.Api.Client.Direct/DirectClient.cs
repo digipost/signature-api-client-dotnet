@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 
 namespace Digipost.Signature.Api.Client.Direct
@@ -22,15 +22,18 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
-            var createAction = new CreateAction(directJob, documentBundle, ClientConfiguration.Certificate, ClientConfiguration.SignatureServiceRoot);
-            var requestResult = await createAction.PostAsync(HttpClient, DirectJobSubPath);
+            var createAction = new CreateAction(directJob, documentBundle);
+            var requestResult = await HttpClient.PostAsync(DirectJobSubPath, createAction.Content());
             
             return CreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
-        public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)
+        public async Task<DirectJobStatusResponse> GetStatus(DirectJobReference directJobReference)
         {
-            throw new NotImplementedException();
+            var response = await HttpClient.GetAsync(directJobReference.Reference);
+            var content = response.Content.ReadAsStringAsync().Result;
+
+            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobStatusResponseDataTransferObject>(content));
         }
 
         public Stream GetXades(XadesReference xadesReference)

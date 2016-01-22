@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     jobId, 
                     jobStatus, 
                     statusResponseUrls
-                    );
+                );
 
                 //Assert
                 Assert.AreEqual(jobId, directJobStatusResponse.JobId);

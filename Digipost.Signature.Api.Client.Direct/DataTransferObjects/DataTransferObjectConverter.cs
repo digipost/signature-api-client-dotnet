@@ -44,37 +44,24 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             var source = directJobStatusResponseDataTransferObject;
 
             var jobId = Int64.Parse(source.JobId);
-            var jobStatus = (JobStatus) Enum.Parse(typeof (JobStatus), source.Status, ignoreCase: true);
+            var jobStatus = (JobStatus)Enum.Parse(typeof(JobStatus), source.Status, ignoreCase: true);
 
-            DirectJobStatusResponse directJobStatusResponse;
-            var signedJob = source.ComfirmationUrl != null;
-
-            if (signedJob)
+            StatusResponseUrls statusResponseUrls;
+            
+            if (jobStatus == JobStatus.Signed)
             {
-                directJobStatusResponse = new DirectJobStatusResponse(
-                    jobId,
-                    jobStatus,
-                    new StatusResponseUrls(
-                        confirmation: new Uri(source.ComfirmationUrl),
-                        xades: new Uri(source.XadesUrl),
-                        pades: new Uri(source.PadesUrl)
-                        )
-                    );
+                statusResponseUrls = new StatusResponseUrls(
+                    confirmation: new Uri(source.ComfirmationUrl),
+                    xades: new Uri(source.XadesUrl),
+                    pades: new Uri(source.PadesUrl)
+                );
             }
             else
             {
-                directJobStatusResponse = new DirectJobStatusResponse(
-                    jobId,
-                    jobStatus,
-                    new StatusResponseUrls(
-                        confirmation: null,
-                        xades: null,
-                        pades: null
-                        )
-                    );
+                statusResponseUrls = new StatusResponseUrls(confirmation: null, xades: null, pades: null);
             }
 
-            return directJobStatusResponse;
+            return new DirectJobStatusResponse(jobId, jobStatus, statusResponseUrls);
         }
     }
 }

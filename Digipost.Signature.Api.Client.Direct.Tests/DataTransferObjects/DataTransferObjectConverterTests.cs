@@ -160,14 +160,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var source = new DirectJobStatusResponseDataTransferObject()
                 {
                     JobId = "77",
-                    Status = "SIGNED"
+                    Status = "CREATED"
                 };
 
                 var jobId = Int64.Parse(source.JobId);
 
                 var expected = new DirectJobStatusResponse(
                     jobId,
-                    JobStatus.Signed,
+                    JobStatus.Created,
                     new StatusResponseUrls(
                         confirmation: null,
                         xades: null,

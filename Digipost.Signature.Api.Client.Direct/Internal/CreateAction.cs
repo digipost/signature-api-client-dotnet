@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
             _documentBundle = documentBundle;
         }
 
-        protected override HttpContent Content()
+        internal override HttpContent Content()
         {
             var boundary = Guid.NewGuid().ToString();
 

@@ -27,17 +27,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         protected string SerializedBody { get; set; }
 
-        protected abstract HttpContent Content();
-
-        internal Task<HttpResponseMessage> PostAsync(HttpClient httpClient, Uri requestUri)
-        {
-            return httpClient.PostAsync(requestUri, Content());
-        }
-
-        internal Task<HttpResponseMessage> GetAsync(HttpClient httpClient)
-        {
-            return httpClient.GetAsync(SignatureServiceRoot);
-        }
+        internal abstract HttpContent Content();
 
         private void InitializeRequestXmlContent(Func<IRequestContent, string> serializeFunc)
         {

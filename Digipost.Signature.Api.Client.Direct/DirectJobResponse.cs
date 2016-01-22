@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Digipost.Signature.Api.Client.Direct
+﻿namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectJobResponse
     {
@@ -12,6 +10,14 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             JobId = jobId;
             ResponseUrls = responseUrls;
+        }
+
+        public DirectJobReference DirectJobReference
+        {
+            get
+            {
+                return new DirectJobReference(ResponseUrls.Status);
+            }
         }
     }
 

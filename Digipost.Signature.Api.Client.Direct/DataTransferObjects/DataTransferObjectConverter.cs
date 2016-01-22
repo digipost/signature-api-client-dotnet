@@ -45,15 +45,36 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
             var jobId = Int64.Parse(source.JobId);
             var jobStatus = (JobStatus) Enum.Parse(typeof (JobStatus), source.Status, ignoreCase: true);
-            
-            return new DirectJobStatusResponse(
-                jobId,
-                jobStatus,
-                new StatusResponseUrls(
-                confirmation: new Uri(source.ComfirmationUrl),
-                xades: new Uri(source.XadesUrl),
-                pades: new Uri(source.PadesUrl))
-              );
+
+            DirectJobStatusResponse directJobStatusResponse;
+            var signedJob = source.ComfirmationUrl != null;
+
+            if (signedJob)
+            {
+                directJobStatusResponse = new DirectJobStatusResponse(
+                    jobId,
+                    jobStatus,
+                    new StatusResponseUrls(
+                        confirmation: new Uri(source.ComfirmationUrl),
+                        xades: new Uri(source.XadesUrl),
+                        pades: new Uri(source.PadesUrl)
+                        )
+                    );
+            }
+            else
+            {
+                directJobStatusResponse = new DirectJobStatusResponse(
+                    jobId,
+                    jobStatus,
+                    new StatusResponseUrls(
+                        confirmation: null,
+                        xades: null,
+                        pades: null
+                        )
+                    );
+            }
+
+            return directJobStatusResponse;
         }
     }
 }

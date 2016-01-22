@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 
 namespace Digipost.Signature.Api.Client.Direct
@@ -27,9 +28,12 @@ namespace Digipost.Signature.Api.Client.Direct
             return CreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
-        public DirectJobStatusResponse GetStatus(DirectJobReference directJobReference)
+        public async Task<DirectJobStatusResponse> GetStatus(DirectJobReference directJobReference)
         {
-            return null;
+            var response = await HttpClient.GetAsync(directJobReference.Reference);
+            var content = response.Content.ReadAsStringAsync().Result;
+
+            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobStatusResponseDataTransferObject>(content));
         }
 
         public Stream GetXades(XadesReference xadesReference)

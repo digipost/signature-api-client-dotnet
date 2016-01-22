@@ -120,7 +120,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsDirectJobStatusSuccessfully()
+            public void ConvertsSignedDirectJobStatusSuccessfully()
             {
                 //Arrange
                 var source = new DirectJobStatusResponseDataTransferObject()
@@ -152,6 +152,38 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 comparator.AreEqual(expected, result, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
+
+            [TestMethod]
+            public void ConvertsUnsignedDirectJobStatusSuccessfully()
+            {
+                //Arrange
+                var source = new DirectJobStatusResponseDataTransferObject()
+                {
+                    JobId = "77",
+                    Status = "SIGNED"
+                };
+
+                var jobId = Int64.Parse(source.JobId);
+
+                var expected = new DirectJobStatusResponse(
+                    jobId,
+                    JobStatus.Signed,
+                    new StatusResponseUrls(
+                        confirmation: null,
+                        xades: null,
+                        pades: null)
+                      );
+
+                //Act
+                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
         }
 
     }

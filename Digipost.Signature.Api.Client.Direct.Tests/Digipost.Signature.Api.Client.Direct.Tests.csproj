@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
+    <Compile Include="DirectJobReferenceTests.cs" />
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobStatusResponseTests.cs" />
     <Compile Include="DirectJobTests.cs" />

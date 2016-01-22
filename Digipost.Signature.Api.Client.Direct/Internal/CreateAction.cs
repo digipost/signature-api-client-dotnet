@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
-        public CreateAction(DirectJob directJob, DocumentBundle documentBundle, X509Certificate2 businessCertificate, Uri signatureServiceRoot) : base(directJob, businessCertificate, signatureServiceRoot, SerializeFunc)
+        public CreateAction(DirectJob directJob, DocumentBundle documentBundle) : base(directJob, SerializeFunc)
         {
             _documentBundle = documentBundle;
         }

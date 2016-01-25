@@ -11,9 +11,8 @@
         <copyright>Copyright 2016</copyright>
         <tags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</tags>
     </metadata>
-    <files>
-        <file src ="Digipost.Signature.Api.Client.Core\bin\Release\*.xml" target="lib\net45" />   
+    <files>       
         <file src ="Digipost.Signature.Api.Client.Direct\bin\Release\*.dll" target="lib\net45" />   
-        <file src ="Digipost.Signature.Api.Client.Direct\bin\Release\*.xml" target="lib\net45" />
+        <file src ="Digipost.Signature.Api.Client.Direct\bin\Release\*.xml" target="lib\net45" />  
     </files>
 </package>

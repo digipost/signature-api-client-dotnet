@@ -1,0 +1,16 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>digipost-signature-api-client</id>
+    <version>0.0.0.0</version>
+    <authors>Digipost AS</authors>
+    <owners>Posten Norge AS</owners>    
+    <projectUrl>https://github.com/digipost/signature-api-client-dotnet/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Klientbibliotek for å administrere elektronisk signering av dokumenter av borgere for en virksomhet. Sentrale funksjoner er opprettelse av signeringsoppdrag, sjekke status på signeringsoppdrag og laste ned dokumenter som er signerte. </description>    
+    <copyright>Copyright 2016</copyright>
+    <tags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</tags>
+  </metadata>
+  <files>    
+  </files>
+</package>

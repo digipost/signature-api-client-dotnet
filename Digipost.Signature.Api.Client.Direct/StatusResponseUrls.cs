@@ -11,11 +11,11 @@ namespace Digipost.Signature.Api.Client.Direct
             Pades = pades;
         }
 
-        public Uri Confirmation { get; }
+        public Uri Confirmation { get; private set; }
 
-        public Uri Xades{ get; }
+        public Uri Xades{ get; private set; }
 
-        public Uri Pades { get; }
+        public Uri Pades { get; private set; }
 
     }
 }

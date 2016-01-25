@@ -5,11 +5,11 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectJob : IRequestContent
     {
-        public Sender Sender { get; set; }
-        public string Reference { get; }
-        public Signer Signer { get; }
-        public Document Document { get; }
-        public ExitUrls ExitUrls { get; }
+        public Sender Sender { get; private set; }
+        public string Reference { get; private set; }
+        public Signer Signer { get; private set; }
+        public Document Document { get; private set; }
+        public ExitUrls ExitUrls { get; private set; }
 
         public DirectJob(Sender sender, Document document, Signer signer, string reference, ExitUrls exitUrls)
         {

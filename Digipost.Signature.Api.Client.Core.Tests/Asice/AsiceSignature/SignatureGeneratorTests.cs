@@ -74,11 +74,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
             {
                 //Arrange
                 var signatureGenerator = DomainUtility.GetSignature();
+                var xml = signatureGenerator.Xml().InnerXml;
                 var signatureValidator = new SignatureValidator();
 
                 //Act
-                var isValidSignatureXml = signatureValidator.ValiderDokumentMotXsd(signatureGenerator.Xml().InnerXml);
-                int signatureLength = signatureGenerator.Xml().InnerXml.Length;
+                var isValidSignatureXml = signatureValidator.ValiderDokumentMotXsd(xml);
+                int signatureLength = xml.Length;
 
                 //Assert
                 Assert.IsTrue(isValidSignatureXml);

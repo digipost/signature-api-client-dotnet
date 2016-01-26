@@ -24,7 +24,8 @@ namespace Digipost.Signature.Api.Client.Core
         private HttpClient MutualTlsClient()
         {
             var mutualTlsHandler = MutualTlsHandler();
-            var loggingHandler = new LoggingHandler(mutualTlsHandler);
+            var userAgentHttpHandler = new UserAgentHttpHandler(mutualTlsHandler);
+            var loggingHandler = new LoggingHandler(userAgentHttpHandler);
 
             return new HttpClient(loggingHandler)
             {

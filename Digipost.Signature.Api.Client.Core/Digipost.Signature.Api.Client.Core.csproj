@@ -87,6 +87,7 @@
     <Compile Include="Internal\DigipostAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
+    <Compile Include="Internal\UserAgentHttpHandler.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />

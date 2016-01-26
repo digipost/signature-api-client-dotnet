@@ -2,16 +2,15 @@
 using System.IO;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
+    [Ignore]
     [TestClass]
     public class DirectClientSmokeTests
     {
-        [Ignore]
         [TestClass]
         public class CreateMethod : DirectClientSmokeTests
         {
@@ -31,7 +30,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
-        [Ignore]
         [TestClass]
         public class GetStatusMethod : DirectClientSmokeTests
         {
@@ -51,8 +49,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(jobStatus.JobId);
             }
         }
-
-        [Ignore]
+        
         [TestClass]
         public class GetXadesMethod : DirectClientSmokeTests
         {
@@ -82,7 +79,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
-        [Ignore]
         [TestClass]
         public class GetPadesMethod : DirectClientSmokeTests
         {

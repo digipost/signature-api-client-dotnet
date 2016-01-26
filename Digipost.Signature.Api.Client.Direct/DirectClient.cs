@@ -36,14 +36,14 @@ namespace Digipost.Signature.Api.Client.Direct
             return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobStatusResponseDataTransferObject>(content));
         }
 
-        public Stream GetXades(XadesReference xadesReference)
+        public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            throw new NotImplementedException();
+            return await HttpClient.GetStreamAsync(xadesReference.XadesUri);
         }
 
-        public Stream GetPades(PadesReference xadesReference)
+        public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            throw new NotImplementedException();
+            return await HttpClient.GetStreamAsync(padesReference.PadesUri);
         }
     }
 }

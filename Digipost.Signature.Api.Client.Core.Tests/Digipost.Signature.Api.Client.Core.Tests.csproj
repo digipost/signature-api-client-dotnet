@@ -84,6 +84,7 @@
     <Compile Include="Asice\DocumentBundleTests.cs" />
     <Compile Include="Asice\SerializeUtilityTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
+    <Compile Include="ConfirmationReferenceTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="SenderTests.cs" />

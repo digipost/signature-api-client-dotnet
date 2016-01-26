@@ -32,21 +32,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.AreEqual(statusResponseUrls, directJobStatusResponse.StatusResponseUrls);
             }
         }
-
-        [TestClass]
-        public class ConfirmationReferenceMethod : DirectJobStatusResponseTests
-        {
-            [TestMethod]
-            public void ReturnsSameUrlAsConfirmationUrlInStatusResponse()
-            {
-                //Arrange
-                var directJobStatusResponse = DomainUtility.GetDirectJobStatusResponse();
-
-                //Act
-
-                //Assert
-                Assert.AreEqual(directJobStatusResponse.StatusResponseUrls.Confirmation, directJobStatusResponse.ConfirmationReference.ConfirmationUrl);
-            } 
-        }
     }
 }

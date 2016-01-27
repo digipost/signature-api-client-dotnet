@@ -29,9 +29,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return CreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
-        public async Task<DirectJobStatusResponse> GetStatus(DirectJobReference directJobReference)
+        public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
         {
-            var response = await HttpClient.GetAsync(directJobReference.Reference);
+            var response = await HttpClient.GetAsync(statusReference.Reference);
             var content = response.Content.ReadAsStringAsync().Result;
 
             return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobStatusResponseDataTransferObject>(content));

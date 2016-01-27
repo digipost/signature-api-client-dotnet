@@ -62,7 +62,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Arrange
                 var directClient =  DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new DirectJobReference(new Uri(statusUrl));
+                var directJobReference = new Direct.StatusReference(new Uri(statusUrl));
                 var jobStatus = await directClient.GetStatus(directJobReference);
 
                 //Act
@@ -88,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Arrange
                 var directClient = DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new DirectJobReference(new Uri(statusUrl));
+                var directJobReference = new Direct.StatusReference(new Uri(statusUrl));
                 var jobStatus = await directClient.GetStatus(directJobReference);
 
                 //Act
@@ -113,7 +113,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 //Arrange
                 var directClient = DirectClient();
-                var directJobReference = new DirectJobReference(new Uri(statusUrl));
+                var directJobReference = new Direct.StatusReference(new Uri(statusUrl));
                 var jobstatus = await directClient.GetStatus(directJobReference);
 
                 //Act

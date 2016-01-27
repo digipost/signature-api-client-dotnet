@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var jobResponse = await directClient.Create(directJob);
                 
                 //Act
-                var jobStatus = await directClient.GetStatus(jobResponse.DirectJobReference);
+                var jobStatus = await directClient.GetStatus(jobResponse.StatusReference);
 
                 //Assert
                 Assert.IsNotNull(jobStatus.JobId);

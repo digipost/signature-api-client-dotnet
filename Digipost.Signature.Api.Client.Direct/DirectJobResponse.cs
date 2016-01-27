@@ -12,11 +12,11 @@
             ResponseUrls = responseUrls;
         }
 
-        public DirectJobReference DirectJobReference
+        public StatusReference StatusReference
         {
             get
             {
-                return new DirectJobReference(ResponseUrls.Status);
+                return new StatusReference(ResponseUrls.Status);
             }
         }
     }

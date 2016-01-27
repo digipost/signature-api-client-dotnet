@@ -103,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             //Arrange
             var jobId = 22;
             var jobStatus = JobStatus.Cancelled;
-            var statusResponseUrls = DomainUtility.GetStatusResponseUrls();
+            var statusResponseUrls = GetJobReferences();
 
             //Act
              return new DirectJobStatusResponse(
@@ -151,7 +151,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
-        public static JobReferences GetStatusResponseUrls()
+        public static JobReferences GetJobReferences()
         {
             return new JobReferences(
                 new Uri("http://signatureRoot.digipost.no/confirmation"),

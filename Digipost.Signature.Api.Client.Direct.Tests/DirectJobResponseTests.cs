@@ -42,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Act
                 
                 //Assert
-                Assert.AreEqual(directJobResponse.ResponseUrls.Status, directJobResponse.DirectJobReference.Reference);
+                Assert.AreEqual(directJobResponse.ResponseUrls.Status, directJobResponse.StatusReference.Reference);
             }
         }
     }

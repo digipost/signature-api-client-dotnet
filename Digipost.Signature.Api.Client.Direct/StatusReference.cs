@@ -2,11 +2,11 @@
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectJobReference
+    public class StatusReference
     {
         public Uri Reference { get; set; }
 
-        public DirectJobReference(Uri reference)
+        public StatusReference(Uri reference)
         {
             Reference = reference;
         }

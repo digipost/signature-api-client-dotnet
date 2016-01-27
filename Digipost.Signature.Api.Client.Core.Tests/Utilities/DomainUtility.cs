@@ -7,6 +7,7 @@ using ApiClientShared.Enums;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
+using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -95,6 +96,21 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), password: "", keyStorageFlags: X509KeyStorageFlags.Exportable);
+        }
+
+        public static DirectJobStatusResponse GetDirectJobStatusResponse()
+        {
+            //Arrange
+            var jobId = 22;
+            var jobStatus = JobStatus.Cancelled;
+            var statusResponseUrls = DomainUtility.GetStatusResponseUrls();
+
+            //Act
+             return new DirectJobStatusResponse(
+                jobId,
+                jobStatus,
+                statusResponseUrls
+            );
         }
 
         public static ResponseUrls GetResponseUrls()

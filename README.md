@@ -11,4 +11,4 @@ Dette klientbiblioteket og APIene er pr. i dag "work in progress", og det vil fo
 
 # Hvordan komme i gang med klientbiblioteket
 
-*Mer informasjon vil komme senere.*
+Dokumentasjon finner du [her](http://digipost.github.io/signature-api-client-dotnet/)

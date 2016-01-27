@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -44,6 +45,11 @@ namespace Digipost.Signature.Api.Client.Direct
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
             return await HttpClient.GetStreamAsync(padesReference.PadesUri);
+        }
+
+        public async Task<HttpResponseMessage> Confirm(DirectJobStatusResponse directJobStatusResponse)
+        {
+            return await HttpClient.PostAsync(directJobStatusResponse.StatusResponseUrls.Confirmation, content: null);
         }
     }
 }

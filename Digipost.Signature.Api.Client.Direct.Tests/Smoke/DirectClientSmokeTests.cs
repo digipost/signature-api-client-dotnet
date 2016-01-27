@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,9 +18,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task SendsCreateSuccessfully()
             {
                 //Arrange
-                var sender = new Sender("983163327");
-                var directClient = DirectClient(sender);
-                var directJob = new DirectJob(sender, DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
+                var directClient = DirectClient();
+                var directJob = new DirectJob(DomainUtility.GetSender(), DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
 
                 //Act
                 var result = await directClient.Create(directJob);
@@ -39,9 +37,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsStatusSuccessfully()
             {
                 //Arrange
-                var sender = new Sender("983163327");
-                var directClient = DirectClient(sender);
-                var directJob = new DirectJob(sender, DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
+                var directClient = DirectClient();
+                var directJob = new DirectJob(DomainUtility.GetSender(), DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
                 var jobResponse = await directClient.Create(directJob);
                 
                 //Act
@@ -60,9 +57,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsXadesSuccessfully()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
                 var directJob = DomainUtility.GetDirectJob();
-                var directClient = DirectClient(sender);
+                var directClient = DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
                 var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
                 var jobStatus = await directClient.GetStatus(directJobReference);
@@ -90,9 +86,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsPadesSuccessfully()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
-                var directJob = DomainUtility.GetDirectJob();
-                var directClient = DirectClient(sender);
+                var directClient = DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
                 var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
                 var jobStatus = await directClient.GetStatus(directJobReference);
@@ -110,9 +104,29 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
-
-        private static DirectClient DirectClient(Sender sender)
+        [TestClass]
+        public class ConfirmMethod : DirectClientSmokeTests
         {
+            [TestMethod]
+            public async Task ConfirmsSuccessfully()
+            {
+                //Arrange
+                var directClient = DirectClient();
+                var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
+                var jobstatus = await directClient.GetStatus(directJobReference);
+
+                //Act
+                await directClient.Confirm(jobstatus);
+
+                //Assert
+            } 
+        }
+
+
+        private static DirectClient DirectClient()
+        {
+            var sender = DomainUtility.GetSender();
+
             var directClient = new DirectClient(
                 new ClientConfiguration(
                     new Uri("https://172.16.91.1:8443"),

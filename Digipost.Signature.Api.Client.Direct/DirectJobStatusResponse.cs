@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Direct.Enums;
+﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
 {

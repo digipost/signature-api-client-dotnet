@@ -47,9 +47,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return await HttpClient.GetStreamAsync(padesReference.PadesUri);
         }
 
-        public async Task<HttpResponseMessage> Confirm(DirectJobStatusResponse directJobStatusResponse)
+        public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
         {
-            return await HttpClient.PostAsync(directJobStatusResponse.StatusResponseUrls.Confirmation, content: null);
+            return await HttpClient.PostAsync(confirmationReference.ConfirmationUri, content: null);
         }
     }
 }

@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class DirectJobReferenceTests
+    public class StatusReference
     {
         [TestClass]
-        public class ConstructorMethod : DirectJobReferenceTests
+        public class ConstructorMethod : StatusReference
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobReference = new Uri("http://signatureserviceroot.digipost.no/urlidurl/id030302");
 
                 //Act
-                var directJobReference = new DirectJobReference(jobReference);
+                var directJobReference = new Direct.StatusReference(jobReference);
 
                 //Assert
                 Assert.AreEqual(jobReference,directJobReference.Reference);

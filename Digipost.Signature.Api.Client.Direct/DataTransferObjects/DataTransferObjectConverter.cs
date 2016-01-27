@@ -46,11 +46,11 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             var jobId = Int64.Parse(source.JobId);
             var jobStatus = (JobStatus)Enum.Parse(typeof(JobStatus), source.Status, ignoreCase: true);
 
-            StatusResponseUrls statusResponseUrls;
+            JobReferences jobReferences;
             
             if (jobStatus == JobStatus.Signed)
             {
-                statusResponseUrls = new StatusResponseUrls(
+                jobReferences = new JobReferences(
                     confirmation: new Uri(source.ComfirmationUrl),
                     xades: new Uri(source.XadesUrl),
                     pades: new Uri(source.PadesUrl)
@@ -58,10 +58,10 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             }
             else
             {
-                statusResponseUrls = new StatusResponseUrls(confirmation: null, xades: null, pades: null);
+                jobReferences = new JobReferences(confirmation: null, xades: null, pades: null);
             }
 
-            return new DirectJobStatusResponse(jobId, jobStatus, statusResponseUrls);
+            return new DirectJobStatusResponse(jobId, jobStatus, jobReferences);
         }
     }
 }

@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class StatusResponseUrlsTests
+    public class JobReferencesTests
     {
         [TestClass]
-        public class ConstructorMethod : StatusResponseUrlsTests
+        public class ConstructorMethod : JobReferencesTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -18,12 +18,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var pades = new Uri("http://signatureRoot.digipost.no/pades");
 
                 //Act
-                var statusResponseUrls = new StatusResponseUrls( confirmation, xades, pades);
+                var jobReferences = new JobReferences(confirmation, xades, pades);
                 
                 //Assert
-                Assert.AreEqual(confirmation,statusResponseUrls.Confirmation);
-                Assert.AreEqual(xades,statusResponseUrls.Xades);
-                Assert.AreEqual(pades,statusResponseUrls.Pades);
+                Assert.AreEqual(confirmation,jobReferences.Confirmation.ConfirmationUri);
+                Assert.AreEqual(xades,jobReferences.Xades.XadesUri);
+                Assert.AreEqual(pades,jobReferences.Pades.PadesUri);
             }
         }
 

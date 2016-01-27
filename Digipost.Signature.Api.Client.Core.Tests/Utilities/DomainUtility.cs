@@ -103,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             //Arrange
             var jobId = 22;
             var jobStatus = JobStatus.Cancelled;
-            var statusResponseUrls = DomainUtility.GetStatusResponseUrls();
+            var statusResponseUrls = GetJobReferences();
 
             //Act
              return new DirectJobStatusResponse(
@@ -136,8 +136,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
         }
 
-        public static Uri GetSignatureServiceRootUri()
-        {
+        public static Uri GetSignatureResponseObjects(){
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
@@ -152,9 +151,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
-        public static StatusResponseUrls GetStatusResponseUrls()
+        public static JobReferences GetJobReferences()
         {
-            return new StatusResponseUrls(
+            return new JobReferences(
                 new Uri("http://signatureRoot.digipost.no/confirmation"),
                 new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));

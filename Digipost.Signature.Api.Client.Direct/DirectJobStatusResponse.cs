@@ -1,5 +1,4 @@
-﻿using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Direct.Enums;
+﻿using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -9,13 +8,13 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public JobStatus JobStatus { get; private set; }
 
-        public StatusResponseUrls StatusResponseUrls { get; private set; }
+        public JobReferences JobReferences { get; private set; }
 
-        public DirectJobStatusResponse(long jobId, JobStatus jobStatus, StatusResponseUrls statusResponseUrls)
+        public DirectJobStatusResponse(long jobId, JobStatus jobStatus, JobReferences jobReferences)
         {
             JobId = jobId;
             JobStatus = jobStatus;
-            StatusResponseUrls = statusResponseUrls;
+            JobReferences = jobReferences;
         }
     }
 }

@@ -137,7 +137,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var expected = new DirectJobStatusResponse(
                     jobId, 
                     JobStatus.Signed,
-                    new StatusResponseUrls(
+                    new JobReferences(
                         confirmation: new Uri(source.ComfirmationUrl), 
                         xades: new Uri(source.XadesUrl), 
                         pades: new Uri(source.PadesUrl))
@@ -168,7 +168,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var expected = new DirectJobStatusResponse(
                     jobId,
                     JobStatus.Created,
-                    new StatusResponseUrls(
+                    new JobReferences(
                         confirmation: null,
                         xades: null,
                         pades: null)

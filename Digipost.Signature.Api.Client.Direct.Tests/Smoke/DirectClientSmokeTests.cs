@@ -10,10 +10,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests
     {
+        private string statusUrl = "https://172.16.91.1:8443/api/signature-jobs/141/status";
+
         [Ignore]
         [TestClass]
         public class CreateMethod : DirectClientSmokeTests
         {
+            
             [TestMethod]
             public async Task SendsCreateSuccessfully()
             {
@@ -57,20 +60,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsXadesSuccessfully()
             {
                 //Arrange
-                var directJob = DomainUtility.GetDirectJob();
-                var directClient = DirectClient();
+                var directClient =  DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
+                var directJobReference = new DirectJobReference(new Uri(statusUrl));
                 var jobStatus = await directClient.GetStatus(directJobReference);
 
                 //Act
-                var xadesReference = new XadesReference(jobStatus.StatusResponseUrls.Xades);
-                using (Stream xadesStream = await directClient.GetXades(xadesReference))
+                using (var xadesStream = await directClient.GetXades(jobStatus.JobReferences.Xades))
                 {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        xadesStream.CopyTo(ms);
-                        File.WriteAllBytes(@"C:\Users\aas\Downloads\xades.xml", ms.ToArray());
+                    using (var memoryStream = new MemoryStream()){
+                        xadesStream.CopyTo(memoryStream);
+                        File.WriteAllBytes(@"C:\Users\aas\Downloads\xades.xml", memoryStream.ToArray());
                     }
                 };
 
@@ -88,19 +88,20 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Arrange
                 var directClient = DirectClient();
                 //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
+                var directJobReference = new DirectJobReference(new Uri(statusUrl));
                 var jobStatus = await directClient.GetStatus(directJobReference);
 
                 //Act
-                var padesReference = new PadesReference(jobStatus.StatusResponseUrls.Pades);
-                using (Stream xadesStream = await directClient.GetPades(padesReference))
+                using (var padesStream = await directClient.GetPades(jobStatus.JobReferences.Pades))
                 {
-                    using (MemoryStream ms = new MemoryStream())
+                    using (var memoryStream = new MemoryStream())
                     {
-                        xadesStream.CopyTo(ms);
-                        File.WriteAllBytes(@"C:\Users\aas\Downloads\pades2.pdf", ms.ToArray());
+                        padesStream.CopyTo(memoryStream);
+                        File.WriteAllBytes(@"C:\Users\aas\Downloads\padex.pdf", memoryStream.ToArray());
                     }
                 };
+
+                //Assert
             }
         }
 
@@ -112,16 +113,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 //Arrange
                 var directClient = DirectClient();
-                var directJobReference = new DirectJobReference(new Uri("https://172.16.91.1:8443/api/signature-jobs/121/status"));
+                var directJobReference = new DirectJobReference(new Uri(statusUrl));
                 var jobstatus = await directClient.GetStatus(directJobReference);
 
                 //Act
-                await directClient.Confirm(jobstatus);
+                await directClient.Confirm(jobstatus.JobReferences.Confirmation);
 
                 //Assert
             } 
         }
-
 
         private static DirectClient DirectClient()
         {

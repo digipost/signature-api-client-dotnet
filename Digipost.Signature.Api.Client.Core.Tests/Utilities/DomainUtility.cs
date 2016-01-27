@@ -136,8 +136,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
         }
 
-        public static Uri GetSignatureServiceRootUri()
-        {
+        public static Uri GetSignatureResponseObjects(){
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
@@ -152,9 +151,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
-        public static StatusResponseUrls GetStatusResponseUrls()
+        public static JobReferences GetStatusResponseUrls()
         {
-            return new StatusResponseUrls(
+            return new JobReferences(
                 new Uri("http://signatureRoot.digipost.no/confirmation"),
                 new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));

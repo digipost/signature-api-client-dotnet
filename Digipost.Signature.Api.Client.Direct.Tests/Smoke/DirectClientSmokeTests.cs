@@ -105,6 +105,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
+        [Ignore]
         [TestClass]
         public class ConfirmMethod : DirectClientSmokeTests
         {

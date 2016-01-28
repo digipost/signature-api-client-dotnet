@@ -10,13 +10,12 @@ isHome: false
 {% highlight csharp %}
 
 var organizationNumber = "012345678910";
-var certificate = new X509Certificate2(); //Certificate loaded from store
+var certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
     signatureServiceRoot: new Uri("http://serviceroot.digipost.no"), 
     sender: new Sender(organizationNumber),
-    certificate: certificate);
-
+    certificateThumbprint: certificateThumbprint);
 
 {% endhighlight %}
 
@@ -61,9 +60,10 @@ var directClient = new DirectClient(clientConfiguration);
 DirectJobResponse directJobResponse = null; //As initialized when creating signature job
 
 var directJobStatusResponse = 
-    await directClient.GetStatus(directJobResponse.DirectJobReference);
+    await directClient.GetStatus(directJobResponse.StatusReference);
 
 var jobStatus = directJobStatusResponse.JobStatus;
+
 
 {% endhighlight %}
 
@@ -71,9 +71,9 @@ var jobStatus = directJobStatusResponse.JobStatus;
 
 {% highlight csharp %}
 
-ClientConfiguration clientConfiguration = null; 
+ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
-DirectJobStatusResponse directJobStatusResponse = null;
+DirectJobStatusResponse directJobStatusResponse = null; // Result of requesting job status
 
 switch (directJobStatusResponse.JobStatus)
 {
@@ -84,13 +84,21 @@ switch (directJobStatusResponse.JobStatus)
         //Signature job was cancelled, Xades and Pades cannot be requested.
         break;
     case JobStatus.Signed:
-        var xadesByteStream = directClient.GetXades(
-            new XadesReference(directJobStatusResponse.StatusResponseUrls.Xades)
-            );
-        var padesByteStream = directClient.GetPades(
-            new PadesReference(directJobStatusResponse.StatusResponseUrls.Pades)
-            );
+        var xadesByteStream = await directClient.GetXades(directJobStatusResponse.JobReferences.Xades);
+        var padesByteStream = await directClient.GetPades(directJobStatusResponse.JobReferences.Pades);
         break;
 }
+
+{% endhighlight %}
+
+<h3 id="uc05">Confirm received signature job</h3>
+
+{% highlight csharp %}
+
+ClientConfiguration clientConfiguration = null; //As initialized earlier
+var directClient = new DirectClient(clientConfiguration);
+DirectJobStatusResponse directJobStatusResponse = null; // Result of requesting job status
+
+var confirm = await directClient.Confirm(directJobStatusResponse.JobReferences.Confirmation);
 
 {% endhighlight %}

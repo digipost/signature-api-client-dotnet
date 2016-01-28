@@ -11,5 +11,6 @@ Dette klientbiblioteket og APIene er pr. i dag "work in progress", og det vil fo
 
 # Hvordan komme i gang med klientbiblioteket
 
-[Dokumentasjon finner du her](http://digipost.github.io/signature-api-client-dotnet/)
-[Nugetpakken finner du her](https://www.nuget.org/packages/digipost-signature-api-client/)
+[Dokumentasjon finner du her](http://digipost.github.io/signature-api-client-dotnet/).
+
+[Nugetpakken finner du her](https://www.nuget.org/packages/digipost-signature-api-client/).

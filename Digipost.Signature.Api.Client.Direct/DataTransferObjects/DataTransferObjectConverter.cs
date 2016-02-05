@@ -1,4 +1,5 @@
 ﻿using System;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
@@ -6,12 +7,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     public static class DataTransferObjectConverter
 
     {
-        public static DirectJobDataTransferObject ToDataTransferObject(DirectJob directJob)
+        public static DirectJobDataTransferObject ToDataTransferObject(DirectJob directJob, Sender sender)
         {
             return new DirectJobDataTransferObject()
             {
                 Reference = directJob.Reference,
-                SenderDataTransferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Sender),
+                SenderDataTransferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(sender),
                 SignerDataTranferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Signer),
                 ExitUrlsDataTranferObject = ToDataTransferObject(directJob.ExitUrls)
             };

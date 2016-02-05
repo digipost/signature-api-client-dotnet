@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class StatusReference
+    public class StatusReferenceTests
     {
         [TestClass]
-        public class ConstructorMethod : StatusReference
+        public class ConstructorMethod : StatusReferenceTests
         {
             [TestMethod]
             public void SimpleConstructor()

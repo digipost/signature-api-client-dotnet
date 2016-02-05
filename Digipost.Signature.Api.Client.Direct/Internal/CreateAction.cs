@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
@@ -10,14 +10,14 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 {
     internal class CreateAction : DigipostAction
     {
-        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((DirectJob) content));
+        public static readonly Func<IRequestContent, Sender, string> SerializeFunc = (content,sender) => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((DirectJob) content, sender));
         public static readonly Func<string, DirectJobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobResponseDataTransferObject>(content));
 
         private readonly DocumentBundle _documentBundle;
 
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
-        public CreateAction(DirectJob directJob, DocumentBundle documentBundle) : base(directJob, SerializeFunc)
+        public CreateAction(Sender sender, DirectJob directJob, DocumentBundle documentBundle) : base(directJob, sender, SerializeFunc)
         {
             _documentBundle = documentBundle;
         }

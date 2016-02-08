@@ -1,352 +1,131 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Xml.Serialization;
-
-/*
-Auto generated DTO classes code
-*/
-
-#pragma warning disable
-namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
+﻿namespace Digipost.Signature.Api.Client.Core
 {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1")]
-    [XmlRoot(Namespace = "http://signering.posten.no/schema/v1", IsNullable = false)]
-    internal class error
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1", TypeName = "error")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://signering.posten.no/schema/v1", IsNullable = false, ElementName = "error")]
+    public class DTOError
     {
 
-        private string _errorcode;
-
-        private string _errormessage;
-
-        private string _errortype;
-
-        [XmlElement("error-code")]
-        public string errorcode
-        {
-            get
-            {
-                return this._errorcode;
-            }
-            set
-            {
-                this._errorcode = value;
-            }
-        }
-
-        [XmlElement("error-message")]
-        public string errormessage
-        {
-            get
-            {
-                return this._errormessage;
-            }
-            set
-            {
-                this._errormessage = value;
-            }
-        }
-
-        [XmlElement("error-type")]
-        public string errortype
-        {
-            get
-            {
-                return this._errortype;
-            }
-            set
-            {
-                this._errortype = value;
-            }
-        }
+        [System.Xml.Serialization.XmlElementAttribute("error-code", ElementName = "errorcode")]
+        public string Errorcode { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("error-message", ElementName = "errormessage")]
+        public string Errormessage { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("error-type", ElementName = "errortype")]
+        public string Errortype { get; set; }
     }
+}
+namespace Digipost.Signature.Api.Client.Core
+{
+    using System.Collections.Generic;
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1")]
-    [XmlRoot("portal-signature-job-request", Namespace = "http://signering.posten.no/schema/v1", IsNullable = false)]
-    internal class portalsignaturejobrequest
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1", TypeName = "portalsignaturejobrequest")]
+    [System.Xml.Serialization.XmlRootAttribute("portal-signature-job-request", Namespace = "http://signering.posten.no/schema/v1", IsNullable = false, ElementName = "portalsignaturejobrequest")]
+    public class DTOPortalsignaturejobrequest
     {
 
-        private string _reference;
+        [System.Xml.Serialization.XmlElementAttribute("reference")]
+        public string Reference { get; set; }
+        [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable = false, ElementName = "signers")]
+        public List<DTOSigner> Signers { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("sender")]
+        public DTOSender Sender { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("distribution-time", ElementName = "distributiontime")]
+        public System.DateTime Distributiontime { get; set; }
 
-        private List<signer> _signers;
-
-        private sender _sender;
-
-        private document _primarydocument;
-
-        public portalsignaturejobrequest()
+        public DTOPortalsignaturejobrequest()
         {
-            this._primarydocument = new document();
-            this._sender = new sender();
-            this._signers = new List<signer>();
-        }
-
-        public string reference
-        {
-            get
-            {
-                return this._reference;
-            }
-            set
-            {
-                this._reference = value;
-            }
-        }
-
-        [XmlArrayItem(IsNullable = false)]
-        public List<signer> signers
-        {
-            get
-            {
-                return this._signers;
-            }
-            set
-            {
-                this._signers = value;
-            }
-        }
-
-        public sender sender
-        {
-            get
-            {
-                return this._sender;
-            }
-            set
-            {
-                this._sender = value;
-            }
-        }
-
-        [XmlElement("primary-document")]
-        public document primarydocument
-        {
-            get
-            {
-                return this._primarydocument;
-            }
-            set
-            {
-                this._primarydocument = value;
-            }
+            this.Sender = new DTOSender();
+            this.Signers = new List<DTOSigner>();
         }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(Namespace = "http://signering.posten.no/schema/v1")]
-    internal class signer
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://signering.posten.no/schema/v1", TypeName = "signer")]
+    [System.Xml.Serialization.XmlRootAttribute("signer")]
+    public class DTOSigner
     {
 
-        private string _personalidentificationnumber;
-
-        [XmlElement("personal-identification-number")]
-        public string personalidentificationnumber
-        {
-            get
-            {
-                return this._personalidentificationnumber;
-            }
-            set
-            {
-                this._personalidentificationnumber = value;
-            }
-        }
+        [System.Xml.Serialization.XmlElementAttribute("personal-identification-number", ElementName = "personalidentificationnumber")]
+        public string Personalidentificationnumber { get; set; }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(Namespace = "http://signering.posten.no/schema/v1")]
-    internal class sender
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://signering.posten.no/schema/v1", TypeName = "sender")]
+    [System.Xml.Serialization.XmlRootAttribute("sender")]
+    public class DTOSender
     {
 
-        private string _organization;
-
-        private string _senderidentifier;
-
-        public string organization
-        {
-            get
-            {
-                return this._organization;
-            }
-            set
-            {
-                this._organization = value;
-            }
-        }
-
-        [XmlElement("sender-identifier")]
-        public string senderidentifier
-        {
-            get
-            {
-                return this._senderidentifier;
-            }
-            set
-            {
-                this._senderidentifier = value;
-            }
-        }
+        [System.Xml.Serialization.XmlElementAttribute("organization")]
+        public string Organization { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("sender-identifier", ElementName = "senderidentifier")]
+        public string Senderidentifier { get; set; }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(Namespace = "http://signering.posten.no/schema/v1")]
-    internal class document
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1", TypeName = "portalsignaturejobresponse")]
+    [System.Xml.Serialization.XmlRootAttribute("portal-signature-job-response", Namespace = "http://signering.posten.no/schema/v1", IsNullable = false, ElementName = "portalsignaturejobresponse")]
+    public class DTOPortalsignaturejobresponse
     {
 
-        private string _title;
-
-        private string _description;
-
-        private string _href;
-
-        private string _mime;
-
-        public string title
-        {
-            get
-            {
-                return this._title;
-            }
-            set
-            {
-                this._title = value;
-            }
-        }
-
-        public string description
-        {
-            get
-            {
-                return this._description;
-            }
-            set
-            {
-                this._description = value;
-            }
-        }
-
-        [XmlAttribute()]
-        public string href
-        {
-            get
-            {
-                return this._href;
-            }
-            set
-            {
-                this._href = value;
-            }
-        }
-
-        [XmlAttribute()]
-        public string mime
-        {
-            get
-            {
-                return this._mime;
-            }
-            set
-            {
-                this._mime = value;
-            }
-        }
+        [System.Xml.Serialization.XmlElementAttribute("signature-job-id", ElementName = "signaturejobid")]
+        public long Signaturejobid { get; set; }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1")]
-    [XmlRoot("portal-signature-job-status-change-response", Namespace = "http://signering.posten.no/schema/v1", IsNullable = false)]
-    internal class portalsignaturejobstatuschangeresponse
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://signering.posten.no/schema/v1", TypeName = "portalsignaturejobstatuschangeresponse")]
+    [System.Xml.Serialization.XmlRootAttribute("portal-signature-job-status-change-response", Namespace = "http://signering.posten.no/schema/v1", IsNullable = false, ElementName = "portalsignaturejobstatuschangeresponse")]
+    public class DTOPortalsignaturejobstatuschangeresponse
     {
 
-        private long _signaturejobid;
+        [System.Xml.Serialization.XmlElementAttribute("signature-job-id", ElementName = "signaturejobid")]
+        public long Signaturejobid { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("status")]
+        public Portalsignaturejobstatus Status { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("confirmation-url", ElementName = "confirmationurl")]
+        public string Confirmationurl { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("signatures")]
+        public DTOSignatures Signatures { get; set; }
 
-        private portalsignaturejobstatus _status;
-
-        private string _confirmationurl;
-
-        private signatures _signatures;
-
-        public portalsignaturejobstatuschangeresponse()
+        public DTOPortalsignaturejobstatuschangeresponse()
         {
-            this._signatures = new signatures();
-        }
-
-        [XmlElement("signature-job-id")]
-        public long signaturejobid
-        {
-            get
-            {
-                return this._signaturejobid;
-            }
-            set
-            {
-                this._signaturejobid = value;
-            }
-        }
-
-        public portalsignaturejobstatus status
-        {
-            get
-            {
-                return this._status;
-            }
-            set
-            {
-                this._status = value;
-            }
-        }
-
-        [XmlElement("confirmation-url")]
-        public string confirmationurl
-        {
-            get
-            {
-                return this._confirmationurl;
-            }
-            set
-            {
-                this._confirmationurl = value;
-            }
-        }
-
-        public signatures signatures
-        {
-            get
-            {
-                return this._signatures;
-            }
-            set
-            {
-                this._signatures = value;
-            }
+            this.Signatures = new DTOSignatures();
         }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [XmlType(TypeName = "portal-signature-job-status", Namespace = "http://signering.posten.no/schema/v1")]
-    public enum portalsignaturejobstatus
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "portalsignaturejobstatus", Namespace = "http://signering.posten.no/schema/v1")]
+    [System.Xml.Serialization.XmlRootAttribute("portalsignaturejobstatus")]
+    public enum Portalsignaturejobstatus
     {
 
         /// <remarks/>
@@ -355,115 +134,66 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         /// <remarks/>
         COMPLETED,
     }
+}
+namespace Digipost.Signature.Api.Client.Core
+{
+    using System.Collections.Generic;
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(Namespace = "http://signering.posten.no/schema/v1")]
-    internal class signatures
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://signering.posten.no/schema/v1", TypeName = "signatures")]
+    [System.Xml.Serialization.XmlRootAttribute("signatures")]
+    public class DTOSignatures
     {
 
-        private List<signature> _signature;
+        [System.Xml.Serialization.XmlElementAttribute("signature", ElementName = "signature")]
+        public List<DTOSignature> DTOSignature { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("pades-url", ElementName = "padesurl")]
+        public string Padesurl { get; set; }
 
-        private string _padesurl;
-
-        public signatures()
+        public DTOSignatures()
         {
-            this._signature = new List<signature>();
-        }
-
-        [XmlElement("signature")]
-        public List<signature> signature
-        {
-            get
-            {
-                return this._signature;
-            }
-            set
-            {
-                this._signature = value;
-            }
-        }
-
-        [XmlElement("pades-url")]
-        public string padesurl
-        {
-            get
-            {
-                return this._padesurl;
-            }
-            set
-            {
-                this._padesurl = value;
-            }
+            this.DTOSignature = new List<DTOSignature>();
         }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [DebuggerStepThrough()]
-    [DesignerCategory("code")]
-    [XmlType(Namespace = "http://signering.posten.no/schema/v1")]
-    internal class signature
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace = "http://signering.posten.no/schema/v1", TypeName = "signature")]
+    [System.Xml.Serialization.XmlRootAttribute("signature")]
+    public class DTOSignature
     {
 
-        private signaturestatus _status;
-
-        private string _personalidentificationnumber;
-
-        private string _xadesurl;
-
-        public signaturestatus status
-        {
-            get
-            {
-                return this._status;
-            }
-            set
-            {
-                this._status = value;
-            }
-        }
-
-        [XmlElement("personal-identification-number")]
-        public string personalidentificationnumber
-        {
-            get
-            {
-                return this._personalidentificationnumber;
-            }
-            set
-            {
-                this._personalidentificationnumber = value;
-            }
-        }
-
-        [XmlElement("xades-url")]
-        public string xadesurl
-        {
-            get
-            {
-                return this._xadesurl;
-            }
-            set
-            {
-                this._xadesurl = value;
-            }
-        }
+        [System.Xml.Serialization.XmlElementAttribute("status")]
+        public Signaturestatus Status { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("personal-identification-number", ElementName = "personalidentificationnumber")]
+        public string Personalidentificationnumber { get; set; }
+        [System.Xml.Serialization.XmlElementAttribute("xades-url", ElementName = "xadesurl")]
+        public string Xadesurl { get; set; }
     }
-
+}
+namespace Digipost.Signature.Api.Client.Core
+{
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1038.0")]
-    [Serializable()]
-    [XmlType(TypeName = "signature-status", Namespace = "http://signering.posten.no/schema/v1")]
-    public enum signaturestatus
+    [System.SerializableAttribute()]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "signaturestatus", Namespace = "http://signering.posten.no/schema/v1")]
+    [System.Xml.Serialization.XmlRootAttribute("signaturestatus")]
+    public enum Signaturestatus
     {
 
         /// <remarks/>
         WAITING,
 
         /// <remarks/>
+        REJECTED,
+
+        /// <remarks/>
         SIGNED,
     }
 }
-#pragma warning restore

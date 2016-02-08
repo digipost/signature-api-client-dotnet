@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         public XmlDocument RequestContentXml { get; internal set; }
 
-        protected DigipostAction(IRequestContent requestContent, Sender sender, Func<IRequestContent, Sender, string> serializeFunc)
+        protected DigipostAction(Sender sender, IRequestContent requestContent, Func<IRequestContent, Sender, string> serializeFunc)
         {
             RequestContent = requestContent;
             Sender = sender;

@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
 
                 //Act
-                var action = new CreateAction(sender,
+                var action = new DirectCreateAction(sender,
                         directJob, asiceBundle);
                 
                 //Assert
@@ -53,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var expected = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob, sender));
 
                 //Act
-                var result = CreateAction.SerializeFunc(directJob,sender);
+                var result = DirectCreateAction.SerializeFunc(directJob,sender);
 
                 //Assert
                 Assert.AreEqual(expected, result);
@@ -76,7 +76,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                         "</direct-signature-job-response>";
 
                 //Act
-                var result = CreateAction.DeserializeFunc(serialized);
+                var result = DirectCreateAction.DeserializeFunc(serialized);
 
 
                 //Assert
@@ -86,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             }
         }
 
-        internal CreateAction GetCreateAction()
+        internal DirectCreateAction GetCreateAction()
         {
             var sender = DomainUtility.GetSender();
             var document = DomainUtility.GetDocument();
@@ -96,7 +96,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
             var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
 
-            return new CreateAction(sender, directJob, asiceBundle);
+            return new DirectCreateAction(sender, directJob, asiceBundle);
         }
 
     }

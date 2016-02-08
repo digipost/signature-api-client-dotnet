@@ -59,7 +59,7 @@
     </Compile>
     <Compile Include="DataTransferObjects\DirectJobResponseDataTransferObject.cs" />
     <Compile Include="DataTransferObjects\DirectJobStatusResponseDataTransferObject.cs" />
-    <Compile Include="Internal\CreateAction.cs" />
+    <Compile Include="Internal\DirectCreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="DataTransferObjects\DirectJobDataTransferObject.cs" />
     <Compile Include="DataTransferObjects\ExitUrlsDataTranferObject.cs" />

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,8 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal
             var portalCreateAction = new PortalCreateAction(ClientConfiguration.Sender, portalJob, documentBundle);
             var requestResult = await HttpClient.PostAsync(PortalJobSubPath, portalCreateAction.Content());
 
-            var strang = await requestResult.Content.ReadAsStringAsync();
-            return PortalCreateAction.DeserializeFunc(strang);
+            return PortalCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
         public PortalJobStatusChanged GetStatusChange()

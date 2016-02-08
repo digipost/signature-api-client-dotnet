@@ -14,10 +14,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public class CreateMethod : PortalClientSmokeTests
         {
             [TestMethod]
-            public async Task SendsCreateSuccessfully()
+            public async Task SendsCreateSuccessfullyToDifiTest()
             {
                 //Arrange
-                var portalClient = DirectClientLocalhost();
+                var portalClient = DirectClientDifiTest();
                 var portalJob = DomainUtility.GetPortalJob();
                 var result = await portalClient.Create(portalJob);
 
@@ -26,6 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 //Act
 
                 //Assert
+                Assert.IsNotNull(result.JobId);
             } 
         }
 

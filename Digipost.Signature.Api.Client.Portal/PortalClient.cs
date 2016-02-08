@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-        private static readonly Uri PortalJobSubPath = new Uri("/api/signature-jobs", UriKind.Relative);
+        private static readonly Uri PortalJobSubPath = new Uri("/api/portal/signature-jobs", UriKind.Relative);
         
         public PortalClient(ClientConfiguration clientConfiguration) 
             : base(clientConfiguration)
@@ -24,7 +24,8 @@ namespace Digipost.Signature.Api.Client.Portal
             var portalCreateAction = new PortalCreateAction(ClientConfiguration.Sender, portalJob, documentBundle);
             var requestResult = await HttpClient.PostAsync(PortalJobSubPath, portalCreateAction.Content());
 
-            return PortalCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
+            var strang = await requestResult.Content.ReadAsStringAsync();
+            return PortalCreateAction.DeserializeFunc(strang);
         }
 
         public PortalJobStatusChanged GetStatusChange()

@@ -8,7 +8,7 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal
 {
-    internal class DirectCreateAction : AbstractCreateAction
+    internal class DirectCreateAction : CreateAction
     {
         public static readonly Func<IRequestContent, Sender, string> SerializeFunc = (content,sender) => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((DirectJob) content, sender));
         public static readonly Func<string, DirectJobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobResponseDataTransferObject>(content));

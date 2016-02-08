@@ -14,12 +14,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public class CreateMethod : PortalClientSmokeTests
         {
             [TestMethod]
-            public async Task SendsCreateSuccessfullyForDifiTest()
+            public async Task SendsCreateSuccessfully()
             {
                 //Arrange
-                var portalClient = DirectClientDifiTest();
+                var portalClient = DirectClientLocalhost();
                 var portalJob = DomainUtility.GetPortalJob();
                 var result = await portalClient.Create(portalJob);
+
+
 
                 //Act
 
@@ -34,5 +36,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             var client = new PortalClient(clientConfig);
             return client;
         }
+
+        private static PortalClient DirectClientLocalhost()
+        {
+            var sender = new Sender("983163327");
+            var clientConfig = new ClientConfiguration(new Uri("https://172.16.91.1:8443"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
+            var client = new PortalClient(clientConfig);
+            return client;
+        }
+
     }
 }

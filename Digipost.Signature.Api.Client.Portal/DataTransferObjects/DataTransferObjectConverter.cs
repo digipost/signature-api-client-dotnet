@@ -6,34 +6,34 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
     internal class DataTransferObjectConverter
     {
-        public static DTOPortalsignaturejobrequest ToDataTransferObject(PortalJob portalJob, Sender sender)
+        public static portalsignaturejobrequest ToDataTransferObject(PortalJob portalJob, Sender sender)
         {
-            var portalsignaturejobrequest = new DTOPortalsignaturejobrequest
+            var portalsignaturejobrequest = new portalsignaturejobrequest
             {
-                Sender = new DTOSender { Organization = sender.OrganizationNumber},
-                Reference = portalJob.Reference,
-                Signers = ToDataTransferObject(portalJob.Signers).ToList()
+                sender = new sender { organization = sender.OrganizationNumber},
+                reference = portalJob.Reference,
+                signers = ToDataTransferObject(portalJob.Signers).ToArray()
             };
 
             return portalsignaturejobrequest;
         }
 
-        private static IEnumerable<DTOSigner> ToDataTransferObject(IEnumerable<Signer> signers)
+        private static IEnumerable<signer> ToDataTransferObject(IEnumerable<Signer> signers)
         {
             return signers.Select(signer => ToDataTransferObject(signer)).ToList();
         }
 
-        private static DTOSigner ToDataTransferObject(Signer signer)
+        private static signer ToDataTransferObject(Signer signer)
         {
-            return new DTOSigner
+            return new signer
             {
-                Personalidentificationnumber = signer.PersonalIdentificationNumber
+                personalidentificationnumber = signer.PersonalIdentificationNumber
             };
         }
 
-        public static PortalJobResponse FromDataTransferObject(DTOPortalsignaturejobresponse dtoPortalsignaturejobresponse)
+        public static PortalJobResponse FromDataTransferObject(portalsignaturejobresponse dtoPortalsignaturejobresponse)
         {
-            return new PortalJobResponse(dtoPortalsignaturejobresponse.Signaturejobid);
+            return new PortalJobResponse(dtoPortalsignaturejobresponse.signaturejobid);
         }
     }
 }

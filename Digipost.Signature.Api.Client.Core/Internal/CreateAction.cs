@@ -5,13 +5,13 @@ using Digipost.Signature.Api.Client.Core.Asice;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
-    internal abstract class AbstractCreateAction : DigipostAction
+    internal abstract class CreateAction : DigipostAction
     {
         private readonly DocumentBundle _documentBundle;
 
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
-        public AbstractCreateAction(Sender sender, IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, Sender, string> serializeFunc) : base(sender, job, serializeFunc)
+        protected CreateAction(Sender sender, IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, Sender, string> serializeFunc) : base(sender, job, serializeFunc)
         {
             _documentBundle = documentBundle;
         }

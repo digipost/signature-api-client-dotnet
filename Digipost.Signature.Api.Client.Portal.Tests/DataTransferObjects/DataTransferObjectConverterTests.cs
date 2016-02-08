@@ -24,18 +24,18 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var reference = "reference";
                 var source = new PortalJob(document, signers, reference);
 
-                var expected = new DTOPortalsignaturejobrequest
+                var expected = new portalsignaturejobrequest
                 {
-                    Reference = reference,
-                    Sender = new DTOSender
+                    reference = reference,
+                    sender = new sender
                     {
-                        Organization = sender.OrganizationNumber
+                        organization = sender.OrganizationNumber
                     },
-                    Signers = new List<DTOSigner>
+                    signers = new List<signer>
                     {
-                        new DTOSigner { Personalidentificationnumber = signers.ElementAt(0).PersonalIdentificationNumber },
-                        new DTOSigner { Personalidentificationnumber = signers.ElementAt(1).PersonalIdentificationNumber }
-                    }
+                        new signer { personalidentificationnumber = signers.ElementAt(0).PersonalIdentificationNumber },
+                        new signer { personalidentificationnumber = signers.ElementAt(1).PersonalIdentificationNumber }
+                    }.ToArray()
                 };
                 
                 //Act

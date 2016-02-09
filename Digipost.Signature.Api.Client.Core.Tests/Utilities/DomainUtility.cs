@@ -8,6 +8,8 @@ using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Portal;
+using JobStatus = Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -36,7 +38,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static DirectJob GetDirectJob()
         {
-            return new DirectJob(GetSender(), GetDocument(), GetSigner(), "Reference", GetExitUrls());
+            return new DirectJob(GetDocument(), GetSigner(), "Reference", GetExitUrls());
+        }
+
+        public static PortalJob GetPortalJob()
+        {
+            return new PortalJob(GetDocument(), GetSigners(3), "PortalJobReference");
         }
 
         public static Document GetDocument()

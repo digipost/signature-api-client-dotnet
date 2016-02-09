@@ -27,7 +27,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var exitUrls = DomainUtility.GetExitUrls();
 
                 var source = new DirectJob(
-                    sender,
                     document,
                     signer,
                     reference,
@@ -53,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 };
 
                 //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+                var result = DataTransferObjectConverter.ToDataTransferObject(source, sender);
 
                 //Assert
                 var comparator = new Comparator();

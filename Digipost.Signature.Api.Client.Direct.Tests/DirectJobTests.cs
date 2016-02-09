@@ -15,7 +15,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var sender = new Sender("012345678910");
                 var id = "IdDirectJob";
                 var signer = new Signer("01013300001");
                 var document = DomainUtility.GetDocument();
@@ -26,10 +25,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     );
 
                 //Act
-                DirectJob directJob = new DirectJob(sender, document, signer, id, exitUrls);
+                var directJob = new DirectJob(document, signer, id, exitUrls);
                 
                 //Assert
-                Assert.AreEqual(sender, directJob.Sender);
                 Assert.AreEqual(id, directJob.Reference);
                 Assert.AreEqual(signer, directJob.Signer);
                 Assert.AreEqual(document, directJob.Document);

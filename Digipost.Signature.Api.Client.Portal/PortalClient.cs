@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using DataTransferObjectConverter = Digipost.Signature.Api.Client.Portal.DataTransferObjects.DataTransferObjectConverter;
 

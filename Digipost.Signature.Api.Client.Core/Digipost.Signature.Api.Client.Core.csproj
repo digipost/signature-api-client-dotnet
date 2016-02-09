@@ -87,7 +87,7 @@
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />
     <Compile Include="Internal\CreateAction.cs" />
-    <Compile Include="Internal\DigipostAction.cs" />
+    <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHttpHandler.cs" />

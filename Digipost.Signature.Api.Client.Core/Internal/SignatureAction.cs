@@ -4,18 +4,19 @@ using System.Xml;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
-    internal abstract class DigipostAction
+    internal abstract class SignatureAction
     {
         public IRequestContent RequestContent { get; }
         public Sender Sender { get; set; }
 
         public XmlDocument RequestContentXml { get; internal set; }
 
-        protected DigipostAction(Sender sender, IRequestContent requestContent, Func<IRequestContent, Sender, string> serializeFunc)
+        protected SignatureAction(Sender sender, IRequestContent requestContent, Func<IRequestContent, Sender, string> serializeFunc)
         {
             RequestContent = requestContent;
             Sender = sender;
             InitializeRequestXmlContent(serializeFunc);
+            
         }
 
         protected string SerializedBody { get; set; }

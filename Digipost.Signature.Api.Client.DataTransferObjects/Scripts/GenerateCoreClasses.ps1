@@ -10,12 +10,13 @@ $XsdDir = "$RootDir\Xsd"
 $DirectXsd = "$XsdDir\direct.xsd"
 $PortalXsd = "$XsdDir\portal.xsd"
 
+Run-Xsd($PortalXsd)
 Run-Xsd($DirectXsd)
 
 function Run-Xsd($Xsd)
 {
     Set-Location "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools"    
-    Invoke-Expression ".\Xsd.exe"
+    Invoke-Expression ".\Xsd.exe $Xsd /classes /out:'$RootDir'"
 }
 
 function Get-ScriptDirectory

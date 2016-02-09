@@ -9,6 +9,7 @@ using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Portal;
+using JobStatus = Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {

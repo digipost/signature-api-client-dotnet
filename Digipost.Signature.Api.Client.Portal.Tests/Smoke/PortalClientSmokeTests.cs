@@ -17,20 +17,32 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task SendsCreateSuccessfullyToDifiTest()
             {
                 //Arrange
-                var portalClient = DirectClientDifiTest();
+                var portalClient = PortalClientDifiTest();
                 var portalJob = DomainUtility.GetPortalJob();
                 var result = await portalClient.Create(portalJob);
-
-
-
+                
                 //Act
 
                 //Assert
                 Assert.IsNotNull(result.JobId);
-            } 
+            }
+
+            [TestMethod]
+            public async Task SendsGetStatusChangeSuccessfullyToDifiTest()
+            {
+                //Arrange
+                var portalClient = PortalClientDifiTest();
+                var result = await portalClient.GetStatusChange();
+
+                //Act
+
+                //Assert
+                //Assert.IsNotNull(result.JobId);
+            }
+
         }
 
-        private static PortalClient DirectClientDifiTest()
+        private static PortalClient PortalClientDifiTest()
         {
             var sender = new Sender("983163327");
             var clientConfig = new ClientConfiguration(new Uri("https://api.difitest.signering.posten.no"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
@@ -38,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return client;
         }
 
-        private static PortalClient DirectClientLocalhost()
+        private static PortalClient PortalClientLocalhost()
         {
             var sender = new Sender("983163327");
             var clientConfig = new ClientConfiguration(new Uri("https://172.16.91.1:8443"), sender, DomainUtility.GetTestIntegrasjonSertifikat());

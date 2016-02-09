@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Internal;
+using DataTransferObjectConverter = Digipost.Signature.Api.Client.Portal.DataTransferObjects.DataTransferObjectConverter;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -26,9 +28,12 @@ namespace Digipost.Signature.Api.Client.Portal
             return PortalCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
-        public PortalJobStatusChanged GetStatusChange()
+        public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
-            throw new NotImplementedException();
+            var requestResult = await HttpClient.GetAsync(PortalJobSubPath);
+            var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(await requestResult.Content.ReadAsStringAsync());
+
+            return DataTransferObjectConverter.FromDataTransferObject(deserialized);
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

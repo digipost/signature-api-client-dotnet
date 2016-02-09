@@ -5,7 +5,7 @@ using Digipost.Signature.Api.Client.Core.Asice;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
-    internal abstract class CreateAction : DigipostAction
+    internal abstract class CreateAction : SignatureAction
     {
         private readonly DocumentBundle _documentBundle;
 

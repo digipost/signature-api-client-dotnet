@@ -16,7 +16,53 @@ using System.Xml.Serialization;
 
 
 /// <remarks/>
-
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://signering.posten.no/schema/v1")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace="http://signering.posten.no/schema/v1", IsNullable=false)]
+public partial class error {
+    
+    private string errorcodeField;
+    
+    private string errormessageField;
+    
+    private string errortypeField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("error-code")]
+    public string errorcode {
+        get {
+            return this.errorcodeField;
+        }
+        set {
+            this.errorcodeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("error-message")]
+    public string errormessage {
+        get {
+            return this.errormessageField;
+        }
+        set {
+            this.errormessageField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("error-type")]
+    public string errortype {
+        get {
+            return this.errortypeField;
+        }
+        set {
+            this.errortypeField = value;
+        }
+    }
+}
 
 /// <remarks/>
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]

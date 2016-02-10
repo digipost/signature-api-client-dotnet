@@ -21,14 +21,15 @@ function Get-ScriptDirectory
 }
 
 $ScriptsDir = Get-ScriptDirectory
-$RootDir =  (Get-Item $ScriptsDir).Parent.FullName
+$RootDirDtoProj =  (Get-Item $ScriptsDir).Parent.FullName
 $XsdDir = "$RootDir\Xsd"
+
+$SolutionDir = (Get-Item $RootDirDtoProj).Parent.FullName
 
 $DirectXsd = "$XsdDir\direct.xsd"
 $PortalXsd = "$XsdDir\portal.xsd"
 
-Run-Xsd $PortalXsd "$RootDir\Portal"
-Run-Xsd $DirectXsd "$RootDir\Direct"
-
+Run-Xsd $PortalXsd "$SolutionDir\Digipost.Signature.Api.Client.Portal\DataTransferObjects\"
+Run-Xsd $DirectXsd "$SolutionDir\Digipost.Signature.Api.Client.Direct\DataTransferObjects\"
 
 Read-Host "Enter to quit"

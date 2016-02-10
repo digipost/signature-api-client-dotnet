@@ -55,9 +55,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="DataTransferObjects\portal-signature-job.cs">
-      <DependentUpon>portal-signature-job.xsd</DependentUpon>
-    </Compile>
+    <Compile Include="DataTransferObjects\portal.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\PortalCreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
@@ -70,9 +68,6 @@
     <Compile Include="Enums\SignatureStatus.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataTransferObjects\portal-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="digipost.pfx" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -22,8 +22,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 
                 //Assert
                 Assert.AreEqual(confirmation,jobReferences.Confirmation.ConfirmationUri);
-                Assert.AreEqual(xades,jobReferences.Xades.XadesUri);
-                Assert.AreEqual(pades,jobReferences.Pades.PadesUri);
+                Assert.AreEqual(xades,jobReferences.Xades.Url);
+                Assert.AreEqual(pades,jobReferences.Pades.Url);
             }
         }
 

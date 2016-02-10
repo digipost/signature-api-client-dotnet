@@ -65,6 +65,7 @@
     <Compile Include="DirectClient.cs" />
     <Compile Include="DirectJob.cs" />
     <Compile Include="Internal\AsicE\DirectManifest.cs" />
+    <Compile Include="RedirectReference.cs" />
     <Compile Include="StatusReference.cs" />
     <Compile Include="DirectJobResponse.cs" />
     <Compile Include="DirectJobStatus.cs" />

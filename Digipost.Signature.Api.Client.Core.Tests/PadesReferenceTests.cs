@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
 
                 //Assert
-                Assert.AreEqual(uri,padesReference.PadesUri);
+                Assert.AreEqual(uri,padesReference.Url);
             }
         }
 

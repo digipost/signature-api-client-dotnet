@@ -63,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static Sender GetSender()
         {
-            var organizationNumberQaOrganization = "983163327";
+            var organizationNumberQaOrganization = "988015814";
             return new Sender(organizationNumberQaOrganization);
         }
 

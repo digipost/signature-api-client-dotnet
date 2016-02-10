@@ -4,13 +4,13 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
-        public Uri Redirect { get; set; }
-        public Uri Status { get; set; }
+        public RedirectReference Redirect { get; set; }
+        public StatusReference Status { get; set; }
 
         public ResponseUrls(Uri redirectUrl, Uri statusUrl)
         {
-            Redirect = redirectUrl;
-            Status = statusUrl;
+            Redirect = new RedirectReference(redirectUrl);
+            Status = new StatusReference(statusUrl);
         }
     }
 }

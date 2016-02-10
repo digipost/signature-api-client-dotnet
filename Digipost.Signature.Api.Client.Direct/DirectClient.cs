@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,25 +14,26 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
     {
-        private static readonly Uri DirectJobSubPath = new Uri("/api/signature-jobs", UriKind.Relative);
+        private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)
             :base(clientConfiguration)
         {
+            _subPath = new Uri(string.Format("/api/{0}/direct/signature-jobs", clientConfiguration.Sender.OrganizationNumber), UriKind.Relative);
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
-            var requestResult = await HttpClient.PostAsync(DirectJobSubPath, createAction.Content());
+            var requestResult = await HttpClient.PostAsync(_subPath, createAction.Content());
             
             return DirectCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
         public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
         {
-            var response = await HttpClient.GetAsync(statusReference.Reference);
+            var response = await HttpClient.GetAsync(statusReference.Url);
             var content = response.Content.ReadAsStringAsync().Result;
 
             return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(content));
@@ -39,12 +41,12 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await HttpClient.GetStreamAsync(xadesReference.XadesUri);
+            return await HttpClient.GetStreamAsync(xadesReference.Url);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await HttpClient.GetStreamAsync(padesReference.PadesUri);
+            return await HttpClient.GetStreamAsync(padesReference.Url);
         }
 
         public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)

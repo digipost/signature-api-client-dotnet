@@ -14,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public class CreateMethod : PortalClientSmokeTests
         {
             [TestMethod]
-            public async Task SendsCreateSuccessfullyToDifiTest()
+            public async Task SendsCreateSuccessfully()
             {
                 //Arrange
                 var portalClient = PortalClientDifiTest();
@@ -28,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             [TestMethod]
-            public async Task SendsGetStatusChangeSuccessfullyToDifiTest()
+            public async Task SendsGetStatusChangeSuccessfully()
             {
                 //Arrange
                 var portalClient = PortalClientDifiTest();

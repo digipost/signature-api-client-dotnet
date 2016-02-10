@@ -14,7 +14,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             RequestContent = requestContent;
             InitializeRequestXmlContent(serializeFunc);
-            
         }
 
         protected string SerializedBody { get; set; }

@@ -71,6 +71,7 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
     <Compile Include="Internal\AsicE\DirectManifestTests.cs" />
+    <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobStatusResponseTests.cs" />

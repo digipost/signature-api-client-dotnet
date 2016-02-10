@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -10,217 +9,183 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests
     {
-        private string localStatusUrl = "https://172.16.91.1:8443/api/signature-jobs/141/status";
-        private string difiTestStatusUrl = "https://api.difitest.signering.posten.no/api/signature-jobs/59/status";
+        private static Client ClientType = Client.Localhost;
 
-        [TestClass]
-        public class CreateMethod : DirectClientSmokeTests
+        private static readonly Uri localhost = new Uri("https://172.16.91.1:8443");
+        private static readonly string localhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
+
+        private static readonly Uri difitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
+        private static readonly string difitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
+
+
+        private enum Client
         {
-            [Ignore]
-            [TestMethod]
-            public async Task SendsCreateSuccessfully()
-            {
-                //Arrange
-                var directClient = DirectClient();
-                var directJob = new DirectJob(DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
-
-                //Act
-                var result = await directClient.Create(directJob);
-
-                //Assert
-                Assert.IsNotNull(result.JobId);
-            }
-
-            [TestMethod]
-            public async Task CreatesSuccessfullyForDifiTest()
-            {
-                //Arrange
-                var client = DirectClientDifiTest();
-
-                var result = await client.Create(DomainUtility.GetDirectJob());
-
-                //Act
-
-                //Assert
-                Assert.IsNotNull(result.JobId);
-            }
+            Localhost,
+            DifiTest
         }
-
         
         [TestClass]
-        public class GetStatusMethod : DirectClientSmokeTests
+        public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests
         {
-            [Ignore]
+            [TestMethod]
+            public async Task CreatesSuccessfully()
+            {
+                //Arrange
+
+                //Act
+                var result = await GetClient().Create(DomainUtility.GetDirectJob());
+
+                //Assert
+                Assert.IsNotNull(result.JobId);
+            }
+
             [TestMethod]
             public async Task GetsStatusSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClient();
-                var directJob = new DirectJob(DomainUtility.GetDocument(), DomainUtility.GetSigner(), "SmokeTestReference", DomainUtility.GetExitUrls());
-                var jobResponse = await directClient.Create(directJob);
-                
+                var directClient = DirectClientDifiTest();
+
                 //Act
-                var jobStatus = await directClient.GetStatus(jobResponse.StatusReference);
+                var jobStatus = await directClient.GetStatus(GetStatusReference());
 
                 //Assert
                 Assert.IsNotNull(jobStatus.JobId);
             }
 
-            [TestMethod]
-            public async Task GetsStatusSuccessfullyForDifiTest()
-            {
-                //Arrange
-                var directClient = DirectClientDifiTest();       
-
-                //Act
-                var jobStatus = await directClient.GetStatus(new StatusReference(new Uri(difiTestStatusUrl)));
-
-                //Assert
-                Assert.IsNotNull(jobStatus.JobId);
-            }
-
-        }
-
-        [TestClass]
-        public class GetXadesMethod : DirectClientSmokeTests
-        {
-            [Ignore]
             [TestMethod]
             public async Task GetsXadesSuccessfully()
             {
                 //Arrange
-                var directClient =  DirectClient();
-                //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new Direct.StatusReference(new Uri(localStatusUrl));
-                var jobStatus = await directClient.GetStatus(directJobReference);
-
-                //Act
-                using (var xadesStream = await directClient.GetXades(jobStatus.JobReferences.Xades))
-                {
-                    using (var memoryStream = new MemoryStream()){
-                        xadesStream.CopyTo(memoryStream);
-                        File.WriteAllBytes(@"C:\Users\aas\Downloads\xades.xml", memoryStream.ToArray());
-                    }
-                };
-
-                //Assert
-            }
-
-            [TestMethod]
-            public async Task GetsXadesSuccessfullyForDifiTest()
-            {
-                //Arrange
                 var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(new StatusReference(new Uri(difiTestStatusUrl)));
+                var jobStatus = await directClient.GetStatus(GetStatusReference());
 
                 //Act
-                var xades = await directClient.GetXades(jobStatus.JobReferences.Xades);
+                var xades = await directClient.GetXades(GetXadesReference(jobStatus));
 
                 //Assert
                 Assert.IsNotNull(jobStatus.JobId);
             }
 
-        }
 
-        [TestClass]
-        public class GetPadesMethod : DirectClientSmokeTests
-        {
-            [Ignore]
             [TestMethod]
             public async Task GetsPadesSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClient();
-                //var jobResponse = await directClient.Create(directJob);
-                var directJobReference = new Direct.StatusReference(new Uri(localStatusUrl));
-                var jobStatus = await directClient.GetStatus(directJobReference);
-
-                //Act
-                using (var padesStream = await directClient.GetPades(jobStatus.JobReferences.Pades))
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        padesStream.CopyTo(memoryStream);
-                        File.WriteAllBytes(@"C:\Users\aas\Downloads\padex.pdf", memoryStream.ToArray());
-                    }
-                };
-
-                //Assert
-            }
-
-            [TestMethod]
-            public async Task GetsPadesSuccessfullyForDifiTest()
-            {
-                //Arrange
                 var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(new StatusReference(new Uri(difiTestStatusUrl)));
+                var jobStatus = await directClient.GetStatus(GetStatusReference());
 
                 //Act
-                var xades = await directClient.GetXades(jobStatus.JobReferences.Xades);
+                var pades = await directClient.GetPades(GetPadesReference(jobStatus));
 
                 //Assert
             }
 
-        }
-
-        [TestClass]
-        public class ConfirmMethod : DirectClientSmokeTests
-        {
-            [Ignore]
             [TestMethod]
             public async Task ConfirmsSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClient();
-                var directJobReference = new Direct.StatusReference(new Uri(localStatusUrl));
-                var jobstatus = await directClient.GetStatus(directJobReference);
-
-                //Act
-                await directClient.Confirm(jobstatus.JobReferences.Confirmation);
-
-                //Assert
-            }
-
-            [TestMethod]
-            public async Task ConfirmsSuccessfullyDifiTest()
-            {
-                //Arrange
                 var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(new StatusReference(new Uri(difiTestStatusUrl)));
+                var jobStatus = await directClient.GetStatus(GetStatusReference());
 
                 //Act
-                var result = await directClient.Confirm(jobStatus.JobReferences.Confirmation);
+                var result = await directClient.Confirm(jobStatus.References.Confirmation);
 
                 //Assert
-                
+            }
+        }
+
+        public static DirectClient GetClient()
+        {
+            DirectClient directClient = null;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    directClient = LocalhostClient();
+                    break;
+                case Client.DifiTest:
+                    directClient = DirectClientDifiTest();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
+            return directClient;
+        }
+
+        private static StatusReference GetStatusReference()
+        {
+            Uri url = null;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    url = new Uri(localhost, localhostRelativeStatusUrl);
+                    break;
+                case Client.DifiTest:
+                    url = new Uri(difitestSigneringPostenNo, localhostRelativeStatusUrl);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return new StatusReference(url);
         }
 
         private static DirectClient DirectClientDifiTest()
         {
             var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(new Uri("https://api.difitest.signering.posten.no"), sender,
-                DomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(difitestSigneringPostenNo, sender, DomainUtility.GetTestIntegrasjonSertifikat());
             var client = new DirectClient(clientConfig);
             return client;
         }
 
 
-        private static DirectClient DirectClient()
+        private static DirectClient LocalhostClient()
         {
             var sender = DomainUtility.GetSender();
 
-            var directClient = new DirectClient(
-                new ClientConfiguration(
-                    new Uri("https://172.16.91.1:8443"),
-                    sender,
-                    DomainUtility.GetTestIntegrasjonSertifikat()
-                    )
-                );
+            var directClient = new DirectClient(new ClientConfiguration(localhost, sender, DomainUtility.GetTestIntegrasjonSertifikat()));
             return directClient;
         }
 
+        private static XadesReference GetXadesReference(DirectJobStatusResponse jobStatus)
+        {
+            XadesReference xadesReference = null;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    xadesReference = new XadesReference(new Uri(localhost, jobStatus.References.Xades.Url.AbsolutePath)); //Server returns localhost, exchanges this with actual localhost address
+                    break;
+                case Client.DifiTest:
+                    xadesReference = jobStatus.References.Xades;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return xadesReference;
+        }
+
+        private static PadesReference GetPadesReference(DirectJobStatusResponse jobStatus)
+        {
+            PadesReference padesReference = null;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    padesReference = new PadesReference(new Uri(localhost, jobStatus.References.Pades.Url.AbsolutePath)); //Server returns localhost, exchanges this with actual localhost address
+                    break;
+                case Client.DifiTest:
+                    padesReference = jobStatus.References.Pades;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return padesReference;
+        }
 
     }
 }

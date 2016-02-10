@@ -28,8 +28,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 Assert.AreEqual(jobId, directJobStatusResponse.JobId);
-                Assert.AreEqual(jobStatus, directJobStatusResponse.JobStatus);
-                Assert.AreEqual(jobReferences, directJobStatusResponse.JobReferences);
+                Assert.AreEqual(jobStatus, directJobStatusResponse.Status);
+                Assert.AreEqual(jobReferences, directJobStatusResponse.References);
             }
         }
     }

@@ -6,15 +6,15 @@ namespace Digipost.Signature.Api.Client.Direct
     {
         public long JobId { get; private set; }
 
-        public JobStatus JobStatus { get; private set; }
+        public JobStatus Status { get; private set; }
 
-        public JobReferences JobReferences { get; private set; }
+        public JobReferences References { get; private set; }
 
-        public DirectJobStatusResponse(long jobId, JobStatus jobStatus, JobReferences jobReferences)
+        public DirectJobStatusResponse(long jobId, JobStatus status, JobReferences references)
         {
             JobId = jobId;
-            JobStatus = jobStatus;
-            JobReferences = jobReferences;
+            Status = status;
+            References = references;
         }
     }
 }

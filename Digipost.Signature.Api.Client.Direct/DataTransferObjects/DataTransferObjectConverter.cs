@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
@@ -7,54 +9,50 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     public static class DataTransferObjectConverter
 
     {
-        public static DirectJobDataTransferObject ToDataTransferObject(DirectJob directJob, Sender sender)
+        public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob, Sender sender)
         {
-            return new DirectJobDataTransferObject()
+            return new directsignaturejobrequest()
             {
-                Reference = directJob.Reference,
-                SenderDataTransferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(sender),
-                SignerDataTranferObject = Core.Asice.DataTransferObjects.DataTransferObjectConverter.ToDataTransferObject(directJob.Signer),
-                ExitUrlsDataTranferObject = ToDataTransferObject(directJob.ExitUrls)
+                reference = directJob.Reference,
+                sender = ToDataTransferObject(sender),
+                signer = ToDataTransferObject(directJob.Signer),
+                exiturls = ToDataTransferObject(directJob.ExitUrls)
             };
         }
 
-        public static ExitUrlsDataTranferObject ToDataTransferObject(ExitUrls exitUrls)
+        public static exiturls ToDataTransferObject(ExitUrls exitUrls)
         {
-            return new ExitUrlsDataTranferObject()
+            return new exiturls
             {
-                CancellationUrl = exitUrls.CancellationUrl.AbsoluteUri,
-                CompletionUrl = exitUrls.CompletionUrl.AbsoluteUri,
-                ErrorUrl = exitUrls.ErrorUrl.AbsoluteUri
+                cancellationurl = exitUrls.CancellationUrl.AbsoluteUri,
+                completionurl = exitUrls.CompletionUrl.AbsoluteUri,
+                errorurl = exitUrls.ErrorUrl.AbsoluteUri
             };
         }
 
-        public static DirectJobResponse FromDataTransferObject(
-            DirectJobResponseDataTransferObject directJobResponseDataTransferObject)
+        public static DirectJobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
         {
             return new DirectJobResponse(
-                Int64.Parse(directJobResponseDataTransferObject.SignatureJobId),
+                directsignaturejobresponse.signaturejobid,
                 new ResponseUrls(
-                    new Uri(directJobResponseDataTransferObject.RedirectUrl),
-                    new Uri(directJobResponseDataTransferObject.StatusUrl)
+                    new Uri(directsignaturejobresponse.redirecturl),
+                    new Uri(directsignaturejobresponse.statusurl)
                   )
                );
         }
 
-        public static DirectJobStatusResponse FromDataTransferObject(DirectJobStatusResponseDataTransferObject directJobStatusResponseDataTransferObject)
+        public static DirectJobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
         {
-            var source = directJobStatusResponseDataTransferObject;
-
-            var jobId = Int64.Parse(source.JobId);
-            var jobStatus = (JobStatus)Enum.Parse(typeof(JobStatus), source.Status, ignoreCase: true);
+            var jobStatus = (JobStatus)Enum.Parse(typeof(JobStatus), directsignaturejobstatusresponse.status.ToString(), ignoreCase: true);
 
             JobReferences jobReferences;
             
             if (jobStatus == JobStatus.Signed)
             {
                 jobReferences = new JobReferences(
-                    confirmation: new Uri(source.ComfirmationUrl),
-                    xades: new Uri(source.XadesUrl),
-                    pades: new Uri(source.PadesUrl)
+                    confirmation: new Uri(directsignaturejobstatusresponse.confirmationurl),
+                    xades: new Uri(directsignaturejobstatusresponse.xadesurl),
+                    pades: new Uri(directsignaturejobstatusresponse.padesurl)
                 );
             }
             else
@@ -62,7 +60,50 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 jobReferences = new JobReferences(confirmation: null, xades: null, pades: null);
             }
 
-            return new DirectJobStatusResponse(jobId, jobStatus, jobReferences);
+            return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
+
+        public static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)
+        {
+            return new directsignaturejobmanifest();
+            {
+                SenderDataTransferObject = ToDataTransferObject(manifest.Sender),
+                DocumentDataTransferObject = ToDataTransferObject(manifest.Document),
+                SignersDataTransferObjects = ToDataTransferObject(manifest.Signers).ToList()
+            };
+        }
+
+        public static SenderDataTransferObject ToDataTransferObject(Sender sender)
+        {
+            return new SenderDataTransferObject()
+            {
+                Organization = sender.OrganizationNumber
+            };
+        }
+
+        public static DocumentDataTransferObject ToDataTransferObject(Document document)
+        {
+            return new DocumentDataTransferObject()
+            {
+                Title = document.Subject,
+                Description = document.Message,
+                Href = document.FileName,
+                Mime = document.MimeType
+            };
+        }
+
+        public static IEnumerable<SignerDataTranferObject> ToDataTransferObject(IEnumerable<Signer> signers)
+        {
+            return signers.Select(signer => ToDataTransferObject(signer)).ToList();
+        }
+
+        public static SignerDataTranferObject ToDataTransferObject(Signer signer)
+        {
+            return new SignerDataTranferObject()
+            {
+                PersonalIdentificationNumber = signer.PersonalIdentificationNumber
+            };
+        }
+
     }
 }

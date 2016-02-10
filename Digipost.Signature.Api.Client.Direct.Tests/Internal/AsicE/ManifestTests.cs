@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
-using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
                 Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signers, manifest.Signers);
+                Assert.AreEqual(signers, manifest.Signer);
             }
         }
 

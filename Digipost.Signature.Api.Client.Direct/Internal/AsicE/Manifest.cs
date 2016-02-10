@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Digipost.Signature.Api.Client.Core.Asice.DataTransferObjects;
+﻿using System.Text;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
 {
@@ -9,13 +7,13 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
     {
         public Sender Sender { get; }
         public Document Document { get; }
-        public IEnumerable<Signer> Signers { get; }
+        public Signer Signer { get; }
 
-        public Manifest(Sender sender, Document document, IEnumerable<Signer> signers)
+        public Manifest(Sender sender, Document document, Signer signer)
         {
             Sender = sender;
             Document = document;
-            Signers = signers;
+            Signer = signer;
         }
 
         public byte[] Bytes

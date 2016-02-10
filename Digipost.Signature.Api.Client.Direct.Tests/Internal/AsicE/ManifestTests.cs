@@ -1,7 +1,8 @@
 ﻿using System.Text;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
@@ -17,15 +18,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
                 //Arrange
                 var sender = DomainUtility.GetSender();
                 var document = DomainUtility.GetDocument();
-                var signers = DomainUtility.GetSigners(3);
+                var signer = DomainUtility.GetSigner();
 
                 //Act
-                var manifest = new Manifest(sender, document, signers);
+                var manifest = new DirectManifest(sender, document, signer);
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
                 Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signers, manifest.Signer);
+                Assert.AreEqual(signer, manifest.Signer);
             }
         }
 
@@ -37,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             {
                 //Arrange
                 const string fileName = "manifest.xml";
-                var manifest = DomainUtility.GetManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -54,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             {
                 //Arrange
                 const string mimeType = "application/xml";
-                var manifest = DomainUtility.GetManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -71,7 +72,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             {
                 //Arrange
                 const string id = "Id_1";
-                var manifest = DomainUtility.GetManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -87,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
-                var manifest = DomainUtility.GetManifest();
+                var manifest = DomainUtility.GetDirectManifest();
                 var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(manifest);
                 var expectedResult = SerializeUtility.Serialize(manifestDataTranferObject);
 

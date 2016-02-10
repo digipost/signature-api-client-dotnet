@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
             public void SimpleConstructorGeneratesBytes()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(DomainUtility.GetManifest(), DomainUtility.GetSignature(), DomainUtility.GetDocument());
+                var asiceArchive = new AsiceArchive(DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), DomainUtility.GetDocument());
 
                 //Act
                 var archiveBytes = asiceArchive.Bytes;

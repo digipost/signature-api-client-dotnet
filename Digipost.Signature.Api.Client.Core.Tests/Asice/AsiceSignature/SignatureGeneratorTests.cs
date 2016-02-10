@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Xsd;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 //Arrange
                 var document = DomainUtility.GetDocument();
                 var sender = DomainUtility.GetSender();
-                var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
+                var manifest = new DirectManifest(sender, document, DomainUtility.GetSigners(3));
                 var x509Certificate2 = DomainUtility.GetTestCertificate();
 
                 //Act
@@ -92,7 +92,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         {
             var document = DomainUtility.GetDocument();
             var sender = DomainUtility.GetSender();
-            var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
+            var manifest = new DirectManifest(sender, document, DomainUtility.GetSigners(3));
             var x509Certificate2 = DomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;

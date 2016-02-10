@@ -1,15 +1,17 @@
 ﻿using System.Text;
+using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceManifest
+namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
-    public class Manifest : IAsiceAttachable
+    public class DirectManifest : IAsiceAttachable
     {
         public Sender Sender { get; }
         public Document Document { get; }
         public Signer Signer { get; }
 
-        public Manifest(Sender sender, Document document, Signer signer)
+        public DirectManifest(Sender sender, Document document, Signer signer)
         {
             Sender = sender;
             Document = document;

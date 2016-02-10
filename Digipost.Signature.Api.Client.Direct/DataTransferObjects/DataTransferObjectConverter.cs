@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
     public static class DataTransferObjectConverter
 
     {
-        public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob, Sender sender)
+        public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob)
         {
             return new directsignaturejobrequest()
             {
                 reference = directJob.Reference,
-                sender = ToDataTransferObject(sender),
-                signer = ToDataTransferObject(directJob.Signer),
                 exiturls = ToDataTransferObject(directJob.ExitUrls)
             };
         }
@@ -63,45 +60,41 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
 
-        public static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)
+        public static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
         {
-            return new directsignaturejobmanifest();
+            return new directsignaturejobmanifest()
             {
-                SenderDataTransferObject = ToDataTransferObject(manifest.Sender),
-                DocumentDataTransferObject = ToDataTransferObject(manifest.Document),
-                SignersDataTransferObjects = ToDataTransferObject(manifest.Signers).ToList()
+                sender = ToDataTransferObject(directManifest.Sender),
+                document = ToDataTransferObject(directManifest.Document),
+                signer = ToDataTransferObject(directManifest.Signer)
+                
             };
         }
 
-        public static SenderDataTransferObject ToDataTransferObject(Sender sender)
+        public static sender ToDataTransferObject(Sender sender)
         {
-            return new SenderDataTransferObject()
+            return new sender()
             {
-                Organization = sender.OrganizationNumber
+                organizationnumber = sender.OrganizationNumber
             };
         }
 
-        public static DocumentDataTransferObject ToDataTransferObject(Document document)
+        public static document ToDataTransferObject(Document document)
         {
-            return new DocumentDataTransferObject()
+            return new document()
             {
-                Title = document.Subject,
-                Description = document.Message,
-                Href = document.FileName,
-                Mime = document.MimeType
+                title= document.Subject,
+                description = document.Message,
+                href = document.FileName,
+                mime = document.MimeType
             };
         }
 
-        public static IEnumerable<SignerDataTranferObject> ToDataTransferObject(IEnumerable<Signer> signers)
+        public static signer ToDataTransferObject(Signer signer)
         {
-            return signers.Select(signer => ToDataTransferObject(signer)).ToList();
-        }
-
-        public static SignerDataTranferObject ToDataTransferObject(Signer signer)
-        {
-            return new SignerDataTranferObject()
+            return new signer()
             {
-                PersonalIdentificationNumber = signer.PersonalIdentificationNumber
+                personalidentificationnumber = signer.PersonalIdentificationNumber
             };
         }
 

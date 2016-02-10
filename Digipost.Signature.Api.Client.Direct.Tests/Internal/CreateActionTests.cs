@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var enumerable = DomainUtility.GetSigners(1);
                 var businessCertificate = DomainUtility.GetTestCertificate();
                 var directJob = DomainUtility.GetDirectJob();
-                var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob, sender));
+                var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
                 var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
 
@@ -35,7 +35,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
                 Assert.AreEqual(serializedDirectJob, action.RequestContentXml.InnerXml);
-                Assert.AreEqual(sender, action.Sender);
 
                 Assert.AreEqual(null, action.MultipartFormDataContent);
             }
@@ -48,12 +47,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void SerializesDirectJob()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
                 var directJob = DomainUtility.GetDirectJob();
-                var expected = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob, sender));
+                var expected = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
                 //Act
-                var result = DirectCreateAction.SerializeFunc(directJob,sender);
+                var result = DirectCreateAction.SerializeFunc(directJob);
 
                 //Assert
                 Assert.AreEqual(expected, result);
@@ -88,7 +86,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
         internal DirectCreateAction GetCreateAction()
         {
-            var sender = DomainUtility.GetSender();
             var document = DomainUtility.GetDocument();
             var enumerable = DomainUtility.GetSigners(1);
             var businessCertificate = DomainUtility.GetTestCertificate();
@@ -96,7 +93,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
             var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
 
-            return new DirectCreateAction(sender, directJob, asiceBundle);
+            return new DirectCreateAction(directJob, asiceBundle);
         }
 
     }

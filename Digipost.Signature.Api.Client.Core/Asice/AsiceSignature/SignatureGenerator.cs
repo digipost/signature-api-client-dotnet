@@ -5,7 +5,6 @@ using System.Text;
 using System.Xml;
 using Difi.Felles.Utility.Security;
 using Difi.Felles.Utility.Utilities;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature

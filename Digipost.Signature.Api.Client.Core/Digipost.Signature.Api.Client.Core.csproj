@@ -77,8 +77,6 @@
     </Compile>
     <Compile Include="Asice\AsiceArchive.cs" />
     <Compile Include="Asice\AsiceGenerator.cs" />
-    <Compile Include="Asice\AsiceManifest\Manifest.cs" />
-    <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />

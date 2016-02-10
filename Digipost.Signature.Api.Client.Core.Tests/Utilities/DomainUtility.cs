@@ -4,10 +4,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceManifest;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
-using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal;
 using JobStatus = Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
@@ -19,17 +18,29 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(GetTestCertificate(), GetDocument(), GetManifest());
+            return new SignatureGenerator(GetTestCertificate(), GetDocument(), GetDirectManifest());
         } 
 
-        public static Manifest GetManifest()
+        public static DirectManifest GetDirectManifest()
         {
-            return new Manifest(
+            return new DirectManifest(
                 GetSender(),
                 GetDocument(),
-                GetSigners(2)
+                GetSigner()
                 );
         }
+
+        public static DirectManifest GetPortalManifest()
+        {
+            throw new NotImplementedException();
+
+            //return new DirectManifest(
+            //    GetSender(),
+            //    GetDocument(),
+            //    GetSigners(3)
+            //    );
+        }
+
 
         public static ClientConfiguration GetClientConfiguration()
         {

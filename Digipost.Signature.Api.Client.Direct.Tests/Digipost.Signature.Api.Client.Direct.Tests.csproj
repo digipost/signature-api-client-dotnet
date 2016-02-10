@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
+    <Compile Include="Internal\AsicE\ManifestTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="DirectJobResponseTests.cs" />
     <Compile Include="DirectJobStatusResponseTests.cs" />

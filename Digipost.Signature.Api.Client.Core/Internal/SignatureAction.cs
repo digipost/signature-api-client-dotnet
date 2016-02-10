@@ -7,14 +7,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     internal abstract class SignatureAction
     {
         public IRequestContent RequestContent { get; }
-        public Sender Sender { get; set; }
 
         public XmlDocument RequestContentXml { get; internal set; }
 
-        protected SignatureAction(Sender sender, IRequestContent requestContent, Func<IRequestContent, Sender, string> serializeFunc)
+        protected SignatureAction(IRequestContent requestContent, Func<IRequestContent, string> serializeFunc)
         {
             RequestContent = requestContent;
-            Sender = sender;
             InitializeRequestXmlContent(serializeFunc);
             
         }
@@ -23,10 +21,10 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         internal abstract HttpContent Content();
 
-        private void InitializeRequestXmlContent(Func<IRequestContent, Sender, string> serializeFunc)
+        private void InitializeRequestXmlContent(Func<IRequestContent, string> serializeFunc)
         {
             var document = new XmlDocument();
-            SerializedBody = serializeFunc(RequestContent, Sender);
+            SerializedBody = serializeFunc(RequestContent);
             document.LoadXml(SerializedBody);
             RequestContentXml = document;
         }

@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var signers = new List<Signer> {directJob.Signer};
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
-            var createAction = new DirectCreateAction(ClientConfiguration.Sender, directJob, documentBundle);
+            var createAction = new DirectCreateAction(directJob, documentBundle);
             var requestResult = await HttpClient.PostAsync(DirectJobSubPath, createAction.Content());
             
             return DirectCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
@@ -34,7 +34,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var response = await HttpClient.GetAsync(statusReference.Reference);
             var content = response.Content.ReadAsStringAsync().Result;
 
-            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<DirectJobStatusResponseDataTransferObject>(content));
+            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(content));
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

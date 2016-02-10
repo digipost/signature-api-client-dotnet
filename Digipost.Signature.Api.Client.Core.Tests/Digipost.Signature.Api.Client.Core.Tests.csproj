@@ -77,12 +77,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceArchiveTests.cs" />
-    <Compile Include="Asice\AsiceManifest\ManifestTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
-    <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
-    <Compile Include="Asice\SerializeUtilityTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
     <Compile Include="DocumentTests.cs" />

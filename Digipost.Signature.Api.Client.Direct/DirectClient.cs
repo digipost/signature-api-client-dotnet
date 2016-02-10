@@ -7,6 +7,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -21,8 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
-            var signers = new List<Signer> {directJob.Signer};
-            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, signers, ClientConfiguration.Certificate);
+            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
             var requestResult = await HttpClient.PostAsync(DirectJobSubPath, createAction.Content());
             

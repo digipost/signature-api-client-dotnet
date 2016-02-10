@@ -60,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
 
-        public static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
+        internal static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
         {
             return new directsignaturejobmanifest()
             {
@@ -73,7 +73,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         public static sender ToDataTransferObject(Sender sender)
         {
-            return new sender()
+            return new sender
             {
                 organizationnumber = sender.OrganizationNumber
             };
@@ -81,7 +81,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         public static document ToDataTransferObject(Document document)
         {
-            return new document()
+            return new document
             {
                 title= document.Subject,
                 description = document.Message,

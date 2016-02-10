@@ -20,7 +20,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalJobSuccessfully()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
                 var document = DomainUtility.GetDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
@@ -32,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 };
                 
                 //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source, sender);
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
 
                 //Assert
                 var comparator = new Comparator();
@@ -134,39 +133,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 comparator.AreEqual(expected, actual, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
-
-            [TestMethod]
-            public void ConvertsSignersSuccessfully()
-            {
-                ////Arrange
-                //const string personalIdentificationNumber1 = "012345678910";
-                //const string personalIdentificationNumber2 = "012345678911";
-                //const string personalIdentificationNumber3 = "012345678912";
-
-                //var source = new List<Signer>
-                //{
-                //    new Signer(personalIdentificationNumber1),
-                //    new Signer(personalIdentificationNumber2),
-                //    new Signer(personalIdentificationNumber3),
-                //};
-                //var expected = new List<SignerDataTranferObject>
-                //{
-                //    new SignerDataTranferObject() {PersonalIdentificationNumber = personalIdentificationNumber1},
-                //    new SignerDataTranferObject() {PersonalIdentificationNumber = personalIdentificationNumber2},
-                //    new SignerDataTranferObject() {PersonalIdentificationNumber = personalIdentificationNumber3},
-                //};
-
-                ////Act
-                //var result = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                ////Assert
-                //var comparator = new Comparator();
-                //IEnumerable<IDifference> differences;
-                //comparator.AreEqual(expected, result, out differences);
-                //Assert.AreEqual(0, differences.Count());
-                Assert.Fail();
-            }
-
         }
     }
 }

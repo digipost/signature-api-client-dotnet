@@ -75,7 +75,6 @@
         </xs:sequence>
     </xs:complexType>
 
-
     <xs:element name="portal-signature-job-response">
         <xs:complexType>
             <xs:sequence>

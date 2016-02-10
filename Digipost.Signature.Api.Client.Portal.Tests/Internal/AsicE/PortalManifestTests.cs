@@ -1,16 +1,17 @@
 ﻿using System.Text;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
-using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
+namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
 {
-    public class ManifestTests
+    [TestClass]
+    public class PortalManifestTests
     {
         [TestClass]
-        public class ConstructorMethod : ManifestTests
+        public class ConstructorMethod : PortalManifestTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -18,44 +19,44 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
                 //Arrange
                 var sender = DomainUtility.GetSender();
                 var document = DomainUtility.GetDocument();
-                var signer = DomainUtility.GetSigner();
+                var signers = DomainUtility.GetSigners(2);
 
                 //Act
-                var manifest = new DirectManifest(sender, document, signer);
+                var manifest = new PortalManifest(sender, document, signers);
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
                 Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signer, manifest.Signer);
+                Assert.AreEqual(signers, manifest.Signers);
             }
         }
 
         [TestClass]
-        public class FileNameMethod : ManifestTests
+        public class FileNameMethod : PortalManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string fileName = "manifest.xml";
-                var manifest = DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
                 //Assert
                 Assert.AreEqual(fileName, manifest.FileName);
-            } 
+            }
         }
 
         [TestClass]
-        public class MimeTypeMethod : ManifestTests
+        public class MimeTypeMethod : PortalManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string mimeType = "application/xml";
-                var manifest = DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
@@ -65,14 +66,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
         }
 
         [TestClass]
-        public class IdMethod : ManifestTests
+        public class IdMethod : PortalManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string id = "Id_1";
-                var manifest = DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
@@ -82,13 +83,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
         }
 
         [TestClass]
-        public class BytesMethod : ManifestTests
+        public class BytesMethod : PortalManifestTests
         {
             [TestMethod]
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
-                var manifest = DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetPortalManifest();
                 var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(manifest);
                 var expectedResult = SerializeUtility.Serialize(manifestDataTranferObject);
 
@@ -100,5 +101,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceManifest
                 Assert.AreEqual(expectedResult, actualResult);
             }
         }
+
     }
 }

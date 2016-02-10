@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     {
                         SignatureStatus = SignatureStatus.Signed,
                         Signer = new Signer("123456789"),
-                        XadesReference = new XadesReference(new Uri("http;//xadesuri1.no"))
+                        XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {

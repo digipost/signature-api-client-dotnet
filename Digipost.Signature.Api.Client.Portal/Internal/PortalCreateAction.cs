@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Portal.Internal
 {
     internal class PortalCreateAction : CreateAction
     {
-        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((PortalJob)content);
+        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((PortalJob)content));
 
         public static readonly Func<string, PortalJobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<portalsignaturejobresponse>(content));
 

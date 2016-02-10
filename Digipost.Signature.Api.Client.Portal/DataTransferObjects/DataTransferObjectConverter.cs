@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Portal.Extensions;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
@@ -18,16 +19,31 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return portalsignaturejobrequest;
         }
 
-        private static IEnumerable<signer> ToDataTransferObject(IEnumerable<Signer> signers)
+        public static portalsignaturejobmanifest ToDataTransferObject(PortalManifest portalManifest)
         {
-            return signers.Select(signer => ToDataTransferObject(signer)).ToList();
+            return new portalsignaturejobmanifest()
+            {
+                sender = ToDataTransferObject(portalManifest.Sender),
+                document = ToDataTransferObject(portalManifest.Document)
+            };
         }
 
-        private static signer ToDataTransferObject(Signer signer)
+        public static sender ToDataTransferObject(Sender sender)
         {
-            return new signer
+            return new sender()
             {
-                personalidentificationnumber = signer.PersonalIdentificationNumber
+                organizationnumber = sender.OrganizationNumber
+            };
+        }
+
+        public static document ToDataTransferObject(Document document)
+        {
+            return new document()
+            {
+                title = document.Subject,
+                description = document.Message,
+                href = document.FileName,
+                mime = document.MimeType
             };
         }
 
@@ -59,15 +75,15 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return signatures.Select(FromDataTransferObject).ToList();
         }
 
-        private static Signature FromDataTransferObject(signature signatures)
+        private static Signature FromDataTransferObject(signature signature)
         {
             var result = new Signature()
             {
-                SignatureStatus = (SignatureStatus) Enum.Parse(typeof(SignatureStatus), signatures.status.ToString(),ignoreCase:true),
-                Signer = new Signer(signatures.personalidentificationnumber)
+                SignatureStatus = (SignatureStatus) Enum.Parse(typeof(SignatureStatus), signature.status.ToString(),ignoreCase:true),
+                Signer = new Signer(signature.personalidentificationnumber)
             };
 
-            var xadesUrl = signatures.xadesurl;
+            var xadesUrl = signature.xadesurl;
             if (!string.IsNullOrEmpty(xadesUrl))
             {
                 result.XadesReference = new XadesReference(new Uri(xadesUrl));

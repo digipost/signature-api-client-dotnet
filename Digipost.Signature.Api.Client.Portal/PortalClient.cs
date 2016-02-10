@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Portal.Internal;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using DataTransferObjectConverter = Digipost.Signature.Api.Client.Portal.DataTransferObjects.DataTransferObjectConverter;
 
 namespace Digipost.Signature.Api.Client.Portal
@@ -21,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Portal
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document,portalJob.Signers, ClientConfiguration.Certificate);
-            var portalCreateAction = new PortalCreateAction(ClientConfiguration.Sender, portalJob, documentBundle);
+            var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
             var requestResult = await HttpClient.PostAsync(PortalJobSubPath, portalCreateAction.Content());
 
             return PortalCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());

@@ -44,27 +44,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\GenerateClassesFromXsd.ps1" />
-    <None Include="Xsd\common.xsd">
+    <EmbeddedResource Include="Xsd\common.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\direct-and-portal.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\direct-and-portal.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\direct.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\direct.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\portal.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\portal.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\Thirdparty\ts_102918v010201.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\Thirdparty\XAdES.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Xsd\Thirdparty\xmldsig-core-schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

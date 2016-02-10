@@ -3,7 +3,7 @@ using System.Xml;
 using ApiClientShared;
 using Difi.Felles.Utility;
 
-namespace Digipost.Signature.Api.Client.Core.Xsd
+namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class SignatureValidator : XmlValidator
     {

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Core.Xsd;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
@@ -14,12 +15,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
         public class ConstructorMethod : SignatureGeneratorTests
         {
             [TestMethod]
-            public void InitializesWithDocumentManifestAndCertificate()
+            public void InitializesWithDocumentDirectManifestAndCertificate()
             {
                 //Arrange
                 var document = DomainUtility.GetDocument();
                 var sender = DomainUtility.GetSender();
-                var manifest = new DirectManifest(sender, document, DomainUtility.GetSigners(3));
+                var manifest = new DirectManifest(sender, document, DomainUtility.GetSigner());
                 var x509Certificate2 = DomainUtility.GetTestCertificate();
 
                 //Act
@@ -30,6 +31,25 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 Assert.AreEqual(manifest, signatur.Attachables.ElementAt(1));
                 Assert.AreEqual(x509Certificate2, signatur.Certificate);
             }
+
+            [TestMethod]
+            public void InitializesWithDocumentPortalManifestAndCertificate()
+            {
+                //Arrange
+                var document = DomainUtility.GetDocument();
+                var sender = DomainUtility.GetSender();
+                var manifest = new PortalManifest(sender, document, DomainUtility.GetSigners(3));
+                var x509Certificate2 = DomainUtility.GetTestCertificate();
+
+                //Act
+                var signatur = new SignatureGenerator(x509Certificate2, document, manifest);
+
+                //Assert
+                Assert.AreEqual(document, signatur.Attachables.ElementAt(0));
+                Assert.AreEqual(manifest, signatur.Attachables.ElementAt(1));
+                Assert.AreEqual(x509Certificate2, signatur.Certificate);
+            }
+
         }
 
         [TestClass]
@@ -85,14 +105,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 Assert.IsTrue(isValidSignatureXml);
                 Assert.IsTrue(signatureLength > 3200);                
             }
-
         }
 
         internal SignatureGenerator GetSignaturGenerator()
         {
             var document = DomainUtility.GetDocument();
             var sender = DomainUtility.GetSender();
-            var manifest = new DirectManifest(sender, document, DomainUtility.GetSigners(3));
+            var signer = DomainUtility.GetSigner();
+            var manifest = new DirectManifest(sender, document, signer);
             var x509Certificate2 = DomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;

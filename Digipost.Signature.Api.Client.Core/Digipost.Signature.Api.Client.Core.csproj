@@ -76,7 +76,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceArchive.cs" />
-    <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />
@@ -109,6 +108,15 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Xsd\Thirdparty\ts_102918v010201.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\Thirdparty\XAdES.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Xsd\Thirdparty\xmldsig-core-schema.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

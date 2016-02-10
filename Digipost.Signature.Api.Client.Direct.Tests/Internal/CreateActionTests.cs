@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Net.Http;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
-using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
@@ -21,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 //Arrange
                 var sender = DomainUtility.GetSender();
                 var document = DomainUtility.GetDocument();
-                var enumerable = DomainUtility.GetSigners(1);
+                var enumerable = DomainUtility.GetSigner();
                 var businessCertificate = DomainUtility.GetTestCertificate();
                 var directJob = DomainUtility.GetDirectJob();
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
@@ -29,8 +28,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
 
                 //Act
-                var action = new DirectCreateAction(sender,
-                        directJob, asiceBundle);
+                var action = new DirectCreateAction(directJob, asiceBundle);
                 
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
@@ -76,25 +74,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 //Act
                 var result = DirectCreateAction.DeserializeFunc(serialized);
 
-
                 //Assert
                 Assert.AreEqual(expectedJobId, result.JobId);
                 Assert.AreEqual(new Uri(expectedRedirectUrl), result.ResponseUrls.Redirect);
                 Assert.AreEqual(new Uri(expectedStatusUrl), result.ResponseUrls.Status);
             }
         }
-
-        internal DirectCreateAction GetCreateAction()
-        {
-            var document = DomainUtility.GetDocument();
-            var enumerable = DomainUtility.GetSigners(1);
-            var businessCertificate = DomainUtility.GetTestCertificate();
-            var directJob = DomainUtility.GetDirectJob();
-
-            var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
-
-            return new DirectCreateAction(directJob, asiceBundle);
-        }
-
     }
 }

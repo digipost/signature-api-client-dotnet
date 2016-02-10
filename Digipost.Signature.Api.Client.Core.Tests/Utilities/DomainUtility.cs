@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using JobStatus = Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
@@ -21,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new SignatureGenerator(GetTestCertificate(), GetDocument(), GetDirectManifest());
         } 
 
-        public static DirectManifest GetDirectManifest()
+        internal static DirectManifest GetDirectManifest()
         {
             return new DirectManifest(
                 GetSender(),
@@ -30,15 +31,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 );
         }
 
-        public static DirectManifest GetPortalManifest()
+        internal static PortalManifest GetPortalManifest()
         {
-            throw new NotImplementedException();
-
-            //return new DirectManifest(
-            //    GetSender(),
-            //    GetDocument(),
-            //    GetSigners(3)
-            //    );
+            return new PortalManifest(
+                GetSender(),
+                GetDocument(),
+                GetSigners(3)
+                );
         }
 
 

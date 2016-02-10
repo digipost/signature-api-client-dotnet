@@ -58,6 +58,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataTransferObjects\direct.cs" />
+    <Compile Include="Internal\AsicE\AsiceGenerator.cs" />
     <Compile Include="Internal\DirectCreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="DirectJobStatusResponse.cs" />

@@ -124,6 +124,9 @@ public enum signaturestatus {
     REJECTED,
     
     /// <remarks/>
+    CANCELLED,
+    
+    /// <remarks/>
     SIGNED,
 }
 
@@ -168,30 +171,138 @@ public partial class signatures {
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
-public partial class sender {
+public partial class availability {
     
-    private string organizationField;
+    private System.DateTime activationtimeField;
     
-    private string senderidentifierField;
+    private bool activationtimeFieldSpecified;
+    
+    private System.DateTime expirationtimeField;
+    
+    private bool expirationtimeFieldSpecified;
     
     /// <remarks/>
-    public string organization {
+    [System.Xml.Serialization.XmlElementAttribute("activation-time")]
+    public System.DateTime activationtime {
         get {
-            return this.organizationField;
+            return this.activationtimeField;
         }
         set {
-            this.organizationField = value;
+            this.activationtimeField = value;
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("sender-identifier")]
-    public string senderidentifier {
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool activationtimeSpecified {
         get {
-            return this.senderidentifierField;
+            return this.activationtimeFieldSpecified;
         }
         set {
-            this.senderidentifierField = value;
+            this.activationtimeFieldSpecified = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("expiration-time")]
+    public System.DateTime expirationtime {
+        get {
+            return this.expirationtimeField;
+        }
+        set {
+            this.expirationtimeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool expirationtimeSpecified {
+        get {
+            return this.expirationtimeFieldSpecified;
+        }
+        set {
+            this.expirationtimeFieldSpecified = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class document {
+    
+    private string titleField;
+    
+    private string descriptionField;
+    
+    private string hrefField;
+    
+    private string mimeField;
+    
+    /// <remarks/>
+    public string title {
+        get {
+            return this.titleField;
+        }
+        set {
+            this.titleField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public string description {
+        get {
+            return this.descriptionField;
+        }
+        set {
+            this.descriptionField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string href {
+        get {
+            return this.hrefField;
+        }
+        set {
+            this.hrefField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string mime {
+        get {
+            return this.mimeField;
+        }
+        set {
+            this.mimeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class sender {
+    
+    private string organizationnumberField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("organization-number")]
+    public string organizationnumber {
+        get {
+            return this.organizationnumberField;
+        }
+        set {
+            this.organizationnumberField = value;
         }
     }
 }
@@ -229,14 +340,6 @@ public partial class portalsignaturejobrequest {
     
     private string referenceField;
     
-    private signer[] signersField;
-    
-    private sender senderField;
-    
-    private System.DateTime distributiontimeField;
-    
-    private bool distributiontimeFieldSpecified;
-    
     /// <remarks/>
     public string reference {
         get {
@@ -246,6 +349,24 @@ public partial class portalsignaturejobrequest {
             this.referenceField = value;
         }
     }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://signering.posten.no/schema/v1")]
+[System.Xml.Serialization.XmlRootAttribute("portal-signature-job-manifest", Namespace="http://signering.posten.no/schema/v1", IsNullable=false)]
+public partial class portalsignaturejobmanifest {
+    
+    private signer[] signersField;
+    
+    private sender senderField;
+    
+    private document documentField;
+    
+    private availability availabilityField;
     
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
@@ -269,24 +390,22 @@ public partial class portalsignaturejobrequest {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("distribution-time")]
-    public System.DateTime distributiontime {
+    public document document {
         get {
-            return this.distributiontimeField;
+            return this.documentField;
         }
         set {
-            this.distributiontimeField = value;
+            this.documentField = value;
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public bool distributiontimeSpecified {
+    public availability availability {
         get {
-            return this.distributiontimeFieldSpecified;
+            return this.availabilityField;
         }
         set {
-            this.distributiontimeFieldSpecified = value;
+            this.availabilityField = value;
         }
     }
 }
@@ -302,6 +421,8 @@ public partial class portalsignaturejobresponse {
     
     private long signaturejobidField;
     
+    private string cancellationurlField;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("signature-job-id")]
     public long signaturejobid {
@@ -310,6 +431,17 @@ public partial class portalsignaturejobresponse {
         }
         set {
             this.signaturejobidField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("cancellation-url")]
+    public string cancellationurl {
+        get {
+            return this.cancellationurlField;
+        }
+        set {
+            this.cancellationurlField = value;
         }
     }
 }
@@ -328,6 +460,8 @@ public partial class portalsignaturejobstatuschangeresponse {
     private portalsignaturejobstatus statusField;
     
     private string confirmationurlField;
+    
+    private string cancellationurlField;
     
     private signatures signaturesField;
     
@@ -360,6 +494,17 @@ public partial class portalsignaturejobstatuschangeresponse {
         }
         set {
             this.confirmationurlField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("cancellation-url")]
+    public string cancellationurl {
+        get {
+            return this.cancellationurlField;
+        }
+        set {
+            this.cancellationurlField = value;
         }
     }
     

@@ -1,16 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.Reflection;
+﻿using System.IO;
 using System.Xml;
 using ApiClientShared;
 using Difi.Felles.Utility;
-using Difi.Felles.Utility.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Xsd
 {
     internal class SignatureValidator : XmlValidator
     {
-        //private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Xsd");
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Xsd.Thirdparty");
 
         public SignatureValidator()

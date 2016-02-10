@@ -79,10 +79,6 @@
     <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\AsiceManifest\Manifest.cs" />
     <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="Asice\DataTransferObjects\ManifestDataTranferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\DocumentDataTransferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />
@@ -92,7 +88,6 @@
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHttpHandler.cs" />
     <Compile Include="Signer.cs" />
-    <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
@@ -111,41 +106,11 @@
     <Compile Include="Extensions\FileTypeExtensions.cs" />
     <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xsd\SignatureValidator.cs" />
+    <Compile Include="Internal\SignatureValidator.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Xsd\common.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct-and-portal.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\portal-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\portal.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\signature-document.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\Thirdparty\ts_102918v010201.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\Thirdparty\XAdES.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\Thirdparty\xmldsig-core-schema.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

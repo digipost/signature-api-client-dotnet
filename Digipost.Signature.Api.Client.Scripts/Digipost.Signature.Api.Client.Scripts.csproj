@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Digipost.Signature.Api.Client.DataTransferObjects</RootNamespace>
     <AssemblyName>Digipost.Signature.Api.Client.DataTransferObjects</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>digipost.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,21 +48,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XsdToCode\Code\direct-and-portal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\GenerateClassesFromXsd.ps1" />
-    <EmbeddedResource Include="Xsd\common.xsd">
+    <None Include="digipost.pfx" />
+    <None Include="XsdToCode\GenerateClassesFromXsd.ps1" />
+    <None Include="XsdToCode\Xsd\common.xsd">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct-and-portal.xsd">
+    </None>
+    <None Include="XsdToCode\Xsd\direct-and-portal.xsd">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct.xsd">
+    </None>
+    <None Include="XsdToCode\Xsd\direct.xsd">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\portal.xsd">
+    </None>
+    <None Include="XsdToCode\Xsd\portal.xsd">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

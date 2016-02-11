@@ -101,6 +101,10 @@
       <Project>{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}</Project>
       <Name>Digipost.Signature.Api.Client.Direct</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

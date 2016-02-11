@@ -55,7 +55,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="DataTransferObjects\portal.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\AsiceGenerator.cs" />
     <Compile Include="Internal\AsicE\PortalManifest.cs" />
@@ -77,6 +76,10 @@
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2d13f732-6a85-4165-ae2f-a87c09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

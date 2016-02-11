@@ -6,6 +6,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
@@ -39,6 +40,49 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 comparator.AreEqual(expected, result, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
+
+                        [TestMethod]
+            public void ConvertsManifestSuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                const string documentSubject = "Subject";
+                const string documentMessage = "Message";
+                const string documentFileName = "Filename.pdf";
+                byte[] pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes();
+                var personalIdentificationNumber = "12345678901";
+                var expectedMimeType = "application/pdf";
+                var signers = DomainUtility.GetSigners(2);
+
+                var source = new PortalManifest(
+                    new Sender(organizationNumberSender),
+                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
+                    signers
+                    );
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender() { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = documentSubject,
+                        description = documentMessage,
+                        href = documentFileName,
+                        mime = expectedMimeType
+                    },
+                    //signer = new signer { personalidentificationnumber = personalIdentificationNumber}
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
 
         }
 

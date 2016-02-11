@@ -57,7 +57,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="DataTransferObjects\direct.cs" />
     <Compile Include="Internal\AsicE\AsiceGenerator.cs" />
     <Compile Include="Internal\DirectCreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
@@ -82,6 +81,10 @@
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

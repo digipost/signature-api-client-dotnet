@@ -22,7 +22,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Clie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Portal.Tests", "Digipost.Signature.Api.Client.Portal.Tests\Digipost.Signature.Api.Client.Portal.Tests.csproj", "{920EE422-A785-4DFD-8237-BA0C3C7F6E0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Scripts", "Digipost.Signature.Api.Client.DataTransferObjects\Digipost.Signature.Api.Client.Scripts.csproj", "{24D1D03D-4F19-488E-8F3F-30DC6C5B7BEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Scripts", "Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj", "{24D1D03D-4F19-488E-8F3F-30DC6C5B7BEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

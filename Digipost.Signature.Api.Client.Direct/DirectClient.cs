@@ -13,7 +13,7 @@ using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
-    {
+    {   
         private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)

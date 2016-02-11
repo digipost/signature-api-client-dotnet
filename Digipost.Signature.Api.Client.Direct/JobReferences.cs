@@ -12,11 +12,11 @@ namespace Digipost.Signature.Api.Client.Direct
             Pades = new PadesReference(pades);
         }
 
-        public ConfirmationReference Confirmation { get; private set; }
+        public ConfirmationReference Confirmation { get; internal set; }
 
-        public XadesReference Xades{ get; private set; }
+        public XadesReference Xades{ get; internal set; }
 
-        public PadesReference Pades { get; private set; }
+        public PadesReference Pades { get; internal set; }
 
     }
 }

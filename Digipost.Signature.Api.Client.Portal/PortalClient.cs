@@ -12,25 +12,26 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-        private static readonly Uri PortalJobSubPath = new Uri("/api/portal/signature-jobs", UriKind.Relative);
-        
+        private readonly Uri _subPath;
+
         public PortalClient(ClientConfiguration clientConfiguration) 
             : base(clientConfiguration)
         {
+            _subPath = new Uri(string.Format("/api/{0}/portal/signature-jobs", clientConfiguration.Sender.OrganizationNumber), UriKind.Relative);
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document,portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
-            var requestResult = await HttpClient.PostAsync(PortalJobSubPath, portalCreateAction.Content());
+            var requestResult = await HttpClient.PostAsync(_subPath, portalCreateAction.Content());
 
             return PortalCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
         }
 
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
-            var requestResult = await HttpClient.GetAsync(PortalJobSubPath);
+            var requestResult = await HttpClient.GetAsync(_subPath);
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(await requestResult.Content.ReadAsStringAsync());
 
             return DataTransferObjectConverter.FromDataTransferObject(deserialized);

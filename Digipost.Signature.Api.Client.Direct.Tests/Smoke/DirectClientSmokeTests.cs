@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
     [TestClass]
-    public class DirectClientSmokeTests
+    public class DirectClientSmokeTests : SmokeTests
     {
         private static readonly Client ClientType = Client.Localhost;
 
-        private static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
         private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
-
-        private static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
         private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
-
-
+        
         private enum Client
         {
             Localhost,
@@ -31,9 +28,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task CreatesSuccessfully()
             {
                 //Arrange
+                var directClient = GetDirectClient();
+                var directJob = DomainUtility.GetDirectJob();
 
                 //Act
-                var result = await GetClient().Create(DomainUtility.GetDirectJob());
+                var result = await directClient.Create(directJob);
 
                 //Assert
                 Assert.IsNotNull(result.JobId);
@@ -43,24 +42,25 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsStatusSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClientDifiTest();
+                var directClient = GetDirectClient();
 
                 //Act
-                var jobStatus = await directClient.GetStatus(GetStatusReference());
+                var directJobStatusResponse = await directClient.GetStatus(GetStatusReference());
 
                 //Assert
-                Assert.IsNotNull(jobStatus.JobId);
+                Assert.IsNotNull(directJobStatusResponse.JobId);
             }
 
             [TestMethod]
             public async Task GetsXadesSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(GetStatusReference());
+                var directClient = GetDirectClient();
+                var directJobStatusResponse = await directClient.GetStatus(GetStatusReference());
+                var xadesReference = MorphDirectJobStatusResponseIfMayBe(directJobStatusResponse).References.Xades;
 
                 //Act
-                var xades = await directClient.GetXades(GetXadesReference(jobStatus));
+                var xades = await directClient.GetXades(xadesReference);
 
                 //Assert
                 Assert.IsTrue(xades.CanRead);
@@ -71,46 +71,30 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public async Task GetsPadesSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(GetStatusReference());
+                var directClient = GetDirectClient();
+                var directJobResponse = await directClient.GetStatus(GetStatusReference());
+                var padesReference = MorphDirectJobStatusResponseIfMayBe(directJobResponse).References.Pades;
 
                 //Act
-                var pades = await directClient.GetPades(GetPadesReference(jobStatus));
+                var pades = await directClient.GetPades(padesReference);
 
                 //Assert
+                Assert.IsTrue(pades.CanRead);
             }
 
             [TestMethod]
             public async Task ConfirmsSuccessfully()
             {
                 //Arrange
-                var directClient = DirectClientDifiTest();
-                var jobStatus = await directClient.GetStatus(GetStatusReference());
+                var directClient = GetDirectClient();
+                var directJobResponse = await directClient.GetStatus(GetStatusReference());
+                var confirmationReference = MorphDirectJobStatusResponseIfMayBe(directJobResponse).References.Confirmation;
 
                 //Act
-                var result = await directClient.Confirm(GetConfirmationReference(jobStatus));
+                var result = await directClient.Confirm(confirmationReference);
 
                 //Assert
             }
-        }
-
-        public static DirectClient GetClient()
-        {
-            DirectClient directClient = null;
-
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    directClient = LocalhostClient();
-                    break;
-                case Client.DifiTest:
-                    directClient = DirectClientDifiTest();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return directClient;
         }
 
         private static StatusReference GetStatusReference()
@@ -132,78 +116,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return new StatusReference(url);
         }
 
-
-        private static DirectClient DirectClientDifiTest()
+        internal DirectJobStatusResponse MorphDirectJobStatusResponseIfMayBe(DirectJobStatusResponse directJobResponse)
         {
-            var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(DifitestSigneringPostenNo, sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new DirectClient(clientConfig);
-            return client;
-        }
-
-
-        private static DirectClient LocalhostClient()
-        {
-            var sender = DomainUtility.GetSender();
-
-            var directClient = new DirectClient(new ClientConfiguration(Localhost, sender, DomainUtility.GetTestIntegrasjonSertifikat()));
-            return directClient;
-        }
-
-        private static XadesReference GetXadesReference(DirectJobStatusResponse jobStatus)
-        {
-            XadesReference xadesReference = null;
-
             switch (ClientType)
             {
                 case Client.Localhost:
-                    xadesReference = new XadesReference(new Uri(Localhost, jobStatus.References.Xades.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address
+                    //Server returns Localhost, exchanges this with actual Localhost address
+                    directJobResponse.References.Xades = new XadesReference(MorphLocalhostForVm(directJobResponse.References.Xades.Url));
+                    directJobResponse.References.Pades = new PadesReference(MorphLocalhostForVm(directJobResponse.References.Pades.Url));
+                    directJobResponse.References.Confirmation = new ConfirmationReference(MorphLocalhostForVm(directJobResponse.References.Confirmation.Url));
                     break;
                 case Client.DifiTest:
-                    xadesReference = jobStatus.References.Xades;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return xadesReference;
-        }
-
-        private static PadesReference GetPadesReference(DirectJobStatusResponse directJobResponse)
-        {
-            PadesReference padesReference = null;
-
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    padesReference = new PadesReference(new Uri(Localhost, directJobResponse.References.Pades.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address
-                    break;
-                case Client.DifiTest:
-                    padesReference = directJobResponse.References.Pades;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return padesReference;
-        }
-
-        private ConfirmationReference GetConfirmationReference(DirectJobStatusResponse directJobResponse)
-        {
-            ConfirmationReference confirmationReference = null;
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    confirmationReference = new ConfirmationReference(new Uri(Localhost, directJobResponse.References.Confirmation.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address;
-                    break;
-                case Client.DifiTest:
-                    confirmationReference = directJobResponse.References.Confirmation;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return confirmationReference;
+            return directJobResponse;
         }
     }
 }

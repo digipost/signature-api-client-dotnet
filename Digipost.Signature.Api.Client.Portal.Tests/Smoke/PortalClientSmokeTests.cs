@@ -1,62 +1,76 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Digipost.Signature.Api.Client.Core;
+﻿using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     [TestClass]
-    public class PortalClientSmokeTests
+    public class PortalClientSmokeTests : SmokeTests
     {
+
+        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
+        private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
+
+
         [TestClass]
-        public class CreateMethod : PortalClientSmokeTests
+        public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
         {
             [TestMethod]
-            public async Task SendsCreateSuccessfully()
+            public async Task CreatesSuccessfully()
             {
                 //Arrange
-                var portalClient = PortalClientDifiTest();
+                var portalClient = GetPortalClient();
                 var portalJob = DomainUtility.GetPortalJob();
-                var result = await portalClient.Create(portalJob);
-                
+
                 //Act
+                var result = await portalClient.Create(portalJob);
 
                 //Assert
                 Assert.IsNotNull(result.JobId);
             }
 
             [TestMethod]
-            public async Task SendsGetStatusChangeSuccessfully()
+            public async Task GetsStatusSuccessfully()
             {
                 //Arrange
-                var portalClient = PortalClientDifiTest();
-                var result = await portalClient.GetStatusChange();
 
                 //Act
 
                 //Assert
-                //Assert.IsNotNull(result.JobId);
             }
 
-        }
+            [TestMethod]
+            public async Task GetsXadesSuccessfully()
+            {
+                //Arrange
 
-        private static PortalClient PortalClientDifiTest()
-        {
-            var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(new Uri("https://api.difitest.signering.posten.no"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new PortalClient(clientConfig);
-            return client;
-        }
+                //Act
 
-        private static PortalClient PortalClientLocalhost()
-        {
-            var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(new Uri("https://172.16.91.1:8443"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new PortalClient(clientConfig);
-            return client;
-        }
 
+                //Assert
+            }
+
+
+            [TestMethod]
+            public async Task GetsPadesSuccessfully()
+            {
+                //Arrange
+                
+                //Act
+
+                //Assert
+            }
+
+            [TestMethod]
+            public async Task ConfirmsSuccessfully()
+            {
+                //Arrange
+
+                //Act
+
+                //Assert
+            }
+        }
     }
 }

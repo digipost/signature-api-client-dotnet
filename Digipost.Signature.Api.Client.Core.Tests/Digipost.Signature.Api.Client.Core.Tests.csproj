@@ -85,6 +85,7 @@
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="SenderTests.cs" />
+    <Compile Include="Smoke\SmokeTests.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
     <Compile Include="Utilities\CompareObjects\IComparator.cs" />

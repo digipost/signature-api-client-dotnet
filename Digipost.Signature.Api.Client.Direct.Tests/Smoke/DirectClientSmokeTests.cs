@@ -9,13 +9,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests
     {
-        private static Client ClientType = Client.Localhost;
+        private static readonly Client ClientType = Client.Localhost;
 
-        private static readonly Uri localhost = new Uri("https://172.16.91.1:8443");
-        private static readonly string localhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
+        private static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
+        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
 
-        private static readonly Uri difitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
-        private static readonly string difitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
+        private static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
+        private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
 
 
         private enum Client
@@ -63,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var xades = await directClient.GetXades(GetXadesReference(jobStatus));
 
                 //Assert
-                Assert.IsNotNull(jobStatus.JobId);
+                Assert.IsTrue(xades.CanRead);
             }
 
 
@@ -88,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var jobStatus = await directClient.GetStatus(GetStatusReference());
 
                 //Act
-                var result = await directClient.Confirm(jobStatus.References.Confirmation);
+                var result = await directClient.Confirm(GetConfirmationReference(jobStatus));
 
                 //Assert
             }
@@ -120,10 +120,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    url = new Uri(localhost, localhostRelativeStatusUrl);
+                    url = new Uri(Localhost, LocalhostRelativeStatusUrl);
                     break;
                 case Client.DifiTest:
-                    url = new Uri(difitestSigneringPostenNo, localhostRelativeStatusUrl);
+                    url = new Uri(DifitestSigneringPostenNo, LocalhostRelativeStatusUrl);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -132,10 +132,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return new StatusReference(url);
         }
 
+
         private static DirectClient DirectClientDifiTest()
         {
             var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(difitestSigneringPostenNo, sender, DomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(DifitestSigneringPostenNo, sender, DomainUtility.GetTestIntegrasjonSertifikat());
             var client = new DirectClient(clientConfig);
             return client;
         }
@@ -145,7 +146,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             var sender = DomainUtility.GetSender();
 
-            var directClient = new DirectClient(new ClientConfiguration(localhost, sender, DomainUtility.GetTestIntegrasjonSertifikat()));
+            var directClient = new DirectClient(new ClientConfiguration(Localhost, sender, DomainUtility.GetTestIntegrasjonSertifikat()));
             return directClient;
         }
 
@@ -156,7 +157,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    xadesReference = new XadesReference(new Uri(localhost, jobStatus.References.Xades.Url.AbsolutePath)); //Server returns localhost, exchanges this with actual localhost address
+                    xadesReference = new XadesReference(new Uri(Localhost, jobStatus.References.Xades.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address
                     break;
                 case Client.DifiTest:
                     xadesReference = jobStatus.References.Xades;
@@ -168,17 +169,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return xadesReference;
         }
 
-        private static PadesReference GetPadesReference(DirectJobStatusResponse jobStatus)
+        private static PadesReference GetPadesReference(DirectJobStatusResponse directJobResponse)
         {
             PadesReference padesReference = null;
 
             switch (ClientType)
             {
                 case Client.Localhost:
-                    padesReference = new PadesReference(new Uri(localhost, jobStatus.References.Pades.Url.AbsolutePath)); //Server returns localhost, exchanges this with actual localhost address
+                    padesReference = new PadesReference(new Uri(Localhost, directJobResponse.References.Pades.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address
                     break;
                 case Client.DifiTest:
-                    padesReference = jobStatus.References.Pades;
+                    padesReference = directJobResponse.References.Pades;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -187,5 +188,22 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return padesReference;
         }
 
+        private ConfirmationReference GetConfirmationReference(DirectJobStatusResponse directJobResponse)
+        {
+            ConfirmationReference confirmationReference = null;
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    confirmationReference = new ConfirmationReference(new Uri(Localhost, directJobResponse.References.Confirmation.Url.AbsolutePath)); //Server returns Localhost, exchanges this with actual Localhost address;
+                    break;
+                case Client.DifiTest:
+                    confirmationReference = directJobResponse.References.Confirmation;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return confirmationReference;
+        }
     }
 }

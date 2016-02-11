@@ -4,11 +4,11 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public class ConfirmationReference
     {
-        public Uri ConfirmationUri { get; set; }
+        public Uri Url { get; set; }
 
-        public ConfirmationReference(Uri confirmationUri)
+        public ConfirmationReference(Uri url)
         {
-            ConfirmationUri = confirmationUri;
+            Url = url;
         }
     }
 }

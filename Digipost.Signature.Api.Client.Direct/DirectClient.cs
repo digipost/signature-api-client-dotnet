@@ -51,7 +51,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
         {
-            return await HttpClient.PostAsync(confirmationReference.ConfirmationUri, content: null);
+            return await HttpClient.PostAsync(confirmationReference.Url, content: null);
         }
     }
 }

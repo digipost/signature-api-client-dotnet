@@ -7,12 +7,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
-        private static readonly Client ClientType = Client.Localhost;
+        protected static readonly Client ClientType = Client.Localhost;
         
         protected static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
         protected static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
 
-        private enum Client
+        protected enum Client
         {
             Localhost,
             DifiTest

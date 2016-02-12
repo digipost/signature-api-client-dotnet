@@ -14,6 +14,8 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 
         public IEnumerable<Signer> Signers { get; }
 
+        public Availability Availability { get; set; }
+
         public PortalManifest(Sender sender, Document document, IEnumerable<Signer> signers)
         {
             Sender = sender;

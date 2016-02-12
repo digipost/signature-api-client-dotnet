@@ -21,10 +21,44 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         public static portalsignaturejobmanifest ToDataTransferObject(PortalManifest portalManifest)
         {
-            return new portalsignaturejobmanifest()
+            var dataTransferObject = new portalsignaturejobmanifest
             {
                 sender = ToDataTransferObject(portalManifest.Sender),
-                document = ToDataTransferObject(portalManifest.Document)
+                document = ToDataTransferObject(portalManifest.Document),
+                signers = ToDataTransferObject(portalManifest.Signers).ToArray(),
+                availability = new availability()
+            };
+
+            if (portalManifest.Availability != null)
+            {
+
+                var activationTime = portalManifest.Availability.Activation;
+                var expirationTime = portalManifest.Availability.Expiration;
+
+                if (activationTime != null)
+                {
+                    dataTransferObject.availability.activationtime = portalManifest.Availability.Activation.Value;
+                }
+
+                if (expirationTime != null)
+                {
+                    dataTransferObject.availability.expirationtime = portalManifest.Availability.Expiration.Value;
+                }
+            }
+
+            return dataTransferObject;
+        }
+
+        private static IEnumerable<signer> ToDataTransferObject(IEnumerable<Signer> signers)
+        {
+            return signers.Select(ToDataTransferObject);
+        }
+
+        private static signer ToDataTransferObject(Signer signer)
+        {
+            return new signer()
+            {
+                personalidentificationnumber = signer.PersonalIdentificationNumber
             };
         }
 

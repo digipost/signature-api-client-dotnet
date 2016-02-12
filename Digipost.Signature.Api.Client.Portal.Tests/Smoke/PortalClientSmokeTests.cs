@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
@@ -9,9 +11,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
     public class PortalClientSmokeTests : SmokeTests
     {
 
-        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
+        private const string LocalhostRelativeStatusUrl = "/api/988015814/portal/signature-jobs/74/status";
         private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
-
 
         [TestClass]
         public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
@@ -22,6 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 //Arrange
                 var portalClient = GetPortalClient();
                 var portalJob = DomainUtility.GetPortalJob();
+                
 
                 //Act
                 var result = await portalClient.Create(portalJob);
@@ -34,10 +36,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task GetsStatusSuccessfully()
             {
                 //Arrange
+                var portalClient = GetPortalClient();
 
                 //Act
+                var status = await portalClient.GetStatusChange();
 
                 //Assert
+
             }
 
             [TestMethod]

@@ -10,16 +10,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests : SmokeTests
     {
-        private static readonly Client ClientType = Client.Localhost;
-
-        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/56/status";
+        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/78/status";
         private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
-        
-        private enum Client
-        {
-            Localhost,
-            DifiTest
-        }
         
         [TestClass]
         public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests
@@ -66,7 +58,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsTrue(xades.CanRead);
             }
 
-
             [TestMethod]
             public async Task GetsPadesSuccessfully()
             {
@@ -99,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private static StatusReference GetStatusReference()
         {
-            Uri url = null;
+            Uri url;
 
             switch (ClientType)
             {

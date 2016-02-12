@@ -41,36 +41,29 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 Assert.AreEqual(0, differences.Count());
             }
 
-                        [TestMethod]
-            public void ConvertsManifestSuccessfully()
+            [TestMethod]
+            public void ConvertsManifestWithoutAvailabilitySuccessfully()
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                const string documentSubject = "Subject";
-                const string documentMessage = "Message";
-                const string documentFileName = "Filename.pdf";
-                byte[] pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes();
-                var personalIdentificationNumber = "12345678901";
-                var expectedMimeType = "application/pdf";
-                var signers = DomainUtility.GetSigners(2);
 
-                var source = new PortalManifest(
-                    new Sender(organizationNumberSender),
-                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
-                    signers
-                    );
-
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2));
+                
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender() { organizationnumber = organizationNumberSender },
                     document = new document
                     {
-                        title = documentSubject,
-                        description = documentMessage,
-                        href = documentFileName,
-                        mime = expectedMimeType
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
-                    //signer = new signer { personalidentificationnumber = personalIdentificationNumber}
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    }
                 };
 
                 //Act
@@ -83,7 +76,140 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 Assert.AreEqual(0, differences.Count());
             }
 
+            [TestMethod]
+            public void ConvertsManifestWithOnlyExpirationAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
 
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                {
+                    Availability = new Availability()
+                    {
+                        Expiration = DateTime.Now.AddHours(22)
+                    }
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        expirationtime = source.Availability.Expiration.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithOnlyActiviationAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                {
+                    Availability = new Availability()
+                    {
+                        Activation = DateTime.Now.AddHours(22)
+                    }
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        activationtime = source.Availability.Activation.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                {
+                    Availability = DomainUtility.GetAvailability()
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new []
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber}, 
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        activationtime = source.Availability.Activation.Value,
+                        expirationtime = source.Availability.Expiration.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
         }
 
         [TestClass]

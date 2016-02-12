@@ -175,5 +175,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));
         }
+
+        public static Availability GetAvailability()
+        {
+            return new Availability()
+            {
+                Activation = DateTime.Now.AddHours(2),
+                Expiration = DateTime.Now.AddDays(3)
+            };
+        }
     }
 }

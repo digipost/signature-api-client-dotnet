@@ -18,6 +18,25 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             DifiTest
         }
 
+        protected static Uri GetUriFromRelativePath(string relativeUri)
+        {
+            Uri result = null;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    result = new Uri(Localhost, relativeUri);
+                    break;
+                case Client.DifiTest:
+                    result = new Uri(DifitestSigneringPostenNo, relativeUri);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return result;
+        }
+
         protected Uri MorphLocalhostForVm(Uri uri)
         {
             return new Uri(Localhost, uri.AbsolutePath);

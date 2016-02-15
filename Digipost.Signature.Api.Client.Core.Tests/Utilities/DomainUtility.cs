@@ -51,9 +51,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new DirectJob(GetDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
-        public static PortalJob GetPortalJob()
+        public static PortalJob GetPortalJob(int signers)
         {
-            return new PortalJob(GetDocument(), GetSigners(3), "PortalJobReference");
+            return new PortalJob(GetDocument(), GetSigners(signers), "PortalJobReference");
         }
 
         public static Document GetDocument()

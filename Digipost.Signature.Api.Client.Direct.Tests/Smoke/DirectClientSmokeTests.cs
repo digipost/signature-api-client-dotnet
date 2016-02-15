@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests : SmokeTests
     {
-        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/78/status";
+        private const string LocalhostRelativeStatusUrl = "/api/988015814/direct/signature-jobs/82/status";
         private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
         
         [TestClass]

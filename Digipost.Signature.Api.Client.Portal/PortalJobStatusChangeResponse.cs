@@ -9,8 +9,6 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public JobStatus Status { get; set; }
 
-        public JobStatus Type { get; internal set; }
-
         public ConfirmationReference ConfirmationReference { get; internal set; }
 
         public PadesReference PadesReference { get; internal set; }

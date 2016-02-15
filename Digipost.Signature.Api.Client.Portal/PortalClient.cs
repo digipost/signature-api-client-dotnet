@@ -32,29 +32,25 @@ namespace Digipost.Signature.Api.Client.Portal
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
             var requestResult = await HttpClient.GetAsync(_subPath);
-            var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(await requestResult.Content.ReadAsStringAsync());
+            var requestContent = await requestResult.Content.ReadAsStringAsync();
+            var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
 
             return DataTransferObjectConverter.FromDataTransferObject(deserialized);
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            throw new NotImplementedException();
-
-            //return await HttpClient.GetStreamAsync(xadesReference.XadesUri);
+            return await HttpClient.GetStreamAsync(xadesReference.Url);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            throw new NotImplementedException();
-
-            //return await HttpClient.GetStreamAsync(padesReference.PadesUri);
+            return await HttpClient.GetStreamAsync(padesReference.Url);
         }
 
-        public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
+        public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            throw new NotImplementedException();
-            //return await HttpClient.PostAsync(confirmationReference.ConfirmationUri, content: null);
+            var requestResult = await HttpClient.PostAsync(confirmationReference.Url, content: null);
         }
     }
 }

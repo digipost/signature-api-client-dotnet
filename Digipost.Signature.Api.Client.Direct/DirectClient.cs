@@ -54,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Direct
             return await HttpClient.PostAsync(confirmationReference.Url, content: null);
         }
 
-        internal async Task DevModeSign(int jobId)
+        internal async Task AutoSign(long jobId)
         {
             var url = new Uri(string.Format("/web/signature-jobs/{0}/devmodesign", jobId), UriKind.Relative);
             var requestResult = await HttpClient.PostAsync(url, content: null);

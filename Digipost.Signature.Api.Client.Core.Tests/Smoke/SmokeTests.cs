@@ -36,12 +36,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 
             return result;
         }
-
-        protected Uri MorphLocalhostForVm(Uri uri)
-        {
-            return new Uri(Localhost, uri.AbsolutePath);
-        }
-
+        
         protected static DirectClient GetDirectClient()
         {
             DirectClient client;

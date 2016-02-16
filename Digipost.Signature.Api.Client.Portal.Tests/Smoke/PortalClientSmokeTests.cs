@@ -56,7 +56,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                         var uri = GetUriFromRelativePath(statusChange.ConfirmationReference.Url.AbsolutePath);
                         portalClient.Confirm(new ConfirmationReference(uri)).Wait();
                     }
-
                 }
 
                 return portalJobStatusChangeResponse;

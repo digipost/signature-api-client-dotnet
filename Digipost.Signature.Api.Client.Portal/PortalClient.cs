@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -50,7 +49,14 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            var requestResult = await HttpClient.PostAsync(confirmationReference.Url, content: null);
+            await HttpClient.PostAsync(confirmationReference.Url, content: null);
         }
+
+        internal async Task AutoSign(int jobId, string signer)
+        {
+            var url = new Uri(string.Format("/web/portal/signature-jobs/{0}/devmodesign?signer={1}", jobId, signer), UriKind.Relative);
+            await HttpClient.PostAsync(url, content: null);
+        }
+
     }
 }

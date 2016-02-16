@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
@@ -12,42 +12,54 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
     [TestClass]
     public class PortalClientSmokeTests : SmokeTests
     {
-        private const string RelativeCompleteUrl = "/api/988015814/portal/signature-jobs/48/complete";
-        private const string RelativePadesUrl = "/api/988015814/portal/signature-jobs/50/pades";
-        private const string RelativeXadesUrl = "/api/988015814/portal/signature-jobs/50/xades/57";
-        private static readonly string DifitestSigneringPostenNoRelativeStatusUrl = "/api/signature-jobs/59/status";
-
+        
+        private static XadesReference _xadesReference;
+        private static PadesReference _padesReference;
+        private static ConfirmationReference _confirmationReference;
+        
         [TestClass]
         public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
         {
-            [TestMethod]
-            public async Task CreatesSuccessfully()
+            [ClassInitialize]
+            public static void ClassInitialize(TestContext context)
             {
-                //Arrange
                 var portalClient = GetPortalClient();
                 var portalJob = DomainUtility.GetPortalJob(signers: 1);
+
+                var portalJobResponse = portalClient.Create(portalJob).Result;
+
+                var signer = portalJob.Signers.ElementAt(0);
+                portalClient.AutoSign((int)portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
+
+                var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
                 
+                
+                Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
 
-                //Act
-                var result = await portalClient.Create(portalJob);
-
-                //Assert
-                Assert.IsNotNull(result.JobId);
+                _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
+                _padesReference = new PadesReference(GetUriFromRelativePath(jobStatusChangeResponse.PadesReference.Url.AbsolutePath));
+                _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(jobStatusChangeResponse.ConfirmationReference.Url.AbsolutePath));
             }
 
-            //[Ignore] //Because will only be tested when a change actually happens.
-            [TestMethod]
-            public async Task GetsStatusSuccessfully()
+            private static PortalJobStatusChangeResponse GetCurrentReceipt(long jobId,  PortalClient portalClient)
             {
-                //Arrange
-                var portalClient = GetPortalClient();
+                PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
+                while (portalJobStatusChangeResponse == null)
+                {
+                    var statusChange = portalClient.GetStatusChange().Result;
+                    if (statusChange.JobId == jobId)
+                    {
+                        portalJobStatusChangeResponse = statusChange;
+                    }
+                    else
+                    {
+                        var uri = GetUriFromRelativePath(statusChange.ConfirmationReference.Url.AbsolutePath);
+                        portalClient.Confirm(new ConfirmationReference(uri)).Wait();
+                    }
 
-                //Act
-                var status = await portalClient.GetStatusChange();
+                }
 
-                //Assert
-                Assert.AreEqual(JobStatus.Completed,status.Status);
-
+                return portalJobStatusChangeResponse;
             }
 
             [TestMethod]
@@ -55,12 +67,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 //Arrange
                 var portalClient = GetPortalClient();
-                var xadesReference = new XadesReference(GetUriFromRelativePath(RelativeXadesUrl));
 
                 //Act
-                var xades = await portalClient.GetXades(xadesReference);
-
+                var xades = await portalClient.GetXades(_xadesReference);
                 //await WriteXadesToFile(portalClient, xadesReference);
+                
                 //Assert
             }
 
@@ -83,11 +94,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 //Arrange
                 var portalClient = GetPortalClient();
-                var padesReference = new PadesReference(GetUriFromRelativePath(RelativePadesUrl));
-
-                var pades = portalClient.GetPades(padesReference);
 
                 //Act
+                var pades = portalClient.GetPades(_padesReference);
                 //await WritePadesToFile(portalClient, padesReference);
 
                 //Assert
@@ -110,13 +119,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 //Arrange
                 var portalClient = GetPortalClient();
-                var confirmationReference = new ConfirmationReference(GetUriFromRelativePath(RelativeCompleteUrl));
-
+                
                 //Act
-                await portalClient.Confirm(confirmationReference);
+                await portalClient.Confirm(_confirmationReference);
 
                 //Assert
             }
+
+
         }
     }
 }

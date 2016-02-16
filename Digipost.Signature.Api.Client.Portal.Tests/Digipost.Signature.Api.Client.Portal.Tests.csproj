@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -63,6 +64,7 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Internal\AsicE\PortalManifestTests.cs" />
+    <Compile Include="PortalClientWithAutoSign.cs" />
     <Compile Include="PortalJobResponseTests.cs" />
     <Compile Include="PortalJobStatusChangeResponseTests.cs" />
     <Compile Include="PortalJobTests.cs" />

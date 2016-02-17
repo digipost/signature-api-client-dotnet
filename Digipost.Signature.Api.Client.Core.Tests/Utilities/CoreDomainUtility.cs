@@ -4,33 +4,15 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
-using Digipost.Signature.Api.Client.Direct;
-using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using JobStatus = Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
-    public static class DomainUtility
+    public static class CoreDomainUtility
     {
         static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
-
-        internal static SignatureGenerator GetSignature()
-        {
-            return new SignatureGenerator(GetTestCertificate(), GetDocument(), GetDirectManifest());
-        } 
-
-        internal static DirectManifest GetDirectManifest()
-        {
-            return new DirectManifest(
-                GetSender(),
-                GetDocument(),
-                GetSigner()
-                );
-        }
-
+        
         internal static PortalManifest GetPortalManifest()
         {
             return new PortalManifest(
@@ -39,16 +21,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 GetSigners(3)
                 );
         }
-
-
+        
         public static ClientConfiguration GetClientConfiguration()
         {
             return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetTestCertificate());
-        }
-
-        public static DirectJob GetDirectJob()
-        {
-            return new DirectJob(GetDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
         public static PortalJob GetPortalJob(int signers)
@@ -114,64 +90,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), password: "", keyStorageFlags: X509KeyStorageFlags.Exportable);
         }
-
-        public static DirectJobStatusResponse GetDirectJobStatusResponse()
-        {
-            var jobId = 22;
-            var jobStatus = JobStatus.Cancelled;
-            var statusResponseUrls = GetJobReferences();
-
-            return new DirectJobStatusResponse(
-                jobId,
-                jobStatus,
-                statusResponseUrls
-            );
-        }
-
-        public static ResponseUrls GetResponseUrls()
-        {
-            var redirectUrl = new Uri("http://responseurl.no");
-            var statusUrl = new Uri("http://statusurl.no");
-
-
-            return new ResponseUrls(
-                redirectUrl,
-                statusUrl
-                );
-        }
-
-        public static ExitUrls GetExitUrls()
-        {
-            var completionUrl = new Uri("http://localhost/completion");
-            var cancellationUrl = new Uri("http://localhost/cancellation");
-            var errorUrl = new Uri("http://localhost/error");
-
-            return new ExitUrls(completionUrl, cancellationUrl, errorUrl);
-        }
-
-        public static Uri GetSignatureResponseObjects(){
-            return new Uri("http://signatureServiceRoot.Digipost.no");
-        }
-
-        public static DirectJobResponse GetDirectJobResponse()
-        {
-            var jobId = 123456789;
-            var responseUrls = GetResponseUrls();
-
-            return new DirectJobResponse(
-                jobId,
-                responseUrls
-                );
-        }
-
-        public static JobReferences GetJobReferences()
-        {
-            return new JobReferences(
-                new Uri("http://signatureRoot.digipost.no/confirmation"),
-                new Uri("http://signatureRoot.digipost.no/xades"),
-                new Uri("http://signatureRoot.digipost.no/pades"));
-        }
-
+        
         public static Availability GetAvailability()
         {
             return new Availability()

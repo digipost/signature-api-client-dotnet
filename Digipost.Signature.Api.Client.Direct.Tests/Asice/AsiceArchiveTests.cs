@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Core.Tests.Asice
+namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
 {
     [TestClass]
     public class AsiceArchiveTests
@@ -18,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
             public void SimpleConstructorGeneratesBytes()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), DomainUtility.GetDocument());
+                var asiceArchive = new AsiceArchive(DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), Core.Tests.Utilities.CoreDomainUtility.GetDocument());
 
                 //Act
                 var archiveBytes = asiceArchive.Bytes;

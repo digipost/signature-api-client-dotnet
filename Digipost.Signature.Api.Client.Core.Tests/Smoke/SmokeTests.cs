@@ -1,7 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct;
-using Digipost.Signature.Api.Client.Portal;
+using Digipost.Signature.Api.Client.Portal; 
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -48,33 +47,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             return result;
         }
         
-        protected static DirectClient GetDirectClient()
-        {
-            DirectClient client;
-
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    client = DirectClient(Localhost);
-                    break;
-                case Client.DifiTest:
-                    client = DirectClient(DifitestSigneringPostenNo);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return client;
-        }
-
-        private static DirectClient DirectClient(Uri uri)
-        {
-            var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(uri, sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new DirectClient(clientConfig);
-            return client;
-        }
-
         protected static PortalClient GetPortalClient()
         {
             PortalClient client;
@@ -97,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
         private static PortalClient GetPortalClient(Uri uri)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(uri, sender, DomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
             var client = new PortalClient(clientConfig);
             return client;
         }

@@ -4,6 +4,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
@@ -18,10 +19,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void InitializesClassAndParentProperties()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
-                var document = DomainUtility.GetDocument();
-                var enumerable = DomainUtility.GetSigner();
-                var businessCertificate = DomainUtility.GetTestCertificate();
+                var sender = CoreDomainUtility.GetSender();
+                var document = CoreDomainUtility.GetDocument();
+                var enumerable = CoreDomainUtility.GetSigner();
+                var businessCertificate = CoreDomainUtility.GetTestCertificate();
                 var directJob = DomainUtility.GetDirectJob();
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 

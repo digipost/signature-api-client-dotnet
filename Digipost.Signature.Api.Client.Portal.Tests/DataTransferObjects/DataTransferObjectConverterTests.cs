@@ -23,8 +23,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalJobSuccessfully()
             {
                 //Arrange
-                var document = DomainUtility.GetDocument();
-                var signers = DomainUtility.GetSigners(2);
+                var document = CoreDomainUtility.GetDocument();
+                var signers = CoreDomainUtility.GetSigners(2);
                 var reference = "reference";
                 var source = new PortalJob(document, signers, reference);
 
@@ -49,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2));
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2));
                 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -84,7 +84,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = new Availability()
                     {
@@ -130,7 +130,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = new Availability()
                     {
@@ -176,9 +176,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
                 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetDocument(), DomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
-                    Availability = DomainUtility.GetAvailability()
+                    Availability = CoreDomainUtility.GetAvailability()
                 };
 
                 var expected = new portalsignaturejobmanifest

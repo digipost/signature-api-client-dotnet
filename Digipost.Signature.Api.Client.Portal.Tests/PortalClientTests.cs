@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ReturnsNullOnEmptyQueue()
             {
                 //Arrange
-                var portalClient = new PortalClient(DomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
                 };
@@ -36,7 +36,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ReturnsPortalJobStatusChangeOnOkResponse()
             {
                 //Arrange
-                var portalClient = new PortalClient(DomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsExceptionOnTooManyRequests()
             {
                 //Arrange
-                var portalClient = new PortalClient(DomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
                 };
@@ -72,7 +72,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsUnexpectedExceptionWithErrorClassOnUnexpectedError()
             {
                 //Arrange
-                var portalClient = new PortalClient(DomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHanderForErrorResponse())
                 };
@@ -88,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsBrokerNotAuthorizedExceptionOnNotAuthorized()
             {
                 //Arrange
-                var portalClient = new PortalClient(DomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse())
                 };

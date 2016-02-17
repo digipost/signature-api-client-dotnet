@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var clientConfiguration = DomainUtility.GetClientConfiguration();
+                var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
          
                 //Act
                 var client = new DirectClient(clientConfiguration);

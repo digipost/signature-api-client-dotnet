@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
@@ -14,6 +15,34 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         private static ConfirmationReference _confirmationReference;
         private static XadesReference _xadesReference;
         private static PadesReference _padesReference;
+
+        protected static DirectClient GetDirectClient()
+        {
+            DirectClient client;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    client = DirectClient(Localhost);
+                    break;
+                case Client.DifiTest:
+                    client = DirectClient(DifitestSigneringPostenNo);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return client;
+        }
+
+        private static DirectClient DirectClient(Uri uri)
+        {
+            var sender = new Sender("988015814");
+            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var client = new DirectClient(clientConfig);
+            return client;
+        }
+
 
         [TestClass]
         public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests

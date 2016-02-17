@@ -76,9 +76,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Asice\AsiceArchiveTests.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
-    <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
@@ -91,7 +89,7 @@
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
     <Compile Include="Utilities\CompareObjects\IComparator.cs" />
     <Compile Include="Utilities\CompareObjects\IDifference.cs" />
-    <Compile Include="Utilities\DomainUtility.cs" />
+    <Compile Include="Utilities\CoreDomainUtility.cs" />
     <Compile Include="PadesReferenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignerTests.cs" />
@@ -111,10 +109,6 @@
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj">
-      <Project>{fc8fc326-4bc7-43b8-a56e-1bbdccc820d5}</Project>
-      <Name>Digipost.Signature.Api.Client.Direct</Name>
     </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj">
       <Project>{d03be351-ca1f-4aac-968a-d3a0d8cd5197}</Project>

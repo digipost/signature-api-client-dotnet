@@ -25,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
-                var portalJob = DomainUtility.GetPortalJob(signers: 1);
+                var portalJob = CoreDomainUtility.GetPortalJob(signers: 1);
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 

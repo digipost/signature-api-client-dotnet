@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
@@ -21,8 +21,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             [TestMethod]
             public void ConvertsDirectJobSuccessfully()
             {
-                var document = DomainUtility.GetDocument();
-                var signer = DomainUtility.GetSigner();
+                var document = Core.Tests.Utilities.CoreDomainUtility.GetDocument();
+                var signer = Core.Tests.Utilities.CoreDomainUtility.GetSigner();
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();
 
@@ -176,13 +176,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const string documentSubject = "Subject";
                 const string documentMessage = "Message";
                 const string documentFileName = "Filename.pdf";
-                Func<byte[]> pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes;
+                byte[] pdfDocumentBytes = Core.Tests.Utilities.CoreDomainUtility.GetPdfDocumentBytes();
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
                 var source = new DirectManifest(
                     new Sender(organizationNumberSender),
-                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes()),
+                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
                     new Signer(personalIdentificationNumber)
                     );
 

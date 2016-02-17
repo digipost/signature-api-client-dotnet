@@ -1,5 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 

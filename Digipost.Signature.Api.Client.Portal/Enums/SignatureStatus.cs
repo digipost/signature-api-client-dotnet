@@ -1,4 +1,4 @@
-﻿namespace Digipost.Signature.Api.Client.Portal
+﻿namespace Digipost.Signature.Api.Client.Portal.Enums
 {
     public enum SignatureStatus
     {

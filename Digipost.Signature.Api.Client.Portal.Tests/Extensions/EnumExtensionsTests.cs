@@ -1,4 +1,6 @@
-﻿using Digipost.Signature.Api.Client.Portal.Extensions;
+﻿using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
+using Digipost.Signature.Api.Client.Portal.Enums;
+using Digipost.Signature.Api.Client.Portal.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Extensions

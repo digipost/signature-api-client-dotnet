@@ -34,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>digipost.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -65,9 +65,6 @@
     <Compile Include="Signature.cs" />
     <Compile Include="Enums\SignatureStatus.cs" />
     <Compile Include="TooEagerPollingException.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="digipost.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">

@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const FileType fileType = FileType.Pdf;
                 const string expectedMimeType = "application/pdf";
                 
-                var pdfDocumentBytes = DomainUtility.GetPdfDocumentBytes();
+                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
 
                 //Act
                 var document = new Document(
@@ -93,7 +93,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var id = "Id_0";
 
                 //Act
-                var document = DomainUtility.GetDocument();
+                var document = CoreDomainUtility.GetDocument();
 
                 //Assert
                 Assert.AreEqual(id, document.Id);

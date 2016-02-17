@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
-        protected CreateAction(Sender sender, IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, Sender, string> serializeFunc) : base(sender, job, serializeFunc)
+        protected CreateAction(IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, string> serializeFunc) : base(job, serializeFunc)
         {
             _documentBundle = documentBundle;
         }

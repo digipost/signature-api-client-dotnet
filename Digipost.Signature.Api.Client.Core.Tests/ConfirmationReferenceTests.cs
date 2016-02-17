@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var confirmationReference = new ConfirmationReference(confirmationUri);
 
                 //Assert
-                Assert.AreEqual(confirmationUri, confirmationReference.ConfirmationUri);
+                Assert.AreEqual(confirmationUri, confirmationReference.Url);
             }
         }
     }

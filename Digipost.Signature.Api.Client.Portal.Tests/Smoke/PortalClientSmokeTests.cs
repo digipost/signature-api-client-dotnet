@@ -1,62 +1,159 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Portal.Enums;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     [TestClass]
-    public class PortalClientSmokeTests
+    public class PortalClientSmokeTests : SmokeTests
     {
-        [TestClass]
-        public class CreateMethod : PortalClientSmokeTests
+        
+        private static XadesReference _xadesReference;
+        private static PadesReference _padesReference;
+        private static ConfirmationReference _confirmationReference;
+
+        protected static PortalClient GetPortalClient()
         {
+            PortalClient client;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    client = GetPortalClient(Localhost);
+                    break;
+                case Client.DifiTest:
+                    client = GetPortalClient(DifitestSigneringPostenNo);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return client;
+        }
+
+        private static PortalClient GetPortalClient(Uri uri)
+        {
+            var sender = new Sender("988015814");
+            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var client = new PortalClient(clientConfig);
+            return client;
+        }
+
+        [TestClass]
+        public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
+        {
+            [ClassInitialize]
+            public static void CreateAndGetStatus(TestContext context)
+            {
+                var portalClient = GetPortalClient();
+                var portalJob = DomainUtility.GetPortalJob(signers: 1);
+
+                var portalJobResponse = portalClient.Create(portalJob).Result;
+
+                var signer = portalJob.Signers.ElementAt(0);
+                portalClient.AutoSign((int)portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
+                
+                var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
+                
+                Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
+
+                _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
+                _padesReference = new PadesReference(GetUriFromRelativePath(jobStatusChangeResponse.PadesReference.Url.AbsolutePath));
+                _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(jobStatusChangeResponse.ConfirmationReference.Url.AbsolutePath));
+            }
+
+            private static PortalJobStatusChangeResponse GetCurrentReceipt(long jobId,  PortalClient portalClient)
+            {
+                PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
+                while (portalJobStatusChangeResponse == null)
+                {
+                    var statusChange = portalClient.GetStatusChange().Result;
+                    if (statusChange.JobId == jobId)
+                    {
+                        portalJobStatusChangeResponse = statusChange;
+                    }
+                    else
+                    {
+                        var uri = GetUriFromRelativePath(statusChange.ConfirmationReference.Url.AbsolutePath);
+                        portalClient.Confirm(new ConfirmationReference(uri)).Wait();
+                    }
+                }
+
+                return portalJobStatusChangeResponse;
+            }
+
             [TestMethod]
-            public async Task SendsCreateSuccessfullyToDifiTest()
+            public async Task GetsXadesSuccessfully()
             {
                 //Arrange
-                var portalClient = PortalClientDifiTest();
-                var portalJob = DomainUtility.GetPortalJob();
-                var result = await portalClient.Create(portalJob);
+                var portalClient = GetPortalClient();
+
+                //Act
+                var xades = await portalClient.GetXades(_xadesReference);
+                //await WriteXadesToFile(portalClient, xadesReference);
+                
+                //Assert
+            }
+
+
+            private static async Task WriteXadesToFile(PortalClient portalClient, XadesReference xadesReference)
+            {
+                using (var xadesStream = await portalClient.GetXades(xadesReference))
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        xadesStream.CopyTo(memoryStream);
+                        File.WriteAllBytes(@"C:\Users\aas\Downloads\xades.xml", memoryStream.ToArray());
+                    }
+                }
+                
+            }
+
+            [TestMethod]
+            public async Task GetsPadesSuccessfully()
+            {
+                //Arrange
+                var portalClient = GetPortalClient();
+
+                //Act
+                var pades = portalClient.GetPades(_padesReference);
+                //await WritePadesToFile(portalClient, padesReference);
+
+                //Assert
+            }
+
+            private static async Task WritePadesToFile(PortalClient portalClient, PadesReference padesReference)
+            {
+                using (var padesStream = await portalClient.GetPades(padesReference))
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        padesStream.CopyTo(memoryStream);
+                        File.WriteAllBytes(@"C:\Users\aas\Downloads\pades.pdf", memoryStream.ToArray());
+                    }
+                }
+            }
+
+            [TestMethod]
+            public async Task ConfirmsSuccessfully()
+            {
+                //Arrange
+                var portalClient = GetPortalClient();
                 
                 //Act
+                await portalClient.Confirm(_confirmationReference);
 
                 //Assert
-                Assert.IsNotNull(result.JobId);
             }
 
-            [TestMethod]
-            public async Task SendsGetStatusChangeSuccessfullyToDifiTest()
-            {
-                //Arrange
-                var portalClient = PortalClientDifiTest();
-                var result = await portalClient.GetStatusChange();
-
-                //Act
-
-                //Assert
-                //Assert.IsNotNull(result.JobId);
-            }
 
         }
-
-        private static PortalClient PortalClientDifiTest()
-        {
-            var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(new Uri("https://api.difitest.signering.posten.no"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new PortalClient(clientConfig);
-            return client;
-        }
-
-        private static PortalClient PortalClientLocalhost()
-        {
-            var sender = new Sender("983163327");
-            var clientConfig = new ClientConfiguration(new Uri("https://172.16.91.1:8443"), sender, DomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new PortalClient(clientConfig);
-            return client;
-        }
-
     }
 }

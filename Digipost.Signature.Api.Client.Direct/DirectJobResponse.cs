@@ -11,14 +11,6 @@
             JobId = jobId;
             ResponseUrls = responseUrls;
         }
-
-        public StatusReference StatusReference
-        {
-            get
-            {
-                return new StatusReference(ResponseUrls.Status);
-            }
-        }
     }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -23,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     {
                         SignatureStatus = SignatureStatus.Signed,
                         Signer = new Signer("123456789"),
-                        XadesReference = new XadesReference(new Uri("http;//xadesuri1.no"))
+                        XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {

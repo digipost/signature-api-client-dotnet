@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
 
                 //Assert
-                Assert.AreEqual(url, reference.XadesUri);
+                Assert.AreEqual(url, reference.Url);
             } 
         }
     }

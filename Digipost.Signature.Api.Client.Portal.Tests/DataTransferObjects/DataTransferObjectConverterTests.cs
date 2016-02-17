@@ -4,8 +4,12 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
+using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
@@ -20,28 +24,18 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalJobSuccessfully()
             {
                 //Arrange
-                var sender = DomainUtility.GetSender();
-                var document = DomainUtility.GetDocument();
-                var signers = DomainUtility.GetSigners(2);
+                var document = CoreDomainUtility.GetDocument();
+                var signers = CoreDomainUtility.GetSigners(2);
                 var reference = "reference";
                 var source = new PortalJob(document, signers, reference);
 
                 var expected = new portalsignaturejobrequest
                 {
-                    reference = reference,
-                    sender = new sender
-                    {
-                        organization = sender.OrganizationNumber
-                    },
-                    signers = new List<signer>
-                    {
-                        new signer { personalidentificationnumber = signers.ElementAt(0).PersonalIdentificationNumber },
-                        new signer { personalidentificationnumber = signers.ElementAt(1).PersonalIdentificationNumber }
-                    }.ToArray()
+                    reference = reference
                 };
                 
                 //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source, sender);
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
 
                 //Assert
                 var comparator = new Comparator();
@@ -50,6 +44,175 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 Assert.AreEqual(0, differences.Count());
             }
 
+            [TestMethod]
+            public void ConvertsManifestWithoutAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2));
+                
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender() { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithOnlyExpirationAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                {
+                    Availability = new Availability()
+                    {
+                        Expiration = DateTime.Now.AddHours(22)
+                    }
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        expirationtime = source.Availability.Expiration.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithOnlyActiviationAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                {
+                    Availability = new Availability()
+                    {
+                        Activation = DateTime.Now.AddHours(22)
+                    }
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        activationtime = source.Availability.Activation.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithAvailabilitySuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                {
+                    Availability = DomainUtility.GetAvailability()
+                };
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender { organizationnumber = organizationNumberSender },
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new []
+                    {
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber}, 
+                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                    },
+                    availability = new availability()
+                    {
+                        activationtime = source.Availability.Activation.Value,
+                        expirationtime = source.Availability.Expiration.Value
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
         }
 
         [TestClass]

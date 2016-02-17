@@ -4,11 +4,11 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public class PadesReference
     {
-        public Uri PadesUri { get; }
+        public Uri Url { get; }
 
-        public PadesReference(Uri padesUri)
+        public PadesReference(Uri url)
         {
-            PadesUri = padesUri;
+            Url = url;
         }
     }
 }

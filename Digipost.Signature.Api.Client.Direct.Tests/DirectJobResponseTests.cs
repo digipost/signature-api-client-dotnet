@@ -1,6 +1,7 @@
 ﻿
 using System;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
@@ -27,22 +28,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Assert
                 Assert.AreEqual(jobId,directJobResponse.JobId);
                 Assert.AreEqual(responseUrls, directJobResponse.ResponseUrls);
-            }
-        }
-
-        [TestClass]
-        public class DirectJobReferenceMethod : DirectJobResponseTests
-        {
-            [TestMethod]
-            public void ReturnsJobReferenceWithStatusUrl()
-            {
-                //Arrange
-                var directJobResponse = DomainUtility.GetDirectJobResponse();
-
-                //Act
-                
-                //Assert
-                Assert.AreEqual(directJobResponse.ResponseUrls.Status, directJobResponse.StatusReference.Reference);
             }
         }
     }

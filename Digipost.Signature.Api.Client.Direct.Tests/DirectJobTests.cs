@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var id = "IdDirectJob";
                 var signer = new Signer("01013300001");
-                var document = DomainUtility.GetDocument();
+                var document = CoreDomainUtility.GetDocument();
                 var exitUrls = new ExitUrls(
                     new Uri("http://localhost.completed"), 
                     new Uri("http://localhost.cancelled"),

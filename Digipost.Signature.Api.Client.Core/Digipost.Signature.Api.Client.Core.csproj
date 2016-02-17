@@ -76,23 +76,19 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceArchive.cs" />
-    <Compile Include="Asice\AsiceGenerator.cs" />
-    <Compile Include="Asice\AsiceManifest\Manifest.cs" />
-    <Compile Include="Asice\DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="Asice\DataTransferObjects\ManifestDataTranferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\PersonDataTransferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\DocumentDataTransferObject.cs" />
-    <Compile Include="Asice\DataTransferObjects\SenderDataTransferObject.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />
+    <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Exceptions\BrokerNotAuthorizedException.cs" />
+    <Compile Include="Exceptions\UnexpectedResponseException.cs" />
     <Compile Include="Internal\CreateAction.cs" />
-    <Compile Include="Internal\DigipostAction.cs" />
+    <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHttpHandler.cs" />
     <Compile Include="Signer.cs" />
-    <Compile Include="Asice\DataTransferObjects\SignerDataTranferObject.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
@@ -111,32 +107,16 @@
     <Compile Include="Extensions\FileTypeExtensions.cs" />
     <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xsd\SignatureValidator.cs" />
+    <Compile Include="Internal\SignatureValidator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Xsd\common.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct-and-portal.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\direct.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\portal-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\portal.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\signature-document.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Xsd\Thirdparty\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>

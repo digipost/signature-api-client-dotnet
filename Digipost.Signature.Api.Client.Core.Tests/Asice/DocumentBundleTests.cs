@@ -1,7 +1,7 @@
 ﻿using Digipost.Signature.Api.Client.Core.Asice;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Direct.Tests
+namespace Digipost.Signature.Api.Client.Core.Tests.Asice
 {
     [TestClass]
     public class DocumentBundleTests

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
@@ -17,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
             public async Task SendsSuccessfully()
             {
                 //Arrange
-                var clientConfiguration = DomainUtility.GetClientConfiguration();
+                var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
                 var directClient = new DirectClient(clientConfiguration)
                 {
                     HttpClient = new HttpClient(new FakeHttpClientHandlerForDirectCreateResponse())
@@ -42,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
             public async Task SendsSuccessfully()
             {
                 //Arrange
-                var clientConfiguration = DomainUtility.GetClientConfiguration();
+                var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
                 var directClient = new DirectClient(clientConfiguration)
                 {
                     HttpClient = new HttpClient(new FakeHttpClientHandlerGetStatusResponse())
@@ -51,10 +52,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                     }
                 };
 
-                var directJobResponse = DomainUtility.GetDirectJobResponse();
+                var directJobResponse = Utilities.DomainUtility.GetDirectJobResponse();
 
                 //Act
-                var result = await directClient.GetStatus(directJobResponse.StatusReference);
+                var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status);
 
                 //Assert
                 Assert.IsNotNull(result.JobId);

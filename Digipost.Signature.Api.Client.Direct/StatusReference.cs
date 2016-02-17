@@ -4,11 +4,11 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class StatusReference
     {
-        public Uri Reference { get; set; }
+        public Uri Url { get; internal set; }
 
-        public StatusReference(Uri reference)
+        public StatusReference(Uri url)
         {
-            Reference = reference;
+            Url = url;
         }
     }
 }

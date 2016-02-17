@@ -4,11 +4,11 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public class XadesReference
     {
-        public Uri XadesUri { get; }
+        public Uri Url { get; }
 
-        public XadesReference(Uri xadesUri)
+        public XadesReference(Uri url)
         {
-            XadesUri = xadesUri;
+            Url = url;
         }
     }
 }

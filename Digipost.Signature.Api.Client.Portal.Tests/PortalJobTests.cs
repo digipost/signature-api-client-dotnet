@@ -13,8 +13,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var document = DomainUtility.GetDocument();
-                var signers = DomainUtility.GetSigners(3);
+                var document = CoreDomainUtility.GetDocument();
+                var signers = CoreDomainUtility.GetSigners(3);
                 var reference = "PortalJobReference";
                 var portalJob = new PortalJob(document, signers, reference);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,8 +16,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
-                var sender = DomainUtility.GetSender();
-                var x509Certificate = DomainUtility.GetTestCertificate();
+                var sender = CoreDomainUtility.GetSender();
+                var x509Certificate = CoreDomainUtility.GetTestCertificate();
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(
@@ -33,13 +32,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
             }
 
-            [Ignore] //Cannot get certificates on TeamCity server. Cannot verify as RDP is down. Disabled for release.
             [TestMethod]
             public void ConstructorWithCertificateThumbprint()
             {
                 //Arrange
                 var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
-                var sender = DomainUtility.GetSender();
+                var sender = CoreDomainUtility.GetSender();
 
                 var aCertificateFromCertificateStore = GetFirstCertificateFromCurrentUserStore();
 

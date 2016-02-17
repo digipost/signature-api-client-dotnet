@@ -37,10 +37,6 @@
     <AssemblyOriginatorKeyFile>digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,11 +50,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Availability.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="DataTransferObjects\portal-signature-job.cs">
-      <DependentUpon>portal-signature-job.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Internal\AsicE\AsiceGenerator.cs" />
+    <Compile Include="Internal\AsicE\PortalManifest.cs" />
     <Compile Include="Internal\PortalCreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="PortalClient.cs" />
@@ -68,18 +64,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signature.cs" />
     <Compile Include="Enums\SignatureStatus.cs" />
+    <Compile Include="TooEagerPollingException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataTransferObjects\portal-signature-job.xsd">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="digipost.pfx" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2d13f732-6a85-4165-ae2f-a87c09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -23,8 +23,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     );
 
                 //Assert
-                Assert.AreEqual(redirectUrl, responseUrls.Redirect);
-                Assert.AreEqual(statusUrl, responseUrls.Status);
+                Assert.AreEqual(redirectUrl, responseUrls.Redirect.Url);
+                Assert.AreEqual(statusUrl, responseUrls.Status.Url);
             } 
         }
     }

@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+﻿using System;
+using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -9,6 +10,20 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         internal static SignatureGenerator GetSignature()
         {
             return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.GetDocument(), GetPortalManifest());
+        }
+
+        public static Availability GetAvailability()
+        {
+            return new Availability()
+            {
+                Activation = DateTime.Now.AddHours(2),
+                Expiration = DateTime.Now.AddDays(3)
+            };
+        }
+
+        public static PortalJob GetPortalJob(int signers)
+        {
+            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference");
         }
 
         internal static PortalManifest GetPortalManifest()

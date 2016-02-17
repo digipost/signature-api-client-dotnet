@@ -9,6 +9,7 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
@@ -178,7 +179,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 
                 var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
-                    Availability = CoreDomainUtility.GetAvailability()
+                    Availability = DomainUtility.GetAvailability()
                 };
 
                 var expected = new portalsignaturejobmanifest

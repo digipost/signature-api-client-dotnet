@@ -3,6 +3,7 @@ using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
@@ -39,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 const string fileName = "manifest.xml";
-                var manifest = CoreDomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
@@ -56,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 const string mimeType = "application/xml";
-                var manifest = CoreDomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
@@ -73,7 +74,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 const string id = "Id_1";
-                var manifest = CoreDomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetPortalManifest();
 
                 //Act
 
@@ -89,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
-                var manifest = CoreDomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetPortalManifest();
                 var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(manifest);
                 var expectedResult = SerializeUtility.Serialize(manifestDataTranferObject);
 

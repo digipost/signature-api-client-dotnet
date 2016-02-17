@@ -6,6 +6,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Enums;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
@@ -17,7 +18,34 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static XadesReference _xadesReference;
         private static PadesReference _padesReference;
         private static ConfirmationReference _confirmationReference;
-        
+
+        protected static PortalClient GetPortalClient()
+        {
+            PortalClient client;
+
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    client = GetPortalClient(Localhost);
+                    break;
+                case Client.DifiTest:
+                    client = GetPortalClient(DifitestSigneringPostenNo);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return client;
+        }
+
+        private static PortalClient GetPortalClient(Uri uri)
+        {
+            var sender = new Sender("988015814");
+            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var client = new PortalClient(clientConfig);
+            return client;
+        }
+
         [TestClass]
         public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
         {
@@ -25,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
-                var portalJob = CoreDomainUtility.GetPortalJob(signers: 1);
+                var portalJob = DomainUtility.GetPortalJob(signers: 1);
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 

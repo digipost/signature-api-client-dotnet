@@ -4,32 +4,16 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
-using Digipost.Signature.Api.Client.Portal;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
     public static class CoreDomainUtility
     {
         static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
-        
-        internal static PortalManifest GetPortalManifest()
-        {
-            return new PortalManifest(
-                GetSender(),
-                GetDocument(),
-                GetSigners(3)
-                );
-        }
-        
+
         public static ClientConfiguration GetClientConfiguration()
         {
             return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetTestCertificate());
-        }
-
-        public static PortalJob GetPortalJob(int signers)
-        {
-            return new PortalJob(GetDocument(), GetSigners(signers), "PortalJobReference");
         }
 
         public static Document GetDocument()
@@ -89,15 +73,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), password: "", keyStorageFlags: X509KeyStorageFlags.Exportable);
-        }
-        
-        public static Availability GetAvailability()
-        {
-            return new Availability()
-            {
-                Activation = DateTime.Now.AddHours(2),
-                Expiration = DateTime.Now.AddDays(3)
-            };
         }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Portal; 
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -45,33 +43,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             }
 
             return result;
-        }
-        
-        protected static PortalClient GetPortalClient()
-        {
-            PortalClient client;
-
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    client = GetPortalClient(Localhost);
-                    break;
-                case Client.DifiTest:
-                    client = GetPortalClient(DifitestSigneringPostenNo);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return client;
-        }
-
-        private static PortalClient GetPortalClient(Uri uri)
-        {
-            var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
-            var client = new PortalClient(clientConfig);
-            return client;
         }
     }
 }

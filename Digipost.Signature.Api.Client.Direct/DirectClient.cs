@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -26,17 +27,34 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
-            var requestResult = await HttpClient.PostAsync(_subPath, createAction.Content());
-            
-            return DirectCreateAction.DeserializeFunc(await requestResult.Content.ReadAsStringAsync());
+
+            var request = new HttpRequestMessage
+            {
+                RequestUri = _subPath,
+                Method = HttpMethod.Post,
+                Content = createAction.Content()
+            };
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            var requestResult = await HttpClient.SendAsync(request);
+            var requestContent = await requestResult.Content.ReadAsStringAsync();
+
+            return DirectCreateAction.DeserializeFunc(requestContent);
         }
 
         public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
         {
-            var response = await HttpClient.GetAsync(statusReference.Url);
-            var content = response.Content.ReadAsStringAsync().Result;
+            var request = new HttpRequestMessage
+            {
+                RequestUri = statusReference.Url,
+                Method = HttpMethod.Get,
+            };
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(content));
+            var requestResult = await HttpClient.SendAsync(request);
+            var requestContent = requestResult.Content.ReadAsStringAsync().Result;
+
+            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

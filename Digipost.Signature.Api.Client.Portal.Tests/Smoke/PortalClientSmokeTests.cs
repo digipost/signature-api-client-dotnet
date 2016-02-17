@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public class RunsEndpointCallsSuccessfully : PortalClientSmokeTests
         {
             [ClassInitialize]
-            public static void ClassInitialize(TestContext context)
+            public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
                 var portalJob = DomainUtility.GetPortalJob(signers: 1);
@@ -30,9 +30,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
                 var signer = portalJob.Signers.ElementAt(0);
                 portalClient.AutoSign((int)portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
-
-                var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
                 
+                var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
                 
                 Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
 

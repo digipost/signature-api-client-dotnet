@@ -40,9 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(_xadesReference);
                 Assert.IsNotNull(_padesReference);
                 Assert.IsNotNull(_confirmationReference);
-
             }
-
 
             [TestMethod]
             public async Task CreatesSuccessfully()
@@ -115,7 +113,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    //Server returns Localhost, exchanges this with actual Localhost address
+                    //Server returns 'ocalhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
                     directJobResponse.References.Xades = new XadesReference(GetUriFromRelativePath(directJobResponse.References.Xades.Url.AbsolutePath));
                     directJobResponse.References.Pades = new PadesReference(GetUriFromRelativePath(directJobResponse.References.Pades.Url.AbsolutePath));
                     directJobResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(directJobResponse.References.Confirmation.Url.AbsolutePath));

@@ -26,12 +26,11 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 sender = ToDataTransferObject(portalManifest.Sender),
                 document = ToDataTransferObject(portalManifest.Document),
                 signers = ToDataTransferObject(portalManifest.Signers).ToArray(),
-                availability = new availability()
             };
 
             if (portalManifest.Availability != null)
             {
-
+                dataTransferObject.availability = new availability();
                 var activationTime = portalManifest.Availability.Activation;
                 var expirationTime = portalManifest.Availability.Expiration;
 

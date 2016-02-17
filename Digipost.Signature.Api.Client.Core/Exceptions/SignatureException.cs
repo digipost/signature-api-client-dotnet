@@ -4,7 +4,7 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
 {
     public class SignatureException : Exception
     {
-        protected SignatureException(string message, Exception innerException)
+        public SignatureException(string message, Exception innerException)
             : base(message, innerException)
         {
         }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<portal-signature-job-status-change-response xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
+	<signature-job-id>155</signature-job-id>
+	<status>COMPLETED</status>
+	<confirmation-url>https://localhost:8443/api/988015814/portal/signature-jobs/155/complete</confirmation-url>
+	<signatures>
+		<signature>
+			<status>SIGNED</status>
+			<personal-identification-number>01013300001</personal-identification-number>
+			<xades-url>https://localhost:8443/api/988015814/portal/signature-jobs/155/xades/162</xades-url>
+		</signature>
+		<pades-url>https://localhost:8443/api/988015814/portal/signature-jobs/155/pades</pades-url>
+	</signatures>
+</portal-signature-job-status-change-response>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<error xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
+	<error-code>BROKER_NOT_AUTHORIZED</error-code>
+	<error-message>Broker is not authorized</error-message>
+	<error-type>CLIENT</error-type>
+</error>

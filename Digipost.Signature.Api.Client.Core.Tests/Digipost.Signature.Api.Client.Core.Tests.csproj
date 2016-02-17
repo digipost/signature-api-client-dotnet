@@ -82,6 +82,7 @@
     <Compile Include="Asice\DocumentBundleTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
+    <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DocumentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="SenderTests.cs" />
@@ -118,6 +119,10 @@
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj">
       <Project>{d03be351-ca1f-4aac-968a-d3a0d8cd5197}</Project>
       <Name>Digipost.Signature.Api.Client.Portal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
+      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
+      <Name>Digipost.Signature.Api.Client.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

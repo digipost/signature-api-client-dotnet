@@ -117,13 +117,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static DirectJobStatusResponse GetDirectJobStatusResponse()
         {
-            //Arrange
             var jobId = 22;
             var jobStatus = JobStatus.Cancelled;
             var statusResponseUrls = GetJobReferences();
 
-            //Act
-             return new DirectJobStatusResponse(
+            return new DirectJobStatusResponse(
                 jobId,
                 jobStatus,
                 statusResponseUrls
@@ -132,12 +130,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ResponseUrls GetResponseUrls()
         {
-            //Arrange
             var redirectUrl = new Uri("http://responseurl.no");
             var statusUrl = new Uri("http://statusurl.no");
 
 
-            //Act
             return new ResponseUrls(
                 redirectUrl,
                 statusUrl

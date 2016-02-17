@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Extensions
                     result = JobStatus.Completed;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+                    throw new ArgumentOutOfRangeException("Could not parse status.");
             }
 
             return result;

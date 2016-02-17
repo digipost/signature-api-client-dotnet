@@ -34,7 +34,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>digipost.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -51,7 +51,6 @@
     <Compile Include="XsdToCode\Code\direct-and-portal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="digipost.pfx" />
     <None Include="XsdToCode\GenerateClassesFromXsd.ps1" />
     <None Include="XsdToCode\Xsd\common.xsd">
       <SubType>Designer</SubType>

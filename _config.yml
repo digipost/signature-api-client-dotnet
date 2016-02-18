@@ -11,14 +11,17 @@ licenseUrl: http://opensource.org/licenses/MIT
 
 baseurl: "/signature-api-client-dotnet"
 
-currentCollecion: "v0_3"
-currentVersion: "0.3"
-versions: ["0.3"]
+currentCollecion: "v1_0"
+currentVersion: "1.0"
+versions: ["1.0", "0.3"]
 
 collections:
   v0_3:  
     output: true
-    permalink: /v0.3/    
+    permalink: /v0.3/
+  v1_0:   
+    output: true
+    permalink: /v1.0/      
 
 # list of additional links on the right of the top menu
 headerLinks:

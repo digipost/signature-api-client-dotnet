@@ -102,3 +102,32 @@ DirectJobStatusResponse directJobStatusResponse = null; // Result of requesting 
 var confirm = await directClient.Confirm(directJobStatusResponse.JobReferences.Confirmation);
 
 {% endhighlight %}
+
+<h3 id="uc06">Create portal signature job</h3>
+
+{% highlight csharp %}
+
+
+
+{% endhighlight %}
+
+
+<h3 id="uc07">Get portal job status</h3>
+
+{% highlight csharp %}
+
+
+
+{% endhighlight %}
+
+<h3 id="uc08">Get Xades and Pades</h3>
+
+{% highlight csharp %}
+
+
+
+{% endhighlight %}
+
+
+<h3 id="uc05">Confirm direct signature job</h3>
+

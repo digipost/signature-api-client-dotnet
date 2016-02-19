@@ -31,6 +31,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 case Client.DifiTest:
                     client = GetPortalClient(DifitestSigneringPostenNo);
                     break;
+                case Client.DifiQa:
+                    client = GetPortalClient(DifiqaSigneringPostenNo);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

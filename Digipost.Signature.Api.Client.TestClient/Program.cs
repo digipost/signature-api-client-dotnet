@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Portal;
 using log4net;
 
 namespace Digipost.Signature.Api.Client.TestClient

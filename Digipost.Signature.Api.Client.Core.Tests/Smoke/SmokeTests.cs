@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -8,12 +9,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
         {
             get
             {
-                var TeamCityBuildUser = "kapteinen";
+                var TeamCityBuildUser = "Administrator";
                 if (Environment.UserName.ToLower().Contains(TeamCityBuildUser))
                 {
+                    Trace.Write("Running as Difi Test");
                     return Client.DifiTest;
                 }
                 return Client.Localhost;
+                Trace.Write("Running as localhost Test");
+
             }
         }
 

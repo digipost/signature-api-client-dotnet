@@ -4,26 +4,41 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
+        protected static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
+        protected static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
+        protected static readonly Uri DifiqaSigneringPostenNo = new Uri("https://api.difiqa.signering.posten.no");
+
         protected static Client ClientType
         {
             get
             {
-                var TeamCityBuildUser = "kapteinen";
-                if (Environment.UserName.ToLower().Contains(TeamCityBuildUser))
+                if (IsOnBuildServer())
                 {
-                    return Client.DifiTest;
+                    return Client.DifiQa;
                 }
-                return Client.Localhost;
+
+                return Client.DifiQa;
             }
         }
 
-        protected static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
-        protected static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
+        protected static bool IsOnBuildServer()
+        {
+            var isOnBuildServer = false;
+
+            var teamCityBuildUser = "kapteinen";
+            if (Environment.UserName.ToLower().Contains(teamCityBuildUser))
+            {
+                isOnBuildServer = true;
+            }
+
+            return isOnBuildServer;
+        }
 
         protected enum Client
         {
             Localhost,
-            DifiTest
+            DifiTest,
+            DifiQa
         }
 
         protected static Uri GetUriFromRelativePath(string relativeUri)
@@ -37,6 +52,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     break;
                 case Client.DifiTest:
                     result = new Uri(DifitestSigneringPostenNo, relativeUri);
+                    break;
+                case Client.DifiQa:
+                    result = new Uri(DifiqaSigneringPostenNo, relativeUri);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

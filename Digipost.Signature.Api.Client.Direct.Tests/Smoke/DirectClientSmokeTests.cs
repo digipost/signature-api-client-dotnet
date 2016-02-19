@@ -28,6 +28,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 case Client.DifiTest:
                     client = DirectClient(DifitestSigneringPostenNo);
                     break;
+                case Client.DifiQa:
+                    client = DirectClient(DifiqaSigneringPostenNo);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -142,15 +145,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    //Server returns 'ocalhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
+                    //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
                     directJobResponse.References.Xades = new XadesReference(GetUriFromRelativePath(directJobResponse.References.Xades.Url.AbsolutePath));
                     directJobResponse.References.Pades = new PadesReference(GetUriFromRelativePath(directJobResponse.References.Pades.Url.AbsolutePath));
                     directJobResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(directJobResponse.References.Confirmation.Url.AbsolutePath));
                     break;
-                case Client.DifiTest:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
 
             return directJobResponse;

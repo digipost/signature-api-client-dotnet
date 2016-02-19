@@ -25,8 +25,7 @@ The following example shows how to create a document and send it to two signers.
 
 {% highlight csharp %}
 
-ClientConfiguration clientConfiguration = null; //As initialized earlier
-var directClient = new DirectClient(clientConfiguration);
+PortalClient portalClient = null; //As initialized earlier
 
 var documentToSign = new Document(
         subject: "Subject of Message",
@@ -35,7 +34,6 @@ var documentToSign = new Document(
         fileType: FileType.Pdf,
         documentPath: @"C:\Path\ToDocument\File.pdf"
         );
-
 
 var signers = new List<Signer>
 {
@@ -46,14 +44,17 @@ var signers = new List<Signer>
 var portalJob = new PortalJob(documentToSign, signers, "myReferenceToJob");
 var portalJobResponse = await portalClient.Create(portalJob);
 
+
 {% endhighlight %}
 
 
-<h3 id="uc08">Get portal job status</h3>
+<h3 id="uc08">Get portal job status change</h3>
 
 All changes to signature jobs will be added to a queue. You can poll for these changes. If the queue is empty, then additional polling will give an exception. The following exception shows how this can be handled and examples of data to extract from a change response.
 
 {% highlight csharp %}
+
+PortalClient portalClient = null; //As initialized earlier
 
 var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
 
@@ -85,6 +86,9 @@ catch (TooEagerPollingException eagerPollingException)
 
 {% highlight csharp %}
 
+PortalClient portalClient = null; //As initialized earlier
+var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
+
 //Get Xades:
 var xades = await portalClient.GetXades(portalJobStatusChangeResponse.Signatures.ElementAt(0).XadesReference);
 
@@ -97,6 +101,9 @@ var pades = await portalClient.GetPades(portalJobStatusChangeResponse.PadesRefer
 <h3 id="uc10">Confirm portal job</h3>
 
 {% highlight csharp %}
+
+PortalClient portalClient = null; //As initialized earlier
+var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
 
 await portalClient.Confirm(portalJobStatusChangeResponse.ConfirmationReference);
 

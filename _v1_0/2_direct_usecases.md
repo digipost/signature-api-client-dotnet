@@ -40,14 +40,13 @@ var exitUrls = new ExitUrls(
     );
 
 var directJob = new DirectJob(
-    sender: clientConfiguration.Sender, 
     document: documentToSign, 
     signer: new Signer(personalIdentificationNumber: "01013302201"), 
     reference: "SendersReferenceToSignatureJob", 
     exitUrls: exitUrls
     );
 
-DirectJobResponse directJobResponse = await directClient.Create(directJob);
+var directJobResponse = await directClient.Create(directJob);
 
 {% endhighlight %}
 
@@ -60,9 +59,9 @@ var directClient = new DirectClient(clientConfiguration);
 DirectJobResponse directJobResponse = null; //As initialized when creating signature job
 
 var directJobStatusResponse = 
-    await directClient.GetStatus(directJobResponse.StatusReference);
+    await directClient.GetStatus(directJobResponse.ResponseUrls.Status);
 
-var jobStatus = directJobStatusResponse.JobStatus;
+var jobStatus = directJobStatusResponse.Status;
 
 
 {% endhighlight %}
@@ -75,7 +74,7 @@ ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
 DirectJobStatusResponse directJobStatusResponse = null; // Result of requesting job status
 
-switch (directJobStatusResponse.JobStatus)
+switch (directJobStatusResponse.Status)
 {
     case JobStatus.Created:
         //Signature job is not signed, Xades and Pades cannot be requested.
@@ -84,8 +83,8 @@ switch (directJobStatusResponse.JobStatus)
         //Signature job was cancelled, Xades and Pades cannot be requested.
         break;
     case JobStatus.Signed:
-        var xadesByteStream = await directClient.GetXades(directJobStatusResponse.JobReferences.Xades);
-        var padesByteStream = await directClient.GetPades(directJobStatusResponse.JobReferences.Pades);
+        var xadesByteStream = await directClient.GetXades(directJobStatusResponse.References.Xades);
+        var padesByteStream = await directClient.GetPades(directJobStatusResponse.References.Pades);
         break;
 }
 

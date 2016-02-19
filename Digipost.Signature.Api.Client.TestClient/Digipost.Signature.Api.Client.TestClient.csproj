@@ -64,6 +64,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
+      <Project>{2d13f732-6a85-4165-ae2f-a87c09750398}</Project>
+      <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj">
+      <Project>{d03be351-ca1f-4aac-968a-d3a0d8cd5197}</Project>
+      <Name>Digipost.Signature.Api.Client.Portal</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

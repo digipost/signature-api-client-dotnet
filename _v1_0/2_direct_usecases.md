@@ -1,6 +1,6 @@
 ---
 title: Direct use cases
-id: portalusecases
+id: directusecases
 layout: default
 isHome: false
 ---

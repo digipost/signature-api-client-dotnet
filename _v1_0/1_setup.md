@@ -1,9 +1,7 @@
 ---
-title: Initial setup
 id: setup
+title: Initial setup
 layout: default
-description: Initial setup
-isHome: false
 ---
 
 The client library is available as a nuget package. The client library (and associated nuget package) is updated regularly as new functionality is added. 

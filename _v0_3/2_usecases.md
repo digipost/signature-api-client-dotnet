@@ -1,8 +1,7 @@
 ---
-title: Use cases
 id: usecases
+title: Use cases
 layout: default
-isHome: false
 ---
 
 <h3 id="uc01">Create Client Configuration</h3>

@@ -1,8 +1,7 @@
 ---
-title: Portal use cases
 id: portalusecases
+title: Portal use cases
 layout: default
-isHome: false
 ---
 
 <h3 id="uc06">Create Client Configuration</h3>

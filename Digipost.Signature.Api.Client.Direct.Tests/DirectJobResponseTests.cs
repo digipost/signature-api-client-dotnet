@@ -1,7 +1,4 @@
-﻿
-using System;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
+﻿using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests

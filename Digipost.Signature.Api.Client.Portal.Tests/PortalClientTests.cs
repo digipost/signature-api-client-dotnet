@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;

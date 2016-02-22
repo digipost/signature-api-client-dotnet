@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
+﻿using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests

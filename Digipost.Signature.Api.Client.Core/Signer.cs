@@ -1,11 +1,8 @@
-﻿using System;
-using System.Xml.Serialization;
-
-namespace Digipost.Signature.Api.Client.Core
+﻿namespace Digipost.Signature.Api.Client.Core
 {
     public class Signer
     {
-        public string PersonalIdentificationNumber { get; private set; }
+        public string PersonalIdentificationNumber { get; }
 
         public Signer(string personalIdentificationNumber)
         {

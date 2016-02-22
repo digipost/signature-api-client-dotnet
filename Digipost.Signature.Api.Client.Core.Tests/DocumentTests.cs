@@ -1,5 +1,4 @@
-﻿using System.CodeDom;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Reflection;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;

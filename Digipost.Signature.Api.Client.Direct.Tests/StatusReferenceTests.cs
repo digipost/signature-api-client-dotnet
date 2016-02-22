@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobReference = new Uri("http://signatureserviceroot.digipost.no/urlidurl/id030302");
 
                 //Act
-                var directJobReference = new Direct.StatusReference(jobReference);
+                var directJobReference = new StatusReference(jobReference);
 
                 //Assert
                 Assert.AreEqual(jobReference,directJobReference.Url);

@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-            return string.Format("digipost-signature-api-client-dotnet/{0} (.NET/{1})", assemblyVersion, netVersion);
+            return $"digipost-signature-api-client-dotnet/{assemblyVersion} (.NET/{netVersion})";
         }
 
     }

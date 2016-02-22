@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 
         protected static Uri GetUriFromRelativePath(string relativeUri)
         {
-            Uri result = null;
+            Uri result;
 
             switch (ClientType)
             {

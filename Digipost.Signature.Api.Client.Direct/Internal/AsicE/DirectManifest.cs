@@ -29,19 +29,10 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
             }
         }
 
-        public string Id
-        {
-            get { return "Id_1"; }
-        }
+        public string Id => "Id_1";
 
-        public string FileName
-        {
-            get { return "manifest.xml"; }
-        }
+        public string FileName => "manifest.xml";
 
-        public string MimeType
-        {
-            get { return "application/xml"; }
-        }
+        public string MimeType => "application/xml";
     }
 }

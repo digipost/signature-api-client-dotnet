@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public DirectClient(ClientConfiguration clientConfiguration)
             :base(clientConfiguration)
         {
-            _subPath = new Uri(string.Format("/api/{0}/direct/signature-jobs", clientConfiguration.Sender.OrganizationNumber), UriKind.Relative);
+            _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
@@ -75,8 +73,8 @@ namespace Digipost.Signature.Api.Client.Direct
 
         internal async Task AutoSign(long jobId)
         {
-            var url = new Uri(string.Format("/web/signature-jobs/{0}/devmodesign", jobId), UriKind.Relative);
-            var requestResult = await HttpClient.PostAsync(url, content: null);
+            var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign", UriKind.Relative);
+            await HttpClient.PostAsync(url, content: null);
         }
     }
 }

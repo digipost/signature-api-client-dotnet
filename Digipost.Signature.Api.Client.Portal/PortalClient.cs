@@ -25,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Portal
         public PortalClient(ClientConfiguration clientConfiguration) 
             : base(clientConfiguration)
         {
-            _subPath = new Uri(string.Format("/api/{0}/portal/signature-jobs", clientConfiguration.Sender.OrganizationNumber), UriKind.Relative);
+            _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
@@ -121,7 +121,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         internal async Task AutoSign(int jobId, string signer)
         {
-            var url = new Uri(string.Format("/web/portal/signature-jobs/{0}/devmodesign?signer={1}", jobId, signer), UriKind.Relative);
+            var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             await HttpClient.PostAsync(url, content: null);
         }
 

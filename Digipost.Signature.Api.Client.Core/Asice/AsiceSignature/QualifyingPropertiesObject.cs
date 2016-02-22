@@ -12,14 +12,14 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class QualifyingPropertiesObject : DataObject
     {
-        public X509Certificate2 Certificate { get; private set; }
+        public X509Certificate2 Certificate { get; }
 
-        public IAsiceAttachable[] References { get; private set; }
+        public IAsiceAttachable[] References { get; }
 
         /// <summary>
         /// The mandatory Target attribute refers to the XML signature in which the qualifying properties are associated.
         /// </summary>
-        public string Target { get; private set; }
+        public string Target { get; }
 
         /// <param name="certificate">The certificate used for signing.</param>
         /// <param name="target">The target attribute value of the QualifyingProperties element.</param>
@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             clone.PreserveWhitespace = true;
 
             // Find where the signature is to be inserted in the cloned document. In our scenario, the signature is placed as a child of the root XAdESSignatures element.
-            var cloneContext = (XmlElement)clone.DocumentElement;
+            var cloneContext = clone.DocumentElement;
 
             // Create a 'dummy' signature node where the QualifyingProperties will be positioned.
             var signature = cloneContext.AppendChild("Signature", NavneromUtility.XmlDsig);

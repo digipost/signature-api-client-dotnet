@@ -14,7 +14,8 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
             StatusCode = statusCode;
         }
 
-        public UnexpectedResponseException(Error error, HttpStatusCode statusCode) : base(string.Format("ErrorType:{0}, ErrorCode: {1}, ErrorMessage: {2}", error.Type, error.Code, error.Message))
+        public UnexpectedResponseException(Error error, HttpStatusCode statusCode) 
+            : base($"ErrorType:{error.Type}, ErrorCode: {error.Code}, ErrorMessage: {error.Message}")
         {
             Error = error;
             StatusCode = statusCode;

@@ -134,7 +134,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directClient = GetDirectClient();
 
                 //Act
-                var result = await directClient.Confirm(_confirmationReference);
+                await directClient.Confirm(_confirmationReference);
 
                 //Assert
             }

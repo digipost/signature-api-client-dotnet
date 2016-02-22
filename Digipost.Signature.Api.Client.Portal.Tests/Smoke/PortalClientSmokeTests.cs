@@ -99,7 +99,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 //Act
-                var xades = await portalClient.GetXades(_xadesReference);
+                await portalClient.GetXades(_xadesReference);
                 //await WriteXadesToFile(portalClient, xadesReference);
                 
                 //Assert
@@ -126,7 +126,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 //Act
-                var pades = portalClient.GetPades(_padesReference);
+                portalClient.GetPades(_padesReference);
                 //await WritePadesToFile(portalClient, padesReference);
 
                 //Assert

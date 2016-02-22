@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                     }
                 };
 
-                var directJobResponse = Utilities.DomainUtility.GetDirectJobResponse();
+                var directJobResponse = DomainUtility.GetDirectJobResponse();
 
                 //Act
                 var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status);

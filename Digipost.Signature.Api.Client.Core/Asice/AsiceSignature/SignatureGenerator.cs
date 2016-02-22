@@ -24,28 +24,13 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         
         public IAsiceAttachable[] Attachables { get; }
         
-        public string FileName
-        {
-            get { return "META-INF/signatures.xml"; }
-        }
-        
-        public byte[] Bytes
-        {
-            get
-            {
-                return Encoding.UTF8.GetBytes(Xml().OuterXml);
-            }
-        }
+        public string FileName => "META-INF/signatures.xml";
 
-        public string MimeType
-        {
-            get { return "application/xml"; }
-        }
+        public byte[] Bytes => Encoding.UTF8.GetBytes(Xml().OuterXml);
 
-        public string Id
-        {
-            get { return "Id_0"; }
-        }
+        public string MimeType => "application/xml";
+
+        public string Id => "Id_0";
 
         public XmlDocument Xml()
         {

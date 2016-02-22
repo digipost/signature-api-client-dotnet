@@ -58,10 +58,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 
         private sealed class Utf8StringWriter : StringWriter
         {
-            public override Encoding Encoding
-            {
-                get { return Encoding.UTF8; }
-            }
+            public override Encoding Encoding => Encoding.UTF8;
         }
 
         public static string FormatXml(string xml)

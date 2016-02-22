@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
             // Add the QualifyingProperties node as normal. This node will be set as the Objects Data property.
             var root = signature.AppendChild("QualifyingProperties", NavneromUtility.UriEtsi132);
-            root.SetAttribute("Target", this.Target);
+            root.SetAttribute("Target", Target);
 
             // Create Xml Node List
             var signedProperties = root.AppendChild("SignedProperties", NavneromUtility.UriEtsi132);

@@ -21,5 +21,4 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
         }
     }
-
 }

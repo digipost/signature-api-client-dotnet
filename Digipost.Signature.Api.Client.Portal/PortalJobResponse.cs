@@ -2,11 +2,11 @@
 {
     public class PortalJobResponse
     {
-        public long JobId { get; internal set; }
-
         public PortalJobResponse(long jobId)
         {
             JobId = jobId;
         }
+
+        public long JobId { get; internal set; }
     }
 }

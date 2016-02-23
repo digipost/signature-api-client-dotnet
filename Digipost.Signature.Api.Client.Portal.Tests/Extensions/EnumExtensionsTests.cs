@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Extensions
 {
-    [TestClass()]
+    [TestClass]
     public class EnumExtensionsTests
     {
         [TestClass]
@@ -28,8 +28,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Extensions
                 //Assert
                 Assert.AreEqual(expectedPartiallyCompleted, partiallyCompleted);
                 Assert.AreEqual(expectedCompleted, completed);
-            }     
+            }
         }
-
     }
 }

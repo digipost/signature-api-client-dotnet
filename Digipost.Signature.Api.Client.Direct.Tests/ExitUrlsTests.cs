@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 var exitUrls = new ExitUrls(completionUrl, cancellationUrl, errorUrl);
-                
+
                 //Assert
                 Assert.AreEqual(completionUrl, exitUrls.CompletionUrl);
                 Assert.AreEqual(cancellationUrl, exitUrls.CancellationUrl);

@@ -3,6 +3,7 @@ using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
@@ -38,13 +39,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
             {
                 //Arrange
                 const string fileName = "manifest.xml";
-                var manifest = Utilities.DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
                 //Assert
                 Assert.AreEqual(fileName, manifest.FileName);
-            } 
+            }
         }
 
         [TestClass]
@@ -55,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
             {
                 //Arrange
                 const string mimeType = "application/xml";
-                var manifest = Utilities.DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -72,7 +73,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
             {
                 //Arrange
                 const string id = "Id_1";
-                var manifest = Utilities.DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -88,7 +89,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
-                var manifest = Utilities.DomainUtility.GetDirectManifest();
+                var manifest = DomainUtility.GetDirectManifest();
                 var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(manifest);
                 var expectedResult = SerializeUtility.Serialize(manifestDataTranferObject);
 

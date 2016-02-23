@@ -22,5 +22,4 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
         }
     }
-
 }

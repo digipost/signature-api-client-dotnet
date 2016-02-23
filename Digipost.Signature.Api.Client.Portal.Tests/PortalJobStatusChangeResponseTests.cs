@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var jobId = 123456789;
                 var jobStatus = JobStatus.PartiallyCompleted;
                 var confirmationReference = new ConfirmationReference(new Uri("http://confirmationreference.no"));
-                var signatures = new List<Signature>()
+                var signatures = new List<Signature>
                 {
                     new Signature
                     {
@@ -37,16 +37,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
                 var portalJobStatusChangeResponse = new PortalJobStatusChangeResponse(
                     jobId,
-                    jobStatus, 
+                    jobStatus,
                     confirmationReference,
                     signatures);
-                
+
                 //Assert
                 Assert.AreEqual(jobId, portalJobStatusChangeResponse.JobId);
                 Assert.AreEqual(jobStatus, portalJobStatusChangeResponse.Status);
                 Assert.AreEqual(confirmationReference, portalJobStatusChangeResponse.ConfirmationReference);
                 Assert.AreEqual(signatures, portalJobStatusChangeResponse.Signatures);
             }
-        }        
+        }
     }
 }

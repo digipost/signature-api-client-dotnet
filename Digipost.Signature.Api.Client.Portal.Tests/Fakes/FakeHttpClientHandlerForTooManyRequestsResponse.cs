@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
         public FakeHttpClientHandlerForTooManyRequestsResponse()
         {
             ResultCode = (HttpStatusCode?) 429;
-            HttpResponseHeader = new KeyValuePair<string, string>("X-Next-permitted-poll-time", DateTime.Now.ToString("O"));    
+            HttpResponseHeader = new KeyValuePair<string, string>("X-Next-permitted-poll-time", DateTime.Now.ToString("O"));
         }
 
         public override HttpContent GetContent()

@@ -9,7 +9,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
     public static class CoreDomainUtility
     {
-        static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
+        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
 
         public static ClientConfiguration GetClientConfiguration()
         {
@@ -72,7 +72,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
-            return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), password: "", keyStorageFlags: X509KeyStorageFlags.Exportable);
+            return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), "", X509KeyStorageFlags.Exportable);
         }
     }
 }

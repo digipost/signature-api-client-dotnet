@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
     public class XmlParseException : ConfigurationException
     {
         public XmlParseException(string message, Exception innerException)
-            :base(message, innerException)
+            : base(message, innerException)
         {
         }
 

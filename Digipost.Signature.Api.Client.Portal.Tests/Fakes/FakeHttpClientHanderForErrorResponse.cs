@@ -4,7 +4,7 @@ using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
 {
-    class FakeHttpClientHanderForErrorResponse : FakeHttpClientHandlerResponse
+    internal class FakeHttpClientHanderForErrorResponse : FakeHttpClientHandlerResponse
     {
         public FakeHttpClientHanderForErrorResponse()
         {

@@ -19,13 +19,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 var jobReferences = new JobReferences(confirmation, xades, pades);
-                
+
                 //Assert
-                Assert.AreEqual(confirmation,jobReferences.Confirmation.Url);
-                Assert.AreEqual(xades,jobReferences.Xades.Url);
-                Assert.AreEqual(pades,jobReferences.Pades.Url);
+                Assert.AreEqual(confirmation, jobReferences.Confirmation.Url);
+                Assert.AreEqual(xades, jobReferences.Xades.Url);
+                Assert.AreEqual(pades, jobReferences.Pades.Url);
             }
         }
-
     }
 }

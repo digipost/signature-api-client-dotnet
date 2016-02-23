@@ -6,15 +6,15 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal abstract class SignatureAction
     {
-        public IRequestContent RequestContent { get; }
-
-        public XmlDocument RequestContentXml { get; internal set; }
-
         protected SignatureAction(IRequestContent requestContent, Func<IRequestContent, string> serializeFunc)
         {
             RequestContent = requestContent;
             InitializeRequestXmlContent(serializeFunc);
         }
+
+        public IRequestContent RequestContent { get; }
+
+        public XmlDocument RequestContentXml { get; internal set; }
 
         protected string SerializedBody { get; set; }
 

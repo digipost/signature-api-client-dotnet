@@ -19,14 +19,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature
                 //Act
 
                 //Assert
-                Assert.AreEqual(digestMethod,reference.DigestMethod);
+                Assert.AreEqual(digestMethod, reference.DigestMethod);
             }
 
             [TestMethod]
             public void BytesConstructor()
             {
                 //Arrange
-                var reference = new Sha256Reference(new byte[]{ 0xb, 0xc});
+                var reference = new Sha256Reference(new byte[] {0xb, 0xc});
                 var digestMethod = "http://www.w3.org/2001/04/xmlenc#sha256";
 
                 //Act

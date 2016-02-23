@@ -1,10 +1,9 @@
 ﻿using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DomainUtility = Digipost.Signature.Api.Client.Direct.Tests.Utilities.DomainUtility;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-
     [TestClass]
     public class DirectJobStatusResponseTests
     {
@@ -21,10 +20,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 var directJobStatusResponse = new DirectJobStatusResponse(
-                    jobId, 
-                    jobStatus, 
+                    jobId,
+                    jobStatus,
                     jobReferences
-                );
+                    );
 
                 //Assert
                 Assert.AreEqual(jobId, directJobStatusResponse.JobId);

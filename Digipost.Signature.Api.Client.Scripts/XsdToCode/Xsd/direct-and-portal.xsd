@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
 <!--
 
     Copyright (C) Posten Norge AS
@@ -22,7 +23,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema http://www.w3.org/2001/XMLSchema.xsd">
 
-    <xs:include schemaLocation="direct.xsd"/>
-    <xs:include schemaLocation="portal.xsd"/>
+  <xs:include schemaLocation="direct.xsd" />
+  <xs:include schemaLocation="portal.xsd" />
 
 </xs:schema>

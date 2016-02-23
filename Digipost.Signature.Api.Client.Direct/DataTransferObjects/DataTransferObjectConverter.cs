@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     {
         public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob)
         {
-            return new directsignaturejobrequest()
+            return new directsignaturejobrequest
             {
                 reference = directJob.Reference,
                 exiturls = ToDataTransferObject(directJob.ExitUrls)
@@ -35,27 +35,24 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 new ResponseUrls(
                     new Uri(directsignaturejobresponse.redirecturl),
                     new Uri(directsignaturejobresponse.statusurl)
-                  )
-               );
+                    )
+                );
         }
 
         public static DirectJobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
         {
-            var jobStatus = (JobStatus)Enum.Parse(typeof(JobStatus), directsignaturejobstatusresponse.status.ToString(), ignoreCase: true);
+            var jobStatus = (JobStatus) Enum.Parse(typeof (JobStatus), directsignaturejobstatusresponse.status.ToString(), true);
 
             JobReferences jobReferences;
-            
+
             if (jobStatus == JobStatus.Signed)
             {
-                jobReferences = new JobReferences(
-                    confirmation: new Uri(directsignaturejobstatusresponse.confirmationurl),
-                    xades: new Uri(directsignaturejobstatusresponse.xadesurl),
-                    pades: new Uri(directsignaturejobstatusresponse.padesurl)
-                );
+                jobReferences = new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl)
+                    );
             }
             else
             {
-                jobReferences = new JobReferences(confirmation: null, xades: null, pades: null);
+                jobReferences = new JobReferences(null, null, null);
             }
 
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
@@ -63,12 +60,11 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         internal static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
         {
-            return new directsignaturejobmanifest()
+            return new directsignaturejobmanifest
             {
                 sender = ToDataTransferObject(directManifest.Sender),
                 document = ToDataTransferObject(directManifest.Document),
                 signer = ToDataTransferObject(directManifest.Signer)
-                
             };
         }
 
@@ -84,7 +80,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             return new document
             {
-                title= document.Subject,
+                title = document.Subject,
                 description = document.Message,
                 href = document.FileName,
                 mime = document.MimeType
@@ -93,11 +89,10 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         public static signer ToDataTransferObject(Signer signer)
         {
-            return new signer()
+            return new signer
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber
             };
         }
-
     }
 }

@@ -14,9 +14,8 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public ConfirmationReference Confirmation { get; internal set; }
 
-        public XadesReference Xades{ get; internal set; }
+        public XadesReference Xades { get; internal set; }
 
         public PadesReference Pades { get; internal set; }
-
     }
 }

@@ -1,7 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<error xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
-	<error-code>SCHEMA_VALIDATION_ERROR</error-code>
-	<error-message>Xml-message was not in accordance to schema:
-cvc-complex-type.2.4.b: The content of element 'exit-urls' is not complete. One of '{&quot;http://signering.posten.no/schema/v1&quot;:error-url}' is expected.</error-message>
-	<error-type>CLIENT</error-type>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<error xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#"
+       xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
+  <error-code>SCHEMA_VALIDATION_ERROR</error-code>
+  <error-message>
+    Xml-message was not in accordance to schema:
+    cvc-complex-type.2.4.b: The content of element 'exit-urls' is not complete. One of '{&quot;http://signering.posten.no/schema/v1&quot;:error-url}' is expected.
+  </error-message>
+  <error-type>CLIENT</error-type>
 </error>

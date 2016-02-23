@@ -19,14 +19,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var signer = new Signer("01013300001");
                 var document = CoreDomainUtility.GetDocument();
                 var exitUrls = new ExitUrls(
-                    new Uri("http://localhost.completed"), 
+                    new Uri("http://localhost.completed"),
                     new Uri("http://localhost.cancelled"),
                     new Uri("http://localhost.error")
                     );
 
                 //Act
                 var directJob = new DirectJob(document, signer, id, exitUrls);
-                
+
                 //Assert
                 Assert.AreEqual(id, directJob.Reference);
                 Assert.AreEqual(signer, directJob.Signer);
@@ -34,6 +34,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.AreEqual(exitUrls, directJob.ExitUrls);
             }
         }
-
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-
     public class ResponseurlsTests
     {
         [TestClass]
@@ -15,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var redirectUrl = new Uri("http://responseurl.no");
                 var statusUrl = new Uri("http://statusurl.no");
-                
+
                 //Act
                 var responseUrls = new ResponseUrls(
                     redirectUrl,
@@ -25,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Assert
                 Assert.AreEqual(redirectUrl, responseUrls.Redirect.Url);
                 Assert.AreEqual(statusUrl, responseUrls.Status.Url);
-            } 
+            }
         }
     }
 }

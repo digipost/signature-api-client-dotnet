@@ -35,11 +35,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);
 
                 //Assert
-                Comparator compartor = new Comparator();
+                var compartor = new Comparator();
                 IEnumerable<IDifference> differences;
                 compartor.AreEqual(expected, actual, out differences);
                 Assert.AreEqual(0, differences.Count());
-            }    
+            }
         }
     }
 }

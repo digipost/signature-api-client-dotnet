@@ -9,10 +9,6 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class BaseClient
     {
-        public ClientConfiguration ClientConfiguration { get; }
-
-        internal HttpClient HttpClient { get; set; }
-
         protected BaseClient(ClientConfiguration clientConfiguration)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -20,6 +16,10 @@ namespace Digipost.Signature.Api.Client.Core
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
         }
+
+        public ClientConfiguration ClientConfiguration { get; }
+
+        internal HttpClient HttpClient { get; set; }
 
         private HttpClient MutualTlsClient()
         {
@@ -36,7 +36,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         private WebRequestHandler MutualTlsHandler()
         {
-            var certificateCollection = new X509Certificate2Collection() { ClientConfiguration.Certificate };
+            var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
             mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
@@ -48,6 +48,5 @@ namespace Digipost.Signature.Api.Client.Core
         {
             return true;
         }
-
     }
 }

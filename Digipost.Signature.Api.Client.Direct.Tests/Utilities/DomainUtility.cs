@@ -37,14 +37,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 jobId,
                 jobStatus,
                 statusResponseUrls
-            );
+                );
         }
 
         public static ResponseUrls GetResponseUrls()
         {
             var redirectUrl = new Uri("http://responseurl.no");
             var statusUrl = new Uri("http://statusurl.no");
-
 
             return new ResponseUrls(
                 redirectUrl,

@@ -11,6 +11,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
     [TestClass]
     public class SignatureGeneratorTests
     {
+        internal SignatureGenerator GetSignaturGenerator()
+        {
+            var document = CoreDomainUtility.GetDocument();
+            var sender = CoreDomainUtility.GetSender();
+            var signers = CoreDomainUtility.GetSigners(2);
+            var manifest = new PortalManifest(sender, document, signers);
+            var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
+            var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
+            return signaturGenerator;
+        }
+
         [TestClass]
         public class ConstructorMethod : SignatureGeneratorTests
         {
@@ -31,7 +42,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 Assert.AreEqual(manifest, signatur.Attachables.ElementAt(1));
                 Assert.AreEqual(x509Certificate2, signatur.Certificate);
             }
-
         }
 
         [TestClass]
@@ -81,22 +91,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
 
                 //Act
                 var isValidSignatureXml = signatureValidator.ValiderDokumentMotXsd(xml);
-                int signatureLength = xml.Length;
+                var signatureLength = xml.Length;
 
                 //Assert
                 Assert.IsTrue(isValidSignatureXml);
-                Assert.IsTrue(signatureLength > 3200);}
-        }
-
-        internal SignatureGenerator GetSignaturGenerator()
-        {
-            var document = CoreDomainUtility.GetDocument();
-            var sender = CoreDomainUtility.GetSender();
-            var signers = CoreDomainUtility.GetSigners(2);
-            var manifest = new PortalManifest(sender, document, signers);
-            var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
-            var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
-            return signaturGenerator;
+                Assert.IsTrue(signatureLength > 3200);
+            }
         }
     }
 }

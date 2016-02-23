@@ -2,7 +2,7 @@
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class SignerTests
     {
         [TestClass]
@@ -12,14 +12,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                string personalIdentificationNumber = "01013300001";
-                Signer signer = new Signer(personalIdentificationNumber);
+                var personalIdentificationNumber = "01013300001";
+                var signer = new Signer(personalIdentificationNumber);
 
                 //Act
 
                 //Assert
                 Assert.AreEqual(personalIdentificationNumber, signer.PersonalIdentificationNumber);
-            } 
+            }
         }
     }
 }

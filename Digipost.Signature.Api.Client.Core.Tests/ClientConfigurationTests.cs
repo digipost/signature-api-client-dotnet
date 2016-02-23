@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
             private static X509Certificate2 GetFirstCertificateFromCurrentUserStore()
             {
-                var store = new X509Store(StoreName.My,StoreLocation.CurrentUser);
+                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
 
                 store.Open(OpenFlags.ReadOnly);
                 var certificate = store.Certificates[0];
@@ -65,6 +65,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 return certificate;
             }
         }
-
     }
 }

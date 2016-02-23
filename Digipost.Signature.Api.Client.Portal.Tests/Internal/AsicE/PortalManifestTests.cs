@@ -102,6 +102,5 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 Assert.AreEqual(expectedResult, actualResult);
             }
         }
-
     }
 }

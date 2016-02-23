@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class PadesReferenceTests
     {
         [TestClass]
@@ -19,9 +19,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
 
                 //Assert
-                Assert.AreEqual(uri,padesReference.Url);
+                Assert.AreEqual(uri, padesReference.Url);
             }
         }
-
     }
 }

@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
             public void SimpleConstructor()
             {
                 //Arrange
-                var bundleBytes = new byte[]{ 0x21, 0x22};
+                var bundleBytes = new byte[] {0x21, 0x22};
 
                 //Act
                 var documentBundle = new DocumentBundle(bundleBytes);

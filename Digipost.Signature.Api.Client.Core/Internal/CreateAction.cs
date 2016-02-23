@@ -9,12 +9,13 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         private readonly DocumentBundle _documentBundle;
 
-        public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
-
-        protected CreateAction(IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, string> serializeFunc) : base(job, serializeFunc)
+        protected CreateAction(IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, string> serializeFunc)
+            : base(job, serializeFunc)
         {
             _documentBundle = documentBundle;
         }
+
+        public MultipartFormDataContent MultipartFormDataContent { get; internal set; }
 
         internal override HttpContent Content()
         {

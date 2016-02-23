@@ -17,7 +17,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Assert
             }
         }
-
-
     }
 }

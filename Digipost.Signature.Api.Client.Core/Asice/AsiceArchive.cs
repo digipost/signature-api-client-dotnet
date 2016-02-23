@@ -6,7 +6,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice
     internal class AsiceArchive
     {
         private readonly IAsiceAttachable[] _attachables;
-        public byte[] Bytes { get; set; }
 
         private ZipArchive _zipArchive;
 
@@ -15,6 +14,8 @@ namespace Digipost.Signature.Api.Client.Core.Asice
             _attachables = attachables;
             Bytes = CreateArchiveBytes();
         }
+
+        public byte[] Bytes { get; set; }
 
         private byte[] CreateArchiveBytes()
         {
@@ -25,12 +26,11 @@ namespace Digipost.Signature.Api.Client.Core.Asice
             {
                 foreach (var dokument in _attachables)
                     AddToArchive(dokument.FileName, dokument.Bytes);
-
             }
 
             return stream.ToArray();
         }
-        
+
         private void AddToArchive(string filename, byte[] data)
         {
             var entry = _zipArchive.CreateEntry(filename, CompressionLevel.Optimal);

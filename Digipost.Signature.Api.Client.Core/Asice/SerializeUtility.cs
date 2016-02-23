@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
                 return null;
             }
 
-            var serializer = new XmlSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof (T));
 
             var settings = new XmlWriterSettings
             {
@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
                 return default(T);
             }
 
-            var serializer = new XmlSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof (T));
 
             var settings = new XmlReaderSettings();
 
@@ -51,14 +51,9 @@ namespace Digipost.Signature.Api.Client.Core.Asice
             {
                 using (var xmlReader = XmlReader.Create(textReader, settings))
                 {
-                    return (T)serializer.Deserialize(xmlReader);
+                    return (T) serializer.Deserialize(xmlReader);
                 }
             }
-        }
-
-        private sealed class Utf8StringWriter : StringWriter
-        {
-            public override Encoding Encoding => Encoding.UTF8;
         }
 
         public static string FormatXml(string xml)
@@ -73,6 +68,10 @@ namespace Digipost.Signature.Api.Client.Core.Asice
                 return xml;
             }
         }
-    }
 
+        private sealed class Utf8StringWriter : StringWriter
+        {
+            public override Encoding Encoding => Encoding.UTF8;
+        }
+    }
 }

@@ -19,9 +19,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var directJobReference = new StatusReference(jobReference);
 
                 //Assert
-                Assert.AreEqual(jobReference,directJobReference.Url);
+                Assert.AreEqual(jobReference, directJobReference.Url);
             }
         }
     }
-
 }

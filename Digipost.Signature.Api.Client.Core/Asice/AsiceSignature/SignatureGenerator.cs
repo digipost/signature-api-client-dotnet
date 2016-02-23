@@ -11,8 +11,8 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class SignatureGenerator : IAsiceAttachable
     {
-        private XmlDocument _xml;
         private SignedXml _signatureNode;
+        private XmlDocument _xml;
 
         public SignatureGenerator(X509Certificate2 certificate, params IAsiceAttachable[] attachables)
         {
@@ -21,9 +21,9 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         }
 
         public X509Certificate2 Certificate { get; }
-        
+
         public IAsiceAttachable[] Attachables { get; }
-        
+
         public string FileName => "META-INF/signatures.xml";
 
         public byte[] Bytes => Encoding.UTF8.GetBytes(Xml().OuterXml);
@@ -66,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private XmlDocument CreateXadesSignatureElement()
         {
-            var signatureDocument = new XmlDocument { PreserveWhitespace = true };
+            var signatureDocument = new XmlDocument {PreserveWhitespace = true};
             var xmlDeclaration = signatureDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
             signatureDocument.AppendChild(signatureDocument.CreateElement("xades", "XAdESSignatures", NavneromUtility.UriEtsi121));
             signatureDocument.DocumentElement.SetAttribute("xmlns", NavneromUtility.UriEtsi132);
@@ -93,10 +93,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
             _signatureNode.AddObject(
                 new QualifyingPropertiesObject(
-                    Certificate, 
-                    target: "#Signature", 
-                    references: Attachables,
-                    context: _xml.DocumentElement
+                    Certificate, "#Signature", Attachables, _xml.DocumentElement
                     )
                 );
 
@@ -130,7 +127,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private void AddSignatureToDocument()
         {
-            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), deep: true));
+            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), true));
         }
     }
 }

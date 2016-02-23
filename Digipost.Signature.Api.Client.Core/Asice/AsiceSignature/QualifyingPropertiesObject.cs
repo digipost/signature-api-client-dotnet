@@ -12,15 +12,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
     internal class QualifyingPropertiesObject : DataObject
     {
-        public X509Certificate2 Certificate { get; }
-
-        public IAsiceAttachable[] References { get; }
-
-        /// <summary>
-        /// The mandatory Target attribute refers to the XML signature in which the qualifying properties are associated.
-        /// </summary>
-        public string Target { get; }
-
         /// <param name="certificate">The certificate used for signing.</param>
         /// <param name="target">The target attribute value of the QualifyingProperties element.</param>
         /// <param name="references">List of DataObjectFormat elements to be included.</param>
@@ -33,15 +24,23 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             Data = CreateNodes(context);
         }
 
+        public X509Certificate2 Certificate { get; }
+
+        public IAsiceAttachable[] References { get; }
+
+        /// <summary>
+        ///     The mandatory Target attribute refers to the XML signature in which the qualifying properties are associated.
+        /// </summary>
+        public string Target { get; }
+
         private XmlNodeList CreateNodes(XmlElement context)
         {
             // To get the digest value for the qualifying properties node, the namespaces of the containing document needs to be available. This is problematic, as the signature element is not added
             // to the document until after the signature has been calculated. To circumvent this, we take the position where the signature will be added (XmlElement context parameter), clone its document
             // and add the QualifyingProperties inside a 'dummy' signature element. This ensures that the canoncalization process will process the QualifyingProperties parent nodes for namespaces.
 
-
             // Clone of the target document for the signature.
-            var clone = (XmlDocument)context.OwnerDocument.Clone();
+            var clone = (XmlDocument) context.OwnerDocument.Clone();
             clone.PreserveWhitespace = true;
 
             // Find where the signature is to be inserted in the cloned document. In our scenario, the signature is placed as a child of the root XAdESSignatures element.

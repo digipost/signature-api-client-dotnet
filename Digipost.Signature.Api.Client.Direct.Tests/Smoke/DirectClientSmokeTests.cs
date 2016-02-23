@@ -46,6 +46,20 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return client;
         }
 
+        internal static DirectJobStatusResponse MorphDirectJobStatusResponseIfMayBe(DirectJobStatusResponse directJobResponse)
+        {
+            switch (ClientType)
+            {
+                case Client.Localhost:
+                    //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
+                    directJobResponse.References.Xades = new XadesReference(GetUriFromRelativePath(directJobResponse.References.Xades.Url.AbsolutePath));
+                    directJobResponse.References.Pades = new PadesReference(GetUriFromRelativePath(directJobResponse.References.Pades.Url.AbsolutePath));
+                    directJobResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(directJobResponse.References.Confirmation.Url.AbsolutePath));
+                    break;
+            }
+
+            return directJobResponse;
+        }
 
         [TestClass]
         public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests
@@ -106,7 +120,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 //Arrange
                 var directClient = GetDirectClient();
-                
+
                 //Act
                 var xades = await directClient.GetXades(_xadesReference);
 
@@ -138,21 +152,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 //Assert
             }
-        }
-
-        internal static DirectJobStatusResponse MorphDirectJobStatusResponseIfMayBe(DirectJobStatusResponse directJobResponse)
-        {
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
-                    directJobResponse.References.Xades = new XadesReference(GetUriFromRelativePath(directJobResponse.References.Xades.Url.AbsolutePath));
-                    directJobResponse.References.Pades = new PadesReference(GetUriFromRelativePath(directJobResponse.References.Pades.Url.AbsolutePath));
-                    directJobResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(directJobResponse.References.Confirmation.Url.AbsolutePath));
-                    break;
-            }
-
-            return directJobResponse;
         }
     }
 }

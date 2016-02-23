@@ -13,11 +13,11 @@ using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
-    {   
+    {
         private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)
-            :base(clientConfiguration)
+            : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
@@ -46,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var request = new HttpRequestMessage
             {
                 RequestUri = statusReference.Url,
-                Method = HttpMethod.Get,
+                Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
@@ -68,13 +68,13 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
         {
-            return await HttpClient.PostAsync(confirmationReference.Url, content: null);
+            return await HttpClient.PostAsync(confirmationReference.Url, null);
         }
 
         internal async Task AutoSign(long jobId)
         {
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign", UriKind.Relative);
-            await HttpClient.PostAsync(url, content: null);
+            await HttpClient.PostAsync(url, null);
         }
     }
 }

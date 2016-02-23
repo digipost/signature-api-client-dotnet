@@ -26,19 +26,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             var isOnBuildServer = false;
 
             var teamCityBuildUser = "kapteinen";
-            if (Environment.UserName.ToLower().Contains(teamCityBuildUser))
+            if (System.Environment.UserName.ToLower().Contains(teamCityBuildUser))
             {
                 isOnBuildServer = true;
             }
 
             return isOnBuildServer;
-        }
-
-        protected enum Client
-        {
-            Localhost,
-            DifiTest,
-            DifiQa
         }
 
         protected static Uri GetUriFromRelativePath(string relativeUri)
@@ -61,6 +54,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             }
 
             return result;
+        }
+
+        protected enum Client
+        {
+            Localhost,
+            DifiTest,
+            DifiQa
         }
     }
 }

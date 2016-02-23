@@ -34,7 +34,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Extensions
                 //Assert
                 Assert.AreEqual(expectedTxtMimeType, txtMimeType);
             }
-
         }
     }
 }

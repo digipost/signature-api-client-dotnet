@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
 
-                object expectedResponseType = typeof(PortalJobStatusChangeResponse) ;
+                object expectedResponseType = typeof (PortalJobStatusChangeResponse);
 
                 //Act
                 var actualResponseType = (await portalClient.GetStatusChange()).GetType();
@@ -50,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof(TooEagerPollingException))]
+            [ExpectedException(typeof (TooEagerPollingException))]
             public async Task ThrowsExceptionOnTooManyRequests()
             {
                 //Arrange
@@ -58,16 +58,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
                 };
-                
+
                 //Act
                 await portalClient.GetStatusChange();
 
                 //Assert
-                
             }
 
             [TestMethod]
-            [ExpectedException(typeof(UnexpectedResponseException))]
+            [ExpectedException(typeof (UnexpectedResponseException))]
             public async Task ThrowsUnexpectedExceptionWithErrorClassOnUnexpectedError()
             {
                 //Arrange
@@ -83,7 +82,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof(BrokerNotAuthorizedException))]
+            [ExpectedException(typeof (BrokerNotAuthorizedException))]
             public async Task ThrowsBrokerNotAuthorizedExceptionOnNotAuthorized()
             {
                 //Arrange

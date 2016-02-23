@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     reference = reference
                 };
-                
+
                 //Act
                 var result = DataTransferObjectConverter.ToDataTransferObject(source);
 
@@ -51,10 +51,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
 
                 var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2));
-                
+
                 var expected = new portalsignaturejobmanifest
                 {
-                    sender = new sender() { organizationnumber = organizationNumberSender },
+                    sender = new sender {organizationnumber = organizationNumberSender},
                     document = new document
                     {
                         title = source.Document.Subject,
@@ -64,8 +64,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     }
                 };
 
@@ -87,7 +87,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
-                    Availability = new Availability()
+                    Availability = new Availability
                     {
                         Expiration = DateTime.Now.AddHours(22)
                     }
@@ -95,7 +95,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
-                    sender = new sender { organizationnumber = organizationNumberSender },
+                    sender = new sender {organizationnumber = organizationNumberSender},
                     document = new document
                     {
                         title = source.Document.Subject,
@@ -105,10 +105,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
-                    availability = new availability()
+                    availability = new availability
                     {
                         expirationtime = source.Availability.Expiration.Value
                     }
@@ -122,7 +122,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
                 Assert.AreEqual(0, differences.Count());
-
             }
 
             [TestMethod]
@@ -133,7 +132,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
-                    Availability = new Availability()
+                    Availability = new Availability
                     {
                         Activation = DateTime.Now.AddHours(22)
                     }
@@ -141,7 +140,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
-                    sender = new sender { organizationnumber = organizationNumberSender },
+                    sender = new sender {organizationnumber = organizationNumberSender},
                     document = new document
                     {
                         title = source.Document.Subject,
@@ -151,10 +150,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
-                    availability = new availability()
+                    availability = new availability
                     {
                         activationtime = source.Availability.Activation.Value
                     }
@@ -168,7 +167,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
                 Assert.AreEqual(0, differences.Count());
-
             }
 
             [TestMethod]
@@ -176,7 +174,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                
+
                 var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = DomainUtility.GetAvailability()
@@ -184,7 +182,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
-                    sender = new sender { organizationnumber = organizationNumberSender },
+                    sender = new sender {organizationnumber = organizationNumberSender},
                     document = new document
                     {
                         title = source.Document.Subject,
@@ -192,12 +190,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         href = source.Document.FileName,
                         mime = source.Document.MimeType
                     },
-                    signers = new []
+                    signers = new[]
                     {
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber}, 
-                        new signer { personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
-                    availability = new availability()
+                    availability = new availability
                     {
                         activationtime = source.Availability.Activation.Value,
                         expirationtime = source.Availability.Expiration.Value
@@ -223,7 +221,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var signaturejobid = 12345678910;
-                var source = new portalsignaturejobresponse() { signaturejobid = signaturejobid };
+                var source = new portalsignaturejobresponse {signaturejobid = signaturejobid};
                 var expected = new PortalJobResponse(signaturejobid);
 
                 //Act
@@ -240,25 +238,28 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalJobStatusChangeResponseSuccessfully()
             {
                 //Arrange
-                var source = new portalsignaturejobstatuschangeresponse()
+                var source = new portalsignaturejobstatuschangeresponse
                 {
                     confirmationurl = "http://confirmationurl.no",
                     signaturejobid = 12345678901011,
-                    signatures = new signatures()
+                    signatures = new signatures
                     {
                         padesurl = "http://padesurl.no",
-                        signature = new[]{ new signature()
+                        signature = new[]
                         {
-                            personalidentificationnumber = "01013300001",
-                            status = signaturestatus.SIGNED,
-                            xadesurl = "http://xadesurl1.no"
-                        }, new signature()
-                        {
-                            personalidentificationnumber = "01013300002",
-                            status = signaturestatus.WAITING,
-                            xadesurl = "http://xadesurl2.no"
+                            new signature
+                            {
+                                personalidentificationnumber = "01013300001",
+                                status = signaturestatus.SIGNED,
+                                xadesurl = "http://xadesurl1.no"
+                            },
+                            new signature
+                            {
+                                personalidentificationnumber = "01013300002",
+                                status = signaturestatus.WAITING,
+                                xadesurl = "http://xadesurl2.no"
+                            }
                         }
-                      }
                     },
                     status = portalsignaturejobstatus.PARTIALLY_COMPLETED
                 };
@@ -267,17 +268,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var confirmationReference = new ConfirmationReference(new Uri(source.confirmationurl));
                 var signature1 = source.signatures.signature[0];
                 var signature2 = source.signatures.signature[1];
-                var signatures = new List<Signature>()
+                var signatures = new List<Signature>
                 {
                     new Signature
                     {
-                        SignatureStatus = (SignatureStatus)Enum.Parse(typeof(SignatureStatus), signature1.status.ToString(), ignoreCase: true),
+                        SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature1.status.ToString(), true),
                         Signer = new Signer(signature1.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
-                        SignatureStatus = (SignatureStatus)Enum.Parse(typeof(SignatureStatus), signature2.status.ToString(), ignoreCase: true),
+                        SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature2.status.ToString(), true),
                         Signer = new Signer(signature2.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }
@@ -298,7 +299,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 //Act
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);
-
 
                 //Assert
                 var comparator = new Comparator();

@@ -8,6 +8,13 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
     internal class PortalManifest : IAsiceAttachable
     {
+        public PortalManifest(Sender sender, Document document, IEnumerable<Signer> signers)
+        {
+            Sender = sender;
+            Document = document;
+            Signers = signers;
+        }
+
         public Sender Sender { get; internal set; }
 
         public Document Document { get; internal set; }
@@ -15,13 +22,6 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
         public IEnumerable<Signer> Signers { get; internal set; }
 
         public Availability Availability { get; set; }
-
-        public PortalManifest(Sender sender, Document document, IEnumerable<Signer> signers)
-        {
-            Sender = sender;
-            Document = document;
-            Signers = signers;
-        }
 
         public byte[] Bytes
         {

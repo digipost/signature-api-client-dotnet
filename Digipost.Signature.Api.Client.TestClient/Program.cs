@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Reflection;
 using log4net;
 
 namespace Digipost.Signature.Api.Client.TestClient
 {
-    class Program
+    internal class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
-        static void Main(string[] args)
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static void Main(string[] args)
         {
             Console.WriteLine("Starting dat loggah ...");
             Log.Debug("Debug logging");

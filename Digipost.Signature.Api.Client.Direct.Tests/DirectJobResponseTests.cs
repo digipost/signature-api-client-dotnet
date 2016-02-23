@@ -18,15 +18,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 var directJobResponse = new DirectJobResponse(
-                    jobId, 
+                    jobId,
                     responseUrls
                     );
 
                 //Assert
-                Assert.AreEqual(jobId,directJobResponse.JobId);
+                Assert.AreEqual(jobId, directJobResponse.JobId);
                 Assert.AreEqual(responseUrls, directJobResponse.ResponseUrls);
             }
         }
     }
-
 }

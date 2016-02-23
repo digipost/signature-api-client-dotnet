@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class DocumentTests
     {
         [TestClass]
@@ -21,15 +21,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const string fileName = "NavnPåFil";
                 const FileType fileType = FileType.Pdf;
                 const string expectedMimeType = "application/pdf";
-                
+
                 var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
 
                 //Act
                 var document = new Document(
-                    subject, 
-                    message, 
-                    fileName, 
-                    fileType, 
+                    subject,
+                    message,
+                    fileName,
+                    fileType,
                     pdfDocumentBytes
                     );
 
@@ -38,9 +38,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(fileName, document.FileName);
                 Assert.AreEqual(expectedMimeType, document.MimeType);
-                Enumerable.SequenceEqual(pdfDocumentBytes, document.Bytes);
+                pdfDocumentBytes.SequenceEqual(document.Bytes);
             }
-            
+
             [TestMethod]
             public void InitializesAllValuesWithDocumentPath()
             {
@@ -50,7 +50,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 const string fileName = "NavnPåFil";
                 const FileType fileType = FileType.Txt;
                 const string expectedMimeType = "text/plain";
-
 
                 var documentPath = DocumentFilePath();
 
@@ -70,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(fileName, document.FileName);
                 Assert.AreEqual(expectedMimeType, document.MimeType);
-                Enumerable.SequenceEqual(pdfDocumentBytes, document.Bytes);
+                pdfDocumentBytes.SequenceEqual(document.Bytes);
             }
 
             private static string DocumentFilePath()

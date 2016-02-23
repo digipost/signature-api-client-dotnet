@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var portalsignaturejobrequest = new portalsignaturejobrequest
             {
-                reference = portalJob.Reference,
+                reference = portalJob.Reference
             };
 
             return portalsignaturejobrequest;
@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             {
                 sender = ToDataTransferObject(portalManifest.Sender),
                 document = ToDataTransferObject(portalManifest.Document),
-                signers = ToDataTransferObject(portalManifest.Signers).ToArray(),
+                signers = ToDataTransferObject(portalManifest.Signers).ToArray()
             };
 
             if (portalManifest.Availability != null)
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         private static signer ToDataTransferObject(Signer signer)
         {
-            return new signer()
+            return new signer
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber
             };
@@ -65,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         public static sender ToDataTransferObject(Sender sender)
         {
-            return new sender()
+            return new sender
             {
                 organizationnumber = sender.OrganizationNumber
             };
@@ -73,7 +73,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         public static document ToDataTransferObject(Document document)
         {
-            return new document()
+            return new document
             {
                 title = document.Subject,
                 description = document.Message,
@@ -112,9 +112,9 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         private static Signature FromDataTransferObject(signature signature)
         {
-            var result = new Signature()
+            var result = new Signature
             {
-                SignatureStatus = (SignatureStatus) Enum.Parse(typeof(SignatureStatus), signature.status.ToString(),ignoreCase:true),
+                SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature.status.ToString(), true),
                 Signer = new Signer(signature.personalidentificationnumber)
             };
 

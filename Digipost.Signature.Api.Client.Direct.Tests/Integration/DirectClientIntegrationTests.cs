@@ -61,6 +61,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 Assert.IsNotNull(result.JobId);
             }
         }
-
     }
 }

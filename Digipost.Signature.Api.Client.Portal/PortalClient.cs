@@ -7,22 +7,22 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using DataTransferObjectConverter = Digipost.Signature.Api.Client.Portal.DataTransferObjects.DataTransferObjectConverter;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-        private readonly Uri _subPath;
         private const int TooManyRequestsStatusCode = 429;
-        private const string  NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
+        private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
         private const string BrokerNotAuthorized = "BROKER_NOT_AUTHORIZED";
+        private readonly Uri _subPath;
 
-        public PortalClient(ClientConfiguration clientConfiguration) 
+        public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
         {
-            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document,portalJob.Signers, ClientConfiguration.Certificate);
+            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
 
             var request = new HttpRequestMessage
@@ -59,7 +59,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = await requestResult.Content.ReadAsStringAsync();
-            
+
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
@@ -82,17 +82,17 @@ namespace Digipost.Signature.Api.Client.Portal
             Error error;
             try
             {
-                error = Core.DataTransferObjects.DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
+                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
             }
             catch (Exception e)
             {
                 return new UnexpectedResponseException(requestContent, statusCode, e);
             }
-            
+
             if (error.Code == BrokerNotAuthorized)
             {
-                return new BrokerNotAuthorizedException(error, statusCode);   
-            } 
+                return new BrokerNotAuthorizedException(error, statusCode);
+            }
 
             return new UnexpectedResponseException(error, statusCode);
         }
@@ -100,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Portal
         private static async Task<PortalJobStatusChangeResponse> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
-            var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);
+            var portalJobStatusChangeResponse = DataTransferObjects.DataTransferObjectConverter.FromDataTransferObject(deserialized);
             return portalJobStatusChangeResponse;
         }
 
@@ -116,14 +116,13 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            await HttpClient.PostAsync(confirmationReference.Url, content: null);
+            await HttpClient.PostAsync(confirmationReference.Url, null);
         }
 
         internal async Task AutoSign(int jobId, string signer)
         {
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
-            await HttpClient.PostAsync(url, content: null);
+            await HttpClient.PostAsync(url, null);
         }
-
     }
 }

@@ -4,9 +4,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 {
     public class PortalClientWithAutoSign : PortalClient
     {
-        public PortalClientWithAutoSign(ClientConfiguration clientConfiguration) : base(clientConfiguration)
+        public PortalClientWithAutoSign(ClientConfiguration clientConfiguration)
+            : base(clientConfiguration)
         {
         }
-
     }
 }

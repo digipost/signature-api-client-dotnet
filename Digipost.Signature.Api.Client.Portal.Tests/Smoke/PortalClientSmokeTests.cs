@@ -14,7 +14,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
     [TestClass]
     public class PortalClientSmokeTests : SmokeTests
     {
-        
         private static XadesReference _xadesReference;
         private static PadesReference _padesReference;
         private static ConfirmationReference _confirmationReference;
@@ -56,15 +55,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
-                var portalJob = DomainUtility.GetPortalJob(signers: 1);
+                var portalJob = DomainUtility.GetPortalJob(1);
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 
                 var signer = portalJob.Signers.ElementAt(0);
-                portalClient.AutoSign((int)portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
-                
+                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
+
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
-                
+
                 Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
 
                 _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
@@ -72,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(jobStatusChangeResponse.ConfirmationReference.Url.AbsolutePath));
             }
 
-            private static PortalJobStatusChangeResponse GetCurrentReceipt(long jobId,  PortalClient portalClient)
+            private static PortalJobStatusChangeResponse GetCurrentReceipt(long jobId, PortalClient portalClient)
             {
                 PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
                 while (portalJobStatusChangeResponse == null)
@@ -101,10 +100,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 //Act
                 await portalClient.GetXades(_xadesReference);
                 //await WriteXadesToFile(portalClient, xadesReference);
-                
+
                 //Assert
             }
-
 
             private static async Task WriteXadesToFile(PortalClient portalClient, XadesReference xadesReference)
             {
@@ -116,7 +114,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                         File.WriteAllBytes(@"C:\Users\aas\Downloads\xades.xml", memoryStream.ToArray());
                     }
                 }
-                
             }
 
             [TestMethod]
@@ -149,14 +146,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 //Arrange
                 var portalClient = GetPortalClient();
-                
+
                 //Act
                 await portalClient.Confirm(_confirmationReference);
 
                 //Assert
             }
-
-
         }
     }
 }

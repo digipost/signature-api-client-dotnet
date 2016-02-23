@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
                 //Act
                 var action = new DirectCreateAction(directJob, asiceBundle);
-                
+
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
                 Assert.AreEqual(serializedDirectJob, action.RequestContentXml.InnerXml);

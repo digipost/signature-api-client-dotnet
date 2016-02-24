@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
-using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -40,26 +39,31 @@ namespace Digipost.Signature.Api.Client.Core
             var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
-            var v = mutualTlsHandler.AuthenticationLevel;
+            mutualTlsHandler.ServerCertificateValidationCallback = IsValidServerCertificate;
 
             return mutualTlsHandler;
         }
 
-        private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        internal bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            var isValid = false;
+            if (certificate == null ||
+                !IsIssuedToServerOrganizationNumber(certificate) ||
+                !IsActiveCertificate(certificate))
+            {
+                return false;
+            }
 
-           
-            
-            if((sslpolicyerrors & SslPolicyErrors.RemoteCertificateNameMismatch) != 0)
+            return ClientConfiguration.Environment.Sertifikatkjedevalidator.ErGyldigResponssertifikat(new X509Certificate2(certificate));
+        }
 
-            if (certificate == null || chain == null)
-                isValid = false;
+        private bool IsIssuedToServerOrganizationNumber(X509Certificate certificate)
+        {
+            return certificate.Subject.Contains(ClientConfiguration.ServerCertificateOrganizationNumber);
+        }
 
-
-
-            return true;
+        private static bool IsActiveCertificate(X509Certificate certificate)
+        {
+            return DateTime.Now > DateTime.Parse(certificate.GetEffectiveDateString()) && DateTime.Now < DateTime.Parse(certificate.GetExpirationDateString());
         }
     }
 }

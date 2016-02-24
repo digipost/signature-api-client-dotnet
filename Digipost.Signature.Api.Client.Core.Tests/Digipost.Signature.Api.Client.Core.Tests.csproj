@@ -100,6 +100,8 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.cer" />
     <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.p12" />
+    <EmbeddedResource Include="Resources\Certificates\Unittests\ExpiredTestCertificate.cer" />
+    <EmbeddedResource Include="Resources\Certificates\Unittests\NotActivatedTestCertificate.cer" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Documents\Dokument.pdf">

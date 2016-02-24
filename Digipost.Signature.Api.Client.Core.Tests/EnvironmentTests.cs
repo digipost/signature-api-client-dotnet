@@ -26,7 +26,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
             }
 
-
             [TestMethod]
             public void GetsInitializedDifiTestEnvironment()
             {

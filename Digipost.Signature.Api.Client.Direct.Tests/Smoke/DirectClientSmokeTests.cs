@@ -5,6 +5,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
@@ -23,13 +24,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    client = DirectClient(Localhost);
+                    client = DirectClient(Environment.Localhost);
                     break;
                 case Client.DifiTest:
-                    client = DirectClient(DifitestSigneringPostenNo);
+                    client = DirectClient(Environment.DifiTest);
                     break;
                 case Client.DifiQa:
-                    client = DirectClient(DifiqaSigneringPostenNo);
+                    client = DirectClient(Environment.DifiQa);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -38,10 +39,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return client;
         }
 
-        private static DirectClient DirectClient(Uri uri)
+        private static DirectClient DirectClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
             var client = new DirectClient(clientConfig);
             return client;
         }

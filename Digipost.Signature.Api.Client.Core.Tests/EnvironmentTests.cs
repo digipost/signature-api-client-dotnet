@@ -11,6 +11,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         public class GetEnvironmentMethod : EnvironmentTests
         {
             [TestMethod]
+            public void GetsInitializeLocalhostEnvironment()
+            {
+                //Arrange
+                var url = new Uri("https://172.16.91.1:8443");
+                var certificates = SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater();
+
+                //Act
+                var environment = Environment.Localhost;
+
+                //Assert
+                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.AreEqual(url, environment.Url);
+                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+            }
+
+
+            [TestMethod]
             public void GetsInitializedDifiTestEnvironment()
             {
                 //Arrange

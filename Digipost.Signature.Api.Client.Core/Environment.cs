@@ -12,6 +12,11 @@ namespace Digipost.Signature.Api.Client.Core
             Sertifikatkjedevalidator = certificateChainValidator;
         }
 
+        internal static Environment Localhost => new Environment(
+            new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
+            new Uri("https://172.16.91.1:8443")
+            );
+
         public static Environment DifiTest => new Environment(
             new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://api.difitest.signering.posten.no")

@@ -7,19 +7,19 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public class ClientConfiguration
     {
-        public ClientConfiguration(Uri signatureServiceRoot, Sender sender, string certificateThumbprint)
-            : this(signatureServiceRoot, sender, CertificateUtility.SenderCertificate(certificateThumbprint, Language.English))
+        public ClientConfiguration(Environment environment, Sender sender, string certificateThumbprint)
+            : this(environment, sender, CertificateUtility.SenderCertificate(certificateThumbprint, Language.English))
         {
         }
 
-        public ClientConfiguration(Uri signatureServiceRoot, Sender sender, X509Certificate2 certificate)
+        public ClientConfiguration(Environment environment, Sender sender, X509Certificate2 certificate)
         {
-            SignatureServiceRoot = signatureServiceRoot;
+            Environment = environment;
             Sender = sender;
             Certificate = certificate;
         }
 
-        public Uri SignatureServiceRoot { get; internal set; }
+        public Environment Environment { get;  }
 
         public Sender Sender { get; internal set; }
 

@@ -15,19 +15,19 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void ConstructorWithCertificate()
             {
                 //Arrange
-                var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
+                var environment = Environment.DifiQa;
                 var sender = CoreDomainUtility.GetSender();
                 var x509Certificate = CoreDomainUtility.GetTestCertificate();
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(
-                    signatureServiceRoot,
+                    environment,
                     sender,
                     x509Certificate
                     );
 
                 //Assert
-                Assert.AreEqual(signatureServiceRoot, clientConfiguration.SignatureServiceRoot);
+                Assert.AreEqual(environment, clientConfiguration.Environment);
                 Assert.AreEqual(sender, clientConfiguration.Sender);
                 Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
             }
@@ -36,20 +36,20 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void ConstructorWithCertificateThumbprint()
             {
                 //Arrange
-                var signatureServiceRoot = new Uri("http://SignatureServiceRoot.no");
+                var environment = Environment.DifiQa;
                 var sender = CoreDomainUtility.GetSender();
 
                 var aCertificateFromCertificateStore = GetFirstCertificateFromCurrentUserStore();
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(
-                    signatureServiceRoot,
+                    environment,
                     sender,
                     aCertificateFromCertificateStore.Thumbprint
                     );
 
                 //Assert
-                Assert.AreEqual(signatureServiceRoot, clientConfiguration.SignatureServiceRoot);
+                Assert.AreEqual(environment, clientConfiguration.Environment);
                 Assert.AreEqual(sender, clientConfiguration.Sender);
                 Assert.AreEqual(aCertificateFromCertificateStore, clientConfiguration.Certificate);
             }

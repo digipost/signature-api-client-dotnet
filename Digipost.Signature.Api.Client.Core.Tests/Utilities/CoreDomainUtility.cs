@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetTestCertificate());
+            return new ClientConfiguration(Environment.DifiQa,  GetSender(), GetTestCertificate());
         }
 
         public static Document GetDocument()

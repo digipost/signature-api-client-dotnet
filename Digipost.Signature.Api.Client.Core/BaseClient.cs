@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core
             return new HttpClient(loggingHandler)
             {
                 Timeout = TimeSpan.FromMilliseconds(5000),
-                BaseAddress = ClientConfiguration.SignatureServiceRoot
+                BaseAddress = ClientConfiguration.Environment.Url
             };
         }
 
@@ -39,14 +39,15 @@ namespace Digipost.Signature.Api.Client.Core
             var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificate;
+            mutualTlsHandler.ServerCertificateValidationCallback = IsValidServerCertificate;
 
             return mutualTlsHandler;
         }
 
-        private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            return true;
+            return CertificateValidator.IsValidServerCertificate(ClientConfiguration.Environment.Sertifikatkjedevalidator, new X509Certificate2(certificate), ClientConfiguration.ServerCertificateOrganizationNumber
+                );
         }
     }
 }

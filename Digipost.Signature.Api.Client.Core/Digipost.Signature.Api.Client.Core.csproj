@@ -82,9 +82,11 @@
     <Compile Include="BaseClient.cs" />
     <Compile Include="ConfirmationReference.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
+    <Compile Include="Environment.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Exceptions\BrokerNotAuthorizedException.cs" />
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
+    <Compile Include="Internal\CertificateValidator.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />

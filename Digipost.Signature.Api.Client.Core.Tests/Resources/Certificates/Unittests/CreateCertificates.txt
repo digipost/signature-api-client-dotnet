@@ -6,3 +6,9 @@
 "C:\Program Files (x86)\Windows Kits\10\bin\x64\pvk2pfx" -pvk DigipostCert.pvk -spc DigipostCert.cer -pfx DigipostCert.p12"
 
 //Note: ...Kits\10\... is for windows 10. For windows 8, use 8.1.
+
+// Expired
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert" -pe -sv DigipostCert.pvk -n "SERIALNUMBER=984661185, CN=Sample" -# "984661185" "ExpiredTestCertificate.cer" -e 12/31/2000 -r
+
+// Not activated
+"C:\Program Files (x86)\Windows Kits\8.1\bin\x64\makecert" -pe -sv DigipostCert.pvk -n "SERIALNUMBER=984661185, CN=Sample" -# "984661185" "NotActivatedTestCertificate.cer" -b 12/31/2300 -r

@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
@@ -25,13 +26,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    client = GetPortalClient(Localhost);
+                    client = GetPortalClient(Environment.Localhost);
                     break;
                 case Client.DifiTest:
-                    client = GetPortalClient(DifitestSigneringPostenNo);
+                    client = GetPortalClient(Environment.DifiTest);
                     break;
                 case Client.DifiQa:
-                    client = GetPortalClient(DifiqaSigneringPostenNo);
+                    client = GetPortalClient(Environment.DifiQa);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -40,10 +41,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return client;
         }
 
-        private static PortalClient GetPortalClient(Uri uri)
+        private static PortalClient GetPortalClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(uri, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
             var client = new PortalClient(clientConfig);
             return client;
         }

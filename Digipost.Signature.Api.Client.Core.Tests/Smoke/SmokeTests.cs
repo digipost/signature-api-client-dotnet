@@ -4,10 +4,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
-        protected static readonly Uri Localhost = new Uri("https://172.16.91.1:8443");
-        protected static readonly Uri DifitestSigneringPostenNo = new Uri("https://api.difitest.signering.posten.no");
-        protected static readonly Uri DifiqaSigneringPostenNo = new Uri("https://api.difiqa.signering.posten.no");
-
         protected static Client ClientType
         {
             get
@@ -17,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     return Client.DifiQa;
                 }
 
-                return Client.DifiQa;
+                return Client.DifiTest;
             }
         }
 
@@ -25,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
         {
             var isOnBuildServer = false;
 
-            var teamCityBuildUser = "kapteinen";
+            const string teamCityBuildUser = "Administrator";
             if (System.Environment.UserName.ToLower().Contains(teamCityBuildUser))
             {
                 isOnBuildServer = true;
@@ -41,13 +37,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             switch (ClientType)
             {
                 case Client.Localhost:
-                    result = new Uri(Localhost, relativeUri);
+                    result = new Uri(Environment.Localhost.Url, relativeUri);
                     break;
                 case Client.DifiTest:
-                    result = new Uri(DifitestSigneringPostenNo, relativeUri);
+                    result = new Uri(Environment.DifiTest.Url, relativeUri);
                     break;
                 case Client.DifiQa:
-                    result = new Uri(DifiqaSigneringPostenNo, relativeUri);
+                    result = new Uri(Environment.DifiQa.Url, relativeUri);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

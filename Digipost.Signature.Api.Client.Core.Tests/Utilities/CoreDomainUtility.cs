@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(new Uri("https://serviceroot.digipost.no"), GetSender(), GetTestCertificate());
+            return new ClientConfiguration(Environment.DifiQa, GetSender(), GetTestCertificate());
         }
 
         public static Document GetDocument()
@@ -63,6 +63,21 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         public static X509Certificate2 GetTestIntegrasjonSertifikat()
         {
             return BringTestSertifikat();
+        }
+
+        public static X509Certificate2 GetExpiredSelfSignedCertificate()
+        {
+            return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "ExpiredTestCertificate.cer"), "", X509KeyStorageFlags.Exportable);
+        }
+
+        public static X509Certificate2 GetNotActivatedSelfSignedCertificate()
+        {
+            return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "NotActivatedTestCertificate.cer"), "", X509KeyStorageFlags.Exportable);
+        }
+
+        public static X509Certificate2 GetPostenTestCertificate()
+        {
+            return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "PostenNorgeAs.cer"), "", X509KeyStorageFlags.Exportable);
         }
 
         private static X509Certificate2 BringTestSertifikat()

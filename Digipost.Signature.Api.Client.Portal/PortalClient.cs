@@ -39,6 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal
                 Method = HttpMethod.Post,
                 Content = portalCreateAction.Content()
             };
+
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
             var requestResult = await HttpClient.PostAsync(_subPath, portalCreateAction.Content());
             var requestContent = await requestResult.Content.ReadAsStringAsync();

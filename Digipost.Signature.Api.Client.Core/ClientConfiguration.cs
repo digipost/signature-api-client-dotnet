@@ -16,7 +16,6 @@ namespace Digipost.Signature.Api.Client.Core
             Environment = environment;
             Sender = sender;
             Certificate = certificate;
-            
         }
 
         public Environment Environment { get; }
@@ -25,6 +24,6 @@ namespace Digipost.Signature.Api.Client.Core
 
         public X509Certificate2 Certificate { get; internal set; }
 
-        public string ServerCertificateOrganizationNumber { get; } = "SERIALNUMBER=984661185";
+        public string ServerCertificateOrganizationNumber { get; } = "984661185";
     }
 }

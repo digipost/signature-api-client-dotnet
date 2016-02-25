@@ -44,26 +44,10 @@ namespace Digipost.Signature.Api.Client.Core
             return mutualTlsHandler;
         }
 
-        internal bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            if (certificate == null ||
-                !IsIssuedToServerOrganizationNumber(certificate) ||
-                !IsActiveCertificate(certificate))
-            {
-                return false;
-            }
-
-            return ClientConfiguration.Environment.Sertifikatkjedevalidator.ErGyldigResponssertifikat(new X509Certificate2(certificate));
-        }
-
-        private bool IsIssuedToServerOrganizationNumber(X509Certificate certificate)
-        {
-            return certificate.Subject.Contains(ClientConfiguration.ServerCertificateOrganizationNumber);
-        }
-
-        private static bool IsActiveCertificate(X509Certificate certificate)
-        {
-            return DateTime.Now > DateTime.Parse(certificate.GetEffectiveDateString()) && DateTime.Now < DateTime.Parse(certificate.GetExpirationDateString());
+            return CertificateValidator.IsValidServerCertificate(ClientConfiguration.Environment.Sertifikatkjedevalidator, new X509Certificate2(certificate), ClientConfiguration.ServerCertificateOrganizationNumber
+                );
         }
     }
 }

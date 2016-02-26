@@ -82,6 +82,8 @@
     <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHanderForErrorResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForJobCompletedResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />

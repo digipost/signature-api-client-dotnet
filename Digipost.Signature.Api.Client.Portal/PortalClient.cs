@@ -10,6 +10,7 @@ using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
+using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -118,6 +119,20 @@ namespace Digipost.Signature.Api.Client.Portal
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
             await HttpClient.PostAsync(confirmationReference.Url, null);
+        }
+
+        public async Task Cancel(CancellationReference cancellationReference)
+        {
+            var requestResult = await HttpClient.PostAsync(cancellationReference.Url, null);
+            switch (requestResult.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    break;
+                case HttpStatusCode.Conflict:
+                    throw new JobCompletedException();
+                default:
+                    throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+            }
         }
 
         internal async Task AutoSign(int jobId, string signer)

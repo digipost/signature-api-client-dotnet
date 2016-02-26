@@ -82,9 +82,9 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             };
         }
 
-        public static PortalJobResponse FromDataTransferObject(portalsignaturejobresponse dtoPortalsignaturejobresponse)
+        public static PortalJobResponse FromDataTransferObject(portalsignaturejobresponse portalsignaturejobresponse)
         {
-            return new PortalJobResponse(dtoPortalsignaturejobresponse.signaturejobid);
+            return new PortalJobResponse(portalsignaturejobresponse.signaturejobid, new Uri(portalsignaturejobresponse.cancellationurl));
         }
 
         public static PortalJobStatusChangeResponse FromDataTransferObject(

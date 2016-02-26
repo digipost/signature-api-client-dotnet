@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,6 +13,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
     [TestClass]
     public class PortalClientTests
     {
+        internal HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
+        {
+            return new HttpClient(delegatingHandler)
+            {
+                BaseAddress = new Uri("http://mockUrl.no")
+            };
+        }
+
         [TestClass]
         public class GetStatusChangeMethod : PortalClientTests
         {
@@ -96,13 +106,41 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Assert
             }
+        }
 
-            private HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
+        [TestClass]
+        public class CancelMethod : PortalClientTests
+        {
+            [ExpectedException(typeof (JobCompletedException))]
+            [TestMethod]
+            public async Task ThrowsJobCompletedExceptionOnConflict()
             {
-                return new HttpClient(delegatingHandler)
+                //Arrange
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
-                    BaseAddress = new Uri("http://mockUrl.no")
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobCompletedResponse())
                 };
+
+                //Act
+                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
+
+                //Assert
+            }
+
+            [ExpectedException(typeof (UnexpectedResponseException))]
+            [TestMethod]
+            public async Task ThrowsUnexpectedErrorOnUnexpectedErrorCode()
+            {
+                //Arrange
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForInternalServerErrorResponse())
+                };
+
+                //Act
+                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
+
+                //Assert
             }
         }
     }

@@ -143,6 +143,25 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             [TestMethod]
+            public async Task CancelsSuccessfully()
+            {
+                //Arrange
+                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(1), "aReference");
+                var portalClient = GetPortalClient();
+
+                var portalJobResponse = await portalClient.Create(portalJob);
+                await portalClient.AutoSign((int) portalJobResponse.JobId, portalJob.Signers.ElementAt(0).PersonalIdentificationNumber);
+
+                //Act
+                portalClient.Cancel(portalJobResponse.CancellationReference).Wait();
+
+                var changeResponse = await portalClient.GetStatusChange();
+
+                //Assert
+                Assert.AreEqual(SignatureStatus.Cancelled, changeResponse.Signatures.ElementAt(0).SignatureStatus);
+            }
+
+            [TestMethod]
             public async Task ConfirmsSuccessfully()
             {
                 //Arrange

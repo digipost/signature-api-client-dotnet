@@ -81,8 +81,6 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHanderForErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobCompletedResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
@@ -127,9 +125,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Responses\EmptyQueueResponse.txt" />
-    <EmbeddedResource Include="Schema\Examples\Response\BrokerNotAuthorizedErrorResponse.xml" />
-    <EmbeddedResource Include="Schema\Examples\Response\ErrorResponse.xml" />
     <EmbeddedResource Include="Schema\Examples\Response\JobStatusChangeResponse.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

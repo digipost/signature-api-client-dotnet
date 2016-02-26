@@ -15,11 +15,14 @@ namespace Digipost.Signature.Api.Client.Core
 
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
+            RequestHelper = new RequestHelper(HttpClient);
         }
 
         public ClientConfiguration ClientConfiguration { get; }
 
         internal HttpClient HttpClient { get; set; }
+
+        internal RequestHelper RequestHelper { get; set; }
 
         private HttpClient MutualTlsClient()
         {
@@ -46,8 +49,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            return CertificateValidator.IsValidServerCertificate(ClientConfiguration.Environment.Sertifikatkjedevalidator, new X509Certificate2(certificate), ClientConfiguration.ServerCertificateOrganizationNumber
-                );
+            return CertificateValidator.IsValidServerCertificate(ClientConfiguration.Environment.Sertifikatkjedevalidator, new X509Certificate2(certificate), ClientConfiguration.ServerCertificateOrganizationNumber);
         }
     }
 }

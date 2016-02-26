@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -20,7 +21,6 @@ namespace Digipost.Signature.Api.Client.Portal
     {
         private const int TooManyRequestsStatusCode = 429;
         private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-        private const string BrokerNotAuthorized = "BROKER_NOT_AUTHORIZED";
         private readonly Uri _subPath;
 
         public PortalClient(ClientConfiguration clientConfiguration)
@@ -34,18 +34,28 @@ namespace Digipost.Signature.Api.Client.Portal
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
 
+            var requestResult = await BuildAndSendCreateRequest(portalCreateAction);
+            var requestContent = await requestResult.Content.ReadAsStringAsync();
+
+            if (!requestResult.IsSuccessStatusCode)
+            {
+                throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+            }
+
+            return PortalCreateAction.DeserializeFunc(requestContent);
+        }
+
+        private async Task<HttpResponseMessage> BuildAndSendCreateRequest(PortalCreateAction portalCreateAction)
+        {
             var request = new HttpRequestMessage
             {
                 RequestUri = _subPath,
                 Method = HttpMethod.Post,
                 Content = portalCreateAction.Content()
             };
-
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-            var requestResult = await HttpClient.PostAsync(_subPath, portalCreateAction.Content());
-            var requestContent = await requestResult.Content.ReadAsStringAsync();
 
-            return PortalCreateAction.DeserializeFunc(requestContent);
+            return await HttpClient.SendAsync(request);
         }
 
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
@@ -73,30 +83,10 @@ namespace Digipost.Signature.Api.Client.Portal
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     throw new TooEagerPollingException(nextPermittedPollTime);
                 default:
-                    throw HandleGeneralException(requestContent, requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
 
             return portalJobStatusChangeResponse;
-        }
-
-        private SignatureException HandleGeneralException(string requestContent, HttpStatusCode statusCode)
-        {
-            Error error;
-            try
-            {
-                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
-            }
-            catch (Exception e)
-            {
-                return new UnexpectedResponseException(requestContent, statusCode, e);
-            }
-
-            if (error.Code == BrokerNotAuthorized)
-            {
-                return new BrokerNotAuthorizedException(error, statusCode);
-            }
-
-            return new UnexpectedResponseException(error, statusCode);
         }
 
         private static async Task<PortalJobStatusChangeResponse> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
@@ -108,17 +98,22 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await HttpClient.GetStreamAsync(xadesReference.Url);
+            return await RequestHelper.DoStreamRequest(xadesReference.Url);
         }
-
+        
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await HttpClient.GetStreamAsync(padesReference.Url);
+            return await RequestHelper.DoStreamRequest(padesReference.Url);
         }
 
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            await HttpClient.PostAsync(confirmationReference.Url, null);
+            var requestResult = await HttpClient.PostAsync(confirmationReference.Url, null);
+
+            if (requestResult.StatusCode != HttpStatusCode.OK)
+            {
+                throw new UnexpectedResponseException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+            }
         }
 
         public async Task Cancel(CancellationReference cancellationReference)
@@ -131,7 +126,7 @@ namespace Digipost.Signature.Api.Client.Portal
                 case HttpStatusCode.Conflict:
                     throw new JobCompletedException();
                 default:
-                    throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
             }
         }
 
@@ -140,5 +135,6 @@ namespace Digipost.Signature.Api.Client.Portal
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             await HttpClient.PostAsync(url, null);
         }
+
     }
 }

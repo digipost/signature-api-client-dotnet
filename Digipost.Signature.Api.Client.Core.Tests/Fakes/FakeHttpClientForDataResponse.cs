@@ -3,7 +3,7 @@ using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
-    internal class FakeHttpClientForDataResponse :FakeHttpClientHandlerResponse
+    internal class FakeHttpClientForDataResponse : FakeHttpClientHandlerResponse
     {
         public override HttpContent GetContent()
         {

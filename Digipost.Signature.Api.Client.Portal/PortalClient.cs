@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -34,30 +33,9 @@ namespace Digipost.Signature.Api.Client.Portal
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
 
-            var requestResult = await BuildAndSendCreateRequest(portalCreateAction);
-            var requestContent = await requestResult.Content.ReadAsStringAsync();
-
-            if (!requestResult.IsSuccessStatusCode)
-            {
-                throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
-            }
-
-            return PortalCreateAction.DeserializeFunc(requestContent);
+            return await RequestHelper.DoPost(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
         }
-
-        private async Task<HttpResponseMessage> BuildAndSendCreateRequest(PortalCreateAction portalCreateAction)
-        {
-            var request = new HttpRequestMessage
-            {
-                RequestUri = _subPath,
-                Method = HttpMethod.Post,
-                Content = portalCreateAction.Content()
-            };
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-
-            return await HttpClient.SendAsync(request);
-        }
-
+        
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
             PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
@@ -100,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             return await RequestHelper.DoStreamRequest(xadesReference.Url);
         }
-        
+
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
             return await RequestHelper.DoStreamRequest(padesReference.Url);
@@ -135,6 +113,5 @@ namespace Digipost.Signature.Api.Client.Portal
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             await HttpClient.PostAsync(url, null);
         }
-
     }
 }

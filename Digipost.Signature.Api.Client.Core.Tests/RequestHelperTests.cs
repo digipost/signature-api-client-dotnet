@@ -25,20 +25,20 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
 
                 //Act
-                var actualResponseData = await requestHelper.DoPost<string>(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
+                var actualResponseData = await requestHelper.DoPost(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
 
                 //Assert
                 Assert.AreEqual(expectedResponseData, actualResponseData);
             }
-            
+
             [TestMethod]
-            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
             public async Task ThrowsGeneralErrorOnNotSuccessResponse()
             {
                 //Arrange
                 var fakeHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
                 var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
-                
+
                 //Act
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
                 await requestHelper.DoPost(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc);
@@ -46,7 +46,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.Fail();
             }
-
         }
 
         [TestClass]

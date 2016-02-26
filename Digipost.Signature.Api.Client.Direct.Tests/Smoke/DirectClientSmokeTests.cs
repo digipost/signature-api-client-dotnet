@@ -79,7 +79,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(directClient.GetStatus(_statusReference).Result);
                 _xadesReference = directJobStatusResponse.References.Xades;
-               _padesReference = directJobStatusResponse.References.Pades;
+                _padesReference = directJobStatusResponse.References.Pades;
                 _confirmationReference = directJobStatusResponse.References.Confirmation;
 
                 //Assert

@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Core
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var responseMessage =  await _httpClient.SendAsync(request);
+            var responseMessage = await _httpClient.SendAsync(request);
             var responseContent = await responseMessage.Content.ReadAsStringAsync();
 
             if (!responseMessage.IsSuccessStatusCode)

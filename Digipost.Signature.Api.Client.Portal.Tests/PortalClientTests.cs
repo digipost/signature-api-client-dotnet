@@ -73,6 +73,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
             }
 
             [TestMethod]
@@ -89,6 +90,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
             }
 
             [TestMethod]
@@ -105,6 +107,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
             }
         }
 
@@ -125,6 +128,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
 
                 //Assert
+                Assert.Fail();
             }
 
             [ExpectedException(typeof (UnexpectedResponseException))]
@@ -141,6 +145,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
 
                 //Assert
+                Assert.Fail();
             }
         }
     }

@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
     {
         public FakeHttpClientHandlerForInternalServerErrorResponse()
         {
-            ResultCode = HttpStatusCode.BadRequest;
+            ResultCode = HttpStatusCode.InternalServerError;
         }
 
         public override HttpContent GetContent()

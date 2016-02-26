@@ -150,7 +150,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);
-                await portalClient.AutoSign((int) portalJobResponse.JobId, portalJob.Signers.ElementAt(0).PersonalIdentificationNumber);
 
                 //Act
                 portalClient.Cancel(portalJobResponse.CancellationReference).Wait();

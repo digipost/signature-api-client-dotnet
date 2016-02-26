@@ -4,6 +4,7 @@
     {
         Waiting,
         Rejected,
+        Cancelled,
         Signed
     }
 }

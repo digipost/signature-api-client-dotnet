@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,6 +13,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
     [TestClass]
     public class PortalClientTests
     {
+        internal HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
+        {
+            return new HttpClient(delegatingHandler)
+            {
+                BaseAddress = new Uri("http://mockUrl.no")
+            };
+        }
+
         [TestClass]
         public class GetStatusChangeMethod : PortalClientTests
         {
@@ -63,6 +73,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
             }
 
             [TestMethod]
@@ -79,6 +90,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
             }
 
             [TestMethod]
@@ -95,14 +107,45 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange();
 
                 //Assert
+                Assert.Fail();
+            }
+        }
+
+        [TestClass]
+        public class CancelMethod : PortalClientTests
+        {
+            [ExpectedException(typeof (JobCompletedException))]
+            [TestMethod]
+            public async Task ThrowsJobCompletedExceptionOnConflict()
+            {
+                //Arrange
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobCompletedResponse())
+                };
+
+                //Act
+                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
+
+                //Assert
+                Assert.Fail();
             }
 
-            private HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
+            [ExpectedException(typeof (UnexpectedResponseException))]
+            [TestMethod]
+            public async Task ThrowsUnexpectedErrorOnUnexpectedErrorCode()
             {
-                return new HttpClient(delegatingHandler)
+                //Arrange
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
-                    BaseAddress = new Uri("http://mockUrl.no")
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForInternalServerErrorResponse())
                 };
+
+                //Act
+                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
+
+                //Assert
+                Assert.Fail();
             }
         }
     }

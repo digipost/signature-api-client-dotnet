@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="Availability.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
+    <Compile Include="Exceptions\JobCompletedException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\AsiceGenerator.cs" />
     <Compile Include="Internal\AsicE\PortalManifest.cs" />
@@ -79,6 +80,7 @@
       <Name>Digipost.Signature.Api.Client.Scripts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

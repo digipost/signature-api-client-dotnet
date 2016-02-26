@@ -78,6 +78,7 @@
     </Compile>
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
+    <Compile Include="CancellationReferenceTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />

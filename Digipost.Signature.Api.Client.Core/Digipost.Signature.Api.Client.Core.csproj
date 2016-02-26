@@ -93,6 +93,7 @@
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHttpHandler.cs" />
+    <Compile Include="RequestHelper.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />

@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
 {
     public class UnexpectedResponseException : SignatureException
     {
-        public UnexpectedResponseException(string message, HttpStatusCode statusCode, Exception innerException)
+        public UnexpectedResponseException(string message, HttpStatusCode statusCode, Exception innerException = null)
             : base(message, innerException)
         {
             StatusCode = statusCode;

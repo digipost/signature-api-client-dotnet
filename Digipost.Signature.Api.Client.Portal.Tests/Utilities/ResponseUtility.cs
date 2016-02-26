@@ -24,16 +24,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return GetContent("TooManyRequestsResponse.txt");
         }
 
-        public static string GetError()
-        {
-            return GetXml("ErrorResponse.xml").OuterXml;
-        }
-
-        public static string GetBrokerNotAuthorizedError()
-        {
-            return GetXml("BrokerNotAuthorizedErrorResponse.xml").OuterXml;
-        }
-
         internal static XmlDocument GetXml(string kvittering)
         {
             return XmlUtility.TilXmlDokument(GetContent(kvittering));

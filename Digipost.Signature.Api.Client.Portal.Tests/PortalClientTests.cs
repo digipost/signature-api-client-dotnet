@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
@@ -19,6 +20,20 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 BaseAddress = new Uri("http://mockUrl.no")
             };
+        }
+
+        [TestClass]
+        public class CreateMethod : PortalClientTests
+        {
+            [TestMethod]
+            public void ThrowsUnexpectedExceptionOn()
+            {
+                //Arrange
+
+                //Act
+
+                //Assert
+            }
         }
 
         [TestClass]
@@ -83,24 +98,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
                 {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHanderForErrorResponse())
-                };
-
-                //Act
-                await portalClient.GetStatusChange();
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof (BrokerNotAuthorizedException))]
-            public async Task ThrowsBrokerNotAuthorizedExceptionOnNotAuthorized()
-            {
-                //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
-                {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse())
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForErrorResponse())
                 };
 
                 //Act
@@ -143,6 +141,27 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Act
                 await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
+
+                //Assert
+                Assert.Fail();
+            }
+        }
+
+        [TestClass]
+        public class ConfirmMethod : PortalClientTests
+        {
+            [TestMethod]
+            [ExpectedException(typeof (UnexpectedResponseException))]
+            public async Task ThrowsUnexpectedResponseException()
+            {
+                //Arrange
+                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForInternalServerErrorResponse())
+                };
+
+                //Act
+                await portalClient.Confirm(new ConfirmationReference(new Uri("http://cancellationuri.no")));
 
                 //Assert
                 Assert.Fail();

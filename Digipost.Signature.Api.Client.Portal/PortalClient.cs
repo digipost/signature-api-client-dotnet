@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -99,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             return await RequestHelper.DoStreamRequest(xadesReference.Url);
         }
-
+        
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
             return await RequestHelper.DoStreamRequest(padesReference.Url);
@@ -134,5 +135,6 @@ namespace Digipost.Signature.Api.Client.Portal
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             await HttpClient.PostAsync(url, null);
         }
+
     }
 }

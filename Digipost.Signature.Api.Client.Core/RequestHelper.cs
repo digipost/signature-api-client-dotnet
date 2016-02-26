@@ -22,6 +22,27 @@ namespace Digipost.Signature.Api.Client.Core
             _httpClient = httpClient;
         }
 
+        public async Task<T> DoPost<T>(Uri uri, HttpContent content, Func<string, T> deserializeFunc)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = uri,
+                Method = HttpMethod.Post,
+                Content = content
+            };
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            var responseMessage =  await _httpClient.SendAsync(request);
+            var responseContent = await responseMessage.Content.ReadAsStringAsync();
+
+            if (!responseMessage.IsSuccessStatusCode)
+            {
+                throw HandleGeneralException(responseContent, responseMessage.StatusCode);
+            }
+
+            return deserializeFunc(responseContent);
+        }
+
         public async Task<Stream> DoStreamRequest(Uri uri)
         {
             var request = new HttpRequestMessage

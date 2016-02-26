@@ -12,6 +12,44 @@ namespace Digipost.Signature.Api.Client.Core.Tests
     public class RequestHelperTests
     {
         [TestClass]
+        public class DoRequestMethod : RequestHelperTests
+        {
+            [TestMethod]
+            public async Task DeserializesClassOnOkResponse()
+            {
+                //Arrange
+                var fakeHandler = new FakeHttpClientForDataResponse();
+                var responseData = await fakeHandler.GetContent().ReadAsStringAsync();
+                var expectedResponseData = $"Appended{responseData}";
+                Func<string, string> deserializeFunc = data => $"Appended{data}";
+                var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
+
+                //Act
+                var actualResponseData = await requestHelper.DoPost<string>(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
+
+                //Assert
+                Assert.AreEqual(expectedResponseData, actualResponseData);
+            }
+            
+            [TestMethod]
+            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
+            public async Task ThrowsGeneralErrorOnNotSuccessResponse()
+            {
+                //Arrange
+                var fakeHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
+                var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
+                
+                //Act
+                Func<string, string> deserializeFunc = data => $"Appended{data}";
+                await requestHelper.DoPost(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc);
+
+                //Assert
+                Assert.Fail();
+            }
+
+        }
+
+        [TestClass]
         public class DoStreamRequestMethod : RequestHelperTests
         {
             [TestMethod]

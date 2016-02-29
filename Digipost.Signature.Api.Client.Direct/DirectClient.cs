@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -53,22 +54,28 @@ namespace Digipost.Signature.Api.Client.Direct
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
 
-            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+            switch (requestResult.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                default:
+                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+            }
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await HttpClient.GetStreamAsync(xadesReference.Url);
+            return await RequestHelper.GetStream(xadesReference.Url);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await HttpClient.GetStreamAsync(padesReference.Url);
+            return await RequestHelper.GetStream(padesReference.Url);
         }
 
-        public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
+        public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            return await HttpClient.PostAsync(confirmationReference.Url, null);
+            await RequestHelper.Confirm(confirmationReference);
         }
 
         internal async Task AutoSign(long jobId)

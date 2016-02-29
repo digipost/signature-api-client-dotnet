@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Portal
                 case HttpStatusCode.OK:
                     portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
                     break;
-                case (HttpStatusCode) TooManyRequestsStatusCode:
+                case (HttpStatusCode)TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     throw new TooEagerPollingException(nextPermittedPollTime);
                 default:
@@ -76,22 +76,17 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await RequestHelper.DoStreamRequest(xadesReference.Url);
+            return await RequestHelper.GetStream(xadesReference.Url);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await RequestHelper.DoStreamRequest(padesReference.Url);
+            return await RequestHelper.GetStream(padesReference.Url);
         }
 
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            var requestResult = await HttpClient.PostAsync(confirmationReference.Url, null);
-
-            if (requestResult.StatusCode != HttpStatusCode.OK)
-            {
-                throw new UnexpectedResponseException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
-            }
+            await RequestHelper.Confirm(confirmationReference);
         }
 
         public async Task Cancel(CancellationReference cancellationReference)

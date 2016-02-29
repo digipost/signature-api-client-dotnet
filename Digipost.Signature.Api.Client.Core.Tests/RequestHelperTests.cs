@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
     public class RequestHelperTests
     {
         [TestClass]
-        public class DoRequestMethod : RequestHelperTests
+        public class DoPostMethod : RequestHelperTests
         {
             [TestMethod]
             public async Task DeserializesClassOnOkResponse()
@@ -59,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
 
                 //Act
-                var result = await requestHelper.DoStreamRequest(new Uri("http://fakeUri.no"));
+                var result = await requestHelper.GetStream(new Uri("http://fakeUri.no"));
 
                 //Assert
                 Assert.IsTrue(result.Length > 5000);
@@ -74,7 +75,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
 
                 //Act
-                var result = await requestHelper.DoStreamRequest(new Uri("http://fakeUri.no"));
+                var result = await requestHelper.GetStream(new Uri("http://fakeUri.no"));
 
                 //Assert
                 Assert.Fail();

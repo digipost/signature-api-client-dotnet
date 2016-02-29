@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Core
             return deserializeFunc(responseContent);
         }
 
-        public async Task<Stream> DoStreamRequest(Uri uri)
+        public async Task<Stream> GetStream(Uri uri)
         {
             var request = new HttpRequestMessage
             {
@@ -62,6 +62,16 @@ namespace Digipost.Signature.Api.Client.Core
             }
 
             return await requestResult.Content.ReadAsStreamAsync();
+        }
+
+        public async Task Confirm(ConfirmationReference confirmationReference)
+        {
+            var requestResult = await _httpClient.PostAsync(confirmationReference.Url, null);
+
+            if (requestResult.StatusCode != HttpStatusCode.OK)
+            {
+                throw new UnexpectedResponseException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+            }
         }
 
         internal SignatureException HandleGeneralException(string requestContent, HttpStatusCode statusCode)

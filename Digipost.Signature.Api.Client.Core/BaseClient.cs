@@ -9,6 +9,8 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class BaseClient
     {
+        private HttpClient _httpClient;
+
         protected BaseClient(ClientConfiguration clientConfiguration)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -20,7 +22,15 @@ namespace Digipost.Signature.Api.Client.Core
 
         public ClientConfiguration ClientConfiguration { get; }
 
-        internal HttpClient HttpClient { get; set; }
+        internal HttpClient HttpClient
+        {
+            get { return _httpClient; }
+            set
+            {
+                _httpClient = value;
+                RequestHelper = new RequestHelper(value);
+            }
+        }
 
         internal RequestHelper RequestHelper { get; set; }
 

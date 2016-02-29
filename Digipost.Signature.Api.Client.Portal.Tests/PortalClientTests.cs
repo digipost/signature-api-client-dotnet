@@ -23,20 +23,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         }
 
         [TestClass]
-        public class CreateMethod : PortalClientTests
-        {
-            [TestMethod]
-            public void ThrowsUnexpectedExceptionOn()
-            {
-                //Arrange
-
-                //Act
-
-                //Assert
-            }
-        }
-
-        [TestClass]
         public class GetStatusChangeMethod : PortalClientTests
         {
             [TestMethod]
@@ -151,7 +137,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class ConfirmMethod : PortalClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (UnexpectedResponseException))]
+            [ExpectedException(typeof (UnexpectedResponseException), AllowDerivedTypes = true)]
             public async Task ThrowsUnexpectedResponseException()
             {
                 //Arrange

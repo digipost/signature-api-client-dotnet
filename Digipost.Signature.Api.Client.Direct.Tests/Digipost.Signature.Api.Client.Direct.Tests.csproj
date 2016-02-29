@@ -98,6 +98,7 @@
     <Compile Include="ResponseUrlsTests.cs" />
     <Compile Include="Smoke\DirectClientSmokeTests.cs" />
     <Compile Include="JobReferencesTests.cs" />
+    <Compile Include="Utilities\ResponseUtility.cs" />
     <Compile Include="Utilities\DomainUtility.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schema\Examples\Response\StatusResponse.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schema\Examples\Response\CreateResponse.xml" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

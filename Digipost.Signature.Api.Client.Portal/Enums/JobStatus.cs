@@ -2,6 +2,7 @@
 {
     public enum JobStatus
     {
+        NoChanges,
         PartiallyCompleted,
         Completed
     }

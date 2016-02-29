@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
     [TestClass]
-    internal class EnvironmentTests
+    public class EnvironmentTests
     {
         [TestClass]
         public class GetEnvironmentMethod : EnvironmentTests

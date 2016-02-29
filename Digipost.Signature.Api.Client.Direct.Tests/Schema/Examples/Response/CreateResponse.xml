@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<direct-signature-job-response xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
+	<signature-job-id>179</signature-job-id>
+	<redirect-url>https://difiqa.signering.posten.no/redirect/#/637851415276fa9bbc9703325ff953d887cf01d21d9b09752b96cae3d22fce62</redirect-url>
+	<status-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/179/status</status-url>
+</direct-signature-job-response>

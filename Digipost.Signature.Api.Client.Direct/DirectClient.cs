@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -27,18 +28,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
 
-            var request = new HttpRequestMessage
-            {
-                RequestUri = _subPath,
-                Method = HttpMethod.Post,
-                Content = createAction.Content()
-            };
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-
-            var requestResult = await HttpClient.SendAsync(request);
-            var requestContent = await requestResult.Content.ReadAsStringAsync();
-
-            return DirectCreateAction.DeserializeFunc(requestContent);
+            return await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
         }
 
         public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
@@ -53,22 +43,28 @@ namespace Digipost.Signature.Api.Client.Direct
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
 
-            return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+            switch (requestResult.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                default:
+                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+            }
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await HttpClient.GetStreamAsync(xadesReference.Url);
+            return await RequestHelper.GetStream(xadesReference.Url);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await HttpClient.GetStreamAsync(padesReference.Url);
+            return await RequestHelper.GetStream(padesReference.Url);
         }
 
-        public async Task<HttpResponseMessage> Confirm(ConfirmationReference confirmationReference)
+        public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            return await HttpClient.PostAsync(confirmationReference.Url, null);
+            await RequestHelper.Confirm(confirmationReference);
         }
 
         internal async Task AutoSign(long jobId)

@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             NextPermittedPollTime = DateTime.Parse(message);
         }
-        
+
         public DateTime NextPermittedPollTime { get; set; }
     }
 }

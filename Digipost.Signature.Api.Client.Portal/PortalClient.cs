@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
-            PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
+            PortalJobStatusChangeResponse portalJobStatusChangeResponse;
 
             var request = new HttpRequestMessage
             {
@@ -52,6 +52,7 @@ namespace Digipost.Signature.Api.Client.Portal
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
+                    portalJobStatusChangeResponse = PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse;
                     break;
                 case HttpStatusCode.OK:
                     portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);

@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class GetStatusChangeMethod : PortalClientTests
         {
             [TestMethod]
-            public async Task ReturnsNullOnEmptyQueue()
+            public async Task ReturnsEmptyObjectOnEmptyQueue()
             {
                 //Arrange
                 var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var actualResponse = await portalClient.GetStatusChange();
 
                 //Assert
-                Assert.AreEqual(expectedResponse, actualResponse);
+                Assert.AreEqual(PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse, actualResponse);
             }
 
             [TestMethod]

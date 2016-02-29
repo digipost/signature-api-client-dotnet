@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
 
                 //Act
-                var actualResponseData = await requestHelper.DoPost(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
+                var actualResponseData = await requestHelper.Create(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
 
                 //Assert
                 Assert.AreEqual(expectedResponseData, actualResponseData);
@@ -42,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Act
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
-                await requestHelper.DoPost(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc);
+                await requestHelper.Create(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc);
 
                 //Assert
                 Assert.Fail();

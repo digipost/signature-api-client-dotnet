@@ -7,7 +7,6 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
@@ -33,9 +32,9 @@ namespace Digipost.Signature.Api.Client.Portal
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
 
-            return await RequestHelper.DoPost(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
+            return await RequestHelper.Create(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
         }
-        
+
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()
         {
             PortalJobStatusChangeResponse portalJobStatusChangeResponse = null;
@@ -57,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Portal
                 case HttpStatusCode.OK:
                     portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
                     break;
-                case (HttpStatusCode)TooManyRequestsStatusCode:
+                case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     throw new TooEagerPollingException(nextPermittedPollTime);
                 default:

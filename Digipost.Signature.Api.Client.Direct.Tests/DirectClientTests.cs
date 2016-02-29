@@ -51,7 +51,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
             public async Task GetStatusReturnsClass()
             {
                 //Arrange
@@ -68,5 +68,4 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             }
         }
     }
-
 }

@@ -28,18 +28,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
 
-            var request = new HttpRequestMessage
-            {
-                RequestUri = _subPath,
-                Method = HttpMethod.Post,
-                Content = createAction.Content()
-            };
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-
-            var requestResult = await HttpClient.SendAsync(request);
-            var requestContent = await requestResult.Content.ReadAsStringAsync();
-
-            return DirectCreateAction.DeserializeFunc(requestContent);
+            return await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
         }
 
         public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)

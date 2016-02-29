@@ -5,21 +5,12 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class TooEagerPollingException : SignatureException
     {
-        public TooEagerPollingException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
         public TooEagerPollingException(string message)
-            : base(message)
+            : base($"Excessive polling is not allowed. The the next permitted poll time is: {message}, and can also be found in variable 'NextPermittedPollTime'.")
         {
             NextPermittedPollTime = DateTime.Parse(message);
         }
-
-        public TooEagerPollingException()
-        {
-        }
-
+        
         public DateTime NextPermittedPollTime { get; set; }
     }
 }

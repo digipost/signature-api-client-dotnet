@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -10,6 +11,7 @@ using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -17,10 +19,13 @@ namespace Digipost.Signature.Api.Client.Direct
     {
         private readonly Uri _subPath;
 
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public DirectClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+            Log.Info($"Creating DirectClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
@@ -42,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
-
+            
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:

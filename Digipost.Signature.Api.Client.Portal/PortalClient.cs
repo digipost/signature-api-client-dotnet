@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
@@ -12,6 +13,7 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -21,10 +23,14 @@ namespace Digipost.Signature.Api.Client.Portal
         private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
         private readonly Uri _subPath;
 
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+
         public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
+            Log.Info($"Creating PortalClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
@@ -49,9 +55,12 @@ namespace Digipost.Signature.Api.Client.Portal
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = await requestResult.Content.ReadAsStringAsync();
 
+            Log.Info($"Requesting status change on endpoint {requestResult} ...");
+
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
+                    Log.Info("");
                     portalJobStatusChangeResponse = PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse;
                     break;
                 case HttpStatusCode.OK:

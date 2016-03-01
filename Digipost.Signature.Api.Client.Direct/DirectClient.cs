@@ -17,9 +17,8 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
     {
-        private readonly Uri _subPath;
-
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
@@ -47,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
-            
+
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:

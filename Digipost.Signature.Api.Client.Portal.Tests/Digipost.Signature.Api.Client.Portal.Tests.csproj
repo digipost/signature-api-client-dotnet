@@ -89,7 +89,6 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\AsicE\PortalManifestTests.cs" />
     <Compile Include="PortalClientTests.cs" />
     <Compile Include="PortalClientWithAutoSign.cs" />

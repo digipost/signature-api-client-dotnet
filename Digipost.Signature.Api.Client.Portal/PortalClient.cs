@@ -21,16 +21,15 @@ namespace Digipost.Signature.Api.Client.Portal
     {
         private const int TooManyRequestsStatusCode = 429;
         private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-        private readonly Uri _subPath;
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+        private readonly Uri _subPath;
 
         public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
-            Log.Info($"Creating PortalClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
+            Log.Info($"Creating PortalClient, endpoint `{new Uri(clientConfiguration.Environment.Url, _subPath)}`");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
@@ -55,20 +54,23 @@ namespace Digipost.Signature.Api.Client.Portal
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = await requestResult.Content.ReadAsStringAsync();
 
-            Log.Info($"Requesting status change on endpoint {requestResult} ...");
+            Log.Info($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    Log.Info("");
+                    Log.Info("No content response received.");
                     portalJobStatusChangeResponse = PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse;
                     break;
                 case HttpStatusCode.OK:
                     portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
+                    Log.Info($"JobStatusChangeResponse received: JobId: {portalJobStatusChangeResponse.JobId}, JobStatus: {portalJobStatusChangeResponse.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
-                    throw new TooEagerPollingException(nextPermittedPollTime);
+                    var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+                    Log.Warn(tooEagerPollingException.Message);
+                    throw tooEagerPollingException;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }

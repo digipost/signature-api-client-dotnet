@@ -25,6 +25,4 @@ using log4net.Config;
 
 [assembly: Guid("469e8c38-800f-4107-8779-cc918ae0da23")]
 
-//Log4Net
-
-[assembly: XmlConfigurator]
+[assembly: XmlConfigurator] //Log4Net

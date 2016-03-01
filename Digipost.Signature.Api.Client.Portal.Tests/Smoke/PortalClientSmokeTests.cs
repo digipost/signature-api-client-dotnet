@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using log4net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
@@ -64,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
-
+                
                 Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
 
                 _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));

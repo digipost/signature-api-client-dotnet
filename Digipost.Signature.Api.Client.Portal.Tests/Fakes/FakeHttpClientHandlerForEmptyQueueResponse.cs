@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes

@@ -106,8 +106,10 @@ namespace Digipost.Signature.Api.Client.Portal
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
+                    Log.Info($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
                     break;
                 case HttpStatusCode.Conflict:
+                    Log.Info($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
                     throw new JobCompletedException();
                 default:
                     throw RequestHelper.HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
@@ -116,6 +118,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         internal async Task AutoSign(int jobId, string signer)
         {
+            Log.Warn($"Autosigning PortalJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             await HttpClient.PostAsync(url, null);
         }

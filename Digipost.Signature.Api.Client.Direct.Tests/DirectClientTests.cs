@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
             [TestMethod]
             [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
-            public async Task GetStatusReturnsClass()
+            public async Task GetStatusThrowsSignatureException()
             {
                 //Arrange
                 var directClient = new DirectClient(CoreDomainUtility.GetClientConfiguration())

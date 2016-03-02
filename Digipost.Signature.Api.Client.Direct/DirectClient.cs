@@ -47,10 +47,13 @@ namespace Digipost.Signature.Api.Client.Direct
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
 
+
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    return DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                    var directJobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                    Log.Info($"Requested status for JobId: {directJobStatusResponse.JobId}, status was: {directJobStatusResponse.Status}.");
+                    return directJobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
@@ -73,6 +76,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         internal async Task AutoSign(long jobId)
         {
+            Log.Warn($"Autosigning DirectJob with id: `{jobId}`. Should only happen in tests.");
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign", UriKind.Relative);
             await HttpClient.PostAsync(url, null);
         }

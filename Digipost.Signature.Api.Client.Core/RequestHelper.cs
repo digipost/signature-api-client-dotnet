@@ -4,11 +4,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Reflection;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -16,6 +18,8 @@ namespace Digipost.Signature.Api.Client.Core
     {
         private const string BrokerNotAuthorized = "BROKER_NOT_AUTHORIZED";
         private readonly HttpClient _httpClient;
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
 
         public RequestHelper(HttpClient httpClient)
         {
@@ -34,9 +38,12 @@ namespace Digipost.Signature.Api.Client.Core
 
             var responseMessage = await _httpClient.SendAsync(request);
             var responseContent = await responseMessage.Content.ReadAsStringAsync();
+            
+            Log.Info("Create request sent");
 
             if (!responseMessage.IsSuccessStatusCode)
             {
+                Log.Error($"Create request sent, but failed {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
                 throw HandleGeneralException(responseContent, responseMessage.StatusCode);
             }
 

@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
 
-            Log.Info($"Creating PortalClient, endpoint `{new Uri(clientConfiguration.Environment.Url, _subPath)}`");
+            Log.Debug($"Creating PortalClient, endpoint `{new Uri(clientConfiguration.Environment.Url, _subPath)}`");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
             var portalJobResponse = await RequestHelper.Create(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 
-            Log.Info($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
+            Log.Debug($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
 
             return portalJobResponse;
         }
@@ -58,22 +58,24 @@ namespace Digipost.Signature.Api.Client.Portal
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = await requestResult.Content.ReadAsStringAsync();
 
-            Log.Info($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+            Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    Log.Info("No content response received.");
+                    Log.Debug("No content response received.");
                     portalJobStatusChangeResponse = PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse;
                     break;
                 case HttpStatusCode.OK:
                     portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
-                    Log.Info($"JobStatusChangeResponse received: JobId: {portalJobStatusChangeResponse.JobId}, JobStatus: {portalJobStatusChangeResponse.Status}");
+                    Log.Debug($"JobStatusChangeResponse received: JobId: {portalJobStatusChangeResponse.JobId}, JobStatus: {portalJobStatusChangeResponse.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+
                     Log.Warn(tooEagerPollingException.Message);
+
                     throw tooEagerPollingException;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
@@ -110,10 +112,10 @@ namespace Digipost.Signature.Api.Client.Portal
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    Log.Info($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
+                    Log.Debug($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
                     break;
                 case HttpStatusCode.Conflict:
-                    Log.Info($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
+                    Log.Debug($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
                     throw new JobCompletedException();
                 default:
                     throw RequestHelper.HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);

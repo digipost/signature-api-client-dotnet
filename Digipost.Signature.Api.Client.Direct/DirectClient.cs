@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
-            Log.Info($"Creating DirectClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
+            Log.Debug($"Creating DirectClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var createAction = new DirectCreateAction(directJob, documentBundle);
             var directJobResponse = await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
 
-            Log.Info($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
+            Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
             return directJobResponse;
         }
@@ -54,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 case HttpStatusCode.OK:
                     var directJobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
-                    Log.Info($"Requested status for JobId: {directJobStatusResponse.JobId}, status was: {directJobStatusResponse.Status}.");
+                    Log.Debug($"Requested status for JobId: {directJobStatusResponse.JobId}, status was: {directJobStatusResponse.Status}.");
                     return directJobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);

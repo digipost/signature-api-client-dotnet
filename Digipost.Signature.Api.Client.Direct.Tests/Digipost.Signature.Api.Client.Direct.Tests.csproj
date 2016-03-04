@@ -74,7 +74,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceArchiveTests.cs" />
@@ -82,6 +82,7 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
     <Compile Include="Internal\AsicE\DirectManifestTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="DirectJobResponseTests.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="ExitUrlsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Integration\DirectClientIntegrationTests.cs" />
     <Compile Include="Internal\CreateActionTests.cs" />
     <Compile Include="Log4NetTests.cs" />
@@ -120,7 +120,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="..\SolutionItems\App.config">
+      <Link>App.config</Link>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Schema\Examples\Response\StatusResponse.xml" />

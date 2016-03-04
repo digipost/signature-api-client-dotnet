@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
+namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
     public abstract class FakeHttpClientHandlerResponse : DelegatingHandler
     {
@@ -20,7 +21,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
             var response = new HttpResponseMessage
             {
                 Content = HttpContent ?? GetContent(),
-                StatusCode = ResultCode ?? HttpStatusCode.OK
+                StatusCode = ResultCode ?? HttpStatusCode.OK,
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, new Uri("http://fake.uri.for.fake.httpClientHandlerResponse.inTests.no"))
             };
             AddResponseHeader(response);
 

@@ -54,6 +54,10 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.4\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -74,7 +78,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
@@ -85,7 +89,6 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\AsicE\PortalManifestTests.cs" />
     <Compile Include="PortalClientTests.cs" />
     <Compile Include="PortalClientWithAutoSign.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="PortalJobStatusChangeResponseTests.cs" />
     <Compile Include="PortalJobTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="Smoke\PortalClientSmokeTests.cs" />
     <Compile Include="TooEagerPollingExceptionTests.cs" />
     <Compile Include="Utilities\DomainUtility.cs" />
@@ -121,7 +125,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="..\SolutionItems\App.config">
+      <Link>App.config</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

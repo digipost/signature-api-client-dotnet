@@ -8,13 +8,14 @@ layout: default
 
 {% highlight csharp %}
 
-var organizationNumber = "012345678910";
-var certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
+const string organizationNumber = "012345678910";
+const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
-    signatureServiceRoot: new Uri("http://serviceroot.digipost.no"), 
-    sender: new Sender(organizationNumber),
-    certificateThumbprint: certificateThumbprint);
+    Environment.DifiQa,
+    new Sender(organizationNumber),
+    certificateThumbprint);
+
 
 {% endhighlight %}
 
@@ -97,6 +98,6 @@ ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
 DirectJobStatusResponse directJobStatusResponse = null; // Result of requesting job status
 
-var confirm = await directClient.Confirm(directJobStatusResponse.JobReferences.Confirmation);
+await directClient.Confirm(directJobStatusResponse.JobReferences.Confirmation);
 
 {% endhighlight %}

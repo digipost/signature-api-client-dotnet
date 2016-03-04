@@ -8,13 +8,13 @@ layout: default
 
 {% highlight csharp %}
 
-var organizationNumber = "012345678910";
-var certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
+const string organizationNumber = "012345678910";
+const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
-    signatureServiceRoot: new Uri("http://serviceroot.digipost.no"), 
-    sender: new Sender(organizationNumber),
-    certificateThumbprint: certificateThumbprint);
+    Environment.DifiQa,
+    new Sender(organizationNumber),
+    certificateThumbprint);
 
 {% endhighlight %}
 
@@ -41,8 +41,8 @@ var signers = new List<Signer>
 };
 
 var portalJob = new PortalJob(documentToSign, signers, "myReferenceToJob");
-var portalJobResponse = await portalClient.Create(portalJob);
 
+var portalJobResponse = await portalClient.Create(portalJob);
 
 {% endhighlight %}
 
@@ -57,9 +57,9 @@ PortalClient portalClient = null; //As initialized earlier
 
 var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
 
-if (portalJobStatusChangeResponse == null)
+if (portalJobStatusChangeResponse.Status == JobStatus.NoChanges)
 {
-    //queue is empty. Additional polling will result in blocking for a defined period.
+    //Queue is empty. Additional polling will result in blocking for a defined period.
 }
 else
 {
@@ -79,23 +79,23 @@ catch (TooEagerPollingException eagerPollingException)
     var nextAvailablePollingTime = eagerPollingException.NextPermittedPollTime;
 }
 
+
 {% endhighlight %}
 
 <h3 id="uc09">Get Xades and Pades</h3>
+
+When getting Xades and Pades for a `PortalJob`, remember that the Xades is per signer, while there is only one Pades. 
 
 {% highlight csharp %}
 
 PortalClient portalClient = null; //As initialized earlier
 var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
 
-//Get Xades:
 var xades = await portalClient.GetXades(portalJobStatusChangeResponse.Signatures.ElementAt(0).XadesReference);
 
-//Get Pades:
 var pades = await portalClient.GetPades(portalJobStatusChangeResponse.PadesReference);
 
 {% endhighlight %}
-
 
 <h3 id="uc10">Confirm portal job</h3>
 

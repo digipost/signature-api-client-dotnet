@@ -8,7 +8,7 @@ layout: default
 
 {% highlight csharp %}
 
-const string organizationNumber = "012345678910";
+const string organizationNumber = "123456789";
 const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
@@ -36,8 +36,8 @@ var documentToSign = new Document(
 
 var signers = new List<Signer>
 {
-    new Signer("01013300001"),
-    new Signer("01024403041")
+    new Signer("12345678910"),
+    new Signer("12345678911")
 };
 
 var portalJob = new PortalJob(documentToSign, signers, "myReferenceToJob");

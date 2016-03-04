@@ -29,6 +29,7 @@ namespace Digipost.Signature.Api.Client.Portal
             : base(clientConfiguration)
         {
             _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
+
             Log.Info($"Creating PortalClient, endpoint `{new Uri(clientConfiguration.Environment.Url, _subPath)}`");
         }
 

@@ -61,10 +61,11 @@ namespace Digipost.Signature.Api.Client.Core
 
             var requestResult = await _httpClient.SendAsync(request);
 
-            Log.Info($"A stream was requested from {uri.ToString()}");
+            Log.Info($"A stream was requested from {uri}");
 
             if (!requestResult.IsSuccessStatusCode)
             {
+                Log.Error($"Unable to confirm job with confirmation reference: {uri}");
                 throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
             }
 
@@ -77,8 +78,11 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (!requestResult.IsSuccessStatusCode)
             {
+                Log.Error($"Unable to confirm job with confirmation reference: {confirmationReference.Url}");
                 throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
             }
+
+            Log.Info($"Successfully confirmed job with confirmation reference: {confirmationReference.Url}");
         }
 
         internal SignatureException HandleGeneralException(string requestContent, HttpStatusCode statusCode)
@@ -87,17 +91,21 @@ namespace Digipost.Signature.Api.Client.Core
             try
             {
                 error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
+                Log.Error($"Error occured: {error}");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return new UnexpectedResponseException(requestContent, statusCode, e);
+                Log.Error($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}, {exception}");
+                return new UnexpectedResponseException(requestContent, statusCode, exception);
             }
 
             if (error.Code == BrokerNotAuthorized)
             {
+                Log.Error("Broker not authorized!");
                 return new BrokerNotAuthorizedException(error, statusCode);
             }
 
+            Log.Error($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}");
             return new UnexpectedResponseException(error, statusCode);
         }
     }

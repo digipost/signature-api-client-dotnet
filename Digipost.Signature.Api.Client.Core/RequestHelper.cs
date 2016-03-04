@@ -17,9 +17,8 @@ namespace Digipost.Signature.Api.Client.Core
     internal class RequestHelper
     {
         private const string BrokerNotAuthorized = "BROKER_NOT_AUTHORIZED";
-        private readonly HttpClient _httpClient;
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
+        private readonly HttpClient _httpClient;
 
         public RequestHelper(HttpClient httpClient)
         {
@@ -38,16 +37,15 @@ namespace Digipost.Signature.Api.Client.Core
 
             var responseMessage = await _httpClient.SendAsync(request);
             var responseContent = await responseMessage.Content.ReadAsStringAsync();
-            
-            Log.Info("Create request sent");
 
             if (!responseMessage.IsSuccessStatusCode)
             {
-                Log.Error($"Create request sent, but failed {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
+                Log.Error($"Create request sent, but failed: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
                 throw HandleGeneralException(responseContent, responseMessage.StatusCode);
             }
 
-            return deserializeFunc(responseContent);
+            var func = deserializeFunc(responseContent);
+            return func;
         }
 
         public async Task<Stream> GetStream(Uri uri)
@@ -62,6 +60,8 @@ namespace Digipost.Signature.Api.Client.Core
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Octet));
 
             var requestResult = await _httpClient.SendAsync(request);
+
+            Log.Info($"A stream was requested from {uri.ToString()}");
 
             if (!requestResult.IsSuccessStatusCode)
             {

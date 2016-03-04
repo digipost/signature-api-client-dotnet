@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using log4net.Config;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -20,5 +19,4 @@ using log4net.Config;
 // COM, set the ComVisible attribute to true on that type.
 
 [assembly: ComVisible(false)]
-
 [assembly: Guid("75f9c13b-be37-4608-af13-7468d56ef804")]

@@ -31,8 +31,11 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
+            var directJobResponse = await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
 
-            return await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
+            Log.Info($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
+
+            return directJobResponse;
         }
 
         public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
@@ -46,7 +49,6 @@ namespace Digipost.Signature.Api.Client.Direct
 
             var requestResult = await HttpClient.SendAsync(request);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
-
 
             switch (requestResult.StatusCode)
             {

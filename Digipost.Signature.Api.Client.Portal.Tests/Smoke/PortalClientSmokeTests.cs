@@ -64,7 +64,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
-                
+
                 Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
 
                 _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));

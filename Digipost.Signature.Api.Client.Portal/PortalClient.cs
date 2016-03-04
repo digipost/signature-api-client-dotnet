@@ -36,8 +36,11 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
+            var portalJobResponse = await RequestHelper.Create(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 
-            return await RequestHelper.Create(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
+            Log.Info($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
+
+            return portalJobResponse;
         }
 
         public async Task<PortalJobStatusChangeResponse> GetStatusChange()

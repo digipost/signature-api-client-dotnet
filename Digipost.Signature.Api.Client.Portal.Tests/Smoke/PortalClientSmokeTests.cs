@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static XadesReference _xadesReference;
         private static PadesReference _padesReference;
         private static ConfirmationReference _confirmationReference;
-        
+
         protected static PortalClient GetPortalClient()
         {
             PortalClient client;

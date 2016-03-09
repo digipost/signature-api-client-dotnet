@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new Availability
             {
                 Activation = DateTime.Now.AddHours(2),
-                Expiration = DateTime.Now.AddDays(3)
+                AvailableFor = new TimeSpan(1, 0, 0, 0)
             };
         }
 

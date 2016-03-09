@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 //Act
-                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no")));
+                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -61,7 +61,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 //Act
-                await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no")));
+                await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
 
                 //Assert
                 Assert.Fail();

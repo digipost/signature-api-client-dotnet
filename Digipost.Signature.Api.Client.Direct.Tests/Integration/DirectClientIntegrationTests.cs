@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var directJobResponse = DomainUtility.GetDirectJobResponse();
 
                 //Act
-                var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status);
+                var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status("StatusQueryToken"));
 
                 //Assert
                 Assert.IsNotNull(result.JobId);

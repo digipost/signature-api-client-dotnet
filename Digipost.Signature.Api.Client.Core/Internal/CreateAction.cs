@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using Digipost.Signature.Api.Client.Core.Asice;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal abstract class CreateAction : SignatureAction
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly DocumentBundle _documentBundle;
 
         protected CreateAction(IRequestContent job, DocumentBundle documentBundle, Func<IRequestContent, string> serializeFunc)
@@ -35,6 +38,8 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private StringContent BodyContent()
         {
+            Log.Debug($"Outgoing body: {SerializedBody}");
+
             var directJobContent = new StringContent(SerializedBody);
             directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
             directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");

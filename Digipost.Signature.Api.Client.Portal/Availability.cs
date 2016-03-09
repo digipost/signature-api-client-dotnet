@@ -6,6 +6,11 @@ namespace Digipost.Signature.Api.Client.Portal
     {
         public DateTime? Activation { get; set; }
 
-        public DateTime? Expiration { get; set; }
+        public long AvailableSeconds { get; private set; }
+
+        public TimeSpan AvailableFor
+        {
+            set { AvailableSeconds = (long) value.TotalSeconds; }
+        }
     }
 }

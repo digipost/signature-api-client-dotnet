@@ -1,6 +1,5 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 
@@ -22,9 +21,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             return new exiturls
             {
-                cancellationurl = exitUrls.CancellationUrl.AbsoluteUri,
-                completionurl = exitUrls.CompletionUrl.AbsoluteUri,
-                errorurl = exitUrls.ErrorUrl.AbsoluteUri
+                completionurl = exitUrls.CompletionUrl.ToString(),
+                errorurl = exitUrls.ErrorUrl.ToString(),
+                rejectionurl = exitUrls.RejectionUrl.ToString()
             };
         }
 

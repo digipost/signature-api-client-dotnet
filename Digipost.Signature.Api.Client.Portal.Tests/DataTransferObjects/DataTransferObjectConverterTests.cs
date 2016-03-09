@@ -4,7 +4,6 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
@@ -80,7 +79,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsManifestWithOnlyExpirationAvailabilitySuccessfully()
+            public void ConvertsManifestWithOnlyAvailableSecondsSuccessfully()
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
@@ -89,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     Availability = new Availability
                     {
-                        Expiration = DateTime.Now.AddHours(22)
+                        AvailableFor = new TimeSpan(0, 0, 1, 0)
                     }
                 };
 
@@ -110,7 +109,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     availability = new availability
                     {
-                        expirationtime = source.Availability.Expiration.Value
+                        availableseconds = source.Availability.AvailableSeconds
                     }
                 };
 
@@ -125,7 +124,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsManifestWithOnlyActiviationAvailabilitySuccessfully()
+            public void ConvertsManifestWithOnlyActivationAvailabilitySuccessfully()
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
@@ -198,7 +197,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     availability = new availability
                     {
                         activationtime = source.Availability.Activation.Value,
-                        expirationtime = source.Availability.Expiration.Value
+                        availableseconds = source.Availability.AvailableSeconds
                     }
                 };
 

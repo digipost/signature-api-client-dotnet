@@ -4,11 +4,18 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class StatusReference
     {
-        public StatusReference(Uri url)
+        public string StatusQueryToken { get;}
+        internal Uri BaseUrl { get; }
+
+        public StatusReference(Uri baseUrl, string statusQueryToken)
         {
-            Url = url;
+            BaseUrl = baseUrl;
+            StatusQueryToken = statusQueryToken;
         }
 
-        public Uri Url { get; internal set; }
+        public Uri Url()
+        {
+           return new Uri($"{BaseUrl.AbsoluteUri}?status_query_token={StatusQueryToken}");
+        }
     }
 }

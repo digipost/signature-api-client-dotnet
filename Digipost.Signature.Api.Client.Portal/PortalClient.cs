@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;

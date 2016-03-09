@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
@@ -13,13 +14,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var jobReference = new Uri("http://signatureserviceroot.digipost.no/urlidurl/id030302");
+                var urlWithoutToken = new Uri("http://organizationdomain.com/completionUrl/");
+                var statusQueryToken = "ALongToken";
 
                 //Act
-                var directJobReference = new StatusReference(jobReference);
+                var statusReference = new StatusReference(urlWithoutToken, statusQueryToken);
 
                 //Assert
-                Assert.AreEqual(jobReference, directJobReference.Url);
+                //Assert.AreEqual();
             }
         }
     }

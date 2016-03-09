@@ -4,7 +4,6 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
@@ -38,9 +37,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     reference = reference,
                     exiturls = new exiturls
                     {
-                        cancellationurl = exitUrls.CancellationUrl.AbsoluteUri,
-                        completionurl = exitUrls.CompletionUrl.AbsoluteUri,
-                        errorurl = exitUrls.ErrorUrl.AbsoluteUri
+                        completionurl = source.ExitUrls.CompletionUrl.AbsoluteUri,
+                        rejectionurl = source.ExitUrls.RejectionUrl.AbsoluteUri,
+                        errorurl = source.ExitUrls.ErrorUrl.AbsoluteUri
                     }
                 };
 
@@ -62,7 +61,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var expected = new exiturls
                 {
                     completionurl = source.CompletionUrl.AbsoluteUri,
-                    cancellationurl = source.CancellationUrl.AbsoluteUri,
+                    rejectionurl = source.RejectionUrl.AbsoluteUri,
                     errorurl = source.ErrorUrl.AbsoluteUri
                 };
 
@@ -143,12 +142,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
-                    status = directsignaturejobstatus.CREATED
+                    status = directsignaturejobstatus.REJECTED
                 };
 
                 var expected = new DirectJobStatusResponse(
                     source.signaturejobid,
-                    JobStatus.Created,
+                    JobStatus.Rejected,
                     new JobReferences(null, null, null)
                     );
 

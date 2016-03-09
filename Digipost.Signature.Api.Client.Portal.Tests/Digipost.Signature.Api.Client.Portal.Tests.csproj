@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
+    <Compile Include="AvailabilityTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse.cs" />

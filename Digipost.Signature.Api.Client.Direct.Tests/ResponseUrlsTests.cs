@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 Assert.IsNotNull(responseUrls.Status(statusQueryToken));
-            } 
+            }
         }
     }
 }

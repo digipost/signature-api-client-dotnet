@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -82,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJobResponse = directClient.Create(directJob).Result;
                 var statusQueryToken = AutoSignAndGetToken(directClient, directJobResponse);
                 _statusReference = MorphStatusReferenceIfMayBe(directJobResponse.ResponseUrls.Status(statusQueryToken));
-                
+
                 var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
 
                 var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(jobStatusResponse);
@@ -102,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 var statusUrl = directClient.AutoSign(directJobResponse.JobId).Result;
                 var queryParams = new Uri(statusUrl).Query;
-                var queryDictionary = System.Web.HttpUtility.ParseQueryString(queryParams);
+                var queryDictionary = HttpUtility.ParseQueryString(queryParams);
                 var statusQueryToken = queryDictionary.Get(0);
                 return statusQueryToken;
             }

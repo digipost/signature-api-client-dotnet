@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static XadesReference _xadesReference;
         private static PadesReference _padesReference;
         private static ConfirmationReference _confirmationReference;
-
+        
         protected static PortalClient GetPortalClient()
         {
             PortalClient client;
@@ -150,9 +150,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);
+                var cancellationReference = new CancellationReference(GetUriFromRelativePath(portalJobResponse.CancellationReference.Url.AbsolutePath));
 
                 //Act
-                portalClient.Cancel(portalJobResponse.CancellationReference).Wait();
+                portalClient.Cancel(cancellationReference).Wait();
 
                 var changeResponse = await portalClient.GetStatusChange();
 

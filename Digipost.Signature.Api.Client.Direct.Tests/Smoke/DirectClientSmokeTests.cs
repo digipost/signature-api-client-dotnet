@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         private static DirectClient DirectClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
             var client = new DirectClient(clientConfig);
             return client;
         }

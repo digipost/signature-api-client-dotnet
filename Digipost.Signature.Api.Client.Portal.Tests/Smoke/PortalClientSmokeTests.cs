@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static PortalClient GetPortalClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
             var client = new PortalClient(clientConfig);
             return client;
         }

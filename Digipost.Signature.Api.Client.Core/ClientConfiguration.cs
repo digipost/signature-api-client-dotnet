@@ -6,12 +6,12 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public class ClientConfiguration
     {
-        public ClientConfiguration(Environment environment, Sender sender, string certificateThumbprint)
-            : this(environment, sender, CertificateUtility.SenderCertificate(certificateThumbprint, Language.English))
+        public ClientConfiguration(Environment environment, string certificateThumbprint, Sender sender = null)
+            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint, Language.English), sender)
         {
         }
 
-        public ClientConfiguration(Environment environment, Sender sender, X509Certificate2 certificate)
+        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender sender = null)
         {
             Environment = environment;
             Sender = sender;

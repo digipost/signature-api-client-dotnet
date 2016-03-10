@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -33,6 +34,17 @@ namespace Digipost.Signature.Api.Client.Core
         }
 
         internal RequestHelper RequestHelper { get; set; }
+
+        protected Sender CurrentSender(Sender jobSender)
+        {
+            var sender = jobSender ?? ClientConfiguration.Sender;
+            if (sender == null)
+            {
+                throw new SenderNotSpecifiedException();
+            }
+
+            return sender;
+        }
 
         private HttpClient MutualTlsClient()
         {

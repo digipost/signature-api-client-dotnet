@@ -17,20 +17,22 @@ namespace Digipost.Signature.Api.Client.Direct
     public class DirectClient : BaseClient
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
-            _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
-            Log.Debug($"Creating DirectClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
-            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
+            var sender = CurrentSender(directJob.Sender);
+            var relativeUrl = new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+
+            Log.Debug($"Creating DirectClient, endpoint {new Uri(ClientConfiguration.Environment.Url, relativeUrl)}");
+
+            var documentBundle = AsiceGenerator.CreateAsice(sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
-            var directJobResponse = await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
+            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 

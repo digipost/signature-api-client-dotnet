@@ -1,5 +1,4 @@
-﻿using System;
-using Digipost.Signature.Api.Client.Core;
+﻿using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,10 +15,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void ConstructorWithoutSenderExists()
             {
                 //Act
-                new DirectJob(null,null,null,null);
+                new DirectJob(null, null, null, null);
 
                 //Assert
             }
+
             [TestMethod]
             public void SimpleConstructor()
             {
@@ -31,14 +31,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var sender = CoreDomainUtility.GetSender();
 
                 //Act
-                var directJob = new DirectJob(document, signer, id, exitUrls,sender);
+                var directJob = new DirectJob(document, signer, id, exitUrls, sender);
 
                 //Assert
                 Assert.AreEqual(id, directJob.Reference);
                 Assert.AreEqual(signer, directJob.Signer);
                 Assert.AreEqual(document, directJob.Document);
                 Assert.AreEqual(exitUrls, directJob.ExitUrls);
-                Assert.AreEqual(sender,directJob.Sender);
+                Assert.AreEqual(sender, directJob.Sender);
             }
         }
     }

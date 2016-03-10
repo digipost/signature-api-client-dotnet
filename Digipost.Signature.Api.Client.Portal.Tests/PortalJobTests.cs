@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void ConstructorWithoutSenderExists()
             {
                 //Arrange
-                
+
                 //Act
                 new PortalJob(null, null, null);
 

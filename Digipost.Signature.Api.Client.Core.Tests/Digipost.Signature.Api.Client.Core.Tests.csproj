@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
+    <Compile Include="BaseClientTests.cs" />
     <Compile Include="CancellationReferenceTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForXadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\CertificateValidatorTests.cs" />
+    <Compile Include="Stubs\ClientStub.cs" />
     <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />

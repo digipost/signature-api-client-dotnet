@@ -86,6 +86,7 @@
     <Compile Include="Environment.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Exceptions\BrokerNotAuthorizedException.cs" />
+    <Compile Include="Exceptions\SenderNotSpecifiedException.cs" />
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
     <Compile Include="Internal\CertificateValidator.cs" />
     <Compile Include="Internal\CreateAction.cs" />

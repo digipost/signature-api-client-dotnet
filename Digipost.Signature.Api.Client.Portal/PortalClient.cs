@@ -22,21 +22,20 @@ namespace Digipost.Signature.Api.Client.Portal
         private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly Uri _subPath;
 
         public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
-            _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
-
-            Log.Debug($"Creating PortalClient, endpoint `{new Uri(clientConfiguration.Environment.Url, _subPath)}`");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
         {
+            var sender = CurrentSender(portalJob.Sender);
+            var relativeUrl = RelativeUrl(sender);
+            
             var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
-            var portalJobResponse = await RequestHelper.Create(_subPath, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
+            var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
 
@@ -49,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
             var request = new HttpRequestMessage
             {
-                RequestUri = _subPath,
+                RequestUri = RelativeUrl(CurrentSender(null)),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
@@ -81,6 +80,11 @@ namespace Digipost.Signature.Api.Client.Portal
             }
 
             return portalJobStatusChangeResponse;
+        }
+
+        private static Uri RelativeUrl(Sender sender)
+        {
+            return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
         private static async Task<PortalJobStatusChangeResponse> ParseResponseToPortalJobStatusChangeResponse(string requestContent)

@@ -35,6 +35,26 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         }
 
         [TestClass]
+        public class CreateMethod : DirectClientTests
+        {
+            [TestMethod]
+            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            public async Task ThrowsExceptionOnNoSender()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var directClient = new DirectClient(clientConfiguration);
+                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
+
+                //Act
+                await directClient.Create(directJob);
+                
+                //Assert
+                Assert.Fail();
+            }
+        }
+
+        [TestClass]
         public class GetStatusMethod : DirectClientTests
         {
             [TestMethod]
@@ -65,26 +85,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
-
-                //Assert
-                Assert.Fail();
-            }
-        }
-
-        [TestClass]
-        public class CreateMethod : DirectClientTests
-        {
-            [TestMethod]
-            [ExpectedException(typeof (SenderNotSpecifiedException))]
-            public async Task ThrowsExceptionOnNoSender()
-            {
-                //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
-                var directClient = new DirectClient(clientConfiguration);
-                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
-                await directClient.Create(directJob);
-
-                //Act
 
                 //Assert
                 Assert.Fail();

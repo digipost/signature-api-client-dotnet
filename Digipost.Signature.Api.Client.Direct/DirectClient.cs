@@ -28,8 +28,6 @@ namespace Digipost.Signature.Api.Client.Direct
             var sender = CurrentSender(directJob.Sender);
             var relativeUrl = new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
 
-            Log.Debug($"Creating DirectClient, endpoint {new Uri(ClientConfiguration.Environment.Url, relativeUrl)}");
-
             var documentBundle = AsiceGenerator.CreateAsice(sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
             var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);

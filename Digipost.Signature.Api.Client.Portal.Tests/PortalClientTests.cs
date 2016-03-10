@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
@@ -20,6 +21,27 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 BaseAddress = new Uri("http://mockUrl.no")
             };
+        }
+
+        [TestClass]
+        public class CreateMethod : PortalClientTests
+        {
+            [TestMethod]
+            [ExpectedException(typeof(SenderNotSpecifiedException))]
+            public async Task ThrowsExceptionOnNoSender()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var portalClient = new PortalClient(clientConfiguration);
+                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(),CoreDomainUtility.GetSigners(1), "SendersReference");
+
+                //Act
+                await portalClient.Create(portalJob);
+
+
+                //Assert
+                Assert.Fail();
+            }
         }
 
         [TestClass]

@@ -48,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Act
                 await directClient.Create(directJob);
-                
+
                 //Assert
                 Assert.Fail();
             }

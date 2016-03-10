@@ -32,8 +32,8 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             var sender = CurrentSender(portalJob.Sender);
             var relativeUrl = RelativeUrl(sender);
-            
-            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, portalJob.Document, portalJob.Signers, ClientConfiguration.Certificate);
+
+            var documentBundle = AsiceGenerator.CreateAsice(sender, portalJob.Document, portalJob.Signers, portalJob.Availability, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
             var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 
@@ -42,13 +42,13 @@ namespace Digipost.Signature.Api.Client.Portal
             return portalJobResponse;
         }
 
-        public async Task<PortalJobStatusChangeResponse> GetStatusChange()
+        public async Task<PortalJobStatusChangeResponse> GetStatusChange(Sender sender = null)
         {
             PortalJobStatusChangeResponse portalJobStatusChangeResponse;
 
             var request = new HttpRequestMessage
             {
-                RequestUri = RelativeUrl(CurrentSender(null)),
+                RequestUri = RelativeUrl(CurrentSender(sender)),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));

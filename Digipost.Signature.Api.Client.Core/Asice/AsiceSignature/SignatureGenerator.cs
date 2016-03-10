@@ -71,7 +71,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
             signatureDocument.AppendChild(signatureDocument.CreateElement("xades", "XAdESSignatures", NavneromUtility.UriEtsi121));
             signatureDocument.DocumentElement.SetAttribute("xmlns", NavneromUtility.UriEtsi132);
 
-            //Todo: Legg til foerst
             signatureDocument.InsertBefore(xmlDeclaration, signatureDocument.DocumentElement);
             return signatureDocument;
         }

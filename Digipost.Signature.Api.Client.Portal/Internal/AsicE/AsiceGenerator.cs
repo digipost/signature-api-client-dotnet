@@ -8,11 +8,14 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
     internal class AsiceGenerator
     {
-        public static DocumentBundle CreateAsice(Sender sender, Document document, IEnumerable<Signer> signers, X509Certificate2 certificate)
+        public static DocumentBundle CreateAsice(Sender sender, Document document, IEnumerable<Signer> signers, Availability availability, X509Certificate2 certificate)
         {
-            var manifest = new PortalManifest(sender, document, signers);
-            var signature = new SignatureGenerator(certificate, document, manifest);
+            var manifest = new PortalManifest(sender, document, signers)
+            {
+                Availability = availability
+            };
 
+            var signature = new SignatureGenerator(certificate, document, manifest);
             var asiceArchive = new AsiceArchive(document, signature, manifest);
 
             return new DocumentBundle(asiceArchive.Bytes);

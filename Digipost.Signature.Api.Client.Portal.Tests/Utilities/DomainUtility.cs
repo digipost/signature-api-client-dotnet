@@ -23,7 +23,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static PortalJob GetPortalJob(int signers)
         {
-            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference");
+            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
+            {
+                Availability = new Availability
+                {
+                    Activation = DateTime.Now,
+                    AvailableFor = new TimeSpan(0, 0, 10, 0)
+                }
+            };
         }
 
         internal static PortalManifest GetPortalManifest()

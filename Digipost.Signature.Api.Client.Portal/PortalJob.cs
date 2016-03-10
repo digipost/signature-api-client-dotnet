@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Internal;
 
@@ -23,6 +22,6 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public Sender Sender { get; }
 
-        public DateTime DistributionTime { get; }
+        public Availability Availability { get; set; }
     }
 }

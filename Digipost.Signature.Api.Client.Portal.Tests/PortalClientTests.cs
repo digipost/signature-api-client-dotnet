@@ -27,17 +27,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class CreateMethod : PortalClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof(SenderNotSpecifiedException))]
+            [ExpectedException(typeof (SenderNotSpecifiedException))]
             public async Task ThrowsExceptionOnNoSender()
             {
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
                 var portalClient = new PortalClient(clientConfiguration);
-                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(),CoreDomainUtility.GetSigners(1), "SendersReference");
+                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(1), "SendersReference");
 
                 //Act
                 await portalClient.Create(portalJob);
-
 
                 //Assert
                 Assert.Fail();
@@ -47,6 +46,64 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         [TestClass]
         public class GetStatusChangeMethod : PortalClientTests
         {
+            [TestMethod]
+            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            public async Task ThrowsExceptionOnSenderNotSpecified()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerForJobStatusChangeResponse();
+                var portalClient = new PortalClient(clientConfiguration)
+                {
+                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                };
+
+                //Act
+                await portalClient.GetStatusChange();
+
+                //Assert
+                Assert.Fail();
+            }
+
+            [TestMethod]
+            public async Task CanBeCalledWithoutSenderUsesSenderInClientConfiguration()
+            {
+                //Arrange
+                var sender = CoreDomainUtility.GetSender();
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), sender);
+                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
+                var portalClient = new PortalClient(clientConfiguration)
+                {
+                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                };
+
+                //Act
+                await portalClient.GetStatusChange();
+
+                //Assert
+                Assert.IsTrue(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(sender.OrganizationNumber));
+            }
+
+            [TestMethod]
+            public async Task CalledWithBothSendersUsesInput()
+            {
+                //Arrange
+                var parameterSender = new Sender("000000000");
+                var clientConfigurationSender = new Sender("999999999");
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), clientConfigurationSender);
+                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
+                var portalClient = new PortalClient(clientConfiguration)
+                {
+                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                };
+
+                //Act
+                await portalClient.GetStatusChange(parameterSender);
+
+                //Assert
+                Assert.IsTrue(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(parameterSender.OrganizationNumber));
+            }
+
             [TestMethod]
             public async Task ReturnsEmptyObjectOnEmptyQueue()
             {

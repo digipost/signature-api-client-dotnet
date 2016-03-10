@@ -86,6 +86,7 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="Extensions\EnumExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerChecksCorrectSenderResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobCompletedResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />

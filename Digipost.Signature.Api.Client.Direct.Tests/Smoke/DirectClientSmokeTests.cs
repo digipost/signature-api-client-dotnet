@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -42,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         private static DirectClient DirectClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
             var client = new DirectClient(clientConfig);
             return client;
         }
@@ -62,6 +63,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return directJobResponse;
         }
 
+        internal static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
+        {
+            var statusReferenceUri = GetUriFromRelativePath(statusReference.Url().AbsolutePath);
+            return new StatusReference(statusReferenceUri, statusReference.StatusQueryToken);
+        }
+
         [TestClass]
         public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests
         {
@@ -73,20 +80,32 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJob = DomainUtility.GetDirectJob();
 
                 //Act
-                var result = directClient.Create(directJob).Result;
-                directClient.AutoSign(result.JobId).Wait();
-                _statusReference = new StatusReference(GetUriFromRelativePath(result.ResponseUrls.Status.Url.AbsolutePath));
+                var directJobResponse = directClient.Create(directJob).Result;
+                var statusQueryToken = AutoSignAndGetToken(directClient, directJobResponse);
+                _statusReference = MorphStatusReferenceIfMayBe(directJobResponse.ResponseUrls.Status(statusQueryToken));
 
-                var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(directClient.GetStatus(_statusReference).Result);
+                var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
+
+                var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(jobStatusResponse);
                 _xadesReference = directJobStatusResponse.References.Xades;
                 _padesReference = directJobStatusResponse.References.Pades;
                 _confirmationReference = directJobStatusResponse.References.Confirmation;
 
                 //Assert
-                Assert.IsNotNull(result.JobId);
+                Assert.IsNotNull(_statusReference);
+                Assert.IsNotNull(directJobResponse.JobId);
                 Assert.IsNotNull(_xadesReference);
                 Assert.IsNotNull(_padesReference);
                 Assert.IsNotNull(_confirmationReference);
+            }
+
+            private static string AutoSignAndGetToken(DirectClient directClient, DirectJobResponse directJobResponse)
+            {
+                var statusUrl = directClient.AutoSign(directJobResponse.JobId).Result;
+                var queryParams = new Uri(statusUrl).Query;
+                var queryDictionary = HttpUtility.ParseQueryString(queryParams);
+                var statusQueryToken = queryDictionary.Get(0);
+                return statusQueryToken;
             }
 
             [TestMethod]

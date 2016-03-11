@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
@@ -32,6 +35,26 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         }
 
         [TestClass]
+        public class CreateMethod : DirectClientTests
+        {
+            [TestMethod]
+            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            public async Task ThrowsExceptionOnNoSender()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var directClient = new DirectClient(clientConfiguration);
+                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
+
+                //Act
+                await directClient.Create(directJob);
+
+                //Assert
+                Assert.Fail();
+            }
+        }
+
+        [TestClass]
         public class GetStatusMethod : DirectClientTests
         {
             [TestMethod]
@@ -44,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 //Act
-                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no")));
+                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
 
                 //Assert
                 Assert.IsNotNull(result);
@@ -61,7 +84,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 //Act
-                await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no")));
+                await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
 
                 //Assert
                 Assert.Fail();

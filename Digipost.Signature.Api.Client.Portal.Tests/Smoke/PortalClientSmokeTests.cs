@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static PortalClient GetPortalClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, sender, CoreDomainUtility.GetTestIntegrasjonSertifikat());
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
             var client = new PortalClient(clientConfig);
             return client;
         }
@@ -150,9 +150,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);
+                var cancellationReference = new CancellationReference(GetUriFromRelativePath(portalJobResponse.CancellationReference.Url.AbsolutePath));
 
                 //Act
-                portalClient.Cancel(portalJobResponse.CancellationReference).Wait();
+                portalClient.Cancel(cancellationReference).Wait();
 
                 var changeResponse = await portalClient.GetStatusChange();
 

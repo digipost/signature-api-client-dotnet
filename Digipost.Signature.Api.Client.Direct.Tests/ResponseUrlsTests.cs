@@ -23,7 +23,28 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 Assert.AreEqual(redirectUrl, responseUrls.Redirect.Url);
-                Assert.AreEqual(statusUrl, responseUrls.Status.Url);
+            }
+        }
+
+        [TestClass]
+        public class StatusMethod : ResponseurlsTests
+        {
+            [TestMethod]
+            public void ReturnsStatusNotNull()
+            {
+                //Arrange
+                var redirectUrl = new Uri("http://responseurl.no");
+                var statusUrl = new Uri("http://statusurl.no");
+                var statusQueryToken = "StatusQueryToken";
+
+                //Act
+                var responseUrls = new ResponseUrls(
+                    redirectUrl,
+                    statusUrl
+                    );
+
+                //Assert
+                Assert.IsNotNull(responseUrls.Status(statusQueryToken));
             }
         }
     }

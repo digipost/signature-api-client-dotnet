@@ -1,6 +1,4 @@
-﻿using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
-
-namespace Digipost.Signature.Api.Client.Core.DataTransferObjects
+﻿namespace Digipost.Signature.Api.Client.Core.DataTransferObjects
 {
     public static class DataTransferObjectConverter
     {

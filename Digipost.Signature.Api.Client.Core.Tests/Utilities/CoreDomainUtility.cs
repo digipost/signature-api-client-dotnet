@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(Environment.DifiQa, GetSender(), GetTestCertificate());
+            return new ClientConfiguration(Environment.DifiQa, GetTestCertificate(), GetSender());
         }
 
         public static Document GetDocument()

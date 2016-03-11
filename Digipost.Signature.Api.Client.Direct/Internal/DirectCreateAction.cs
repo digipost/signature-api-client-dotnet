@@ -1,7 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Internal;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal

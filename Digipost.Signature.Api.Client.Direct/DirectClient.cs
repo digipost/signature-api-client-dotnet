@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
@@ -18,20 +17,20 @@ namespace Digipost.Signature.Api.Client.Direct
     public class DirectClient : BaseClient
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        private readonly Uri _subPath;
 
         public DirectClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
-            _subPath = new Uri($"/api/{clientConfiguration.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
-            Log.Debug($"Creating DirectClient, endpoint {new Uri(clientConfiguration.Environment.Url, _subPath)}");
         }
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
-            var documentBundle = AsiceGenerator.CreateAsice(ClientConfiguration.Sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
+            var sender = CurrentSender(directJob.Sender);
+            var relativeUrl = new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+
+            var documentBundle = AsiceGenerator.CreateAsice(sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
-            var directJobResponse = await RequestHelper.Create(_subPath, createAction.Content(), DirectCreateAction.DeserializeFunc);
+            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
@@ -42,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = statusReference.Url,
+                RequestUri = statusReference.Url(),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
@@ -76,11 +75,12 @@ namespace Digipost.Signature.Api.Client.Direct
             await RequestHelper.Confirm(confirmationReference);
         }
 
-        internal async Task AutoSign(long jobId)
+        internal async Task<string> AutoSign(long jobId)
         {
             Log.Warn($"Autosigning DirectJob with id: `{jobId}`. Should only happen in tests.");
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign", UriKind.Relative);
-            await HttpClient.PostAsync(url, null);
+            var httpResponseMessage = await HttpClient.PostAsync(url, null);
+            return await httpResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }

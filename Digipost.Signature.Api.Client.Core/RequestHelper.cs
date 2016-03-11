@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using log4net;
 
 namespace Digipost.Signature.Api.Client.Core

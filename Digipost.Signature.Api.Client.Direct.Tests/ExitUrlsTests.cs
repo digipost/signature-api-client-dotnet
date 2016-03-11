@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 Assert.AreEqual(completionUrl, exitUrls.CompletionUrl);
-                Assert.AreEqual(cancellationUrl, exitUrls.CancellationUrl);
+                Assert.AreEqual(cancellationUrl, exitUrls.RejectionUrl);
                 Assert.AreEqual(errorUrl, exitUrls.ErrorUrl);
             }
         }

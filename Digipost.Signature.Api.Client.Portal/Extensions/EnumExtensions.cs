@@ -1,5 +1,4 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.Enums;
 
 namespace Digipost.Signature.Api.Client.Portal.Extensions

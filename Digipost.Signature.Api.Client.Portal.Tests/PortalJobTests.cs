@@ -10,6 +10,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class ConstructorMethod : PortalJobTests
         {
             [TestMethod]
+            public void ConstructorWithoutSenderExists()
+            {
+                //Arrange
+
+                //Act
+                new PortalJob(null, null, null);
+
+                //Assert
+            }
+
+            [TestMethod]
             public void SimpleConstructor()
             {
                 //Arrange

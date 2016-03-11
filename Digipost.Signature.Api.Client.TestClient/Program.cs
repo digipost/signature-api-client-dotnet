@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.TestClient
             Log.Warn("Warn logging");
             Log.Error("Error logging");
             Log.Fatal("Fatal logging");
-            var client = new PortalClient(new ClientConfiguration(Environment.DifiQa, new Sender("123456789"), new X509Certificate2()));
+            var client = new PortalClient(new ClientConfiguration(Environment.DifiQa, new X509Certificate2(), new Sender("123456789")));
             Console.WriteLine("Finished with loggah ...");
             Console.ReadLine();
         }

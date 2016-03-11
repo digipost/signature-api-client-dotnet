@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
@@ -34,17 +33,13 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             {
                 dataTransferObject.availability = new availability();
                 var activationTime = portalManifest.Availability.Activation;
-                var expirationTime = portalManifest.Availability.Expiration;
 
                 if (activationTime != null)
                 {
                     dataTransferObject.availability.activationtime = portalManifest.Availability.Activation.Value;
                 }
 
-                if (expirationTime != null)
-                {
-                    dataTransferObject.availability.expirationtime = portalManifest.Availability.Expiration.Value;
-                }
+                dataTransferObject.availability.availableseconds = portalManifest.Availability.AvailableSeconds;
             }
 
             return dataTransferObject;

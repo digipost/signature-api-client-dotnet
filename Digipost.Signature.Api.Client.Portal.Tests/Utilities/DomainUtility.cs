@@ -17,13 +17,20 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new Availability
             {
                 Activation = DateTime.Now.AddHours(2),
-                Expiration = DateTime.Now.AddDays(3)
+                AvailableFor = new TimeSpan(1, 0, 0, 0)
             };
         }
 
         public static PortalJob GetPortalJob(int signers)
         {
-            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference");
+            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
+            {
+                Availability = new Availability
+                {
+                    Activation = DateTime.Now,
+                    AvailableFor = new TimeSpan(0, 0, 10, 0)
+                }
+            };
         }
 
         internal static PortalManifest GetPortalManifest()

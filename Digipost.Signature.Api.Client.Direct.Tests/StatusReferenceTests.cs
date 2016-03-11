@@ -13,13 +13,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var jobReference = new Uri("http://signatureserviceroot.digipost.no/urlidurl/id030302");
+                var urlWithoutToken = new Uri("http://organizationdomain.com/completionUrl/");
+                var statusQueryToken = "ALongToken";
 
                 //Act
-                var directJobReference = new StatusReference(jobReference);
+                var statusReference = new StatusReference(urlWithoutToken, statusQueryToken);
 
                 //Assert
-                Assert.AreEqual(jobReference, directJobReference.Url);
+                Assert.AreEqual(urlWithoutToken, statusReference.BaseUrl);
+                Assert.AreEqual(statusQueryToken, statusReference.StatusQueryToken);
             }
         }
     }

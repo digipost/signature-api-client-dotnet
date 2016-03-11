@@ -11,24 +11,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         public class ConstructorMethod : ClientConfigurationTests
         {
             [TestMethod]
-            public void ConstructorWithCertificate()
+            public void ConstructorWithNoSenderAndCertificateThumbprintExists()
             {
                 //Arrange
-                var environment = Environment.DifiQa;
-                var sender = CoreDomainUtility.GetSender();
-                var x509Certificate = CoreDomainUtility.GetTestCertificate();
 
                 //Act
-                var clientConfiguration = new ClientConfiguration(
-                    environment,
-                    sender,
-                    x509Certificate
-                    );
+                new ClientConfiguration(Environment.DifiQa, GetFirstCertificateFromCurrentUserStore());
 
                 //Assert
-                Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.Sender);
-                Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
             }
 
             [TestMethod]
@@ -43,14 +33,42 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
                 var clientConfiguration = new ClientConfiguration(
                     environment,
-                    sender,
-                    aCertificateFromCertificateStore.Thumbprint
-                    );
+                    aCertificateFromCertificateStore.Thumbprint, sender);
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
                 Assert.AreEqual(sender, clientConfiguration.Sender);
                 Assert.AreEqual(aCertificateFromCertificateStore, clientConfiguration.Certificate);
+            }
+
+            [TestMethod]
+            public void ConstructorWithCertificate()
+            {
+                //Arrange
+                var environment = Environment.DifiQa;
+                var sender = CoreDomainUtility.GetSender();
+                var x509Certificate = CoreDomainUtility.GetTestCertificate();
+
+                //Act
+                var clientConfiguration = new ClientConfiguration(
+                    environment,
+                    x509Certificate, sender);
+
+                //Assert
+                Assert.AreEqual(environment, clientConfiguration.Environment);
+                Assert.AreEqual(sender, clientConfiguration.Sender);
+                Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
+            }
+
+            [TestMethod]
+            public void ConstructorWithNoSenderAndCertificateExists()
+            {
+                //Arrange
+
+                //Act
+                new ClientConfiguration(Environment.DifiQa, new X509Certificate2());
+
+                //Assert
             }
 
             private static X509Certificate2 GetFirstCertificateFromCurrentUserStore()

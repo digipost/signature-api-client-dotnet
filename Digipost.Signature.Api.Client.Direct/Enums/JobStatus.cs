@@ -2,8 +2,8 @@
 {
     public enum JobStatus
     {
-        Created,
-        Signed,
-        Cancelled
+        Cancelled,
+        Rejected,
+        Signed
     }
 }

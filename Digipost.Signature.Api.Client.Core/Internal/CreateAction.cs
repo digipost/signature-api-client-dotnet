@@ -38,8 +38,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private StringContent BodyContent()
         {
-            Log.Debug($"Outgoing body: {SerializedBody}");
-
             var directJobContent = new StringContent(SerializedBody);
             directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
             directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");

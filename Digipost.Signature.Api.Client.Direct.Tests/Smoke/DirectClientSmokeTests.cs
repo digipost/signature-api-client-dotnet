@@ -111,15 +111,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             [TestMethod]
             public async Task CreatesSuccessfully()
             {
-                ////Arrange
-                //var directClient = GetDirectClient();
-                //var directJob = DomainUtility.GetDirectJob();
+                //Arrange
+                var directClient = GetDirectClient();
+                var directJob = DomainUtility.GetDirectJob();
 
-                ////Act
-                //var result = await directClient.Create(directJob);
+                //Act
+                var result = await directClient.Create(directJob);
 
-                ////Assert
-                //Assert.IsNotNull(result.JobId);
+                //Assert
+                Assert.IsNotNull(result.JobId);
             }
 
             [TestMethod]

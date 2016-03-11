@@ -20,7 +20,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var statusReference = new StatusReference(urlWithoutToken, statusQueryToken);
 
                 //Assert
-                //Assert.AreEqual();
+                Assert.AreEqual(urlWithoutToken, statusReference.BaseUrl);
+                Assert.AreEqual(statusQueryToken, statusReference.StatusQueryToken);
             }
         }
     }

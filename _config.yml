@@ -11,13 +11,13 @@ licenseUrl: http://opensource.org/licenses/MIT
 
 baseurl: "/signature-api-client-dotnet"
 
-currentVersion: "1.0-beta2"
-versions: ["1.0-beta2"]
+currentVersion: "1.0-beta3"
+versions: ["1.0-beta3"]
 
 collections:
-  v1_0_beta2:   
+  v1_0_beta3:   
     output: true
-    permalink: /v1.0-beta2/      
+    permalink: /v1.0-beta3/      
 
 # list of additional links on the right of the top menu
 headerLinks:

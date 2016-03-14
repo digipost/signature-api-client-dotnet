@@ -44,30 +44,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsPortalJobWithOrderedSignersSuccessfully()
-            {
-                //Arrange
-                var document = CoreDomainUtility.GetDocument();
-                var signers = new List<Signer> {new Signer("")};
-                var reference = "reference";
-                var source = new PortalJob(document, signers, reference);
-
-                var expected = new portalsignaturejobrequest
-                {
-                    reference = reference
-                };
-
-                //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, result, out differences);
-                Assert.AreEqual(0, differences.Count());
-            }
-
-            [TestMethod]
             public void ConvertsManifestWithoutAvailabilitySuccessfully()
             {
                 //Arrange

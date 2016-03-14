@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return new signer
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber,
-                order = signer.Order.ToString()
+                order = signer.Order?.ToString()
             };
         }
 

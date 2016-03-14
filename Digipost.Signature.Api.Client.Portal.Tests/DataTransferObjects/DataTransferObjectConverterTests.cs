@@ -98,8 +98,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = "1"},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = "2"}
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = 1},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = 2}
                     }
                 };
 

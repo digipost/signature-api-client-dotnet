@@ -13,8 +13,8 @@ const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
     Environment.DifiQa,
-    new Sender(organizationNumber),
-    certificateThumbprint);
+    certificateThumbprint,
+    new Sender(organizationNumber));
 
 {% endhighlight %}
 

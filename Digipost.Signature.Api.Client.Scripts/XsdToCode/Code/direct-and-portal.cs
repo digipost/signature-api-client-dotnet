@@ -320,6 +320,8 @@ public partial class signer {
     
     private string personalidentificationnumberField;
     
+    private string orderField;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
     public string personalidentificationnumber {
@@ -328,6 +330,17 @@ public partial class signer {
         }
         set {
             this.personalidentificationnumberField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute(DataType="integer")]
+    public string order {
+        get {
+            return this.orderField;
+        }
+        set {
+            this.orderField = value;
         }
     }
 }

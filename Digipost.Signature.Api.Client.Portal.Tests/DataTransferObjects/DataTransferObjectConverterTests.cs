@@ -44,6 +44,30 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [TestMethod]
+            public void ConvertsPortalJobWithOrderedSignersSuccessfully()
+            {
+                //Arrange
+                var document = CoreDomainUtility.GetDocument();
+                var signers = new List<Signer> {new Signer("")};
+                var reference = "reference";
+                var source = new PortalJob(document, signers, reference);
+
+                var expected = new portalsignaturejobrequest
+                {
+                    reference = reference
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
             public void ConvertsManifestWithoutAvailabilitySuccessfully()
             {
                 //Arrange
@@ -65,6 +89,41 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
                         new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void ConvertsManifestWithOrderedSignersSuccessfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+
+                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), new List<Signer> {new Signer("00000000000") {Order = 1}, new Signer("99999999999") {Order = 2}});
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender {organizationnumber = organizationNumberSender},
+                    document = new document
+                    {
+                        title = source.Document.Subject,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = "1"},
+                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = "2"}
                     }
                 };
 

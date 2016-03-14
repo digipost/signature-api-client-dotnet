@@ -9,6 +9,6 @@
 
         public string PersonalIdentificationNumber { get; }
 
-        public int Order { get; set; }
+        public int? Order { get; set; } = null;
     }
 }

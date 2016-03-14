@@ -52,10 +52,17 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         private static signer ToDataTransferObject(Signer signer)
         {
-            return new signer
+            var dataTransferObject = new signer
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber
             };
+
+            if (signer.Order != null)
+            {
+                dataTransferObject.order = signer.Order.Value;
+            }
+
+            return dataTransferObject;
         }
 
         public static sender ToDataTransferObject(Sender sender)

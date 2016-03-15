@@ -6,20 +6,9 @@ using System.Threading.Tasks;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
-    internal class UserAgentHttpHandler : DelegatingHandler
+    internal class UserAgentHandler : DelegatingHandler
     {
-        public UserAgentHttpHandler()
-            : base(new HttpClientHandler())
-        {
-        }
-
-        public UserAgentHttpHandler(HttpMessageHandler innerHandler)
-            : base(innerHandler)
-        {
-        }
-
-        protected override async Task<HttpResponseMessage> SendAsync(
-            HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             request.Headers.Add("User-Agent", GetAssemblyVersion());
 

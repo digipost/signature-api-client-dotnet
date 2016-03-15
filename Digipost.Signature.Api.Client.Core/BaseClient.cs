@@ -48,15 +48,16 @@ namespace Digipost.Signature.Api.Client.Core
 
         private HttpClient MutualTlsClient()
         {
-            var mutualTlsHandler = MutualTlsHandler();
-            var userAgentHttpHandler = new UserAgentHttpHandler(mutualTlsHandler);
-            var loggingHandler = new LoggingHandler(userAgentHttpHandler);
+            var client = HttpClientFactory.Create(
+                MutualTlsHandler(),
+                new UserAgentHandler(),
+                new LoggingHandler()
+                );
 
-            return new HttpClient(loggingHandler)
-            {
-                Timeout = TimeSpan.FromMilliseconds(5000),
-                BaseAddress = ClientConfiguration.Environment.Url
-            };
+            client.Timeout = TimeSpan.FromMilliseconds(100000);
+            client.BaseAddress = ClientConfiguration.Environment.Url;
+
+            return client;
         }
 
         private WebRequestHandler MutualTlsHandler()

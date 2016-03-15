@@ -37,12 +37,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task<string> GetRequestData(HttpRequestMessage request)
         {
-            var keyValuePairs = new List<string[]>
+            var keyValuePairs = new List<KeyValuePair<string, string>>
             {
-                new[] {"Method", $"{request.Method}, {request.RequestUri}"},
-                new[] {"Accept", $"{request.Headers.Accept}"},
-                new[] {"UserAgent", $"{request.Headers.UserAgent}"},
-                new[] {"", $"{await GetContentData(request.Content)}"}
+                new KeyValuePair<string, string>("Method", $"{request.Method}, {request.RequestUri}"),
+                new KeyValuePair<string, string>("Accept", $"{request.Headers.Accept}"),
+                new KeyValuePair<string, string>("UserAgent", $"{request.Headers.UserAgent}"),
+                new KeyValuePair<string, string>(null, $"{await GetContentData(request.Content)}")
             };
 
             return FormatHttpData(keyValuePairs);
@@ -56,27 +56,34 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task<string> GetResponseData(HttpResponseMessage response)
         {
-            var keyValuePairs = new List<string[]>
+            var keyValuePairs = new List<KeyValuePair<string, string>>
             {
-                new[] {"StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}"},
-                new[] {"Cache-Control", $"{response.Headers.CacheControl}"},
-                new[] {"Content-Length", $"{response.Content.Headers.ContentLength}"},
-                new[] {"Content-Type", $"{response.Content.Headers.ContentType}"},
-                new[] {"Date", $"{response.Headers.Date}"},
-                new[] {"", $"{await GetContentData(response.Content)}"}
+                new KeyValuePair<string, string>("StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}"),
+                new KeyValuePair<string, string>("Cache-Control", $"{response.Headers.CacheControl}"),
+                new KeyValuePair<string, string>("Content-Length", $"{response.Content.Headers.ContentLength}"),
+                new KeyValuePair<string, string>("Content-Type", $"{response.Content.Headers.ContentType}"),
+                new KeyValuePair<string, string>("Date", $"{response.Headers.Date}"),
+                new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}")
             };
 
             return FormatHttpData(keyValuePairs);
         }
 
-        private static string FormatHttpData(IEnumerable<string[]> keyValuePairs)
+        private static string FormatHttpData(List<KeyValuePair<string, string>> keyValuePairs)
         {
-            return keyValuePairs.Aggregate(System.Environment.NewLine, (current, keyValuePair) => current + $"{keyValuePair.ElementAt(0)}:  {keyValuePair.ElementAt(1)} {System.Environment.NewLine}");
+            return keyValuePairs.Aggregate(System.Environment.NewLine, (current, keyValuePair) => current + $"{GetFormattedElement(keyValuePair)} {System.Environment.NewLine}");
+        }
+
+        private static string GetFormattedElement(KeyValuePair<string, string> keyValuePair)
+        {
+            var separator = !string.IsNullOrEmpty(keyValuePair.Key) ? ": " : string.Empty;
+
+            return $"{keyValuePair.Key}{separator}{keyValuePair.Value}";
         }
 
         private static async Task<string> GetContentData(HttpContent httpContent)
         {
-            var requestContent = "";
+            var requestContent = string.Empty;
             if (httpContent != null)
             {
                 requestContent = await httpContent.ReadAsStringAsync();

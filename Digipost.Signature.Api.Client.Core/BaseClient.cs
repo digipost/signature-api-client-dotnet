@@ -54,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Core
                 new LoggingHandler()
                 );
 
-            client.Timeout = TimeSpan.FromMilliseconds(100000);
+            client.Timeout = TimeSpan.FromMilliseconds(3000);
             client.BaseAddress = ClientConfiguration.Environment.Url;
 
             return client;

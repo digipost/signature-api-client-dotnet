@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
@@ -11,8 +12,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestLogger");
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-            CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (Log.IsDebugEnabled)
             {
@@ -39,11 +39,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var keyValuePairs = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("Method", $"{request.Method}, {request.RequestUri}"),
-                new KeyValuePair<string, string>("Accept", $"{request.Headers.Accept}"),
-                new KeyValuePair<string, string>("UserAgent", $"{request.Headers.UserAgent}"),
-                new KeyValuePair<string, string>(null, $"{await GetContentData(request.Content)}")
+                new KeyValuePair<string, string>("Method", $"{request.Method}, {request.RequestUri}")
             };
+
+            keyValuePairs.AddRange(SerializeHeaders(request.Headers));
+
+            if (request.Content != null)
+            {
+                keyValuePairs.AddRange(SerializeHeaders(request.Content.Headers));
+                keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(request.Content)}"));
+            }
 
             return FormatHttpData(keyValuePairs);
         }
@@ -58,15 +63,25 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var keyValuePairs = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}"),
-                new KeyValuePair<string, string>("Cache-Control", $"{response.Headers.CacheControl}"),
-                new KeyValuePair<string, string>("Content-Length", $"{response.Content.Headers.ContentLength}"),
-                new KeyValuePair<string, string>("Content-Type", $"{response.Content.Headers.ContentType}"),
-                new KeyValuePair<string, string>("Date", $"{response.Headers.Date}"),
-                new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}")
+                new KeyValuePair<string, string>("StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}")
             };
 
+            keyValuePairs.AddRange(SerializeHeaders(response.Headers));
+            keyValuePairs.AddRange(SerializeHeaders(response.Content.Headers));
+            keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}"));
+
             return FormatHttpData(keyValuePairs);
+        }
+
+        private static List<KeyValuePair<string, string>> SerializeHeaders(HttpHeaders headers)
+        {
+            var keyValuePairs = new List<KeyValuePair<string, string>>();
+
+            keyValuePairs
+                .AddRange(headers
+                    .Select(header => new KeyValuePair<string, string>(header.Key, string.Join(",", header.Value))));
+
+            return keyValuePairs;
         }
 
         private static string FormatHttpData(List<KeyValuePair<string, string>> keyValuePairs)
@@ -81,15 +96,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return $"{keyValuePair.Key}{separator}{keyValuePair.Value}";
         }
 
-        private static async Task<string> GetContentData(HttpContent httpContent)
+        private static Task<string> GetContentData(HttpContent httpContent)
         {
-            var requestContent = string.Empty;
-            if (httpContent != null)
-            {
-                requestContent = await httpContent.ReadAsStringAsync();
-            }
-
-            return requestContent;
+            return httpContent != null ? httpContent.ReadAsStringAsync() : Task.FromResult(string.Empty);
         }
     }
 }

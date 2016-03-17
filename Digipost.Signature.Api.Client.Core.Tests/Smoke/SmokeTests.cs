@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -10,6 +12,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             {
                 if (IsOnBuildServer())
                 {
+                    DisableBuildServerLogging();
                     return Client.DifiQa;
                 }
 
@@ -17,12 +20,19 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             }
         }
 
+        private static void DisableBuildServerLogging()
+        {
+            LogManager.GetRepository().ResetConfiguration();
+        }
+
         protected static bool IsOnBuildServer()
         {
             var isOnBuildServer = false;
 
-            const string teamCityBuildUser = "Administrator";
-            if (System.Environment.UserName.ToLower().Contains(teamCityBuildUser))
+            const string buildServerUser = "administrator";
+            var currentUser = System.Environment.UserName.ToLower();
+            var isCurrentUserBuildServer = currentUser.Contains(buildServerUser);
+            if (isCurrentUserBuildServer)
             {
                 isOnBuildServer = true;
             }

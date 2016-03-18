@@ -14,7 +14,7 @@ Enabling logging on level `DEBUG` will output positive results of requests and w
 
 For initial integration and debugging purposes, it can be useful to log the actual request and response going over the wire. This can be enabled by creating a logger with the name `Digipost.Signature.Api.Client.RequestLogger`. See the following example for how to log requests to trace and file:
 
-{% highlight csharp %}
+{% highlight xml %}
 
  <log4net>
     <logger name="Digipost.Signature.Api.Client.RequestLogger">

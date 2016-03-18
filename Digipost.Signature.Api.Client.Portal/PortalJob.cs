@@ -4,7 +4,7 @@ using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class PortalJob : IRequestContent
+    public class PortalJob : IRequestContent, ISignatureJob
     {
         public PortalJob(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {

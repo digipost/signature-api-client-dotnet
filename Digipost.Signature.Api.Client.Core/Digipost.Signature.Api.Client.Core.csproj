@@ -102,6 +102,7 @@
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHandler.cs" />
+    <Compile Include="ISignatureJob.cs" />
     <Compile Include="RequestHelper.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />

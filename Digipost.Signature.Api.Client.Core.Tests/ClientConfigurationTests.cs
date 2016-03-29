@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.Sender);
+                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
                 Assert.AreEqual(aCertificateFromCertificateStore, clientConfiguration.Certificate);
             }
 
@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.Sender);
+                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
                 Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
             }
 

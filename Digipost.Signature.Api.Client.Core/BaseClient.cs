@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         protected Sender CurrentSender(Sender jobSender)
         {
-            var sender = jobSender ?? ClientConfiguration.Sender;
+            var sender = jobSender ?? ClientConfiguration.GlobalSender;
             if (sender == null)
             {
                 throw new SenderNotSpecifiedException();

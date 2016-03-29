@@ -25,10 +25,10 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<DirectJobResponse> Create(DirectJob directJob)
         {
-            var sender = CurrentSender(directJob.Sender);
-            var relativeUrl = new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+            directJob.Sender = CurrentSender(directJob.Sender);
+            var relativeUrl = new Uri($"/api/{directJob.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
 
-            var documentBundle = AsiceGenerator.CreateAsice(sender, directJob.Document, directJob.Signer, ClientConfiguration.Certificate);
+            var documentBundle = AsiceGenerator.CreateAsice(directJob, ClientConfiguration.Certificate);
             var createAction = new DirectCreateAction(directJob, documentBundle);
             var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
 

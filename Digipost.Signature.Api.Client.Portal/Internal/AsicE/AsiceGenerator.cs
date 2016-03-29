@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
             var signature = new SignatureGenerator(certificate, document, manifest);
             var asiceArchive = new AsiceArchive(document, signature, manifest);
 
-            return new DocumentBundle(asiceArchive.Bytes);
+            return new DocumentBundle(asiceArchive.GetBytes());
         }
     }
 }

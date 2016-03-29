@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice;
+﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
@@ -18,14 +19,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void InitializesClassAndParentProperties()
             {
                 //Arrange
-                var sender = CoreDomainUtility.GetSender();
-                var document = CoreDomainUtility.GetDocument();
-                var enumerable = CoreDomainUtility.GetSigner();
                 var businessCertificate = CoreDomainUtility.GetTestCertificate();
-                var directJob = DomainUtility.GetDirectJob();
+                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
-                var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
+                var asiceBundle = AsiceGenerator.CreateAsice(directJob, businessCertificate);
 
                 //Act
                 var action = new DirectCreateAction(directJob, asiceBundle);
@@ -36,6 +34,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
                 Assert.AreEqual(null, action.MultipartFormDataContent);
             }
+
         }
     }
 }

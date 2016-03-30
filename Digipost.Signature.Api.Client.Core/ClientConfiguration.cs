@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
@@ -22,6 +21,16 @@ namespace Digipost.Signature.Api.Client.Core
             Certificate = certificate;
         }
 
+        public Environment Environment { get; }
+
+        public Sender GlobalSender { get; internal set; }
+
+        public X509Certificate2 Certificate { get; internal set; }
+
+        public string ServerCertificateOrganizationNumber { get; } = "984661185";
+
+        public IEnumerable<IDocumentBundleProcessor> DocumentBundleProcessors { get; set; } = new List<IDocumentBundleProcessor>();
+
         public void EnableDocumentBundleDiskDump(string directory)
         {
             var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
@@ -32,15 +41,5 @@ namespace Digipost.Signature.Api.Client.Core
                 ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
             }
         }
-
-        public Environment Environment { get; }
-
-        public Sender GlobalSender { get; internal set; }
-
-        public X509Certificate2 Certificate { get; internal set; }
-
-        public string ServerCertificateOrganizationNumber { get; } = "984661185";
-
-        public IEnumerable<IDocumentBundleProcessor> DocumentBundleProcessors { get; set; } = new List<IDocumentBundleProcessor>();
     }
 }

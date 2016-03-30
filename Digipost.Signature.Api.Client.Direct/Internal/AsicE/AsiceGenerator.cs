@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
@@ -20,8 +19,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 
         private static AsiceArchive GetAsiceArchive(ISignatureJob signatureJobForMetadata, IAsiceConfiguration asiceConfiguration, params IAsiceAttachable[] asiceAttachables)
         {
-            return  asiceConfiguration == null 
-                ? new AsiceArchive(asiceAttachables) 
+            return asiceConfiguration == null
+                ? new AsiceArchive(asiceAttachables)
                 : new AsiceArchive(asiceConfiguration.DocumentBundleProcessors, signatureJobForMetadata, asiceAttachables);
         }
     }

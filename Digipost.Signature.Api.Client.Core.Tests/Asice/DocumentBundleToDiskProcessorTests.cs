@@ -7,36 +7,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice
 {
-    [TestClass()]
+    [TestClass]
     public class DocumentBundleToDiskProcessorTests
     {
         [TestClass]
         public class ProcessMethod : DocumentBundleToDiskProcessorTests
         {
-            [TestClass]
-            public class ConstructorMethod : DocumentBundleToDiskProcessorTests
-            {
-                [TestMethod]
-                public void SimpleConstructor()
-                {
-                    //Arrange
-                    var directory = "C:\\directory";
-
-                    //Act
-                    var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
-
-                    //Assert
-                    Assert.AreEqual(directory, documentBundleToDiskProcessor.Directory);
-                }
-            }
-
             [TestMethod]
             public void PersistsFileToDisk()
             {
                 //Arrange
                 var tmpDirectory = Path.GetTempPath();
                 var processor = new DocumentBundleToDiskProcessor(tmpDirectory);
-                var mockSignatureJob = new SignatureJobStub() { Reference = "AReference"};
+                var mockSignatureJob = new SignatureJobStub {Reference = "AReference"};
                 var documentBytes = CoreDomainUtility.GetDocument().Bytes;
                 var fileStream = new MemoryStream(documentBytes);
 
@@ -57,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 var fileEnding = "asice.zip";
 
                 var processor = new DocumentBundleToDiskProcessor(tmpDirectory);
-                var mockSignatureJob = new SignatureJobStub() { Reference = "AReference" };
+                var mockSignatureJob = new SignatureJobStub {Reference = "AReference"};
                 var documentBytes = CoreDomainUtility.GetDocument().Bytes;
                 var fileStream = new MemoryStream(documentBytes);
 
@@ -71,6 +54,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 Assert.IsTrue(tempFile.Contains(fileEnding));
                 Assert.IsTrue(tempFile.Contains(mockSignatureJob.Reference));
                 Assert.IsTrue(tempFile.Contains(DateTime.Now.Year.ToString()));
+            }
+
+            [TestClass]
+            public class ConstructorMethod : DocumentBundleToDiskProcessorTests
+            {
+                [TestMethod]
+                public void SimpleConstructor()
+                {
+                    //Arrange
+                    var directory = "C:\\directory";
+
+                    //Act
+                    var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
+
+                    //Assert
+                    Assert.AreEqual(directory, documentBundleToDiskProcessor.Directory);
+                }
             }
         }
     }

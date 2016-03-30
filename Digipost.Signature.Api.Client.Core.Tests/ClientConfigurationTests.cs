@@ -99,7 +99,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.IsTrue(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof (DocumentBundleToDiskProcessor)));
-            } 
+            }
         }
     }
 }

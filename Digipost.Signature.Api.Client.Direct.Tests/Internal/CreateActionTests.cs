@@ -1,5 +1,4 @@
-﻿using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice;
+﻿using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
@@ -34,7 +33,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
                 Assert.AreEqual(null, action.MultipartFormDataContent);
             }
-
         }
     }
 }

@@ -8,11 +8,11 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 {
     internal class AsiceArchive
     {
-        private readonly IEnumerable<IDocumentBundleProcessor> _documentBundleProcessors = new List<IDocumentBundleProcessor>();
-        private readonly ISignatureJob _signatureJob;
         private readonly IAsiceConfiguration _asiceConfiguration;
         private readonly IAsiceAttachable[] _attachables;
+        private readonly IEnumerable<IDocumentBundleProcessor> _documentBundleProcessors = new List<IDocumentBundleProcessor>();
         private readonly bool _sendThroughBundleProcessors;
+        private readonly ISignatureJob _signatureJob;
 
         private ZipArchive _zipArchive;
 
@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
         }
 
         public AsiceArchive(IEnumerable<IDocumentBundleProcessor> documentBundleProcessors, ISignatureJob signatureJob, params IAsiceAttachable[] attachables)
-            :this(attachables)
+            : this(attachables)
         {
             _documentBundleProcessors = documentBundleProcessors;
             _signatureJob = signatureJob;
@@ -50,7 +50,6 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 
                 return bundleArray;
             }
-
         }
 
         private void SendArchiveThroughBundleProcessors(byte[] archiveBytes)

@@ -14,13 +14,13 @@ namespace Digipost.Signature.Api.Client.Direct
             Sender = sender;
         }
 
-        public string Reference { get; }
-
         public Signer Signer { get; }
 
-        public Document Document { get; }
-
         public ExitUrls ExitUrls { get; }
+
+        public string Reference { get; }
+
+        public Document Document { get; }
 
         public Sender Sender { get; internal set; }
     }

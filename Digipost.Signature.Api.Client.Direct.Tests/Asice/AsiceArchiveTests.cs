@@ -56,10 +56,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 };
                 var job = DomainUtility.GetDirectJobWithSender();
                 var asiceArchive = new AsiceArchive(clientConfiguration.DocumentBundleProcessors, job, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument());
-                
+
                 //Act
                 asiceArchive.GetBytes();
-                
+
                 //Assert
                 foreach (var simpleProcessor in clientConfiguration.DocumentBundleProcessors.Cast<SimpleDocumentBundleProcessor>())
                 {

@@ -14,14 +14,14 @@ namespace Digipost.Signature.Api.Client.Portal
             Sender = sender;
         }
 
-        public Document Document { get; }
-
         public IEnumerable<Signer> Signers { get; }
+
+        public Availability Availability { get; set; }
+
+        public Document Document { get; }
 
         public string Reference { get; }
 
         public Sender Sender { get; }
-
-        public Availability Availability { get; set; }
     }
 }

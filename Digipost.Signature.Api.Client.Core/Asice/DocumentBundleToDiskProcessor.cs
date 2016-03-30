@@ -6,14 +6,14 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 {
     public class DocumentBundleToDiskProcessor : IDocumentBundleProcessor
     {
-        public string Directory { get; }
-
-        public string LastFileProcessed { get; set; }
-
         public DocumentBundleToDiskProcessor(string directory)
         {
             Directory = directory;
         }
+
+        public string Directory { get; }
+
+        public string LastFileProcessed { get; set; }
 
         public void Process(ISignatureJob signatureJob, Stream bundleStream)
         {

@@ -6,7 +6,7 @@ using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 
 namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
-    internal class AsiceGenerator
+    internal class PortalAsiceGenerator : AsiceGenerator
     {
         public static DocumentBundle CreateAsice(Sender sender, Document document, IEnumerable<Signer> signers, Availability availability, X509Certificate2 certificate)
         {

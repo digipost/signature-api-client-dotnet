@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
-                var asiceBundle = AsiceGenerator.CreateAsice(directJob, businessCertificate);
+                var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate);
 
                 //Act
                 var action = new DirectCreateAction(directJob, asiceBundle);

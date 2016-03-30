@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Portal
             var sender = CurrentSender(portalJob.Sender);
             var relativeUrl = RelativeUrl(sender);
 
-            var documentBundle = AsiceGenerator.CreateAsice(sender, portalJob.Document, portalJob.Signers, portalJob.Availability, ClientConfiguration.Certificate);
+            var documentBundle = PortalAsiceGenerator.CreateAsice(sender, portalJob.Document, portalJob.Signers, portalJob.Availability, ClientConfiguration.Certificate);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
             var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 

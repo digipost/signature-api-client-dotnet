@@ -85,6 +85,10 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Asice\AsiceAttachableProcessor.cs" />
+    <Compile Include="Asice\AsiceGenerator.cs" />
+    <Compile Include="Asice\DocumentBundleToDiskProcessor.cs" />
+    <Compile Include="IAsiceConfiguration.cs" />
     <Compile Include="Asice\AsiceArchive.cs" />
     <Compile Include="Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
@@ -96,12 +100,14 @@
     <Compile Include="Exceptions\BrokerNotAuthorizedException.cs" />
     <Compile Include="Exceptions\SenderNotSpecifiedException.cs" />
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
+    <Compile Include="IDocumentBundleProcessor.cs" />
     <Compile Include="Internal\CertificateValidator.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHandler.cs" />
+    <Compile Include="ISignatureJob.cs" />
     <Compile Include="RequestHelper.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />

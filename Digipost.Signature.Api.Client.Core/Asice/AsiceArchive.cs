@@ -1,34 +1,54 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
     internal class AsiceArchive
     {
+        private readonly IEnumerable<AsiceAttachableProcessor> _asiceAttachableProcessors;
         private readonly IAsiceAttachable[] _attachables;
-
         private ZipArchive _zipArchive;
 
-        public AsiceArchive(params IAsiceAttachable[] attachables)
+        public AsiceArchive(IEnumerable<AsiceAttachableProcessor> asiceAttachableProcessors, params IAsiceAttachable[] attachables)
         {
             _attachables = attachables;
-            Bytes = CreateArchiveBytes();
+            _asiceAttachableProcessors = asiceAttachableProcessors;
         }
 
-        public byte[] Bytes { get; set; }
-
-        private byte[] CreateArchiveBytes()
+        public byte[] GetBytes()
         {
-            var stream = new MemoryStream();
-            _zipArchive = new ZipArchive(stream, ZipArchiveMode.Create);
-
-            using (_zipArchive)
+            using (var stream = new MemoryStream())
             {
-                foreach (var dokument in _attachables)
-                    AddToArchive(dokument.FileName, dokument.Bytes);
-            }
+                _zipArchive = new ZipArchive(stream, ZipArchiveMode.Create);
 
-            return stream.ToArray();
+                using (_zipArchive)
+                {
+                    foreach (var dokument in _attachables)
+                        AddToArchive(dokument.FileName, dokument.Bytes);
+                }
+
+                var bundleArray = stream.ToArray();
+                SendArchiveThroughBundleProcessors(bundleArray);
+
+                return bundleArray;
+            }
+        }
+
+        private void SendArchiveThroughBundleProcessors(byte[] archiveBytes)
+        {
+            foreach (var documentBundleProcessor in _asiceAttachableProcessors)
+            {
+                try
+                {
+                    documentBundleProcessor.Process(new MemoryStream(archiveBytes));
+                }
+                catch (Exception exception)
+                {
+                    throw new IOException("Could not run stream through document bundle processor.", exception);
+                }
+            }
         }
 
         private void AddToArchive(string filename, byte[] data)

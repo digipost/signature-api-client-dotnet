@@ -4,7 +4,7 @@ using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class PortalJob : IRequestContent
+    public class PortalJob : IRequestContent, ISignatureJob
     {
         public PortalJob(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {
@@ -14,14 +14,14 @@ namespace Digipost.Signature.Api.Client.Portal
             Sender = sender;
         }
 
-        public Document Document { get; }
-
         public IEnumerable<Signer> Signers { get; }
+
+        public Availability Availability { get; set; }
+
+        public Document Document { get; }
 
         public string Reference { get; }
 
-        public Sender Sender { get; }
-
-        public Availability Availability { get; set; }
+        public Sender Sender { get; internal set; }
     }
 }

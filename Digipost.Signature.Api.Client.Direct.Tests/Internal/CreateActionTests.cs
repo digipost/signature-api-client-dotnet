@@ -18,14 +18,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             public void InitializesClassAndParentProperties()
             {
                 //Arrange
-                var sender = CoreDomainUtility.GetSender();
-                var document = CoreDomainUtility.GetDocument();
-                var enumerable = CoreDomainUtility.GetSigner();
                 var businessCertificate = CoreDomainUtility.GetTestCertificate();
-                var directJob = DomainUtility.GetDirectJob();
+                var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
+                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
-                var asiceBundle = AsiceGenerator.CreateAsice(sender, document, enumerable, businessCertificate);
+                var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate, clientConfiguration);
 
                 //Act
                 var action = new DirectCreateAction(directJob, asiceBundle);

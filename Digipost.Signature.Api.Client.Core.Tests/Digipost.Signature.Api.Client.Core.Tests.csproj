@@ -83,6 +83,8 @@
     </Compile>
     <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
     <Compile Include="Asice\DocumentBundleTests.cs" />
+    <Compile Include="Asice\DocumentBundleToDiskProcessorTests.cs" />
+    <Compile Include="Asice\SimpleDocumentBundleProcessor.cs" />
     <Compile Include="BaseClientTests.cs" />
     <Compile Include="CancellationReferenceTests.cs" />
     <Compile Include="ClientConfigurationTests.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Smoke\SmokeTests.cs" />
+    <Compile Include="Stubs\SignatureJobStub.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
     <Compile Include="Utilities\CompareObjects\IComparator.cs" />

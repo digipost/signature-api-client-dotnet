@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -37,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.Sender);
+                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
                 Assert.AreEqual(aCertificateFromCertificateStore, clientConfiguration.Certificate);
             }
 
@@ -56,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.Sender);
+                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
                 Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
             }
 
@@ -80,6 +82,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 store.Close();
 
                 return certificate;
+            }
+        }
+
+        [TestClass]
+        public class EnableDocumentBundleDiskDumpMethod : ClientConfigurationTests
+        {
+            [TestMethod]
+            public void AddsDocumentBundleToDiskProcessor()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+
+                //Act
+                clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");
+
+                //Assert
+                Assert.IsTrue(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof (DocumentBundleToDiskProcessor)));
             }
         }
     }

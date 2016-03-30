@@ -1,22 +1,32 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using Digipost.Signature.Api.Client.Core.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
     public class DocumentBundleToDiskProcessor : IDocumentBundleProcessor
     {
-        public string Path { get; }
+        public string Directory { get; }
 
-        public DocumentBundleToDiskProcessor(string path)
+        public string LastFileProcessed { get; set; }
+
+        public DocumentBundleToDiskProcessor(string directory)
         {
-            Path = path;
+            Directory = directory;
         }
 
         public void Process(ISignatureJob signatureJob, Stream bundleStream)
         {
-            using (var fileStream = File.Create(Path))
+            LastFileProcessed = FileNameWithTimeStamp(signatureJob.Reference);
+            using (var fileStream = File.Create(Path.Combine(Directory, LastFileProcessed)))
             {
                 bundleStream.CopyTo(fileStream);
             }
+        }
+
+        private static string FileNameWithTimeStamp(string reference)
+        {
+            return $"{DateTime.Now.ToString(DateUtility.DateForFile())} - {reference}.asice.zip";
         }
     }
 }

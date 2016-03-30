@@ -85,6 +85,7 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Asice\AsiceGenerator.cs" />
     <Compile Include="Asice\DocumentBundleToDiskProcessor.cs" />
     <Compile Include="IAsiceConfiguration.cs" />

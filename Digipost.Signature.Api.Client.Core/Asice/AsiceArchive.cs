@@ -2,31 +2,19 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
     internal class AsiceArchive
     {
-        private readonly IAsiceConfiguration _asiceConfiguration;
+        private readonly IEnumerable<AsiceAttachableProcessor> _asiceAttachableProcessors;
         private readonly IAsiceAttachable[] _attachables;
-        private readonly IEnumerable<IDocumentBundleProcessor> _documentBundleProcessors = new List<IDocumentBundleProcessor>();
-        private readonly bool _sendThroughBundleProcessors;
-        private readonly ISignatureJob _signatureJob;
-
         private ZipArchive _zipArchive;
 
-        public AsiceArchive(params IAsiceAttachable[] attachables)
+        public AsiceArchive(IEnumerable<AsiceAttachableProcessor> asiceAttachableProcessors, params IAsiceAttachable[] attachables)
         {
             _attachables = attachables;
-        }
-
-        public AsiceArchive(IEnumerable<IDocumentBundleProcessor> documentBundleProcessors, ISignatureJob signatureJob, params IAsiceAttachable[] attachables)
-            : this(attachables)
-        {
-            _documentBundleProcessors = documentBundleProcessors;
-            _signatureJob = signatureJob;
-            _sendThroughBundleProcessors = _documentBundleProcessors.Any() && _signatureJob != null;
+            _asiceAttachableProcessors = asiceAttachableProcessors;
         }
 
         public byte[] GetBytes()
@@ -42,11 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
                 }
 
                 var bundleArray = stream.ToArray();
-
-                if (_sendThroughBundleProcessors)
-                {
-                    SendArchiveThroughBundleProcessors(bundleArray);
-                }
+                SendArchiveThroughBundleProcessors(bundleArray);
 
                 return bundleArray;
             }
@@ -54,11 +38,11 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 
         private void SendArchiveThroughBundleProcessors(byte[] archiveBytes)
         {
-            foreach (var documentBundleProcessor in _documentBundleProcessors)
+            foreach (var documentBundleProcessor in _asiceAttachableProcessors)
             {
                 try
                 {
-                    documentBundleProcessor.Process(_signatureJob, new MemoryStream(archiveBytes));
+                    documentBundleProcessor.Process(new MemoryStream(archiveBytes));
                 }
                 catch (Exception exception)
                 {

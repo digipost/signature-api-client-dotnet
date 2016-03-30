@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
@@ -8,15 +7,15 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
     internal class PortalAsiceGenerator : AsiceGenerator
     {
-        public static DocumentBundle CreateAsice(Sender sender, Document document, IEnumerable<Signer> signers, Availability availability, X509Certificate2 certificate)
+        public static DocumentBundle CreateAsice(PortalJob portalJob, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
         {
-            var manifest = new PortalManifest(sender, document, signers)
+            var manifest = new PortalManifest(portalJob.Sender, portalJob.Document, portalJob.Signers)
             {
-                Availability = availability
+                Availability = portalJob.Availability
             };
+            var signature = new SignatureGenerator(certificate, portalJob.Document, manifest);
 
-            var signature = new SignatureGenerator(certificate, document, manifest);
-            var asiceArchive = new AsiceArchive(document, signature, manifest);
+            var asiceArchive = GetAsiceArchive(portalJob, asiceConfiguration, portalJob.Document, manifest, signature);
 
             return new DocumentBundle(asiceArchive.GetBytes());
         }

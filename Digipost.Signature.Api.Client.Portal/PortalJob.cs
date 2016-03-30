@@ -22,6 +22,6 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public string Reference { get; }
 
-        public Sender Sender { get; }
+        public Sender Sender { get; internal set; }
     }
 }

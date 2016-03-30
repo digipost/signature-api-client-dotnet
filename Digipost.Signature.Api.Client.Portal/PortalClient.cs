@@ -30,10 +30,10 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)
         {
-            var sender = CurrentSender(portalJob.Sender);
-            var relativeUrl = RelativeUrl(sender);
+            portalJob.Sender = CurrentSender(portalJob.Sender);
+            var relativeUrl = RelativeUrl(portalJob.Sender);
 
-            var documentBundle = PortalAsiceGenerator.CreateAsice(sender, portalJob.Document, portalJob.Signers, portalJob.Availability, ClientConfiguration.Certificate);
+            var documentBundle = PortalAsiceGenerator.CreateAsice(portalJob, ClientConfiguration.Certificate, ClientConfiguration);
             var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
             var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 

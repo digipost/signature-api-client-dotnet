@@ -18,10 +18,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
         public class ConstructorMethod : AsiceArchiveTests
         {
             [TestMethod]
-            public void SimpleConstructorGeneratesBytes()
+            public void ConstructorGeneratesBytes()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument());
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument());
 
                 //Act
                 var archiveBytes = asiceArchive.GetBytes();
@@ -54,10 +54,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                         new SimpleDocumentBundleProcessor()
                     }
                 };
+
                 var job = DomainUtility.GetDirectJobWithSender();
-                var asiceArchive = new AsiceArchive(clientConfiguration.DocumentBundleProcessors, job, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument());
+                var asiceAttachableProcessors = clientConfiguration.DocumentBundleProcessors.Select(p => new AsiceAttachableProcessor(job, p));
+                var asiceAttachables = new IAsiceAttachable[] {DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument()};
 
                 //Act
+                var asiceArchive = new AsiceArchive(asiceAttachableProcessors, asiceAttachables);
                 asiceArchive.GetBytes();
 
                 //Assert

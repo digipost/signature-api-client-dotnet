@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
@@ -10,9 +7,14 @@ namespace Digipost.Signature.Api.Client.Core.Asice
     {
         protected static AsiceArchive GetAsiceArchive(ISignatureJob signatureJobForMetadata, IAsiceConfiguration asiceConfiguration, params IAsiceAttachable[] asiceAttachables)
         {
-            return asiceConfiguration == null
-                ? new AsiceArchive(asiceAttachables)
-                : new AsiceArchive(asiceConfiguration.DocumentBundleProcessors, signatureJobForMetadata, asiceAttachables);
+            var asiceAttachableProcessors = ConvertDocumentBundleProcessorsToAsiceAttachableProcessors(signatureJobForMetadata, asiceConfiguration);
+
+            return new AsiceArchive(asiceAttachableProcessors, asiceAttachables);
+        }
+
+        private static IEnumerable<AsiceAttachableProcessor> ConvertDocumentBundleProcessorsToAsiceAttachableProcessors(ISignatureJob signatureJobForMetadata, IAsiceConfiguration asiceConfiguration)
+        {
+            return asiceConfiguration.DocumentBundleProcessors.Select(p => new AsiceAttachableProcessor(signatureJobForMetadata, p));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
@@ -34,12 +33,7 @@ namespace Digipost.Signature.Api.Client.Core
         public void EnableDocumentBundleDiskDump(string directory)
         {
             var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
-
-            var hasDocumentBundleProcessor = DocumentBundleProcessors.Any(p => p.GetType() == typeof (DocumentBundleToDiskProcessor));
-            if (!hasDocumentBundleProcessor)
-            {
-                ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
-            }
+            ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
         }
     }
 }

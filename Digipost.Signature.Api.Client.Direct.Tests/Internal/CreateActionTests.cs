@@ -19,10 +19,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
             {
                 //Arrange
                 var businessCertificate = CoreDomainUtility.GetTestCertificate();
+                var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
                 var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
                 var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
-                var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate);
+                var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate, clientConfiguration);
 
                 //Act
                 var action = new DirectCreateAction(directJob, asiceBundle);

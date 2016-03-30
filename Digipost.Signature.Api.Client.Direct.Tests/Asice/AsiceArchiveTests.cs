@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Tests.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -65,30 +66,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                     Assert.IsTrue(simpleProcessor.StreamLength > 1000);
                     Assert.IsTrue(simpleProcessor.CouldReadBytesStream);
                     Assert.AreEqual(0, simpleProcessor.Initialposition);
-                }
-            }
-
-            private class SimpleDocumentBundleProcessor : IDocumentBundleProcessor
-            {
-                public long StreamLength { get; private set; }
-
-                public long Initialposition { get; private set; }
-
-                public bool CouldReadBytesStream { get; private set; }
-
-                public void Process(ISignatureJob signatureJob, Stream bundleStream)
-                {
-                    Initialposition = bundleStream.Position;
-
-                    CouldReadBytesStream = bundleStream.CanRead;
-                    StreamLength = bundleStream.Length;
-
-                    DoSomeStreamMessing(bundleStream);
-                }
-
-                private void DoSomeStreamMessing(Stream bundleStream)
-                {
-                    bundleStream.Position = 100;
                 }
             }
         }

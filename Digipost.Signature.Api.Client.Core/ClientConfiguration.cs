@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
+using Digipost.Signature.Api.Client.Core.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -17,6 +20,17 @@ namespace Digipost.Signature.Api.Client.Core
             Environment = environment;
             GlobalSender = globalSender;
             Certificate = certificate;
+        }
+
+        public void EnableDocumentBundleDiskDump(string directory)
+        {
+            var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
+
+            var hasDocumentBundleProcessor = DocumentBundleProcessors.Any(p => p.GetType() == typeof (DocumentBundleToDiskProcessor));
+            if (!hasDocumentBundleProcessor)
+            {
+                ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
+            }
         }
 
         public Environment Environment { get; }

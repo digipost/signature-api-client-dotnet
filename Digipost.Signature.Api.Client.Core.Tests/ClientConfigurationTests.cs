@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -81,6 +83,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 return certificate;
             }
+        }
+
+        [TestClass]
+        public class EnableDocumentBundleDiskDumpMethod : ClientConfigurationTests
+        {
+            [TestMethod]
+            public void AddsDocumentBundleToDiskProcessor()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+
+                //Act
+                clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");
+
+                //Assert
+                Assert.IsTrue(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof (DocumentBundleToDiskProcessor)));
+            } 
         }
     }
 }

@@ -167,6 +167,20 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
 
             [TestMethod]
+            public async Task GetsPades2Successfully()
+            {
+                //Arrange
+                var directClient = GetDirectClient();
+
+                //Act
+                var pades = await directClient.GetPades(_padesReference);
+
+                //Assert
+                Assert.IsTrue(pades.CanRead);
+            }
+
+
+            [TestMethod]
             public async Task ConfirmsSuccessfully()
             {
                 //Arrange

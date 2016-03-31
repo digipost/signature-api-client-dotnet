@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
+using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -169,6 +171,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             [TestMethod]
             public async Task GetsPades2Successfully()
             {
+                Trace.WriteLine("Doing some tracing ...");
                 //Arrange
                 var directClient = GetDirectClient();
 

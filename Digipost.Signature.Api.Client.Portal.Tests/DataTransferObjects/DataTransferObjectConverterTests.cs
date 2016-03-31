@@ -311,13 +311,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     new Signature
                     {
-                        SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature1.status.ToString(), true),
+                        SignatureStatus = signature1.status.ToSignatureStatus(),
                         Signer = new Signer(signature1.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
-                        SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature2.status.ToString(), true),
+                        SignatureStatus = signature2.status.ToSignatureStatus(),
                         Signer = new Signer(signature2.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }

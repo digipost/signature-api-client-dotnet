@@ -43,8 +43,8 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             var jobStatus = directsignaturejobstatusresponse.status.ToJobStatus();
 
-            var jobReferences = jobStatus == JobStatus.Signed 
-                ? new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl)) 
+            var jobReferences = jobStatus == JobStatus.Signed
+                ? new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl))
                 : new JobReferences(null, null, null);
 
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);

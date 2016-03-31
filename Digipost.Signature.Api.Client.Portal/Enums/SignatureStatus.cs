@@ -5,6 +5,7 @@
         Waiting,
         Rejected,
         Cancelled,
-        Signed
+        Signed,
+        Expired
     }
 }

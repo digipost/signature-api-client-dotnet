@@ -18,6 +18,10 @@ var clientConfiguration = new ClientConfiguration(
 
 {% endhighlight %}
 
+<blockquote>
+Note: If the sender changes per signature job created, the sender can be set on the job itself. The sender of the job will always take precedence over the sender in <code>ClientConfiguration</code>. This means that a default sender can be set in <code>ClientConfiguration</code> and, when required, on a specific job.   
+</blockquote>
+
 <h3 id="uc07">Create and send portal signature job</h3>
 
 The following example shows how to create a document and send it to two signers.

@@ -48,3 +48,23 @@ For initial integration and debugging purposes, it can be useful to log the actu
 <blockquote>
 Warning: Enabling request logging should never be used in a production system. It will severely impact the performance of the client.	
 </blockquote>
+
+<h3 id="loggingdocumentbundle">Logging of document bundle</h3>
+
+Logging of document bundle can be enabled via the `ClientConfiguration`:
+
+{% highlight csharp %}
+
+var clientConfiguration = new ClientConfiguration(Environment.DifiQa, "3k 7f 30 dd 05 d3 b7 fc...");
+clientConfiguration.EnableDocumentBundleDiskDump("/directory/path/for/bundle/disk/dump");
+
+{% endhighlight %}
+
+<blockquote>
+Remember to only set the directory to save the disk dump. A new zip file will be placed there for each created signature job. 
+</blockquote>
+
+If you have special needs for the bundle other than just saving it to disk, add your own bundle processor to `ClientConfiguration.DocumentBundleProcessors`.
+
+
+

@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
 
                 //Act
-                new ClientConfiguration(Environment.DifiQa, GetFirstCertificateFromCurrentUserStore());
+                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
 
                 //Assert
             }
@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiQa;
                 var sender = CoreDomainUtility.GetSender();
 
-                var aCertificateFromCertificateStore = GetFirstCertificateFromCurrentUserStore();
+                var aCertificateFromCertificateStore = CoreDomainUtility.GetPostenTestCertificate();
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(
@@ -71,17 +71,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 new ClientConfiguration(Environment.DifiQa, new X509Certificate2());
 
                 //Assert
-            }
-
-            private static X509Certificate2 GetFirstCertificateFromCurrentUserStore()
-            {
-                var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
-
-                store.Open(OpenFlags.ReadOnly);
-                var certificate = store.Certificates[0];
-                store.Close();
-
-                return certificate;
             }
         }
 

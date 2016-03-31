@@ -116,7 +116,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var result = new Signature
             {
-                SignatureStatus = (SignatureStatus) Enum.Parse(typeof (SignatureStatus), signature.status.ToString(), true),
+                SignatureStatus = signature.status.ToSignatureStatus(),
                 Signer = new Signer(signature.personalidentificationnumber)
             };
 

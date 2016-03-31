@@ -17,7 +17,35 @@ namespace Digipost.Signature.Api.Client.Portal.Extensions
                     result = JobStatus.Completed;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("Could not parse status.");
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
+            }
+
+            return result;
+        }
+
+        public static SignatureStatus ToSignatureStatus(this signaturestatus status)
+        {
+            SignatureStatus result;
+
+            switch (status)
+            {
+                case signaturestatus.WAITING:
+                    result = SignatureStatus.Waiting;
+                    break;
+                case signaturestatus.REJECTED:
+                    result = SignatureStatus.Rejected;
+                    break;
+                case signaturestatus.CANCELLED:
+                    result = SignatureStatus.Cancelled;
+                    break;
+                case signaturestatus.EXPIRED:
+                    result = SignatureStatus.Expired;
+                    break;
+                case signaturestatus.SIGNED:
+                    result = SignatureStatus.Signed;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
 
             return result;

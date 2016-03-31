@@ -19,26 +19,31 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static PadesReference _padesReference;
         private static ConfirmationReference _confirmationReference;
 
+        private static PortalClient _portalClient;
+
         protected static PortalClient GetPortalClient()
         {
-            PortalClient client;
+            if (_portalClient != null)
+            {
+                return _portalClient;
+            }
 
             switch (ClientType)
             {
                 case Client.Localhost:
-                    client = GetPortalClient(Environment.Localhost);
+                    _portalClient = GetPortalClient(Environment.Localhost);
                     break;
                 case Client.DifiTest:
-                    client = GetPortalClient(Environment.DifiTest);
+                    _portalClient = GetPortalClient(Environment.DifiTest);
                     break;
                 case Client.DifiQa:
-                    client = GetPortalClient(Environment.DifiQa);
+                    _portalClient = GetPortalClient(Environment.DifiQa);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return client;
+            return _portalClient;
         }
 
         private static PortalClient GetPortalClient(Environment environment)

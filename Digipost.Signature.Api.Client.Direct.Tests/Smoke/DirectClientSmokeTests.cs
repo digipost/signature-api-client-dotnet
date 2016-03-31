@@ -169,14 +169,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
 
             [TestMethod]
-            public async Task GetsPades2Successfully()
+            public void GetsPades2Successfully()
             {
                 Trace.WriteLine("Doing some tracing ...");
                 //Arrange
                 var directClient = GetDirectClient();
+                Trace.WriteLine($"Address:{directClient.HttpClient.BaseAddress}, timeout: {directClient.HttpClient.Timeout}");
 
                 //Act
-                var pades = await directClient.GetPades(_padesReference);
+                Trace.WriteLine($"PadesUrl: {_padesReference.Url}");
+                var pades = directClient.GetPades(_padesReference).Result;
 
                 //Assert
                 Assert.IsTrue(pades.CanRead);

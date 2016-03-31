@@ -12,10 +12,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                 if (IsOnBuildServer())
                 {
                     DisableBuildServerLogging();
-                    return Client.DifiQa;
+                    return Client.DifiTest;
                 }
 
-                return Client.DifiQa;
+                return Client.DifiTest;
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
@@ -40,19 +41,11 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         public static DirectJobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
         {
-            var jobStatus = (JobStatus) Enum.Parse(typeof (JobStatus), directsignaturejobstatusresponse.status.ToString(), true);
+            var jobStatus = directsignaturejobstatusresponse.status.ToJobStatus();
 
-            JobReferences jobReferences;
-
-            if (jobStatus == JobStatus.Signed)
-            {
-                jobReferences = new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl)
-                    );
-            }
-            else
-            {
-                jobReferences = new JobReferences(null, null, null);
-            }
+            var jobReferences = jobStatus == JobStatus.Signed 
+                ? new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl)) 
+                : new JobReferences(null, null, null);
 
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }

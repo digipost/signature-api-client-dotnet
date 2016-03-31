@@ -2,7 +2,7 @@
 {
     public enum JobStatus
     {
-        Cancelled,
+        Failed,
         Rejected,
         Signed
     }

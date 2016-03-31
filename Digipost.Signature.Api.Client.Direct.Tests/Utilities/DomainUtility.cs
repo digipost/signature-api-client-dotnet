@@ -35,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         public static DirectJobStatusResponse GetDirectJobStatusResponse()
         {
             var jobId = 22;
-            var jobStatus = JobStatus.Cancelled;
+            var jobStatus = JobStatus.Failed;
             var statusResponseUrls = GetJobReferences();
 
             return new DirectJobStatusResponse(

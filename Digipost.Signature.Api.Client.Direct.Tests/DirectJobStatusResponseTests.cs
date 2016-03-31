@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             {
                 //Arrange
                 var jobId = 22;
-                var jobStatus = JobStatus.Cancelled;
+                var jobStatus = JobStatus.Failed;
                 var jobReferences = DomainUtility.GetJobReferences();
 
                 //Act

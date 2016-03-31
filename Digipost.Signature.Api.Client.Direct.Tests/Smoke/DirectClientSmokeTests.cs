@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
+using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -13,6 +15,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     [TestClass]
     public class DirectClientSmokeTests : SmokeTests
     {
+        private static DirectClient _directClient;
+
         private static StatusReference _statusReference;
         private static ConfirmationReference _confirmationReference;
         private static XadesReference _xadesReference;
@@ -20,24 +24,27 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         protected static DirectClient GetDirectClient()
         {
-            DirectClient client;
+            if (_directClient != null)
+            {
+                return _directClient;
+            }
 
             switch (ClientType)
             {
                 case Client.Localhost:
-                    client = DirectClient(Environment.Localhost);
+                    _directClient = DirectClient(Environment.Localhost);
                     break;
                 case Client.DifiTest:
-                    client = DirectClient(Environment.DifiTest);
+                    _directClient = DirectClient(Environment.DifiTest);
                     break;
                 case Client.DifiQa:
-                    client = DirectClient(Environment.DifiQa);
+                    _directClient = DirectClient(Environment.DifiQa);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return client;
+            return _directClient;
         }
 
         private static DirectClient DirectClient(Environment environment)
@@ -83,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJobResponse = directClient.Create(directJob).Result;
                 var statusQueryToken = AutoSignAndGetToken(directClient, directJobResponse).Result;
                 _statusReference = MorphStatusReferenceIfMayBe(directJobResponse.ResponseUrls.Status(statusQueryToken));
-
+                
                 var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
 
                 var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(jobStatusResponse);
@@ -116,7 +123,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJob = DomainUtility.GetDirectJob();
 
                 //Act
-                var result = await directClient.Create(directJob);
+                var result = directClient.Create(directJob).Result;
 
                 //Assert
                 Assert.IsNotNull(result.JobId);
@@ -136,19 +143,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
 
             [TestMethod]
-            public async Task GetsXadesSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-
-                //Act
-                var xades = await directClient.GetXades(_xadesReference);
-
-                //Assert
-                Assert.IsTrue(xades.CanRead);
-            }
-
-            [TestMethod]
             public async Task GetsPadesSuccessfully()
             {
                 //Arrange
@@ -159,6 +153,19 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 //Assert
                 Assert.IsTrue(pades.CanRead);
+            }
+
+            [TestMethod]
+            public async Task GetsXadesSuccessfully()
+            {
+                //Arrange
+                var directClient = GetDirectClient();
+
+                //Act
+                var xades = await directClient.GetXades(_xadesReference);
+
+                //Assert
+                Assert.IsTrue(xades.CanRead);
             }
 
             [TestMethod]

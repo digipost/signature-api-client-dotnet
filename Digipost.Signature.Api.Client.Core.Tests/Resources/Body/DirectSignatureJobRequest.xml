@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<direct-signature-job-request xmlns="http://signering.posten.no/schema/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<reference>Reference</reference>
+	<exit-urls>
+		<completion-url>http://localhost/completion</completion-url>
+		<rejection-url>http://localhost/cancellation</rejection-url>
+		<error-url>http://localhost/error</error-url>
+	</exit-urls>
+</direct-signature-job-request>

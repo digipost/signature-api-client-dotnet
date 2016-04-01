@@ -1,0 +1,13 @@
+﻿using System.Net.Http;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+
+namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
+{
+    internal class FakeHttpClientHandlerForDirectCreateResponse : FakeHttpClientHandlerResponse
+    {
+        public override HttpContent GetContent()
+        {
+            return new StringContent(ContentUtility.GetCreateResponse());
+        }
+    }
+}

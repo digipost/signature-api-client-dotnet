@@ -3,7 +3,7 @@
 	<reference>Reference</reference>
 	<exit-urls>
 		<completion-url>http://localhost/completion</completion-url>
-		<rejaculate-url>http://localhost/cancellation</rejection-url>
+		<rejaculate-url>http://localhost/cancellation</rejaculate-url>
 		<error-url>http://localhost/error</error-url>
 	</exit-urls>
 </direct-signature-job-request>

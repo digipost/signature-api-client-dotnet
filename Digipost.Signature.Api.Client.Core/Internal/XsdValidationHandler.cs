@@ -17,23 +17,36 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                 await ValidateOutgoingAndThrowIfInvalid(request, cancellationToken);
             }
             
-            return await base.SendAsync(request, cancellationToken);
+            var result = await base.SendAsync(request, cancellationToken);
+
+            await ValidateIncomingAndThrowIfInvalid(result, cancellationToken);
+
+            return result;
+        }
+
+        private async Task ValidateIncomingAndThrowIfInvalid(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)
+        {
+            var responseBody = await httpResponseMessage.Content.ReadAsStringAsync();
+
+            ValidateBody(responseBody);
         }
 
         private static async Task ValidateOutgoingAndThrowIfInvalid(HttpRequestMessage request, CancellationToken cancellationToken)
         {
+            var multipart = await request.Content.ReadAsMultipartAsync(cancellationToken);
+            var requestBody = await multipart.Contents.ElementAt(0).ReadAsStringAsync();
+
+            ValidateBody(requestBody);
+        }
+
+        private static void ValidateBody(string responseBody)
+        {
             var xsdValidator = new XsdValidator();
 
-            var multipart = await request.Content.ReadAsMultipartAsync(cancellationToken);
-            var bodyPartXml = await multipart.Contents.ElementAt(0).ReadAsStringAsync();
-
-            try
+            xsdValidator.ValiderDokumentMotXsd(responseBody);
+            if (!string.IsNullOrEmpty(xsdValidator.ValideringsVarsler))
             {
-                xsdValidator.ValiderDokumentMotXsd(bodyPartXml);
-            }
-            catch (XmlException)
-            {
-                throw new InvalidXmlException($"Invalid outgoing Xml: {xsdValidator.ValideringsVarsler}");
+                throw new InvalidXmlException(xsdValidator.ValideringsVarsler);
             }
         }
     }

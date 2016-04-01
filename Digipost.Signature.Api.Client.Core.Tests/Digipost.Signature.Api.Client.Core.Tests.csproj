@@ -106,6 +106,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForBrokerNotAuthorizedErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForErrorResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponseInvalid.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForXadesResponse.cs" />
@@ -163,6 +164,7 @@
     <EmbeddedResource Include="Resources\Body\CreateResponse.xml" />
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequestInvalid.xml" />
     <EmbeddedResource Include="Resources\Body\StatusResponse.xml" />
+    <EmbeddedResource Include="Resources\Body\StatusResponseInvalid.xml" />
     <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
     <EmbeddedResource Include="Schema\Examples\Response\Xades.xml" />
     <EmbeddedResource Include="Schema\Examples\Response\ErrorResponse.xml" />

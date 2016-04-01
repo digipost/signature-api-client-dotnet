@@ -14,6 +14,46 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
     [TestClass]
     public class XsdValidationHandlerTests
     {
+         private static HttpRequestMessage GetHttpRequestMessage(MultipartFormDataContent multipartFormDataContent)
+            {
+                return new HttpRequestMessage
+                {
+                    Content = multipartFormDataContent,
+                    RequestUri = new Uri("http://bogusurl.no"),
+                    Method = HttpMethod.Post
+                };
+            }
+
+            private static HttpClient GetClient(DelegatingHandler lastHandler)
+            {
+                var client = HttpClientFactory.Create(
+                    new XsdValidationHandler(),
+                    lastHandler
+                    );
+                return client;
+            }
+
+        [TestClass]
+        public class Response : XsdValidationHandlerTests
+        {
+            [TestMethod]
+            public async Task AcceptsValidXml()
+            {
+                //Arrange
+                var client = GetClient(new FakeHttpClientHandlerGetStatusResponse());
+                await client.GetAsync("http://bogusuri.no");
+            }
+
+            [TestMethod]
+            [ExpectedException(typeof(InvalidXmlException))]
+            public async Task ThrowsExceptionOnInvalidXml()
+            {
+                //Arrange
+                var client = GetClient(new FakeHttpClientHandlerGetStatusResponseInvalid());
+                await client.GetAsync("http://bogusuri.no");
+            }
+        }
+
         [TestClass]
         public class Request : XsdValidationHandlerTests
         {
@@ -43,8 +83,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 //Assert
             }
 
-            [ExpectedException(typeof (InvalidXmlException))]
             [TestMethod]
+            [ExpectedException(typeof(InvalidXmlException))]
             public async Task ThrowsExceptionOnInvalidXml()
             {
                 //Arrange
@@ -57,25 +97,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 //Assert
                 Assert.Fail();
-            }
-
-            private static HttpRequestMessage GetHttpRequestMessage(MultipartFormDataContent multipartFormDataContent)
-            {
-                return new HttpRequestMessage
-                {
-                    Content = multipartFormDataContent,
-                    RequestUri = new Uri("http://bogusurl.no"),
-                    Method = HttpMethod.Post
-                };
-            }
-
-            private static HttpClient GetClient(DelegatingHandler lastHandler)
-            {
-                var client = HttpClientFactory.Create(
-                    new XsdValidationHandler(),
-                    lastHandler
-                    );
-                return client;
             }
 
             private static MultipartFormDataContent MultipartFormDataContent(string content)
@@ -93,32 +114,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 multipartFormDataContent.Add(directJobContent);
                 return multipartFormDataContent;
-            }
-        }
-
-        [TestClass]
-        public class Response : XsdValidationHandlerTests
-        {
-            [TestMethod]
-            public void AcceptsValidXml()
-            {
-                //Arrange
-
-                //Act
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            public void ThrowsExceptionOnInvalidXml()
-            {
-                //Arrange
-
-                //Act
-
-                //Assert
-                Assert.Fail();
             }
         }
     }

@@ -7,8 +7,8 @@
     <ProjectGuid>{24D1D03D-4F19-488E-8F3F-30DC6C5B7BEE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Digipost.Signature.Api.Client.DataTransferObjects</RootNamespace>
-    <AssemblyName>Digipost.Signature.Api.Client.DataTransferObjects</AssemblyName>
+    <RootNamespace>Digipost.Signature.Api.Client.Scripts</RootNamespace>
+    <AssemblyName>Digipost.Signature.Api.Client.Scripts</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -37,6 +37,14 @@
     <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ApiClientShared, Version=1.0.5637.25994, Culture=neutral, PublicKeyToken=6e0e24e0c7886562, processorArchitecture=MSIL">
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5857.18209\lib\net45\ApiClientShared.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Difi.Felles.Utility, Version=0.2.5857.18209, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\difi-felles-utility-dotnet.0.2.5857.18209\lib\net45\Difi.Felles.Utility.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,21 +57,23 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XsdToCode\Code\direct-and-portal.cs" />
+    <Compile Include="XsdToCode\Code\XsdFiles.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="XsdToCode\GenerateClassesFromXsd.ps1" />
-    <None Include="XsdToCode\Xsd\common.xsd">
+    <EmbeddedResource Include="XsdToCode\Xsd\common.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="XsdToCode\Xsd\direct-and-portal.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="XsdToCode\Xsd\direct-and-portal.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="XsdToCode\Xsd\direct.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="XsdToCode\Xsd\direct.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="XsdToCode\Xsd\portal.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="XsdToCode\Xsd\portal.xsd">
       <SubType>Designer</SubType>
-    </None>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

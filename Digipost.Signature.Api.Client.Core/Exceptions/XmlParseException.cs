@@ -13,9 +13,5 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
             : base(message)
         {
         }
-
-        public XmlParseException()
-        {
-        }
     }
 }

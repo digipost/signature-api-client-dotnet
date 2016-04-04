@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <direct-signature-job-status-response xmlns="http://signering.posten.no/schema/v1" xmlns:ns2="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
-	<signature-job-id>183</signature-job-id>
-	<status>SIGNED</status>
-	<confirmationadas-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/complete</confirmationadas-url>
-	<xades-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/xades/191</xades-url>
-	<pades-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/pades</pades-url>
+  <signature-job-id>183</signature-job-id>
+  <status>SIGNED</status>
+  <confirmationadas-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/complete</confirmationadas-url>
+  <xades-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/xades/191</xades-url>
+  <pades-url>https://api.difiqa.signering.posten.no/api/988015814/direct/signature-jobs/183/pades</pades-url>
 </direct-signature-job-status-response>

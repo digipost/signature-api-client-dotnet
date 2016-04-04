@@ -101,6 +101,8 @@
     <Compile Include="DocumentTests.cs" />
     <Compile Include="EnvironmentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
+    <Compile Include="Fakes\FakeHttpClientForNoContentResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientForDataResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientForPadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForBrokerNotAuthorizedErrorResponse.cs" />

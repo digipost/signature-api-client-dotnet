@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
@@ -7,7 +8,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
     {
         public override HttpContent GetContent()
         {
-            return new StringContent(ContentUtility.GetCreateResponse());
+            var stringContent = new StringContent(ContentUtility.GetCreateResponse());
+            stringContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+            return stringContent;
         }
     }
 }

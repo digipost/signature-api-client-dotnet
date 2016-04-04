@@ -1,49 +1,49 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net.Http;
+using System.Net.Mime;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Xsd;
+using log4net;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
     public class XsdValidationHandler : DelegatingHandler
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (request.Content != null)
-            {
-                await ValidateOutgoingAndThrowIfInvalid(request, cancellationToken);
-            }
+            await ValidateXmlAndThrowIfInvalid(request.Content, cancellationToken);
             
             var result = await base.SendAsync(request, cancellationToken);
 
-            await ValidateIncomingAndThrowIfInvalid(result, cancellationToken);
+            await ValidateXmlAndThrowIfInvalid(result.Content, cancellationToken);
 
             return result;
         }
 
-        private async Task ValidateIncomingAndThrowIfInvalid(HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)
+        private static async Task ValidateXmlAndThrowIfInvalid(HttpContent content, CancellationToken cancellationToken)
         {
-            var responseBody = await httpResponseMessage.Content.ReadAsStringAsync();
-
-            ValidateBody(responseBody);
+            if (content?.Headers.ContentType?.MediaType == "multipart/mixed")
+            {
+                var multipart = await content.ReadAsMultipartAsync(cancellationToken);
+                var requestBody = await multipart.Contents.ElementAt(0).ReadAsStringAsync();
+                ValidateXmlBody(requestBody);
+            }
         }
 
-        private static async Task ValidateOutgoingAndThrowIfInvalid(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var multipart = await request.Content.ReadAsMultipartAsync(cancellationToken);
-            var requestBody = await multipart.Contents.ElementAt(0).ReadAsStringAsync();
-
-            ValidateBody(requestBody);
-        }
-
-        private static void ValidateBody(string responseBody)
+        private static void ValidateXmlBody(string body)
         {
             var xsdValidator = new XsdValidator();
 
-            xsdValidator.ValiderDokumentMotXsd(responseBody);
+            xsdValidator.ValiderDokumentMotXsd(body);
             if (!string.IsNullOrEmpty(xsdValidator.ValideringsVarsler))
             {
                 throw new InvalidXmlException(xsdValidator.ValideringsVarsler);

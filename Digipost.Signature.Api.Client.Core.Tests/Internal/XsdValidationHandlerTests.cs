@@ -14,11 +14,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
     [TestClass]
     public class XsdValidationHandlerTests
     {
-         private static HttpRequestMessage GetHttpRequestMessage(MultipartFormDataContent multipartFormDataContent)
+         private static HttpRequestMessage GetHttpRequestMessage(HttpContent httpContent)
             {
                 return new HttpRequestMessage
                 {
-                    Content = multipartFormDataContent,
+                    Content = httpContent,
                     RequestUri = new Uri("http://bogusurl.no"),
                     Method = HttpMethod.Post
                 };
@@ -34,27 +34,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
         [TestClass]
-        public class Response : XsdValidationHandlerTests
-        {
-            [TestMethod]
-            public async Task AcceptsValidXml()
-            {
-                //Arrange
-                var client = GetClient(new FakeHttpClientHandlerGetStatusResponse());
-                await client.GetAsync("http://bogusuri.no");
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
-            public async Task ThrowsExceptionOnInvalidXml()
-            {
-                //Arrange
-                var client = GetClient(new FakeHttpClientHandlerGetStatusResponseInvalid());
-                await client.GetAsync("http://bogusuri.no");
-            }
-        }
-
-        [TestClass]
         public class Request : XsdValidationHandlerTests
         {
             [TestMethod]
@@ -62,11 +41,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var client = GetClient(new FakeHttpClientHandlerForDirectCreateResponse());
-                var directSignatureJobRequestBody = ContentUtility.GetDirectSignatureJobRequestBody();
-                var multipartFormDataContent = MultipartFormDataContent(directSignatureJobRequestBody);
+                HttpContent invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBody()).GetContent();
 
                 //Act
-                await client.SendAsync(GetHttpRequestMessage(multipartFormDataContent));
+                await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
 
                 //Assert
             }
@@ -89,31 +67,52 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var client = GetClient(new FakeHttpClientHandlerForDirectCreateResponse());
-                var directSignatureJobRequestBody = ContentUtility.GetDirectSignatureJobRequestBodyInvalid();
-                var multipartFormDataContent = MultipartFormDataContent(directSignatureJobRequestBody);
+                var invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBodyInvalid()).GetContent();
 
                 //Act
-                await client.SendAsync(GetHttpRequestMessage(multipartFormDataContent));
+                await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
 
                 //Assert
                 Assert.Fail();
             }
 
-            private static MultipartFormDataContent MultipartFormDataContent(string content)
+        }
+
+        [TestClass]
+        public class Response : XsdValidationHandlerTests
+        {
+            [TestMethod]
+            public async Task AcceptsValidXml()
             {
-                var boundary = Guid.NewGuid().ToString();
-                var multipartFormDataContent = new MultipartFormDataContent(boundary);
+                //Arrange
+                var client = GetClient(new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetStatusResponse()));
+                await client.GetAsync("http://bogusuri.no");
+            }
 
-                var mediaTypeHeaderValue = new MediaTypeHeaderValue("multipart/mixed");
-                mediaTypeHeaderValue.Parameters.Add(new NameValueWithParametersHeaderValue("boundary", boundary));
-                multipartFormDataContent.Headers.ContentType = mediaTypeHeaderValue;
+            [TestMethod]
+            [ExpectedException(typeof(InvalidXmlException))]
+            public async Task ThrowsExceptionOnInvalidXml()
+            {
+                //Arrange
+                var client = GetClient(new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetStatusResponseInvalid()));
 
-                var directJobContent = new StringContent(content);
-                directJobContent.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                directJobContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                //Act
+                await client.GetAsync("http://bogusuri.no");
 
-                multipartFormDataContent.Add(directJobContent);
-                return multipartFormDataContent;
+                //Assert
+                Assert.Fail();
+            }
+
+            [TestMethod]
+            public async Task AcceptsEmptyResponse()
+            {
+                //Arrange
+                var client = GetClient(new FakeHttpClientHandlerForNoContentResponse());
+                await client.GetAsync("http://bogusuri.no");
+
+                //Act
+
+                //Assert
             }
         }
     }

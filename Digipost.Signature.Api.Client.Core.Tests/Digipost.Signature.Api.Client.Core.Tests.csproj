@@ -114,7 +114,8 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForXadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\CertificateValidatorTests.cs" />
-    <Compile Include="Internal\XsdValidationHandlerTests.cs" />
+    <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
+    <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />
     <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="RequestHelperTests.cs" />

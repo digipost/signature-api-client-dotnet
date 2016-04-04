@@ -50,7 +50,8 @@ namespace Digipost.Signature.Api.Client.Core
         {
             var client = HttpClientFactory.Create(
                 MutualTlsHandler(),
-                new XsdValidationHandler(),
+                new XsdRequestValidationHandler(),
+                new XsdResponseValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler()
                 );

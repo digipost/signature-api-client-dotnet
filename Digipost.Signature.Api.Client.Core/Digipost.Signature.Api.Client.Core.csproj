@@ -108,6 +108,8 @@
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
     <Compile Include="Internal\UserAgentHandler.cs" />
+    <Compile Include="Internal\XsdResponseValidationHandler.cs" />
+    <Compile Include="Internal\XsdRequestValidationHandler.cs" />
     <Compile Include="Internal\XsdValidationHandler.cs" />
     <Compile Include="ISignatureJob.cs" />
     <Compile Include="RequestHelper.cs" />

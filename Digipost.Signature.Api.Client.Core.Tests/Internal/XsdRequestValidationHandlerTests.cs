@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 {
     [TestClass]
-    public class XsdValidationHandlerTests
+    public class XsdRequestValidationHandlerTests
     {
          private static HttpRequestMessage GetHttpRequestMessage(HttpContent httpContent)
             {
@@ -24,23 +24,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 };
             }
 
-            private static HttpClient GetClient(DelegatingHandler lastHandler)
+         private static HttpClient GetClientWithRequestValidator(DelegatingHandler lastHandler)
             {
                 var client = HttpClientFactory.Create(
-                    new XsdValidationHandler(),
+                    new XsdRequestValidationHandler(),
                     lastHandler
                     );
                 return client;
             }
 
         [TestClass]
-        public class Request : XsdValidationHandlerTests
+        public class SendAsync : XsdRequestValidationHandlerTests
         {
             [TestMethod]
             public async Task AcceptsValidXml()
             {
                 //Arrange
-                var client = GetClient(new FakeHttpClientHandlerForDirectCreateResponse());
+                var client = GetClientWithRequestValidator(new FakeHttpClientHandlerForDirectCreateResponse());
                 HttpContent invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBody()).GetContent();
 
                 //Act
@@ -53,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             public async Task AcceptsGetRequest()
             {
                 //Arrange
-                var client = GetClient(new FakeHttpClientHandlerGetStatusResponse());
+                var client = GetClientWithRequestValidator(new FakeHttpClientHandlerGetStatusResponse());
 
                 //Act
                 await client.GetAsync("http://bogusurl.no");
@@ -66,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             public async Task ThrowsExceptionOnInvalidXml()
             {
                 //Arrange
-                var client = GetClient(new FakeHttpClientHandlerForDirectCreateResponse());
+                var client = GetClientWithRequestValidator(new FakeHttpClientHandlerForDirectCreateResponse());
                 var invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBodyInvalid()).GetContent();
 
                 //Act
@@ -76,44 +76,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 Assert.Fail();
             }
 
-        }
-
-        [TestClass]
-        public class Response : XsdValidationHandlerTests
-        {
-            [TestMethod]
-            public async Task AcceptsValidXml()
-            {
-                //Arrange
-                var client = GetClient(new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetStatusResponse()));
-                await client.GetAsync("http://bogusuri.no");
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
-            public async Task ThrowsExceptionOnInvalidXml()
-            {
-                //Arrange
-                var client = GetClient(new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetStatusResponseInvalid()));
-
-                //Act
-                await client.GetAsync("http://bogusuri.no");
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            public async Task AcceptsEmptyResponse()
-            {
-                //Arrange
-                var client = GetClient(new FakeHttpClientHandlerForNoContentResponse());
-                await client.GetAsync("http://bogusuri.no");
-
-                //Act
-
-                //Assert
-            }
         }
     }
 }

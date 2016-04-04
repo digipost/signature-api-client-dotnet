@@ -1,15 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Mime;
-using System.Reflection;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
-using Difi.Felles.Utility;
-using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.Core.Xsd;
-using log4net;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
@@ -14,24 +13,24 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
     [TestClass]
     public class XsdRequestValidationHandlerTests
     {
-         private static HttpRequestMessage GetHttpRequestMessage(HttpContent httpContent)
+        private static HttpRequestMessage GetHttpRequestMessage(HttpContent httpContent)
+        {
+            return new HttpRequestMessage
             {
-                return new HttpRequestMessage
-                {
-                    Content = httpContent,
-                    RequestUri = new Uri("http://bogusurl.no"),
-                    Method = HttpMethod.Post
-                };
-            }
+                Content = httpContent,
+                RequestUri = new Uri("http://bogusurl.no"),
+                Method = HttpMethod.Post
+            };
+        }
 
-         private static HttpClient GetClientWithRequestValidator(DelegatingHandler lastHandler)
-            {
-                var client = HttpClientFactory.Create(
-                    new XsdRequestValidationHandler(),
-                    lastHandler
-                    );
-                return client;
-            }
+        private static HttpClient GetClientWithRequestValidator(DelegatingHandler lastHandler)
+        {
+            var client = HttpClientFactory.Create(
+                new XsdRequestValidationHandler(),
+                lastHandler
+                );
+            return client;
+        }
 
         [TestClass]
         public class SendAsync : XsdRequestValidationHandlerTests
@@ -41,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientHandlerForDirectCreateResponse());
-                HttpContent invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBody()).GetContent();
+                var invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBody()).GetContent();
 
                 //Act
                 await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
@@ -62,7 +61,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
             [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
+            [ExpectedException(typeof (InvalidXmlException))]
             public async Task ThrowsExceptionOnInvalidXml()
             {
                 //Arrange
@@ -75,7 +74,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 //Assert
                 Assert.Fail();
             }
-
         }
     }
 }

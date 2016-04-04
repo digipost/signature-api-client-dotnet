@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
@@ -15,7 +14,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
         [TestClass]
         public class CreateAsync : XsdResponseValidationHandlerTests
         {
-          
             private static HttpClient GetClientWithResponseValidator(DelegatingHandler lastHandler)
             {
                 var client = HttpClientFactory.Create(
@@ -24,7 +22,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                     );
                 return client;
             }
-
 
             [TestMethod]
             public async Task AcceptsValidXml()
@@ -35,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
             [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
+            [ExpectedException(typeof (InvalidXmlException))]
             public async Task ThrowsExceptionOnInvalidXml()
             {
                 //Arrange
@@ -60,6 +57,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 //Assert
             }
         }
-
     }
 }

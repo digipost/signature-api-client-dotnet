@@ -6,12 +6,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
     internal class FakeHttpClientHandlerForMultipartXml : FakeHttpClientHandlerResponse
     {
-        public string Content { get; set; }
-
         public FakeHttpClientHandlerForMultipartXml(string content)
         {
             Content = content;
         }
+
+        public string Content { get; set; }
 
         public override HttpContent GetContent()
         {
@@ -34,6 +34,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
             multipartFormDataContent.Add(stringContent);
             return multipartFormDataContent;
         }
-
     }
 }

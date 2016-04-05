@@ -129,7 +129,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalClient = GetPortalClient();
 
                 //Act
-                portalClient.GetPades(_padesReference);
+                await portalClient.GetPades(_padesReference);
                 //await WritePadesToFile(portalClient, padesReference);
 
                 //Assert

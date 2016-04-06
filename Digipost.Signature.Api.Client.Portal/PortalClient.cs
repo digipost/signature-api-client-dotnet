@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
@@ -42,9 +43,22 @@ namespace Digipost.Signature.Api.Client.Portal
             return portalJobResponse;
         }
 
-        public async Task<PortalJobStatusChangeResponse> GetStatusChange(Sender sender = null)
+        /// <summary>
+        ///     If there is a job with an updated <see cref="JobStatus" />, the returned object contains necessary information to
+        ///     act
+        ///     on the status change. If the returned object has status <see cref="JobStatus.NoChanges" />, there is no changes.
+        ///     When
+        ///     processing of the status change is complete, (e.g. retrieving  <see cref="GetPades(PadesReference)">Pades</see>
+        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.Completed" /> job
+        ///     where
+        ///     all signers have <see cref="SignatureStatus">signed</see> their documents), the returned status must be
+        ///     <see cref="Confirm(ConfirmationReference)">confirmed</see>.
+        /// </summary>
+        /// <param name="sender">The organization the status change is requested on behalf of. Defaults to <see cref="ClientConfiguration.GlobalSender"/></param>
+        /// <returns>the changed status for a job, never null.</returns>
+        public async Task<PortalJobStatusChanged> GetStatusChange(Sender sender = null)
         {
-            PortalJobStatusChangeResponse portalJobStatusChangeResponse;
+            PortalJobStatusChanged portalJobStatusChanged;
 
             var request = new HttpRequestMessage
             {
@@ -62,11 +76,11 @@ namespace Digipost.Signature.Api.Client.Portal
             {
                 case HttpStatusCode.NoContent:
                     Log.Debug("No content response received.");
-                    portalJobStatusChangeResponse = PortalJobStatusChangeResponse.NoChangesJobStatusChangeResponse;
+                    portalJobStatusChanged = PortalJobStatusChanged.NoChangesJobStatusChanged;
                     break;
                 case HttpStatusCode.OK:
-                    portalJobStatusChangeResponse = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
-                    Log.Debug($"JobStatusChangeResponse received: JobId: {portalJobStatusChangeResponse.JobId}, JobStatus: {portalJobStatusChangeResponse.Status}");
+                    portalJobStatusChanged = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
+                    Log.Debug($"JobStatusChangeResponse received: JobId: {portalJobStatusChanged.JobId}, JobStatus: {portalJobStatusChanged.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
@@ -79,7 +93,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
 
-            return portalJobStatusChangeResponse;
+            return portalJobStatusChanged;
         }
 
         private static Uri RelativeUrl(Sender sender)
@@ -87,7 +101,7 @@ namespace Digipost.Signature.Api.Client.Portal
             return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
-        private static async Task<PortalJobStatusChangeResponse> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
+        private static async Task<PortalJobStatusChanged> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
             var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);
@@ -104,6 +118,13 @@ namespace Digipost.Signature.Api.Client.Portal
             return await RequestHelper.GetStream(padesReference.Url);
         }
 
+        /// <summary>
+        /// Confirms that the status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see> is received and may be discarded by the 
+        /// Signature service and not retrieved again. Calling this method on a status update without
+        /// <see cref="ConfirmationReference"/> has no effect.
+        /// </summary>
+        /// <param name="confirmationReference">the updated status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see>{@link #getStatusChange()}</param>
+        /// <returns></returns>
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
             await RequestHelper.Confirm(confirmationReference);

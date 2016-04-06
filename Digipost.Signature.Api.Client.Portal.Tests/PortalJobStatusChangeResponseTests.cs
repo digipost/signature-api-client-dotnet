@@ -35,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                var portalJobStatusChangeResponse = new PortalJobStatusChangeResponse(
+                var portalJobStatusChangeResponse = new PortalJobStatusChanged(
                     jobId,
                     jobStatus,
                     confirmationReference,

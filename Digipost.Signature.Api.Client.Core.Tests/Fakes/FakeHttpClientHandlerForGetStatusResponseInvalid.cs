@@ -1,14 +1,14 @@
 ﻿using System.Net.Http;
-using Digipost.Signature.Api.Client.Core.Tests.Fakes;
+using System.Text;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 
-namespace Digipost.Signature.Api.Client.Direct.Tests.Fakes
+namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
-    internal class FakeHttpClientHandlerGetStatusResponseInvalid : FakeHttpClientHandlerResponse
+    internal class FakeHttpClientHandlerForStatusResponseInvalid : FakeHttpClientHandlerResponse
     {
         public override HttpContent GetContent()
         {
-            return new StringContent(ContentUtility.GetStatusResponseInvalid());
+            return new StringContent(ContentUtility.GetStatusResponseInvalid(), Encoding.UTF8, "application/xml");
         }
     }
 }

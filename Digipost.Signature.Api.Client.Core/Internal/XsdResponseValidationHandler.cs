@@ -10,9 +10,24 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var result = await base.SendAsync(request, cancellationToken);
 
-            await ValidateXmlAndThrowIfInvalid(result.Content, cancellationToken);
+            var mustValidateForCurrentEndpoint = !request.RequestUri.AbsolutePath.ToLower().Contains("xades");
+            if (mustValidateForCurrentEndpoint)
+            {
+                await ValidateXmlAndThrowIfInvalid(result.Content);
+            }
 
             return result;
+        }
+
+        private async Task ValidateXmlAndThrowIfInvalid(HttpContent content)
+        {
+            var contentMediaType = content?.Headers.ContentType?.MediaType;
+
+            if (contentMediaType == ApplicationXml)
+            {
+                var readAsStringAsync = await content.ReadAsStringAsync();
+                ValidateXml(readAsStringAsync);
+            }
         }
     }
 }

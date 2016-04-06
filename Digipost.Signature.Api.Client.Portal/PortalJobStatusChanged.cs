@@ -4,11 +4,11 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class PortalJobStatusChangeResponse
+    public class PortalJobStatusChanged
     {
-        public static PortalJobStatusChangeResponse NoChangesJobStatusChangeResponse = new PortalJobStatusChangeResponse(0, JobStatus.NoChanges, null, null);
+        public static PortalJobStatusChanged NoChangesJobStatusChanged = new PortalJobStatusChanged(0, JobStatus.NoChanges, null, null);
 
-        public PortalJobStatusChangeResponse(long jobId, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
+        public PortalJobStatusChanged(long jobId, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
         {
             JobId = jobId;
             Status = status;

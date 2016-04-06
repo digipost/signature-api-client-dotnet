@@ -88,14 +88,14 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return new PortalJobResponse(portalsignaturejobresponse.signaturejobid, new Uri(portalsignaturejobresponse.cancellationurl));
         }
 
-        public static PortalJobStatusChangeResponse FromDataTransferObject(
+        public static PortalJobStatusChanged FromDataTransferObject(
             portalsignaturejobstatuschangeresponse changeResponse)
         {
             var jobStatus = changeResponse.status.ToJobStatus();
             var confirmationReference = new ConfirmationReference(new Uri(changeResponse.confirmationurl));
             var signatures = FromDataTransferObject(changeResponse.signatures.signature);
 
-            var result = new PortalJobStatusChangeResponse(changeResponse.signaturejobid, jobStatus, confirmationReference, signatures);
+            var result = new PortalJobStatusChanged(changeResponse.signaturejobid, jobStatus, confirmationReference, signatures);
 
             var padesUrl = changeResponse.signatures.padesurl;
             if (padesUrl != null)

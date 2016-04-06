@@ -49,8 +49,21 @@ namespace Digipost.Signature.Api.Client.Core
 
         public string ServerCertificateOrganizationNumber { get; } = "984661185";
 
+        /// <summary>
+        ///     All bundle processors used for processing document bundle zip files before they are sent to the service to create
+        ///     signature jobs. Add a <see cref="IDocumentBundleProcessor">DocumentBundleProcessor</see> here if requirements are
+        ///     more specific than what can be achieved from <see cref="EnableDocumentBundleDiskDump" />
+        /// </summary>
         public IEnumerable<IDocumentBundleProcessor> DocumentBundleProcessors { get; set; } = new List<IDocumentBundleProcessor>();
 
+        /// <summary>
+        ///     Have the library dump the generated document bundle zip files to disk before they are sent to the service to create
+        ///     signature jobs.
+        /// </summary>
+        /// <param name="directory">
+        ///     The directory in which the bundles will be persisted. The file format will as follows:
+        ///     <code>[timestamp] - [reference-from-job].asice.zip</code>
+        /// </param>
         public void EnableDocumentBundleDiskDump(string directory)
         {
             var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);

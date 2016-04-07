@@ -93,11 +93,13 @@ When getting Xades and Pades for a `PortalJob`, remember that the Xades is per s
 {% highlight csharp %}
 
 PortalClient portalClient = null; //As initialized earlier
-var portalJobStatusChangeResponse = await portalClient.GetStatusChange();
+var portalJobStatusChanged = await portalClient.GetStatusChange();
 
-var xades = await portalClient.GetXades(portalJobStatusChangeResponse.Signatures.ElementAt(0).XadesReference);
+//Get Xades:
+var xades = await portalClient.GetXades(portalJobStatusChanged.Signatures.ElementAt(0).XadesReference);
 
-var pades = await portalClient.GetPades(portalJobStatusChangeResponse.PadesReference);
+//Get Pades:
+var pades = await portalClient.GetPades(portalJobStatusChanged.PadesReference);
 
 {% endhighlight %}
 

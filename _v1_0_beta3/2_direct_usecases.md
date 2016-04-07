@@ -84,8 +84,8 @@ switch (directJobStatusResponse.Status)
     case JobStatus.Rejected:
         //Signature job was rejected by the signer. Xades and Pades cannot be requested.
         break;
-    case JobStatus.Cancelled:
-        //Signature job was cancelled, Xades and Pades cannot be requested.
+    case JobStatus.Failed:
+        //Signature job failed, Xades and Pades cannot be requested.
         break;
     case JobStatus.Signed:
         var xadesByteStream = await directClient.GetXades(directJobStatusResponse.References.Xades);

@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Exceptions;
+﻿using System.Net;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -8,6 +9,30 @@ namespace Digipost.Signature.Api.Client.Core.Tests
     [TestClass]
     public class BaseClientTests
     {
+        [TestClass]
+        public class ConstructorMethod : BaseClientTests
+        {
+            [TestMethod]
+            public void InitializesWithProperties()
+            {
+                //Arrange
+                var tlsSetup = SecurityProtocolType.Tls12;
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetTestIntegrasjonSertifikat())
+                {
+                    HttpClientTimeoutInMilliseconds = 1441
+                };
+
+                //Act
+                var clientStub = new ClientStub(clientConfiguration);
+
+                //Assert
+                Assert.AreEqual(clientConfiguration, clientStub.ClientConfiguration);
+                Assert.AreEqual(tlsSetup, ServicePointManager.SecurityProtocol);
+                Assert.IsNotNull(clientStub.RequestHelper);
+                Assert.AreEqual(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
+            } 
+        }
+
         [TestClass]
         public class CurrentSenderMethod : BaseClientTests
         {

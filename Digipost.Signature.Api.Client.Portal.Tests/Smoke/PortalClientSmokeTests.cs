@@ -122,6 +122,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 }
             }
 
+            [Ignore]
             [TestMethod]
             public async Task GetsPadesSuccessfully()
             {

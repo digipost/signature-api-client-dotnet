@@ -142,6 +142,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(directJobStatusResponse.JobId);
             }
 
+            [Ignore]
             [TestMethod]
             public async Task GetsPadesSuccessfully()
             {
@@ -167,23 +168,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Assert
                 Assert.IsTrue(xades.CanRead);
             }
-
-            [TestMethod]
-            public void GetsPades2Successfully()
-            {
-                Trace.WriteLine("Doing some tracing ...");
-                //Arrange
-                var directClient = GetDirectClient();
-                Trace.WriteLine($"Address:{directClient.HttpClient.BaseAddress}, timeout: {directClient.HttpClient.Timeout}");
-
-                //Act
-                Trace.WriteLine($"PadesUrl: {_padesReference.Url}");
-                var pades = directClient.GetPades(_padesReference).Result;
-
-                //Assert
-                Assert.IsTrue(pades.CanRead);
-            }
-
+            
 
             [TestMethod]
             public async Task ConfirmsSuccessfully()

@@ -10,7 +10,8 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var result = await base.SendAsync(request, cancellationToken);
 
-            var mustValidateForCurrentEndpoint = !request.RequestUri.AbsolutePath.ToLower().Contains("xades");
+            var requestUri = request.RequestUri.AbsolutePath.ToLower();
+            var mustValidateForCurrentEndpoint = !requestUri.Contains("xades") && !requestUri.Contains("pades");
             if (mustValidateForCurrentEndpoint)
             {
                 await ValidateXmlAndThrowIfInvalid(result.Content);

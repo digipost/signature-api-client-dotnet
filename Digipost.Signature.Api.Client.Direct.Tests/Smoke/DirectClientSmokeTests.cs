@@ -142,7 +142,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(directJobStatusResponse.JobId);
             }
 
-            [Ignore]
             [TestMethod]
             public async Task GetsPadesSuccessfully()
             {

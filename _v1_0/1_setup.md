@@ -6,7 +6,6 @@ layout: default
 
 The client library is available as a nuget package. The client library (and associated nuget package) is updated regularly as new functionality is added. 
 
-<blockquote> The version number will be a good indicator, as a change in the major or minor version will have breaking changes. </blockquote>
 
 To install the nuget package, follow these steps in Visual Studio:
 

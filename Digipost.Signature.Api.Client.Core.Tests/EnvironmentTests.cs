@@ -57,6 +57,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(url, environment.Url);
                 CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
             }
+
+            [TestMethod]
+            public void GetsInitializedProductionEnvironment()
+            {
+                //Arrange
+                var url = new Uri("https://api.signering.posten.no");
+                var certificates = SertifikatkjedeUtility.ProduksjonsSertifikater();
+
+                //Act
+                var environment = Environment.Production;
+
+                //Assert
+                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.AreEqual(url, environment.Url);
+                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+            }
+
         }
     }
 }

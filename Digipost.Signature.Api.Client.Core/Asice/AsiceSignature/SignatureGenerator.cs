@@ -126,7 +126,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private void AddSignatureToDocument()
         {
-            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), true));
+            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), deep: true));
         }
     }
 }

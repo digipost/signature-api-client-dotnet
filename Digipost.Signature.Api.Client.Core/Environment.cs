@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core
             new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://172.16.91.1:8443")
             );
-
+        
         public static Environment DifiTest => new Environment(
             new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://api.difitest.signering.posten.no")
@@ -25,6 +25,10 @@ namespace Digipost.Signature.Api.Client.Core
         public static Environment DifiQa => new Environment(
             new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://api.difiqa.signering.posten.no")
+            );
+        public static Environment Production => new Environment(
+            new Sertifikatkjedevalidator(SertifikatkjedeUtility.ProduksjonsSertifikater()),
+            new Uri("https://api.signering.posten.no")
             );
     }
 }

@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using log4net;
+using Common.Logging;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {

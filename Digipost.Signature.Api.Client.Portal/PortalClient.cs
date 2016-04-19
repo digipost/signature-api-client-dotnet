@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading.Tasks;
+using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
@@ -13,7 +14,6 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using log4net;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -27,6 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal
         public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
+            Log.Debug("Inne i klient.........");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)

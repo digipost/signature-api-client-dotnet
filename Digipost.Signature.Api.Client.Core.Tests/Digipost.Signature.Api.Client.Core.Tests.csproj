@@ -121,7 +121,6 @@
     <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
     <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />
-    <Compile Include="Properties\AssemblyInfo.log4net.cs" />
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Smoke\SmokeTests.cs" />
@@ -141,6 +140,7 @@
   <ItemGroup>
     <None Include="..\SolutionItems\App.config">
       <Link>App.config</Link>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.cer" />

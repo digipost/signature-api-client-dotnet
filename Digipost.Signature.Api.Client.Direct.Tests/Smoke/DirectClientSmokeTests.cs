@@ -123,7 +123,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directJob = DomainUtility.GetDirectJob();
 
                 //Act
-                var result = directClient.Create(directJob).Result;
+                var result = await directClient.Create(directJob);
 
                 //Assert
                 Assert.IsNotNull(result.JobId);

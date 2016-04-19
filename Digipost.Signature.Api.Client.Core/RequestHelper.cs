@@ -6,10 +6,11 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Reflection;
 using System.Threading.Tasks;
+using Common.Logging;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using log4net;
+
 
 namespace Digipost.Signature.Api.Client.Core
 {

@@ -40,3 +40,4 @@ To communicate over HTTPS you need to sign your request with a business certific
 7. Go to the 'Details' tab
 8. Scroll down to 'Thumbprint'
 9. Copy the thumbprint.
+10. IMPORTANT: If you experience that the client is not finding the certificate, then it could be that the thumbprint you copied have an invisible BOM (Byte Order Mark). To remove the invisible characters you can paste the thumbprint in a text editor, then go to the start of the string and delete all the invisible characters. Be sure not to remove any of the actual characters.

@@ -1,5 +1,6 @@
 ﻿using System;
-using log4net;
+using Common.Logging;
+using Common.Logging.Simple;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -21,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 
         private static void DisableBuildServerLogging()
         {
-            LogManager.GetRepository().ResetConfiguration();
+            LogManager.Adapter = new NoOpLoggerFactoryAdapter();
         }
 
         protected static bool IsOnBuildServer()

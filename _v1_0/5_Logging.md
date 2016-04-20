@@ -6,9 +6,9 @@ layout: default
 
 
 <h3 id="loggingrequestflow">Logging request flow</h3>
-The client is using Common Logging API for .NET as an abstraction for logging. It is up to the user to implement the API with a logging framework of his/here choice.
+The client is using Common Logging API for .NET as an abstraction for logging. It is up to the user to implement the API with a logging framework.
 
-<blockquote>Common Logging API is a lightweight “infrastructure” logging platform that allows developers to focus on the logging requirements instead of the logging tools and required configuration. The Common Logging API abstracts the logging requirements of any project making it ridiculously easy to swap logging providers should the need arises at any point.</blockquote>
+<blockquote>Common Logging API is a lightweight infrastructure logging platform that allows developers to focus on the logging requirements instead of the logging tools and required configuration. The Common Logging API abstracts the logging requirements of any project making it easy to swap logging providers.</blockquote>
 
 
 Enabling logging on level `DEBUG` will output positive results of requests and worse, `WARN` only failed requests or worse, while `ERROR` will only occur on failed requests to create a signature job. These loggers will be under the `Digipost.Signature.Api.Client` namespace. 
@@ -16,7 +16,7 @@ Enabling logging on level `DEBUG` will output positive results of requests and w
 <h3 id="log4net">Implementing Log4Net</h3>
 Follow this guide to implement a adapter for Log4Net: <a href="https://cmatskas.com/extend-the-common-logging-api-with-log4net/">Log4Net adapter</a>
 
-What I learned when following the guide was that you have to update the version of Log4Net to the right one. E.g. if you went for `Common.Logging.Log4Net1213` you have to update Log4Net from `2.0.0` to `2.0.3`. The second thing I had to do was to change the `<factoryAdapter` to `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">` where `1213` is the version of the adapter.
+What I learned when following the guide was that you have to update the version of Log4Net to the right one. E.g. if you went for `Common.Logging.Log4Net1213` you have to update Log4Net from `2.0.0` to `2.0.3`. The second thing I had to do was to change the `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net">` to `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">` where `1213` is the version of the adapter.
 
 Complete App.config with the adapter installed and a `RollingFileAppender`:
 {% highlight xml %}

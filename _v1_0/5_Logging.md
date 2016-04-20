@@ -16,9 +16,9 @@ Enabling logging on level `DEBUG` will output positive results of requests and w
 <h3 id="log4net">Implementing Log4Net</h3>
 Follow this guide to implement a adapter for Log4Net: <a href="https://cmatskas.com/extend-the-common-logging-api-with-log4net/">Log4Net adapter</a>
 
-What I learned when following the guide was that you have to update the version of Log4Net to the right one. E.g. if you went for `Common.Logging.Log4Net1213` you have to update Log4Net from `2.0.0` to `2.0.3`. The second thing I had to do was to change the `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net">` to `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">` where `1213` is the version of the adapter.
+When following this guide, a modification of the `FactoryAdapter` may be needed. E.g. if you choose `Common.Logging.Log4Net1213` as log adapter, log4net 2.0.0 is also installed. You must then update Log4Net from `2.0.0` to `2.0.3`. A minor change must also be done in ​_App.config_​: Change `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net">` to `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">`, where `1213` is the version of the adapter.
 
-Complete App.config with the adapter installed and a `RollingFileAppender`:
+Complete App.config with the Log4Net adapter installed and a `RollingFileAppender`:
 {% highlight xml %}
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>

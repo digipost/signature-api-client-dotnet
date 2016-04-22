@@ -27,7 +27,6 @@ namespace Digipost.Signature.Api.Client.Portal
         public PortalClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
         {
-            Log.Debug("Inne i klient.........");
         }
 
         public async Task<PortalJobResponse> Create(PortalJob portalJob)

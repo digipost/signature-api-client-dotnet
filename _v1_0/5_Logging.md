@@ -14,9 +14,8 @@ The client is using Common Logging API for .NET as an abstraction for logging. I
 Enabling logging on level `DEBUG` will output positive results of requests and worse, `WARN` only failed requests or worse, while `ERROR` will only occur on failed requests to create a signature job. These loggers will be under the `Digipost.Signature.Api.Client` namespace. 
 
 <h3 id="log4net">Implementing Log4Net</h3>
-Follow this guide to implement a adapter for Log4Net: <a href="https://cmatskas.com/extend-the-common-logging-api-with-log4net/">Log4Net adapter</a>
-
-When following this guide, a modification of the `FactoryAdapter` may be needed. E.g. if you choose `Common.Logging.Log4Net1213` as log adapter, log4net 2.0.0 is also installed. You must then update Log4Net from `2.0.0` to `2.0.3`. A minor change must also be done in ​_App.config_​: Change `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4Net">` to `<factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">`, where `1213` is the version of the adapter.
+1. Install Nuget-package `Common.Logging.Log4Net`. This will install the dependencies `Common.Logging.Core` og `Common.Logging`. Note that the versioning of Log4Net is a bit odd, but Nuget Gallery will reveal that Log4Net 2.0.3 has _Log4net [1.2.13] 2.0.3_ as package name. This means that `Common.Logging.Log4Net1213` is the correct logging adapter.
+2. In some cases, the adapter may install the wrong version of Log4Net. If installing the adapter for 2.0.3, the version must be upped to this version too.
 
 Complete App.config with the Log4Net adapter installed and a `RollingFileAppender`:
 {% highlight xml %}
@@ -40,7 +39,7 @@ Complete App.config with the Log4Net adapter installed and a `RollingFileAppende
    <log4net>
     <appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
       <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
-      <file value="${AppData}\Digipost\Signature\RequestLog\" />
+      <file value="${AppData}\Digipost\Signature\" />
       <appendToFile value="true" />
       <rollingStyle value="Date" />
       <staticLogFileName value="false" />

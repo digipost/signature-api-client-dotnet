@@ -4,11 +4,11 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
-        private readonly Uri _statusUrl;
+        public readonly Uri StatusBaseUrl;
 
-        public ResponseUrls(Uri redirectUrl, Uri statusUrl)
+        public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
         {
-            _statusUrl = statusUrl;
+            StatusBaseUrl = statusBaseUrl;
             Redirect = new RedirectReference(redirectUrl);
         }
 
@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <returns></returns>
         public StatusReference Status(string statusQueryToken)
         {
-            return new StatusReference(_statusUrl, statusQueryToken);
+            return new StatusReference(StatusBaseUrl, statusQueryToken);
         }
     }
 }

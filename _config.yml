@@ -1,7 +1,7 @@
 # name of the software
 name: .NET client library for Digipost signature Api
 # current version of the software
-
+version: 1.0
 # url of the download button
 downloadUrl: https://www.nuget.org/packages/digipost-signature-api-client/
 # licence of the software

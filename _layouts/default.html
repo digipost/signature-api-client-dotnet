@@ -48,15 +48,6 @@
         <a class="navbar-brand" href="{{site.github.url}}/index.html">{{site.name}}</a>
       </div>
       <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-        <ul class="nav navbar-nav">
-        {% for p in site.pages %}
-          {% if p.isHome != true %}
-          <li {% if page.title == p.title %}class="active"{% endif %}>
-            <a href="{{site.github.url}}{{p.url}}">{{p.title}}</a>
-          </li>
-          {% endif %}
-        {% endfor %}
-        </ul>
         <ul class="nav navbar-nav navbar-right">
         {% for p in site.headerLinks %}
           <li>

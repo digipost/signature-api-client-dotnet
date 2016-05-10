@@ -11,11 +11,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         protected static void ValidateXml(string xml)
         {
             var xsdValidator = new XsdValidator();
-            xsdValidator.ValiderDokumentMotXsd(xml);
+            xsdValidator.Validate(xml);
 
-            if (!string.IsNullOrEmpty(xsdValidator.ValideringsVarsler))
+            if (!string.IsNullOrEmpty(xsdValidator.ValidationWarnings))
             {
-                throw new InvalidXmlException(xsdValidator.ValideringsVarsler);
+                throw new InvalidXmlException(xsdValidator.ValidationWarnings);
             }
         }
     }

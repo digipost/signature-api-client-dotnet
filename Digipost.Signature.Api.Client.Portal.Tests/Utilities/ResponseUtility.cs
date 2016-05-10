@@ -2,6 +2,7 @@
 using System.Xml;
 using ApiClientShared;
 using Difi.Felles.Utility.Utilities;
+using Digipost.Signature.Api.Client.Core.Utilities;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 {
@@ -26,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         internal static XmlDocument GetXml(string kvittering)
         {
-            return XmlUtility.TilXmlDokument(GetContent(kvittering));
+            return XmlUtility.ToXmlDocument(GetContent(kvittering));
         }
 
         internal static string GetContent(string path)

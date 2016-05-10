@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice.AsiceSignature
                 var signatureValidator = new SignatureValidator();
 
                 //Act
-                var isValidSignatureXml = signatureValidator.ValiderDokumentMotXsd(xml);
+                var isValidSignatureXml = signatureValidator.Validate(xml);
                 var signatureLength = xml.Length;
 
                 //Assert

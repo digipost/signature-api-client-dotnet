@@ -8,9 +8,9 @@ namespace Digipost.Signature.Api.Client.Core.Xsd
         public XsdValidator()
         {
             var httpSigneringPostenNoSchemaV1 = "http://signering.posten.no/schema/v1";
-            LeggTilXsdRessurs(httpSigneringPostenNoSchemaV1, XsdFiles.GetCommon());
-            LeggTilXsdRessurs(httpSigneringPostenNoSchemaV1, XsdFiles.GetDirect());
-            LeggTilXsdRessurs(httpSigneringPostenNoSchemaV1, XsdFiles.GetPortal());
+            AddXsd(httpSigneringPostenNoSchemaV1, XsdFiles.GetCommon());
+            AddXsd(httpSigneringPostenNoSchemaV1, XsdFiles.GetDirect());
+            AddXsd(httpSigneringPostenNoSchemaV1, XsdFiles.GetPortal());
         }
     }
 }

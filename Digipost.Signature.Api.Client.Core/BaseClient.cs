@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 
@@ -74,7 +75,11 @@ namespace Digipost.Signature.Api.Client.Core
 
         private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            return CertificateValidator.IsValidServerCertificate(ClientConfiguration.Environment.Sertifikatkjedevalidator, new X509Certificate2(certificate), ClientConfiguration.ServerCertificateOrganizationNumber);
+            var x509Certificate2 = new X509Certificate2(certificate);
+            var isValidCertificate = CertificateValidator.IsValidCertificate(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber);
+            var isValidCertificateChain = new CertificateChainValidator(ClientConfiguration.Environment.CertificateChainValidator.SertifikatLager).ErGyldigSertifikatkjede(x509Certificate2);
+
+            return isValidCertificate && isValidCertificateChain;
         }
     }
 }

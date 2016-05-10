@@ -6,6 +6,7 @@ using System.Xml;
 using Difi.Felles.Utility.Security;
 using Difi.Felles.Utility.Utilities;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Utilities.Difi.Felles.Utility.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 {
@@ -68,8 +69,8 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
         {
             var signatureDocument = new XmlDocument {PreserveWhitespace = true};
             var xmlDeclaration = signatureDocument.CreateXmlDeclaration("1.0", "UTF-8", null);
-            signatureDocument.AppendChild(signatureDocument.CreateElement("xades", "XAdESSignatures", NavneromUtility.UriEtsi121));
-            signatureDocument.DocumentElement.SetAttribute("xmlns", NavneromUtility.UriEtsi132);
+            signatureDocument.AppendChild(signatureDocument.CreateElement("xades", "XAdESSignatures", NamespaceUtility.UriEtsi121));
+            signatureDocument.DocumentElement.SetAttribute("xmlns", NamespaceUtility.UriEtsi132);
 
             signatureDocument.InsertBefore(xmlDeclaration, signatureDocument.DocumentElement);
             return signatureDocument;

@@ -37,8 +37,8 @@
     <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApiClientShared, Version=1.0.5941.27271, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.1.0.5941.27271\lib\net45\ApiClientShared.dll</HintPath>
+    <Reference Include="ApiClientShared, Version=1.0.5968.19413, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
+      <HintPath>..\packages\api-client-shared.1.0.5968.19413\lib\net45\ApiClientShared.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Difi.Felles.Utility, Version=0.5.5970.24171, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
@@ -60,6 +60,7 @@
     <Compile Include="XsdToCode\Code\XsdFiles.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="XsdToCode\GenerateClassesFromXsd.ps1" />
     <EmbeddedResource Include="XsdToCode\Xsd\common.xsd">

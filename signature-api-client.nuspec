@@ -12,12 +12,12 @@
         <tags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</tags>
         <dependencies>
             <group targetFramework=".NETFramework4.5">
-                <dependency id="api-client-shared" version="1.0.5941.27271" />
                 <dependency id="Common.Logging" version="3.3.1" />
                 <dependency id="Common.Logging.Core" version="3.3.1" />
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
                 <dependency id="Newtonsoft.Json" version="6.0.4" />
                 <dependency id="difi-felles-utility-dotnet" version="0.5.5970.21171" />
+                <dependency id="api-client-shared" version="1.0.5968.19413" />
             </group>
         </dependencies>
     </metadata>

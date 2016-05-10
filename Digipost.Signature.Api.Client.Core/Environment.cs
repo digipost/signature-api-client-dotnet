@@ -4,30 +4,30 @@ using Difi.Felles.Utility.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core
 {
-    public class Environment : AbstraktMiljø
+    public class Environment : AbstractEnvironment
     {
-        private Environment(Sertifikatkjedevalidator certificateChainValidator, Uri url)
+        private Environment(CertificateChainValidator certificateChainValidator, Uri url)
         {
             Url = url;
-            Sertifikatkjedevalidator = certificateChainValidator;
+            CertificateChainValidator = certificateChainValidator;
         }
 
         internal static Environment Localhost => new Environment(
-            new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
+            new CertificateChainValidator(CertificateChainUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://172.16.91.1:8443")
             );
         
         public static Environment DifiTest => new Environment(
-            new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
+            new CertificateChainValidator(CertificateChainUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://api.difitest.signering.posten.no")
             );
 
         public static Environment DifiQa => new Environment(
-            new Sertifikatkjedevalidator(SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater()),
+            new CertificateChainValidator(CertificateChainUtility.FunksjoneltTestmiljøSertifikater()),
             new Uri("https://api.difiqa.signering.posten.no")
             );
         public static Environment Production => new Environment(
-            new Sertifikatkjedevalidator(SertifikatkjedeUtility.ProduksjonsSertifikater()),
+            new CertificateChainValidator(CertificateChainUtility.ProduksjonsSertifikater()),
             new Uri("https://api.signering.posten.no")
             );
     }

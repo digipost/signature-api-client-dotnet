@@ -11,9 +11,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         public SignatureValidator()
         {
-            LeggTilXsdRessurs("http://uri.etsi.org/01903/v1.3.2#", HentRessurs("XAdES.xsd"));
-            LeggTilXsdRessurs("http://www.w3.org/2000/09/xmldsig#", HentRessurs("xmldsig-core-schema.xsd"));
-            LeggTilXsdRessurs("http://uri.etsi.org/2918/v1.2.1#", HentRessurs("ts_102918v010201.xsd"));
+            AddXsd("http://uri.etsi.org/01903/v1.3.2#", HentRessurs("XAdES.xsd"));
+            AddXsd("http://www.w3.org/2000/09/xmldsig#", HentRessurs("xmldsig-core-schema.xsd"));
+            AddXsd("http://uri.etsi.org/2918/v1.2.1#", HentRessurs("ts_102918v010201.xsd"));
         }
 
         private XmlReader HentRessurs(string path)

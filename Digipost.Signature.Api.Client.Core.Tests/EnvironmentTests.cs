@@ -15,15 +15,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var url = new Uri("https://172.16.91.1:8443");
-                var certificates = SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater();
+                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
 
                 //Act
                 var environment = Environment.Localhost;
 
                 //Assert
-                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
             }
 
             [TestMethod]
@@ -31,15 +31,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var url = new Uri("https://api.difitest.signering.posten.no");
-                var certificates = SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater();
+                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
 
                 //Act
                 var environment = Environment.DifiTest;
 
                 //Assert
-                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
             }
 
             [TestMethod]
@@ -47,15 +47,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var url = new Uri("https://api.difiqa.signering.posten.no");
-                var certificates = SertifikatkjedeUtility.FunksjoneltTestmiljøSertifikater();
+                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
 
                 //Act
                 var environment = Environment.DifiQa;
 
                 //Assert
-                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
             }
 
             [TestMethod]
@@ -63,15 +63,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var url = new Uri("https://api.signering.posten.no");
-                var certificates = SertifikatkjedeUtility.ProduksjonsSertifikater();
+                var certificates = CertificateChainUtility.ProduksjonsSertifikater();
 
                 //Act
                 var environment = Environment.Production;
 
                 //Assert
-                Assert.IsNotNull(environment.Sertifikatkjedevalidator);
+                Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.Sertifikatkjedevalidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
             }
 
         }

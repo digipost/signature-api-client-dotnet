@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
             public void ConstructorGeneratesBytes()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument());
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), DomainUtility.GetDirectDocument());
 
                 //Act
                 var archiveBytes = asiceArchive.GetBytes();
@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                     {
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "TestFileName.pdf"));
+                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "TheFileName.pdf"));
                     }
                 }
             }
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
 
                 var job = DomainUtility.GetDirectJobWithSender();
                 var asiceAttachableProcessors = clientConfiguration.DocumentBundleProcessors.Select(p => new AsiceAttachableProcessor(job, p));
-                var asiceAttachables = new IAsiceAttachable[] {DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), CoreDomainUtility.GetDocument()};
+                var asiceAttachables = new IAsiceAttachable[] {DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), DomainUtility.GetDirectDocument()};
 
                 //Act
                 var asiceArchive = new AsiceArchive(asiceAttachableProcessors, asiceAttachables);

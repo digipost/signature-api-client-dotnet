@@ -1,4 +1,5 @@
 ﻿using System;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
@@ -10,26 +11,26 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
     {
         public static DirectJob GetDirectJob()
         {
-            return new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls());
+            return new DirectJob(GetDirectDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls());
         }
 
         public static DirectJob GetDirectJobWithSender()
         {
-            return new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
+            return new DirectJob(GetDirectDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
         internal static DirectManifest GetDirectManifest()
         {
             return new DirectManifest(
                 CoreDomainUtility.GetSender(),
-                CoreDomainUtility.GetDocument(),
+                GetDirectDocument(),
                 CoreDomainUtility.GetSigner()
                 );
         }
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.GetDocument(), GetDirectManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetDirectDocument(), GetDirectManifest());
         }
 
         public static DirectJobStatusResponse GetDirectJobStatusResponse()
@@ -87,6 +88,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 new Uri("http://signatureRoot.digipost.no/confirmation"),
                 new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));
+        }
+
+        public static DirectDocument GetDirectDocument()
+        {
+            return new DirectDocument("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             [TestMethod]
             public void ConvertsDirectJobSuccessfully()
             {
-                var document = CoreDomainUtility.GetDocument();
+                var document = DomainUtility.GetDirectDocument();
                 var signer = CoreDomainUtility.GetSigner();
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();

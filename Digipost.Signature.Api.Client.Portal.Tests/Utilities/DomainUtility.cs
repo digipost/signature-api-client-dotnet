@@ -1,4 +1,5 @@
 ﻿using System;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
@@ -9,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
     {
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.GetDocument(), GetPortalManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetPortalDocument(), GetPortalManifest());
         }
 
         public static Availability GetAvailability()
@@ -23,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static PortalJob GetPortalJob(int signers)
         {
-            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
+            return new PortalJob(GetPortalDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
             {
                 Availability = new Availability
                 {
@@ -37,9 +38,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         {
             return new PortalManifest(
                 CoreDomainUtility.GetSender(),
-                CoreDomainUtility.GetDocument(),
+                GetPortalDocument(),
                 CoreDomainUtility.GetSigners(2)
                 );
+        }
+
+        internal static PortalDocument GetPortalDocument()
+        {
+            return new PortalDocument("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes())
+            {
+                NonsensitiveTitle = "The nonsensitve title"
+            };
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalJobSuccessfully()
             {
                 //Arrange
-                var document = CoreDomainUtility.GetDocument();
+                var document = DomainUtility.GetPortalDocument();
                 var signers = CoreDomainUtility.GetSigners(2);
                 var reference = "reference";
                 var source = new PortalJob(document, signers, reference);
@@ -49,17 +49,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2));
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), CoreDomainUtility.GetSigners(2));
 
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.Document.Subject,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
+                        title = source.PortalDocument.Title,
+                        description = source.PortalDocument.Message,
+                        href = source.PortalDocument.FileName,
+                        mime = source.PortalDocument.MimeType
                     },
                     signers = new[]
                     {
@@ -84,17 +84,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), new List<Signer> {new Signer("00000000000") {Order = 1}, new Signer("99999999999") {Order = 2}});
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new Signer("00000000000") {Order = 1}, new Signer("99999999999") {Order = 2}});
 
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.Document.Subject,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
+                        title = source.PortalDocument.Title,
+                        description = source.PortalDocument.Message,
+                        href = source.PortalDocument.FileName,
+                        mime = source.PortalDocument.MimeType
                     },
                     signers = new[]
                     {
@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = new Availability
                     {
@@ -132,10 +132,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.Document.Subject,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
+                        title = source.PortalDocument.Title,
+                        description = source.PortalDocument.Message,
+                        href = source.PortalDocument.FileName,
+                        mime = source.PortalDocument.MimeType
                     },
                     signers = new[]
                     {
@@ -164,7 +164,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = new Availability
                     {
@@ -177,10 +177,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.Document.Subject,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
+                        title = source.PortalDocument.Title,
+                        description = source.PortalDocument.Message,
+                        href = source.PortalDocument.FileName,
+                        mime = source.PortalDocument.MimeType
                     },
                     signers = new[]
                     {
@@ -209,7 +209,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(2))
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), CoreDomainUtility.GetSigners(2))
                 {
                     Availability = DomainUtility.GetAvailability()
                 };
@@ -219,10 +219,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.Document.Subject,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
+                        title = source.PortalDocument.Title,
+                        description = source.PortalDocument.Message,
+                        href = source.PortalDocument.FileName,
+                        mime = source.PortalDocument.MimeType
                     },
                     signers = new[]
                     {
@@ -243,6 +243,31 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void ConvertsPortalDocument()
+            {
+                //Arrange
+                var source = new PortalDocument("subject", "message", "fileName", FileType.Pdf, new byte[] {0xb2, 0xb3});
+                var expected = new portaldocument
+                {
+                    title = source.Title,
+                    nonsensitivetitle = source.NonsensitiveTitle,
+                    description = source.Message,
+                    href = source.FileName,
+                    mime = source.MimeType
+                };
+
+                //Act
+                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, actual, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
+using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -18,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static Document GetDocument()
         {
-            return new Document("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
+            return new DocumentStub("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
         }
 
         public static Sender GetSender()

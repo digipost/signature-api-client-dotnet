@@ -175,7 +175,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 
                 var source = new DirectManifest(
                     new Sender(organizationNumberSender),
-                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
+                    new DirectDocument(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
                     new Signer(personalIdentificationNumber)
                     );
 
@@ -234,7 +234,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const FileType fileType = FileType.Pdf;
                 var documentBytes = new byte[] {0x21, 0x22};
 
-                var source = new Document(
+                var source = new DirectDocument(
                     subject,
                     message,
                     fileName,

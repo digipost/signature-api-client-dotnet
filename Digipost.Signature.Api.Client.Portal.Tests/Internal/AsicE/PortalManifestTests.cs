@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
-                var document = CoreDomainUtility.GetDocument();
+                var document = DomainUtility.GetPortalDocument();
                 var signers = CoreDomainUtility.GetSigners(2);
 
                 //Act
@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
-                Assert.AreEqual(document, manifest.Document);
+                Assert.AreEqual(document, manifest.PortalDocument);
                 Assert.AreEqual(signers, manifest.Signers);
             }
         }

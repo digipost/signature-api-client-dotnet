@@ -78,6 +78,7 @@
     <Compile Include="Internal\PortalCreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="PortalClient.cs" />
+    <Compile Include="PortalDocument.cs" />
     <Compile Include="PortalJob.cs" />
     <Compile Include="PortalJobResponse.cs" />
     <Compile Include="PortalJobStatusChanged.cs" />

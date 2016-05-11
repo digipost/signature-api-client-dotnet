@@ -71,6 +71,7 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DirectDocument.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\DirectAsiceGenerator.cs" />
     <Compile Include="Internal\DirectCreateAction.cs" />

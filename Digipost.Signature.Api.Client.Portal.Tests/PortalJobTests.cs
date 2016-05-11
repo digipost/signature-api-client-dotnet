@@ -1,4 +1,5 @@
 ﻿using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -24,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var document = CoreDomainUtility.GetDocument();
+                var document = DomainUtility.GetPortalDocument();
                 var signers = CoreDomainUtility.GetSigners(3);
                 var reference = "PortalJobReference";
                 var portalJob = new PortalJob(document, signers, reference);

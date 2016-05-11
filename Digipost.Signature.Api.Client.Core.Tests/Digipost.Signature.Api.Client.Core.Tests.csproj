@@ -123,6 +123,7 @@
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Smoke\SmokeTests.cs" />
+    <Compile Include="Stubs\DocumentStub.cs" />
     <Compile Include="Stubs\SignatureJobStub.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />

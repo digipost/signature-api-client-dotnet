@@ -47,7 +47,7 @@ blockquote {
 .list-versions {
   position: fixed;
   bottom: 0%;
-  width: 75px;
+  width: 107px;
 }
 
 @media (max-width: 995px){

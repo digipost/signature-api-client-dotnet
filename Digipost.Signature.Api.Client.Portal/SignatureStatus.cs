@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Digipost.Signature.Api.Client.Portal.Enums
@@ -29,12 +30,28 @@ namespace Digipost.Signature.Api.Client.Portal.Enums
             ContactInformationMissing,
             Expired,
             Waiting,
-            
+            Signed
         };
 
         public SignatureStatus(string identifier)
         {
-            Identifier = identifier;
+           Identifier = identifier;
+        }
+        public override string ToString()
+        {
+            return $"{GetType().Name}: {Identifier}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            var that = obj as SignatureStatus;
+
+            return that != null && Identifier.Equals(that.Identifier);
+        }
+
+        public override int GetHashCode()
+        {
+            return Identifier.GetHashCode();
         }
     }
 }

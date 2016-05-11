@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -44,14 +45,14 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return dataTransferObject;
         }
 
-        private static IEnumerable<signer> ToDataTransferObject(IEnumerable<Signer> signers)
+        private static IEnumerable<portalsigner> ToDataTransferObject(IEnumerable<Signer> signers)
         {
             return signers.Select(ToDataTransferObject);
         }
 
-        private static signer ToDataTransferObject(Signer signer)
+        private static portalsigner ToDataTransferObject(Signer signer)
         {
-            var dataTransferObject = new signer
+            var dataTransferObject = new portalsigner
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber
             };
@@ -72,9 +73,9 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             };
         }
 
-        public static document ToDataTransferObject(Document document)
+        public static portaldocument ToDataTransferObject(Document document)
         {
-            return new document
+            return new portaldocument
             {
                 title = document.Subject,
                 description = document.Message,
@@ -115,7 +116,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var result = new Signature
             {
-                SignatureStatus = signature.status.ToSignatureStatus(),
+                SignatureStatus = new SignatureStatus(signature.status),
                 Signer = new Signer(signature.personalidentificationnumber)
             };
 

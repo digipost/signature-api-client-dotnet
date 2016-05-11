@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var jobId = 123456789;
-                var jobStatus = JobStatus.PartiallyCompleted;
+                var jobStatus = JobStatus.InProgress;
                 var confirmationReference = new ConfirmationReference(new Uri("http://confirmationreference.no"));
                 var signatures = new List<Signature>
                 {

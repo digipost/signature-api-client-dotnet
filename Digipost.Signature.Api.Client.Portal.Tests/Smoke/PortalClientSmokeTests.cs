@@ -70,7 +70,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
 
-                Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
+                Assert.AreEqual(JobStatus.CompletedSuccessfully, jobStatusChangeResponse.Status);
 
                 _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
                 _padesReference = new PadesReference(GetUriFromRelativePath(jobStatusChangeResponse.PadesReference.Url.AbsolutePath));

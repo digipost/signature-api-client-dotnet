@@ -5,6 +5,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
@@ -53,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new portaldocument
                     {
                         title = source.Document.Subject,
                         description = source.Document.Message,
@@ -62,8 +63,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     }
                 };
 
@@ -88,7 +89,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new portaldocument
                     {
                         title = source.Document.Subject,
                         description = source.Document.Message,
@@ -97,8 +98,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = 1},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = 2}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = 1},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = 2}
                     }
                 };
 
@@ -129,7 +130,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new portaldocument
                     {
                         title = source.Document.Subject,
                         description = source.Document.Message,
@@ -138,8 +139,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
                     availability = new availability
                     {
@@ -174,7 +175,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new portaldocument
                     {
                         title = source.Document.Subject,
                         description = source.Document.Message,
@@ -183,8 +184,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
                     availability = new availability
                     {
@@ -216,7 +217,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new portaldocument
                     {
                         title = source.Document.Subject,
                         description = source.Document.Message,
@@ -225,8 +226,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new signer {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
                     },
                     availability = new availability
                     {
@@ -288,18 +289,18 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 personalidentificationnumber = "01013300001",
-                                status = signaturestatus.SIGNED,
+                                status = SignatureStatus.Signed.Identifier,
                                 xadesurl = "http://xadesurl1.no"
                             },
                             new signature
                             {
                                 personalidentificationnumber = "01013300002",
-                                status = signaturestatus.WAITING,
+                                status = SignatureStatus.Waiting.Identifier,
                                 xadesurl = "http://xadesurl2.no"
                             }
                         }
                     },
-                    status = portalsignaturejobstatus.PARTIALLY_COMPLETED
+                    status = portalsignaturejobstatus.IN_PROGRESS
                 };
 
                 var jobStatus = source.status.ToJobStatus();
@@ -310,13 +311,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     new Signature
                     {
-                        SignatureStatus = signature1.status.ToSignatureStatus(),
+                        SignatureStatus = new SignatureStatus(signature1.status),
                         Signer = new Signer(signature1.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
-                        SignatureStatus = signature2.status.ToSignatureStatus(),
+                        SignatureStatus = new SignatureStatus(signature2.status),
                         Signer = new Signer(signature2.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }

@@ -68,9 +68,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static document ToDataTransferObject(Document document)
+        public static directdocument ToDataTransferObject(Document document)
         {
-            return new document
+            return new directdocument
             {
                 title = document.Subject,
                 description = document.Message,
@@ -79,9 +79,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static signer ToDataTransferObject(Signer signer)
+        public static directsigner ToDataTransferObject(Signer signer)
         {
-            return new signer
+            return new directsigner
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber
             };

@@ -2,8 +2,8 @@
 {
     public class NotificationsUsingLookup
     {
-        public bool SmsIfAvailable { get; } = true;
+        public bool SmsIfAvailable { get; set; }
 
-        public bool EmailIfAvailable { get; set; }
+        public bool EmailIfAvailable { get; } = true;
     }
 }

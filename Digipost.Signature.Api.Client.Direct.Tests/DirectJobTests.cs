@@ -25,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             {
                 //Arrange
                 var id = "IdDirectJob";
-                var signer = new Signer("01013300001");
+                var signer = new DirectSigner("01013300001");
                 var document = DomainUtility.GetDirectDocument();
                 var exitUrls = DomainUtility.GetExitUrls();
                 var sender = CoreDomainUtility.GetSender();

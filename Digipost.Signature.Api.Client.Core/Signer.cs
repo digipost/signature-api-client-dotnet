@@ -1,8 +1,8 @@
 ﻿namespace Digipost.Signature.Api.Client.Core
 {
-    public class Signer
+    public abstract class Signer
     {
-        public Signer(string personalIdentificationNumber)
+         protected Signer(string personalIdentificationNumber)
         {
             PersonalIdentificationNumber = personalIdentificationNumber;
         }
@@ -10,5 +10,12 @@
         public string PersonalIdentificationNumber { get; }
 
         public int? Order { get; set; } = null;
+
+        private string MaskedPersonalIdentificationNumber => PersonalIdentificationNumber.Substring(0, 6) + "*****";
+
+        public override string ToString()
+        {
+            return $"PersonalIdentificationNumber: {MaskedPersonalIdentificationNumber}, Order: {Order}";
+        }
     }
 }

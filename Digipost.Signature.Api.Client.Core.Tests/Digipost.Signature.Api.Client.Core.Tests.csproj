@@ -125,6 +125,7 @@
     <Compile Include="Smoke\SmokeTests.cs" />
     <Compile Include="Stubs\DocumentStub.cs" />
     <Compile Include="Stubs\SignatureJobStub.cs" />
+    <Compile Include="Stubs\SignerStub.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
     <Compile Include="Utilities\CompareObjects\IComparator.cs" />

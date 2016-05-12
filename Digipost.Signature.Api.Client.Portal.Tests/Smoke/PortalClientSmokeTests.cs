@@ -77,15 +77,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(jobStatusChangeResponse.ConfirmationReference.Url.AbsolutePath));
             }
 
-            private static PortalJobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
+            private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
             {
-                PortalJobStatusChanged portalJobStatusChanged = null;
-                while (portalJobStatusChanged == null)
+                JobStatusChanged jobStatusChanged = null;
+                while (jobStatusChanged == null)
                 {
                     var statusChange = portalClient.GetStatusChange().Result;
                     if (statusChange.JobId == jobId)
                     {
-                        portalJobStatusChanged = statusChange;
+                        jobStatusChanged = statusChange;
                     }
                     else
                     {
@@ -94,7 +94,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                     }
                 }
 
-                return portalJobStatusChanged;
+                return jobStatusChanged;
             }
 
             [TestMethod]

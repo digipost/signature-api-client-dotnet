@@ -6,10 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    public class PortalJobStatusChangedTests
+    public class JobStatusChangedTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalJobStatusChangedTests
+        public class ConstructorMethod : JobStatusChangedTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -35,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                var portalJobStatusChangeResponse = new PortalJobStatusChanged(
+                var portalJobStatusChangeResponse = new JobStatusChanged(
                     jobId,
                     jobStatus,
                     confirmationReference,

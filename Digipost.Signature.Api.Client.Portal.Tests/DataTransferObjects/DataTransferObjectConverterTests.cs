@@ -348,7 +348,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     }
                 };
 
-                var expected = new PortalJobStatusChanged(
+                var expected = new JobStatusChanged(
                     source.signaturejobid,
                     jobStatus,
                     confirmationReference,

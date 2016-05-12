@@ -101,7 +101,7 @@
     <Compile Include="PortalClientTests.cs" />
     <Compile Include="PortalClientWithAutoSign.cs" />
     <Compile Include="PortalJobResponseTests.cs" />
-    <Compile Include="PortalJobStatusChangedTests.cs" />
+    <Compile Include="JobStatusChangedTests.cs" />
     <Compile Include="PortalJobTests.cs" />
     <Compile Include="PortalSignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

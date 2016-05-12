@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var actualResponse = await portalClient.GetStatusChange();
 
                 //Assert
-                Assert.AreEqual(PortalJobStatusChanged.NoChangesJobStatusChanged, actualResponse);
+                Assert.AreEqual(JobStatusChanged.NoChangesJobStatusChanged, actualResponse);
             }
 
             [TestMethod]
@@ -131,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
 
-                object expectedResponseType = typeof (PortalJobStatusChanged);
+                object expectedResponseType = typeof (JobStatusChanged);
 
                 //Act
                 var actualResponseType = (await portalClient.GetStatusChange()).GetType();

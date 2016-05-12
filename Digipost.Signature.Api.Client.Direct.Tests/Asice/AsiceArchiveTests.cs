@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                     {
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "TheFileName.pdf"));
+                        Assert .IsTrue(archive.Entries.Any(entry => entry.FullName == "TheFileName.pdf"));
                     }
                 }
             }

@@ -2,7 +2,7 @@
 {
     public class SignerStub : Signer
     {
-        public SignerStub(string personalIdentificationNumber)
+        public SignerStub(PersonalIdentificationNumber personalIdentificationNumber)
             : base(personalIdentificationNumber)
         {
         }

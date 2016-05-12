@@ -63,8 +63,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value}
                     }
                 };
 
@@ -84,7 +84,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new PortalSigner("00000000000", new NotificationsUsingLookup()) {Order = 1}, new PortalSigner("99999999999", new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new PortalSigner(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()) {Order = 1}, new PortalSigner(new PersonalIdentificationNumber("99999999999"), new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -98,8 +98,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber, order = 1},
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber, order = 2}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value, order = 1},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value, order = 2}
                     }
                 };
 
@@ -139,8 +139,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value}
                     },
                     availability = new availability
                     {
@@ -184,8 +184,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value}
                     },
                     availability = new availability
                     {
@@ -226,8 +226,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     signers = new[]
                     {
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber},
-                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber}
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value},
+                        new portalsigner {personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value}
                     },
                     availability = new availability
                     {
@@ -337,13 +337,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature1.status),
-                        Signer = new PortalSigner(signature1.personalidentificationnumber, new NotificationsUsingLookup()),//TODO: Skal ikke bruke lookup
+                        Signer = new PortalSigner(new PersonalIdentificationNumber(signature1.personalidentificationnumber), new NotificationsUsingLookup()),//TODO: Skal ikke bruke lookup
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature2.status),
-                        Signer = new PortalSigner(signature2.personalidentificationnumber, new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
+                        Signer = new PortalSigner(new PersonalIdentificationNumber(signature2.personalidentificationnumber), new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }
                 };

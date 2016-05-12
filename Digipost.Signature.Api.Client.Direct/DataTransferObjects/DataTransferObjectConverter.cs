@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             return new directsigner
             {
-                personalidentificationnumber = signer.PersonalIdentificationNumber
+                personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
         }
     }

@@ -66,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 
                 var signer = portalJob.Signers.ElementAt(0);
-                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
+                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Wait();
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
 

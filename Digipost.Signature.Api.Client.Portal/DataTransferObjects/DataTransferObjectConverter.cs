@@ -54,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var dataTransferObject = new portalsigner
             {
-                personalidentificationnumber = signer.PersonalIdentificationNumber
+                personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
 
             if (signer.Order != null)
@@ -118,7 +118,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             var result = new Signature
             {
                 SignatureStatus = new SignatureStatus(signature.status),
-                Signer = new PortalSigner(signature.personalidentificationnumber, new NotificationsUsingLookup())
+                Signer = new PortalSigner(new PersonalIdentificationNumber(signature.personalidentificationnumber), new NotificationsUsingLookup())
             };
 
             var xadesUrl = signature.xadesurl;

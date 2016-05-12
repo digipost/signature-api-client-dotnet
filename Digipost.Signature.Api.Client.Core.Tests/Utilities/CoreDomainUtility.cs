@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             const string basePersonalIdentificationNumber = "0101330000";
             for (var i = 1; i <= count; i++)
             {
-                signers.Add(new SignerStub(basePersonalIdentificationNumber + i));
+                signers.Add(new SignerStub(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
             }
 
             return signers;

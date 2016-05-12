@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Digipost.Signature.Api.Client.Core;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
@@ -15,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notifications = new Notifications(new Email("email@address.no"));
 
                 //Act
-                var portalSigner = new PortalSigner("99999999999", notifications);
+                var portalSigner = new PortalSigner(new PersonalIdentificationNumber("99999999999"), notifications);
 
                 //Assert
                 Assert.AreEqual(notifications, portalSigner.Notifications);
@@ -28,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notificationsUsingLookup = new NotificationsUsingLookup();
                 
                 //Act
-                var portalSigner = new PortalSigner("999999999", notificationsUsingLookup);
+                var portalSigner = new PortalSigner(new PersonalIdentificationNumber("999999999"), notificationsUsingLookup);
 
                 //Assert
                 Assert.AreEqual(notificationsUsingLookup, portalSigner.NotificationsUsingLookup);

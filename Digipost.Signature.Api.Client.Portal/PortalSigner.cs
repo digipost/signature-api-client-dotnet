@@ -8,13 +8,13 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public Notifications Notifications { get; }
 
-        public PortalSigner(string personalIdentificationNumber, Notifications notifications)
+        public PortalSigner(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
             : base(personalIdentificationNumber)
         {
             Notifications = notifications;
         }
 
-        public PortalSigner(string personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
+        public PortalSigner(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
     : base(personalIdentificationNumber)
         {
             NotificationsUsingLookup = notificationsUsingLookup;

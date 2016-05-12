@@ -4,7 +4,7 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectSigner : Signer
     {
-        public DirectSigner(string personalIdentificationNumber)
+        public DirectSigner(PersonalIdentificationNumber personalIdentificationNumber)
             : base(personalIdentificationNumber)
         {
         }

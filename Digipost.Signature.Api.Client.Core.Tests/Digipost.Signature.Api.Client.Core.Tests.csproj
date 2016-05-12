@@ -119,6 +119,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
     <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
+    <Compile Include="PersonalIdentificationNumberTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />

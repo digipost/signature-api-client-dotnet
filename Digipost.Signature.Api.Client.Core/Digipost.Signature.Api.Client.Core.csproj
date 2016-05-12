@@ -106,6 +106,7 @@
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
     <Compile Include="IDocumentBundleProcessor.cs" />
     <Compile Include="Internal\CreateAction.cs" />
+    <Compile Include="PersonalIdentificationNumber.cs" />
     <Compile Include="Utilities\NamespaceUtility.cs" />
     <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />

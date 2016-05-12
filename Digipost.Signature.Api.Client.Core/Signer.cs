@@ -2,20 +2,18 @@
 {
     public abstract class Signer
     {
-         protected Signer(string personalIdentificationNumber)
+        protected Signer(PersonalIdentificationNumber personalIdentificationNumber)
         {
             PersonalIdentificationNumber = personalIdentificationNumber;
         }
 
-        public string PersonalIdentificationNumber { get; }
+        public PersonalIdentificationNumber PersonalIdentificationNumber { get; }
 
         public int? Order { get; set; } = null;
 
-        private string MaskedPersonalIdentificationNumber => PersonalIdentificationNumber.Substring(0, 6) + "*****";
-
         public override string ToString()
         {
-            return $"PersonalIdentificationNumber: {MaskedPersonalIdentificationNumber}, Order: {Order}";
+            return $"PersonalIdentificationNumber: {PersonalIdentificationNumber}, Order: {Order}";
         }
     }
 }

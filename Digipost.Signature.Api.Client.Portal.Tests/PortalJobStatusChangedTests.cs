@@ -6,10 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    public class PortalJobStatusChangeResponseTests
+    public class PortalJobStatusChangedTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalJobStatusChangeResponseTests
+        public class ConstructorMethod : PortalJobStatusChangedTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -23,13 +23,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Signed,
-                        Signer = new PortalSigner("123456789"),
+                        Signer = new PortalSigner("123456789", new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
                         XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Waiting,
-                        Signer = new PortalSigner("123456789"),
+                        Signer = new PortalSigner("123456789", new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
                         XadesReference = null
                     }
                 };

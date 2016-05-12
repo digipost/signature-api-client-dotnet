@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         public class ConstructorMethod : SignerTests
         {
             [TestMethod]
-            public void SimpleConstructor()
+            public void InitializesWithProperties()
             {
                 //Arrange
                 var personalIdentificationNumber = "01013300001";

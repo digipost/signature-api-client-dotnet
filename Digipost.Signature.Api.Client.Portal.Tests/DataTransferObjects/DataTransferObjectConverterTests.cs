@@ -84,7 +84,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new PortalSigner("00000000000") {Order = 1}, new PortalSigner("99999999999") {Order = 2}});
+                var source = new PortalManifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new PortalSigner("00000000000", new NotificationsUsingLookup()) {Order = 1}, new PortalSigner("99999999999", new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -337,13 +337,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature1.status),
-                        Signer = new PortalSigner(signature1.personalidentificationnumber),
+                        Signer = new PortalSigner(signature1.personalidentificationnumber, new NotificationsUsingLookup()),//TODO: Skal ikke bruke lookup
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature2.status),
-                        Signer = new PortalSigner(signature2.personalidentificationnumber),
+                        Signer = new PortalSigner(signature2.personalidentificationnumber, new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }
                 };

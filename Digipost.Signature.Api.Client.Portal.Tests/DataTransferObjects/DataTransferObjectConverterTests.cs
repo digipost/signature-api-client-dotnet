@@ -337,13 +337,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature1.status),
-                        Signer = new PortalSigner(new PersonalIdentificationNumber(signature1.personalidentificationnumber), new NotificationsUsingLookup()),//TODO: Skal ikke bruke lookup
+                        Signer = new PersonalIdentificationNumber(signature1.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl))
                     },
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature2.status),
-                        Signer = new PortalSigner(new PersonalIdentificationNumber(signature2.personalidentificationnumber), new NotificationsUsingLookup()), //TODO: Skal ikke bruke lookup
+                        Signer = new PersonalIdentificationNumber(signature2.personalidentificationnumber),
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl))
                     }
                 };

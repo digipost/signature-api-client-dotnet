@@ -118,7 +118,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             var result = new Signature
             {
                 SignatureStatus = new SignatureStatus(signature.status),
-                Signer = new PortalSigner(new PersonalIdentificationNumber(signature.personalidentificationnumber), new NotificationsUsingLookup())
+                Signer = new PersonalIdentificationNumber(signature.personalidentificationnumber)
             };
 
             var xadesUrl = signature.xadesurl;

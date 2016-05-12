@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Portal
     {
         public SignatureStatus SignatureStatus { get; set; }
 
-        public Signer Signer { get; set; }
+        public PersonalIdentificationNumber Signer { get; set; }
 
         public XadesReference XadesReference { get; set; }
     }

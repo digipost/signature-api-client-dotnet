@@ -48,10 +48,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         internal static PortalDocument GetPortalDocument()
         {
-            return new PortalDocument("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes())
-            {
-                NonsensitiveTitle = "The nonsensitve title"
-            };
+            return new PortalDocument("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
         public static Signer GetSigner()

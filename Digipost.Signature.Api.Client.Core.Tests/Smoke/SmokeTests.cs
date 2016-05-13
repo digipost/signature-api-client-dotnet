@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     return Client.DifiTest;
                 }
 
-                return Client.DifiTest;
+                return Client.Localhost;
             }
         }
 
@@ -55,6 +55,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                 case Client.DifiQa:
                     result = new Uri(Environment.DifiQa.Url, relativeUri);
                     break;
+                case Client.Test:
+                    result = new Uri(Environment.DifiQa.Url.AbsolutePath.Replace("difiqa", "test"));
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -66,7 +69,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
         {
             Localhost,
             DifiTest,
-            DifiQa
+            DifiQa,
+            Test
         }
     }
 }

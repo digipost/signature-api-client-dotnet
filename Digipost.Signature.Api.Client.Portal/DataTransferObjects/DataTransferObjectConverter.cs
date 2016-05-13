@@ -45,21 +45,67 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return dataTransferObject;
         }
 
-        private static IEnumerable<portalsigner> ToDataTransferObject(IEnumerable<Signer> signers)
+        private static IEnumerable<portalsigner> ToDataTransferObject(IEnumerable<PortalSigner> signers)
         {
             return signers.Select(ToDataTransferObject);
         }
 
-        private static portalsigner ToDataTransferObject(Signer signer)
+        internal static portalsigner ToDataTransferObject(PortalSigner signer)
         {
             var dataTransferObject = new portalsigner
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
 
+            if (signer.Notifications != null)
+            {
+                dataTransferObject.Item = ToDataTransferObject(signer.Notifications);
+            }
+            else
+            {
+                dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
+            }
+
             if (signer.Order != null)
             {
                 dataTransferObject.order = signer.Order.Value;
+            }
+
+            return dataTransferObject;
+        }
+
+        internal static notifications ToDataTransferObject(Notifications notifications)
+        {
+            var notificationsDto = new List<object>();
+
+            if (notifications.Sms!= null)
+            {
+                notificationsDto.Add(new sms() { number = notifications.Sms.Number});
+            }
+
+            if (notifications.Email != null)
+            {
+                notificationsDto.Add(new email() {address = notifications.Email.Address});
+            }
+
+            return new notifications()
+            {
+                Items = notificationsDto.ToArray()
+            };
+        }
+
+        internal static notificationsusinglookup ToDataTransferObject(NotificationsUsingLookup notificationsUsingLookup)
+        {
+            var dataTransferObject = new notificationsusinglookup();
+
+            if (notificationsUsingLookup.EmailIfAvailable)
+            {
+                dataTransferObject.email = new enabled();
+            }
+
+            if (notificationsUsingLookup.SmsIfAvailable)
+            {
+                dataTransferObject.sms = new enabled();
             }
 
             return dataTransferObject;

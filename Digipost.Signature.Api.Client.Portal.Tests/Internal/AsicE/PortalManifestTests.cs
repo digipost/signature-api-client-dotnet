@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
                 var document = DomainUtility.GetPortalDocument();
-                var signers = CoreDomainUtility.GetSigners(2);
+                var signers = DomainUtility.GetSigners(2);
 
                 //Act
                 var manifest = new PortalManifest(sender, document, signers);

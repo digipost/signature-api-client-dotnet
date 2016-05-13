@@ -28,29 +28,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new Sender(organizationNumberQaOrganization);
         }
 
-        public static Signer GetSigner()
-        {
-            return GetSigners(1).First();
-        }
-
-        public static List<Signer> GetSigners(int count)
-        {
-            if (count > 9)
-            {
-                throw new ArgumentException("Maximum of 9 senders.");
-            }
-
-            var signers = new List<Signer>();
-
-            const string basePersonalIdentificationNumber = "0101330000";
-            for (var i = 1; i <= count; i++)
-            {
-                signers.Add(new SignerStub(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
-            }
-
-            return signers;
-        }
-
         public static byte[] GetPdfDocumentBytes()
         {
             return ResourceUtility.ReadAllBytes(true, "Documents", "Dokument.pdf");

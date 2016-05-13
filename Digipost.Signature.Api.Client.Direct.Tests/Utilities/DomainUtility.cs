@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -11,12 +13,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
     {
         public static DirectJob GetDirectJob()
         {
-            return new DirectJob(GetDirectDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls());
+            return new DirectJob(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
         public static DirectJob GetDirectJobWithSender()
         {
-            return new DirectJob(GetDirectDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
+            return new DirectJob(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
         internal static DirectManifest GetDirectManifest()
@@ -24,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new DirectManifest(
                 CoreDomainUtility.GetSender(),
                 GetDirectDocument(),
-                CoreDomainUtility.GetSigner()
+                GetSigner()
                 );
         }
 
@@ -94,5 +96,29 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         {
             return new DirectDocument("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
+
+        public static Signer GetSigner()
+        {
+            return GetSigners(1).First();
+        }
+
+        public static List<DirectSigner> GetSigners(int count)
+        {
+            if (count > 9)
+            {
+                throw new ArgumentException("Maximum of 9 senders.");
+            }
+
+            var signers = new List<DirectSigner>();
+
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
+            {
+                signers.Add(new DirectSigner(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
+            }
+
+            return signers;
+        }
+
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -24,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static PortalJob GetPortalJob(int signers)
         {
-            return new PortalJob(GetPortalDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
+            return new PortalJob(GetPortalDocument(), GetSigners(signers), "PortalJobReference")
             {
                 Availability = new Availability
                 {
@@ -39,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new PortalManifest(
                 CoreDomainUtility.GetSender(),
                 GetPortalDocument(),
-                CoreDomainUtility.GetSigners(2)
+                GetSigners(2)
                 );
         }
 
@@ -49,6 +52,29 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             {
                 NonsensitiveTitle = "The nonsensitve title"
             };
+        }
+
+        public static Signer GetSigner()
+        {
+            return GetSigners(1).First();
+        }
+
+        public static List<PortalSigner> GetSigners(int count)
+        {
+            if (count > 9)
+            {
+                throw new ArgumentException("Maximum of 9 senders.");
+            }
+
+            var signers = new List<PortalSigner>();
+
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
+            {
+                signers.Add(new PortalSigner(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new NotificationsUsingLookup()));
+            }
+
+            return signers;
         }
     }
 }

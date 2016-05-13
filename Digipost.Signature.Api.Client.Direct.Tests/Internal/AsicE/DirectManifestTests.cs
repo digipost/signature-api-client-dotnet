@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
                 var document = DomainUtility.GetDirectDocument();
-                var signer = CoreDomainUtility.GetSigner();
+                var signer = DomainUtility.GetSigner();
 
                 //Act
                 var manifest = new DirectManifest(sender, document, signer);

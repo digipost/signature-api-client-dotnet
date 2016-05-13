@@ -363,47 +363,29 @@ public partial class enabled {
 [System.Xml.Serialization.XmlTypeAttribute(TypeName="notifications-using-lookup", Namespace="http://signering.posten.no/schema/v1")]
 public partial class notificationsusinglookup {
     
-    private enabled[] itemsField;
+    private enabled emailField;
     
-    private ItemsChoiceType[] itemsElementNameField;
+    private enabled smsField;
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("email", typeof(enabled))]
-    [System.Xml.Serialization.XmlElementAttribute("sms", typeof(enabled))]
-    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemsElementName")]
-    public enabled[] Items {
+    public enabled email {
         get {
-            return this.itemsField;
+            return this.emailField;
         }
         set {
-            this.itemsField = value;
+            this.emailField = value;
         }
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("ItemsElementName")]
-    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public ItemsChoiceType[] ItemsElementName {
+    public enabled sms {
         get {
-            return this.itemsElementNameField;
+            return this.smsField;
         }
         set {
-            this.itemsElementNameField = value;
+            this.smsField = value;
         }
     }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1", IncludeInSchema=false)]
-public enum ItemsChoiceType {
-    
-    /// <remarks/>
-    email,
-    
-    /// <remarks/>
-    sms,
 }
 
 /// <remarks/>

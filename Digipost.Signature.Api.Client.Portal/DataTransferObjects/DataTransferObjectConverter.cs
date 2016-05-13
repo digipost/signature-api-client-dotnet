@@ -124,7 +124,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return new portaldocument
             {
                 title = document.Title,
-                //nonsensitivetitle = document.NonsensitiveTitle,
+                nonsensitivetitle = document.NonsensitiveTitle,
                 description = document.Message,
                 href = document.FileName,
                 mime = document.MimeType

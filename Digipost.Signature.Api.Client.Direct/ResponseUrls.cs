@@ -4,8 +4,6 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
-        public readonly Uri StatusBaseUrl;
-
         public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
         {
             StatusBaseUrl = statusBaseUrl;
@@ -13,6 +11,8 @@ namespace Digipost.Signature.Api.Client.Direct
         }
 
         public RedirectReference Redirect { get; set; }
+
+        public Uri StatusBaseUrl { get; private set; }
 
         /// <summary>
         ///     A <see cref="StatusReference" /> is constructed from the url acquired from

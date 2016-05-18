@@ -35,10 +35,18 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
                 if (activationTime != null)
                 {
-                    dataTransferObject.availability.activationtime = portalManifest.Availability.Activation.Value;
+                    dataTransferObject.availability.activationtime = activationTime.Value;
+                    dataTransferObject.availability.activationtimeSpecified = true;
+
                 }
 
-                dataTransferObject.availability.availableseconds = portalManifest.Availability.AvailableSeconds;
+                var availableSeconds = portalManifest.Availability.AvailableSeconds;
+
+                if(availableSeconds != null)
+                { 
+                    dataTransferObject.availability.availableseconds = availableSeconds.Value;
+                    dataTransferObject.availability.availablesecondsSpecified = true;
+                }
             }
 
             return dataTransferObject;

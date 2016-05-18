@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     result = new Uri(Environment.DifiQa.Url, relativeUri);
                     break;
                 case Client.Test:
-                    result = new Uri(Environment.DifiQa.Url.AbsolutePath.Replace("difiqa", "test"));
+                    result = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

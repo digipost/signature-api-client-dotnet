@@ -162,6 +162,10 @@
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
+      <Project>{1f5941d7-0ae5-40c4-b1de-9adbb6926420}</Project>
+      <Name>Digipost.Signature.Api.Client.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
       <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
       <Name>Digipost.Signature.Api.Client.Scripts</Name>

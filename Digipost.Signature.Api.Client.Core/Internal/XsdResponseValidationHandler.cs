@@ -14,20 +14,20 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             var mustValidateForCurrentEndpoint = !requestUri.Contains("xades") && !requestUri.Contains("pades");
             if (mustValidateForCurrentEndpoint)
             {
-                await ValidateXmlAndThrowIfInvalid(result.Content);
+                await ValidateAndThrowIfInvalid(result.Content);
             }
 
             return result;
         }
 
-        private async Task ValidateXmlAndThrowIfInvalid(HttpContent content)
+        private async Task ValidateAndThrowIfInvalid(HttpContent content)
         {
             var contentMediaType = content?.Headers.ContentType?.MediaType;
 
             if (contentMediaType == ApplicationXml)
             {
                 var readAsStringAsync = await content.ReadAsStringAsync();
-                ValidateXml(readAsStringAsync);
+                ValidateXmlAndThrowIfInvalid(readAsStringAsync);
             }
         }
     }

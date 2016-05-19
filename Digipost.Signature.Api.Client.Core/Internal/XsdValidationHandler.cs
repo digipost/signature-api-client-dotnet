@@ -8,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         protected const string ApplicationXml = "application/xml";
 
-        protected static void ValidateXml(string xml)
+        protected static void ValidateXmlAndThrowIfInvalid(string xml)
         {
             var xsdValidator = new XsdValidator();
             xsdValidator.Validate(xml);

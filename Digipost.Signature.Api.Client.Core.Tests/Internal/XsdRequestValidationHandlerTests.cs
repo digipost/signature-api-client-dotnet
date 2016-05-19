@@ -69,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
             [TestMethod]
             [ExpectedException(typeof(InvalidXmlException))]
-            public void ThrowsExceptionOnInvalidManifestInAttachment()
+            public async Task ThrowsExceptionOnInvalidManifestInAttachment()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 var createAction = new CreateAction(new FakeJob(), documentBundle, serializedfunc);
 
-                client.SendAsync(GetHttpRequestMessage(createAction.Content()));
+                await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
 
                 //Act
 

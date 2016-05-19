@@ -40,6 +40,32 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
         }
 
         [TestClass]
+        public class AddAttachableMethod : AsiceArchiveTests
+        {
+            [TestMethod]
+            public void AddsAttachableToZip()
+            {
+                //Arrange
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] { });
+
+                //Act
+                var attachment = DomainUtility.GetDirectDocument();
+                asiceArchive.AddAttachable(attachment.FileName, attachment.Bytes);
+
+                var archiveBytes = asiceArchive.GetBytes();
+
+                //Assert
+                using (var memoryStream = new MemoryStream(archiveBytes))
+                {
+                    using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
+                    {
+                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == attachment.FileName));
+                    }
+                }
+            }
+        }
+
+        [TestClass]
         public class BytesMethod : AsiceArchiveTests
         {
             [TestMethod]

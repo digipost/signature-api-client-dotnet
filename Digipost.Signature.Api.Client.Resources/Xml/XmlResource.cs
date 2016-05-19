@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using System.Xml;
 using ApiClientShared;
+using Digipost.Signature.Api.Client.Resources.Xml.Data;
 
-namespace Digipost.Signature.Api.Client.Resources.Xml.Data
+namespace Digipost.Signature.Api.Client.Resources.Xml
 {
     internal class XmlResource
     {
@@ -20,6 +17,10 @@ namespace Digipost.Signature.Api.Client.Resources.Xml.Data
 
         internal class Request
         {
+            public static XmlDocument GetPortalManifest()
+            {
+                return GetResource("Request", "PortalManifest.xml");
+            }
         }
 
         internal class Response

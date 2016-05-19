@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Core.Utilities;
 using Digipost.Signature.Api.Client.Portal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -70,11 +74,16 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
 
+                var serializedfunc = new Func<IRequestContent, string>(p => ContentUtility.GetDirectSignatureJobRequestBody());
 
+                var manifestBytes = Encoding.UTF8.GetBytes(Resources.Xml.XmlResource.Request.GetPortalManifest().OuterXml);
+                var asiceArchive = new AsiceArchive(new List<AsiceAttachableProcessor>());
+                asiceArchive.AddAttachable("manifest.xml", manifestBytes);
+                var documentBundle = new DocumentBundle(asiceArchive.GetBytes());
 
-                Func<IRequestContent, string> serializedfunc = new Func<IRequestContent, string>(p => ContentUtility.GetDirectSignatureJobRequestBody());
-                
-                var createAction = new CreateAction(new FakeJob(), null, serializedfunc);
+                var createAction = new CreateAction(new FakeJob(), documentBundle, serializedfunc);
+
+                client.SendAsync(GetHttpRequestMessage(createAction.Content()));
 
                 //Act
 

@@ -25,9 +25,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        public static PortalJob GetPortalJob(int signers)
+        public static PortalJob GetPortalJob()
         {
-            return new PortalJob(GetPortalDocument(), GetSigners(signers), "PortalJobReference")
+            return new PortalJob(GetPortalDocument(), GetSigner(), "PortalJobReference")
             {
                 Availability = new Availability
                 {
@@ -51,9 +51,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new PortalDocument("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static Signer GetSigner()
+        public static List<PortalSigner> GetSigner()
         {
-            return GetSigners(1).First();
+            return new List<PortalSigner>()
+            {
+                new PortalSigner(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
+            };
         }
 
         public static List<PortalSigner> GetSigners(int count)

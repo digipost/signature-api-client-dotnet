@@ -5,6 +5,7 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Portal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Internal
@@ -49,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
             [TestMethod]
             [ExpectedException(typeof (InvalidXmlException))]
-            public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipart()
+            public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipartBody()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
@@ -61,6 +62,31 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 //Assert
                 Assert.Fail();
             }
+
+            [TestMethod]
+            [ExpectedException(typeof(InvalidXmlException))]
+            public void ThrowsExceptionOnInvalidManifestInAttachment()
+            {
+                //Arrange
+                var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
+
+
+
+                Func<IRequestContent, string> serializedfunc = new Func<IRequestContent, string>(p => ContentUtility.GetDirectSignatureJobRequestBody());
+                
+                var createAction = new CreateAction(new FakeJob(), null, serializedfunc);
+
+                //Act
+
+                //Assert
+                Assert.Fail();
+            }
+
+            private class FakeJob : IRequestContent
+            {
+                
+            }
+
 
             [TestMethod]
             public async Task AcceptsRequestWithNoBody()

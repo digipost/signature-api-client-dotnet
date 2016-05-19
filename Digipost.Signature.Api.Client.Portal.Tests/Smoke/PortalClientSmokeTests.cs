@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +41,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                     _portalClient = GetPortalClient(Environment.DifiQa);
                     break;
                 case Client.Test:
-                    _portalClient = GetPortalClient(Environment.DifiTest);
+                    var testEnvironment = Environment.DifiTest;
+                    testEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
+                    _portalClient = GetPortalClient(testEnvironment);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -64,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
-                var portalJob = DomainUtility.GetPortalJob(1);
+                var portalJob = DomainUtility.GetPortalJob();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 
@@ -89,6 +92,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                     if (statusChange.JobId == jobId)
                     {
                         jobStatusChanged = statusChange;
+                    } 
+                    else if (statusChange.Status == JobStatus.NoChanges)
+                    {
+                        throw new Exception("Expected receipt, got emtpy queue.");
                     }
                     else
                     {
@@ -154,7 +161,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task CancelsSuccessfully()
             {
                 //Arrange
-                var portalJob = new PortalJob(DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(1), "aReference");
+                var portalJob = new PortalJob(DomainUtility.GetPortalDocument(), DomainUtility.GetSigner(), "aReference");
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<direct-signature-job-manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://signering.posten.no/schema/v1">
+  <signer>
+    <personal-identification-number>01013300001</personal-identification-number>
+  </signer>
+  <sender>
+    <organization-number>988015814</organization-number>
+  </sender>
+  <document href="TheFileName.pdf" mime="application/pdf">
+    <title>TheTitle</title>
+    <description>The direct document message</description>
+  </document>
+</direct-signature-job-manifest>

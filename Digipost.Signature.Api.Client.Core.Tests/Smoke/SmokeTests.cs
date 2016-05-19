@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     return Client.DifiTest;
                 }
 
-                return Client.Localhost;
+                return Client.Test;
             }
         }
 

@@ -83,7 +83,7 @@
     <Compile Include="Internal\AsicE\DirectManifest.cs" />
     <Compile Include="RedirectReference.cs" />
     <Compile Include="StatusReference.cs" />
-    <Compile Include="DirectJobResponse.cs" />
+    <Compile Include="JobResponse.cs" />
     <Compile Include="ExitUrls.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

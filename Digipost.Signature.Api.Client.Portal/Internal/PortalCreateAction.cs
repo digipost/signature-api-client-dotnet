@@ -9,7 +9,7 @@ namespace Digipost.Signature.Api.Client.Portal.Internal
     {
         public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((Job) content));
 
-        public static readonly Func<string, PortalJobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<portalsignaturejobresponse>(content));
+        public static readonly Func<string, JobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<portalsignaturejobresponse>(content));
 
         public PortalCreateAction(Job job, DocumentBundle documentBundle)
             : base(job, documentBundle, SerializeFunc)

@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     statusurl = "https://localhost:8443/api/signature-jobs/77/status"
                 };
 
-                var expected = new DirectJobResponse(
+                var expected = new JobResponse(
                     source.signaturejobid,
                     new ResponseUrls(new Uri(source.redirecturl), new Uri(source.statusurl)
                         )

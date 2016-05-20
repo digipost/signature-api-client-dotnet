@@ -468,7 +468,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     signaturejobid = signaturejobid,
                     cancellationurl = httpCancellationurl
                 };
-                var expected = new PortalJobResponse(signaturejobid, new Uri(httpCancellationurl));
+                var expected = new JobResponse(signaturejobid, new Uri(httpCancellationurl));
 
                 //Act
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);

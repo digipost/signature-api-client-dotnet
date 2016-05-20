@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
         }
 
-        public async Task<PortalJobResponse> Create(Job job)
+        public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
             var relativeUrl = RelativeUrl(job.Sender);

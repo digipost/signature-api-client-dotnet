@@ -73,12 +73,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
-        public static DirectJobResponse GetDirectJobResponse()
+        public static JobResponse GetDirectJobResponse()
         {
             var jobId = 123456789;
             var responseUrls = GetResponseUrls();
 
-            return new DirectJobResponse(
+            return new JobResponse(
                 jobId,
                 responseUrls
                 );

@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public async Task<DirectJobResponse> Create(Job job)
+        public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
             var relativeUrl = RelativeUrl(job);

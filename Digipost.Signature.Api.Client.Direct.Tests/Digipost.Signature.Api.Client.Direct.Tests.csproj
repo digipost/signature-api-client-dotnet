@@ -89,7 +89,7 @@
     <Compile Include="Internal\AsicE\DirectManifestTests.cs" />
     <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
-    <Compile Include="DirectJobResponseTests.cs" />
+    <Compile Include="JobResponseTests.cs" />
     <Compile Include="DirectJobStatusResponseTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />

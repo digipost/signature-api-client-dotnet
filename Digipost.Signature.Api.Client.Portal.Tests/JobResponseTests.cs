@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
     [TestClass]
-    public class PortalJobResponseTests
+    public class JobResponseTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalJobResponseTests
+        public class ConstructorMethod : JobResponseTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -17,11 +17,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Act
                 var cancellationUrl = new Uri("http://cancellationUrl.no");
-                var portalJobResponse = new PortalJobResponse(jobId, cancellationUrl);
+                var jobResponse = new JobResponse(jobId, cancellationUrl);
 
                 //Assert
-                Assert.AreEqual(jobId, portalJobResponse.JobId);
-                Assert.AreEqual(cancellationUrl, portalJobResponse.CancellationReference.Url);
+                Assert.AreEqual(jobId, jobResponse.JobId);
+                Assert.AreEqual(cancellationUrl, jobResponse.CancellationReference.Url);
             }
         }
     }

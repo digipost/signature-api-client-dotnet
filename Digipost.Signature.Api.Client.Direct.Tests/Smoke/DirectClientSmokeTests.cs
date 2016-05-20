@@ -111,9 +111,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(_confirmationReference);
             }
 
-            private static async Task<string> AutoSignAndGetToken(DirectClient directClient, DirectJobResponse directJobResponse)
+            private static async Task<string> AutoSignAndGetToken(DirectClient directClient, JobResponse jobResponse)
             {
-                var statusUrl = await directClient.AutoSign(directJobResponse.JobId);
+                var statusUrl = await directClient.AutoSign(jobResponse.JobId);
                 var queryParams = new Uri(statusUrl).Query;
                 var queryDictionary = HttpUtility.ParseQueryString(queryParams);
                 var statusQueryToken = queryDictionary.Get(0);

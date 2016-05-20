@@ -100,7 +100,7 @@
     <Compile Include="NotificationsUsingLookupTests.cs" />
     <Compile Include="PortalClientTests.cs" />
     <Compile Include="PortalClientWithAutoSign.cs" />
-    <Compile Include="PortalJobResponseTests.cs" />
+    <Compile Include="JobResponseTests.cs" />
     <Compile Include="JobStatusChangedTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="SignerTests.cs" />

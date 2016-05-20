@@ -83,7 +83,7 @@
     <Compile Include="PortalClient.cs" />
     <Compile Include="PortalDocument.cs" />
     <Compile Include="Job.cs" />
-    <Compile Include="PortalJobResponse.cs" />
+    <Compile Include="JobResponse.cs" />
     <Compile Include="JobStatusChanged.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

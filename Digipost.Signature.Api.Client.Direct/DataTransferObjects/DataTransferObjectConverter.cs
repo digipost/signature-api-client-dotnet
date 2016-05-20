@@ -28,9 +28,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static DirectJobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
+        public static JobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
         {
-            return new DirectJobResponse(
+            return new JobResponse(
                 directsignaturejobresponse.signaturejobid,
                 new ResponseUrls(
                     new Uri(directsignaturejobresponse.redirecturl),

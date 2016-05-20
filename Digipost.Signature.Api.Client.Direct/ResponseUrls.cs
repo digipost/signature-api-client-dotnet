@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         /// <summary>
         ///     A <see cref="StatusReference" /> is constructed from the url acquired from
-        ///     <see cref="DirectJobResponse.ResponseUrls" />, and a token provided as a
+        ///     <see cref="JobResponse.ResponseUrls" />, and a token provided as a
         /// </summary>
         /// <param name="statusQueryToken">
         ///     The <see cref="StatusReference.StatusQueryTokenParamName">query parameter</see> which is needed to create a

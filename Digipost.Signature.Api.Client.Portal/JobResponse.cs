@@ -3,9 +3,9 @@ using Digipost.Signature.Api.Client.Core;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class PortalJobResponse
+    public class JobResponse
     {
-        public PortalJobResponse(long jobId, Uri cancellationUrl)
+        public JobResponse(long jobId, Uri cancellationUrl)
         {
             JobId = jobId;
             CancellationReference = new CancellationReference(cancellationUrl);

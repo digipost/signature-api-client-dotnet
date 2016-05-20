@@ -134,7 +134,7 @@
     <Compile Include="Utilities\CoreDomainUtility.cs" />
     <Compile Include="PadesReferenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignerTests.cs" />
+    <Compile Include="AbstractSignerTests.cs" />
     <Compile Include="Utilities\CoreResponseUtility.cs" />
     <Compile Include="Utilities\ContentUtility.cs" />
     <Compile Include="XadesReferenceTests.cs" />

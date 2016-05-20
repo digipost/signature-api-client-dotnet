@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var document = DomainUtility.GetPortalDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
-                var source = new PortalJob(document, signers, reference);
+                var source = new Job(document, signers, reference);
 
                 var expected = new portalsignaturejobrequest
                 {

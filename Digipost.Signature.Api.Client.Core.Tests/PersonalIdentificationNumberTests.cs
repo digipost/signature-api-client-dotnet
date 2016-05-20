@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
     public class PersonalIdentificationNumberTests
     {
         [TestClass]
-        public class ToStringMethod : SignerTests
+        public class ToStringMethod : AbstractSignerTests
         {
             [TestMethod]
             public void ReturnsMaskedPersonalIdentificationNumber()

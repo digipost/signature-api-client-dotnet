@@ -161,7 +161,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task CancelsSuccessfully()
             {
                 //Arrange
-                var portalJob = new PortalJob(DomainUtility.GetPortalDocument(), DomainUtility.GetSigner(), "aReference");
+                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigner(), "aReference");
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);

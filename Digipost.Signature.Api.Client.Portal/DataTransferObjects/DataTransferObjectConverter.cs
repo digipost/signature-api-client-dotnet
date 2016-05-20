@@ -10,11 +10,11 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
     internal class DataTransferObjectConverter
     {
-        public static portalsignaturejobrequest ToDataTransferObject(PortalJob portalJob)
+        public static portalsignaturejobrequest ToDataTransferObject(Job job)
         {
             var portalsignaturejobrequest = new portalsignaturejobrequest
             {
-                reference = portalJob.Reference
+                reference = job.Reference
             };
 
             return portalsignaturejobrequest;

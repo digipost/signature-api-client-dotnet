@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
     [TestClass]
-    public class SignerTests
+    public class AbstractSignerTests
     {
         [TestClass]
-        public class ConstructorMethod : SignerTests
+        public class ConstructorMethod : AbstractSignerTests
         {
             [TestMethod]
             public void InitializesWithProperties()

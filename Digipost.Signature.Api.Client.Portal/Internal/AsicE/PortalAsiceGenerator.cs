@@ -7,15 +7,15 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
     internal class PortalAsiceGenerator : AsiceGenerator
     {
-        public static DocumentBundle CreateAsice(PortalJob portalJob, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
+        public static DocumentBundle CreateAsice(Job job, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
         {
-            var manifest = new PortalManifest(portalJob.Sender, (PortalDocument) portalJob.Document, portalJob.Signers)
+            var manifest = new PortalManifest(job.Sender, (PortalDocument) job.Document, job.Signers)
             {
-                Availability = portalJob.Availability
+                Availability = job.Availability
             };
-            var signature = new SignatureGenerator(certificate, portalJob.Document, manifest);
+            var signature = new SignatureGenerator(certificate, job.Document, manifest);
 
-            var asiceArchive = GetAsiceArchive(portalJob, asiceConfiguration, portalJob.Document, manifest, signature);
+            var asiceArchive = GetAsiceArchive(job, asiceConfiguration, job.Document, manifest, signature);
 
             return new DocumentBundle(asiceArchive.GetBytes());
         }

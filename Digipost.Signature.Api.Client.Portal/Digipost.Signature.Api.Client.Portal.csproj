@@ -82,7 +82,7 @@
     <Compile Include="NotificationsUsingLookup.cs" />
     <Compile Include="PortalClient.cs" />
     <Compile Include="PortalDocument.cs" />
-    <Compile Include="PortalJob.cs" />
+    <Compile Include="Job.cs" />
     <Compile Include="PortalJobResponse.cs" />
     <Compile Include="JobStatusChanged.cs" />
     <Compile Include="Signer.cs" />

@@ -37,16 +37,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                             ValidateXmlAndThrowIfInvalid(await httpContent.ReadAsStringAsync());
                             break;
                         case ApplicationOctetStream:
-                            ValidateByteStreamAndThrowIfInvalid(httpContent.ReadAsByteArrayAsync());
+                            ValidateByteStreamAndThrowIfInvalid(await httpContent.ReadAsByteArrayAsync());
                             break;
                     }
                 }
             }
         }
 
-        private async void ValidateByteStreamAndThrowIfInvalid(Task<byte[]> bytes)
+        private static void ValidateByteStreamAndThrowIfInvalid(byte[] bytes)
         {
-            using (var memoryStream = new MemoryStream(await bytes))
+            using (var memoryStream = new MemoryStream(bytes))
             using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
             {
                 foreach (var zipArchiveEntry in archive.Entries)

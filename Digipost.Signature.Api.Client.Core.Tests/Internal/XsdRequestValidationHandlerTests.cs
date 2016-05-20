@@ -64,7 +64,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
 
                 //Assert
-                Assert.Fail();
             }
 
             [TestMethod]
@@ -83,12 +82,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 var createAction = new CreateAction(new FakeJob(), documentBundle, serializedfunc);
 
-                await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
-
                 //Act
-
+                await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
+                
                 //Assert
-                Assert.Fail();
+                
             }
 
             private class FakeJob : IRequestContent

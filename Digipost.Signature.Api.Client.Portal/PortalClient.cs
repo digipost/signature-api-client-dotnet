@@ -146,11 +146,12 @@ namespace Digipost.Signature.Api.Client.Portal
             }
         }
 
-        internal async Task AutoSign(int jobId, string signer)
+        internal async Task<string> AutoSign(int jobId, string signer)
         {
             Log.Warn($"Autosigning PortalJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
-            await HttpClient.PostAsync(url, null);
+            var httpResponseMessage = await HttpClient.PostAsync(url, null);
+            return await httpResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }

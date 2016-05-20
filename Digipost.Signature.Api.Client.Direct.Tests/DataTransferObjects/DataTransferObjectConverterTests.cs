@@ -176,7 +176,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var source = new DirectManifest(
                     new Sender(organizationNumberSender),
                     new DirectDocument(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
-                    new DirectSigner(new PersonalIdentificationNumber(personalIdentificationNumber))
+                    new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))
                     );
 
                 var expected = new directsignaturejobmanifest
@@ -266,7 +266,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 //Arrange
                 const string personalIdentificationNumber = "0123456789";
 
-                var source = new DirectSigner(new PersonalIdentificationNumber(personalIdentificationNumber));
+                var source = new Signer(new PersonalIdentificationNumber(personalIdentificationNumber));
                 var expected = new directsigner
                 {
                     personalidentificationnumber = personalIdentificationNumber

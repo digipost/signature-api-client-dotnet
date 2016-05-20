@@ -2,9 +2,9 @@
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectSigner : AbstractSigner
+    public class Signer : AbstractSigner
     {
-        public DirectSigner(PersonalIdentificationNumber personalIdentificationNumber)
+        public Signer(PersonalIdentificationNumber personalIdentificationNumber)
             : base(personalIdentificationNumber)
         {
         }

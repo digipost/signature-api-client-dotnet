@@ -97,24 +97,24 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new DirectDocument("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static DirectSigner GetSigner()
+        public static Signer GetSigner()
         {
             return GetSigners(1).First();
         }
 
-        public static List<DirectSigner> GetSigners(int count)
+        public static List<Signer> GetSigners(int count)
         {
             if (count > 9)
             {
                 throw new ArgumentException("Maximum of 9 senders.");
             }
 
-            var signers = new List<DirectSigner>();
+            var signers = new List<Signer>();
 
             const string basePersonalIdentificationNumber = "0101330000";
             for (var i = 1; i <= count; i++)
             {
-                signers.Add(new DirectSigner(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
+                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
             }
 
             return signers;

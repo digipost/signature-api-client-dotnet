@@ -11,14 +11,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 {
     public class DomainUtility
     {
-        public static DirectJob GetDirectJob()
+        public static Job GetDirectJob()
         {
-            return new DirectJob(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
+            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
-        public static DirectJob GetDirectJobWithSender()
+        public static Job GetDirectJobWithSender()
         {
-            return new DirectJob(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
+            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
         internal static DirectManifest GetDirectManifest()

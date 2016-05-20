@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();
 
-                var source = new DirectJob(
+                var source = new Job(
                     document,
                     signer,
                     reference,

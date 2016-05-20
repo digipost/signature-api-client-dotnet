@@ -6,16 +6,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class DirectJobTests
+    public class JobTests
     {
         [TestClass]
-        public class ConstructorMethod : DirectJobTests
+        public class ConstructorMethod : JobTests
         {
             [TestMethod]
             public void ConstructorWithoutSenderExists()
             {
                 //Act
-                new DirectJob(null, null, null, null);
+                new Job(null, null, null, null);
 
                 //Assert
             }
@@ -31,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var sender = CoreDomainUtility.GetSender();
 
                 //Act
-                var directJob = new DirectJob(document, signer, id, exitUrls, sender);
+                var directJob = new Job(document, signer, id, exitUrls, sender);
 
                 //Assert
                 Assert.AreEqual(id, directJob.Reference);

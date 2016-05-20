@@ -9,12 +9,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     public static class DataTransferObjectConverter
 
     {
-        public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob)
+        public static directsignaturejobrequest ToDataTransferObject(Job job)
         {
             return new directsignaturejobrequest
             {
-                reference = directJob.Reference,
-                exiturls = ToDataTransferObject(directJob.ExitUrls)
+                reference = job.Reference,
+                exiturls = ToDataTransferObject(job.ExitUrls)
             };
         }
 

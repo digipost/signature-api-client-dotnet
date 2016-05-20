@@ -3,9 +3,9 @@ using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectJob : IRequestContent, ISignatureJob
+    public class Job : IRequestContent, ISignatureJob
     {
-        public DirectJob(Document document, AbstractSigner signer, string reference, ExitUrls exitUrls, Sender sender = null)
+        public Job(Document document, AbstractSigner signer, string reference, ExitUrls exitUrls, Sender sender = null)
         {
             Reference = reference;
             Signer = signer;

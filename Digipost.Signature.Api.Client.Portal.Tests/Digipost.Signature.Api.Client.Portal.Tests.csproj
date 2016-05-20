@@ -103,7 +103,7 @@
     <Compile Include="PortalJobResponseTests.cs" />
     <Compile Include="JobStatusChangedTests.cs" />
     <Compile Include="PortalJobTests.cs" />
-    <Compile Include="PortalSignerTests.cs" />
+    <Compile Include="SignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignatureStatusTests.cs" />
     <Compile Include="Smoke\PortalClientSmokeTests.cs" />

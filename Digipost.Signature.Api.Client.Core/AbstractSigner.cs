@@ -1,8 +1,8 @@
 ﻿namespace Digipost.Signature.Api.Client.Core
 {
-    public abstract class Signer
+    public abstract class AbstractSigner
     {
-        protected Signer(PersonalIdentificationNumber personalIdentificationNumber)
+        protected AbstractSigner(PersonalIdentificationNumber personalIdentificationNumber)
         {
             PersonalIdentificationNumber = personalIdentificationNumber;
         }

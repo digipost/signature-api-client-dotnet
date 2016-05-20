@@ -97,7 +97,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new DirectDocument("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static Signer GetSigner()
+        public static DirectSigner GetSigner()
         {
             return GetSigners(1).First();
         }

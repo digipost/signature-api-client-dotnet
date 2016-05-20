@@ -51,27 +51,27 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new PortalDocument("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static List<PortalSigner> GetSigner()
+        public static List<Signer> GetSigner()
         {
-            return new List<PortalSigner>()
+            return new List<Signer>()
             {
-                new PortalSigner(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
+                new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
             };
         }
 
-        public static List<PortalSigner> GetSigners(int count)
+        public static List<Signer> GetSigners(int count)
         {
             if (count > 9)
             {
                 throw new ArgumentException("Maximum of 9 senders.");
             }
 
-            var signers = new List<PortalSigner>();
+            var signers = new List<Signer>();
 
             const string basePersonalIdentificationNumber = "0101330000";
             for (var i = 1; i <= count; i++)
             {
-                signers.Add(new PortalSigner(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new NotificationsUsingLookup()));
+                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new NotificationsUsingLookup()));
             }
 
             return signers;

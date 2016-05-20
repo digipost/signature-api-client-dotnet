@@ -2,19 +2,19 @@
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class PortalSigner : Signer
+    public class Signer : AbstractSigner
     {
         public NotificationsUsingLookup NotificationsUsingLookup { get; }
 
         public Notifications Notifications { get; }
 
-        public PortalSigner(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
+        public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
             : base(personalIdentificationNumber)
         {
             Notifications = notifications;
         }
 
-        public PortalSigner(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
+        public Signer(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
     : base(personalIdentificationNumber)
         {
             NotificationsUsingLookup = notificationsUsingLookup;

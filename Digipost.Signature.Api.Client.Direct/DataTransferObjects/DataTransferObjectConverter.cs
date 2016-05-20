@@ -79,7 +79,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static directsigner ToDataTransferObject(Signer signer)
+        public static directsigner ToDataTransferObject(AbstractSigner signer)
         {
             return new directsigner
             {

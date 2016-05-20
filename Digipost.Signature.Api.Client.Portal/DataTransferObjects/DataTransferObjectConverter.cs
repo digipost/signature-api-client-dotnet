@@ -45,12 +45,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return dataTransferObject;
         }
 
-        private static IEnumerable<portalsigner> ToDataTransferObject(IEnumerable<PortalSigner> signers)
+        private static IEnumerable<portalsigner> ToDataTransferObject(IEnumerable<Signer> signers)
         {
             return signers.Select(ToDataTransferObject);
         }
 
-        internal static portalsigner ToDataTransferObject(PortalSigner signer)
+        internal static portalsigner ToDataTransferObject(Signer signer)
         {
             var dataTransferObject = new portalsigner
             {

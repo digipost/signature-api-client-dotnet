@@ -1,6 +1,6 @@
 ﻿namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
-    public class SignerStub : Signer
+    public class SignerStub : AbstractSigner
     {
         public SignerStub(PersonalIdentificationNumber personalIdentificationNumber)
             : base(personalIdentificationNumber)

@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
     internal class DirectManifest : IAsiceAttachable
     {
-        public DirectManifest(Sender sender, DirectDocument document, Signer signer)
+        public DirectManifest(Sender sender, DirectDocument document, AbstractSigner signer)
         {
             Sender = sender;
             Document = document;
@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 
         public Document Document { get; internal set; }
 
-        public Signer Signer { get; internal set; }
+        public AbstractSigner Signer { get; internal set; }
 
         public byte[] Bytes
         {

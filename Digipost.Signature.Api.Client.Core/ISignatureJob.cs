@@ -4,7 +4,7 @@
     {
         Sender Sender { get; }
 
-        Document Document { get; }
+        AbstractDocument Document { get; }
 
         string Reference { get; }
     }

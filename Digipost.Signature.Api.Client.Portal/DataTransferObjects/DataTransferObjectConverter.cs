@@ -25,7 +25,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             var dataTransferObject = new portalsignaturejobmanifest
             {
                 sender = ToDataTransferObject(portalManifest.Sender),
-                document = ToDataTransferObject(portalManifest.PortalDocument),
+                document = ToDataTransferObject(portalManifest.Document),
                 signers = ToDataTransferObject(portalManifest.Signers).ToArray()
             };
 
@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             };
         }
 
-        internal static portaldocument ToDataTransferObject(PortalDocument document)
+        internal static portaldocument ToDataTransferObject(Document document)
         {
             return new portaldocument
             {

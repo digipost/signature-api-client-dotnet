@@ -8,10 +8,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
     [TestClass]
-    public class DocumentTests
+    public class AbstractDocumentTests
     {
         [TestClass]
-        public class ConstructorMethod : DocumentTests
+        public class ConstructorMethod : AbstractDocumentTests
         {
             [TestMethod]
             public void InitializesAllValuesWithDocumentBytes()
@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         }
 
         [TestClass]
-        public class IdMethod : DocumentTests
+        public class IdMethod : AbstractDocumentTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()

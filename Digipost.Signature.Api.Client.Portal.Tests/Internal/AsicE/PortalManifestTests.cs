@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
-                Assert.AreEqual(document, manifest.PortalDocument);
+                Assert.AreEqual(document, manifest.Document);
                 Assert.AreEqual(signers, manifest.Signers);
             }
         }

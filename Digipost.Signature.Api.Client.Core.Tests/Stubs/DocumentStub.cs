@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
-    class DocumentStub : Core.Document
+    class DocumentStub : Core.AbstractDocument
     {
         public DocumentStub(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
             : base(title, message, fileName, fileType, documentBytes)

@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new directsignaturejobmanifest
             {
                 sender = ToDataTransferObject(directManifest.Sender),
-                document = ToDataTransferObject(directManifest.Document),
+                document = ToDataTransferObject((Document)directManifest.Document),
                 signer = ToDataTransferObject(directManifest.Signer)
             };
         }

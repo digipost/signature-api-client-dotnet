@@ -102,7 +102,7 @@
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
-    <Compile Include="DocumentTests.cs" />
+    <Compile Include="AbstractDocumentTests.cs" />
     <Compile Include="EnvironmentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />

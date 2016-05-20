@@ -4,9 +4,9 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 
 namespace Digipost.Signature.Api.Client.Core
 {
-    public abstract class Document : IAsiceAttachable
+    public abstract class AbstractDocument : IAsiceAttachable
     {
-        protected Document(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
+        protected AbstractDocument(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
         {
             Title = title;
             Message = message;
@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core
             Bytes = documentBytes;
         }
 
-        protected Document(string title, string message, string fileName, FileType fileType, string documentPath)
+        protected AbstractDocument(string title, string message, string fileName, FileType fileType, string documentPath)
             : this(title, message, fileName, fileType, File.ReadAllBytes(documentPath))
         {
         }

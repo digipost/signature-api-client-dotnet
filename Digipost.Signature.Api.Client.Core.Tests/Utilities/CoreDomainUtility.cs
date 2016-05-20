@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new ClientConfiguration(Environment.DifiQa, GetTestCertificate(), GetSender());
         }
 
-        public static Document GetDocument()
+        public static AbstractDocument GetDocument()
         {
             return new DocumentStub("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
         }

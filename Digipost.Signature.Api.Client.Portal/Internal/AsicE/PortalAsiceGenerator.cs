@@ -9,7 +9,7 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
     {
         public static DocumentBundle CreateAsice(Job job, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
         {
-            var manifest = new PortalManifest(job.Sender, (PortalDocument) job.Document, job.Signers)
+            var manifest = new PortalManifest(job.Sender, (Document) job.Document, job.Signers)
             {
                 Availability = job.Availability
             };

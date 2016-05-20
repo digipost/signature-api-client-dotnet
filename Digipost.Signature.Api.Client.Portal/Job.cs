@@ -6,7 +6,7 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Job : IRequestContent, ISignatureJob
     {
-        public Job(PortalDocument document, IEnumerable<Signer> signers, string reference, Sender sender = null)
+        public Job(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {
             Document = document;
             Signers = signers;
@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public Availability Availability { get; set; }
 
-        public Document Document { get; }
+        public AbstractDocument Document { get; }
 
         public string Reference { get; }
 

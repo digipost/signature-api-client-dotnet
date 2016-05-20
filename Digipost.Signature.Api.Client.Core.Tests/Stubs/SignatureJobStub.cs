@@ -4,7 +4,7 @@
     {
         public Sender Sender { get; }
 
-        public Core.Document Document { get; }
+        public Core.AbstractDocument Document { get; }
 
         public string Reference { get; set; }
     }

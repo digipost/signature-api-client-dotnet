@@ -55,10 +55,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.PortalDocument.Title,
-                        description = source.PortalDocument.Message,
-                        href = source.PortalDocument.FileName,
-                        mime = source.PortalDocument.MimeType
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
                     signers = new[]
                     {
@@ -98,10 +98,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.PortalDocument.Title,
-                        description = source.PortalDocument.Message,
-                        href = source.PortalDocument.FileName,
-                        mime = source.PortalDocument.MimeType
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
                     signers = new[]
                     {
@@ -147,10 +147,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.PortalDocument.Title,
-                        description = source.PortalDocument.Message,
-                        href = source.PortalDocument.FileName,
-                        mime = source.PortalDocument.MimeType
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
                     signers = new[]
                     {
@@ -200,10 +200,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.PortalDocument.Title,
-                        description = source.PortalDocument.Message,
-                        href = source.PortalDocument.FileName,
-                        mime = source.PortalDocument.MimeType
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
                     signers = new[]
                     {
@@ -250,10 +250,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     sender = new sender {organizationnumber = organizationNumberSender},
                     document = new portaldocument
                     {
-                        title = source.PortalDocument.Title,
-                        description = source.PortalDocument.Message,
-                        href = source.PortalDocument.FileName,
-                        mime = source.PortalDocument.MimeType
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
                     },
                     signers = new[]
                     {
@@ -289,7 +289,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalDocumentSuccessfully()
             {
                 //Arrange
-                var source = new PortalDocument("subject", "message", "fileName", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
+                var source = new Document("subject", "message", "fileName", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
                 var expected = new portaldocument
                 {
                     title = source.Title,

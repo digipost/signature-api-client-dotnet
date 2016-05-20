@@ -92,9 +92,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 new Uri("http://signatureRoot.digipost.no/pades"));
         }
 
-        public static DirectDocument GetDirectDocument()
+        public static Document GetDirectDocument()
         {
-            return new DirectDocument("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+            return new Document("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
         public static Signer GetSigner()

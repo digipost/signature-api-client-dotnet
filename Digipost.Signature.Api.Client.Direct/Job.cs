@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public string Reference { get; }
 
-        public Document Document { get; }
+        public AbstractDocument Document { get; }
 
         public Sender Sender { get; internal set; }
     }

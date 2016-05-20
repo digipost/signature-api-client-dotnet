@@ -4,15 +4,15 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
-        private readonly Uri _statusUrl;
-
-        public ResponseUrls(Uri redirectUrl, Uri statusUrl)
+        public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
         {
-            _statusUrl = statusUrl;
+            StatusBaseUrl = statusBaseUrl;
             Redirect = new RedirectReference(redirectUrl);
         }
 
         public RedirectReference Redirect { get; set; }
+
+        public Uri StatusBaseUrl { get; private set; }
 
         /// <summary>
         ///     A <see cref="StatusReference" /> is constructed from the url acquired from
@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <returns></returns>
         public StatusReference Status(string statusQueryToken)
         {
-            return new StatusReference(_statusUrl, statusQueryToken);
+            return new StatusReference(StatusBaseUrl, statusQueryToken);
         }
     }
 }

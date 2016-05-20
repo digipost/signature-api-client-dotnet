@@ -10,10 +10,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class AvailableForMethod : AvailabilityTests
         {
             [TestMethod]
-            public void ReturnsZeroWhenUninitialized()
+            public void ReturnsNullWhenUninitialized()
             {
                 //Arrange
-                var expectedAvailableSeconds = 0;
+                object expectedAvailableSeconds = null;
 
                 //Act
                 var availability = new Availability();

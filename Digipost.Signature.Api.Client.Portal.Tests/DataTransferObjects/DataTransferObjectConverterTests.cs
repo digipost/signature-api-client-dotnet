@@ -167,7 +167,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     availability = new availability
                     {
-                        availableseconds = source.Availability.AvailableSeconds
+                        availableseconds = source.Availability.AvailableSeconds.Value,
+                        availablesecondsSpecified = true
                     }
                 };
 
@@ -220,7 +221,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     },
                     availability = new availability
                     {
-                        activationtime = source.Availability.Activation.Value
+                        activationtime = source.Availability.Activation.Value,
+                        activationtimeSpecified = true
                     }
                 };
 
@@ -271,7 +273,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     availability = new availability
                     {
                         activationtime = source.Availability.Activation.Value,
-                        availableseconds = source.Availability.AvailableSeconds
+                        availableseconds = source.Availability.AvailableSeconds.Value,
+                        activationtimeSpecified = true,
+                        availablesecondsSpecified = true,
                     }
                 };
 

@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
             var document = DomainUtility.GetPortalDocument();
             var sender = CoreDomainUtility.GetSender();
             var signers = DomainUtility.GetSigners(2);
-            var manifest = new PortalManifest(sender, document, signers);
+            var manifest = new Manifest(sender, document, signers);
             var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;
@@ -31,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 //Arrange
                 var document = DomainUtility.GetPortalDocument();
                 var sender = CoreDomainUtility.GetSender();
-                var manifest = new PortalManifest(sender, document, DomainUtility.GetSigners(3));
+                var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
                 var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
 
                 //Act

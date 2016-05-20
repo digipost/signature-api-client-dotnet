@@ -75,7 +75,7 @@
     <Compile Include="Exceptions\JobCompletedException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\PortalAsiceGenerator.cs" />
-    <Compile Include="Internal\AsicE\PortalManifest.cs" />
+    <Compile Include="Internal\AsicE\Manifest.cs" />
     <Compile Include="Internal\PortalCreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="Notifications.cs" />

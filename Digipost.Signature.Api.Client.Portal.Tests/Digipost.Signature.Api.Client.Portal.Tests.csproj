@@ -95,7 +95,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
-    <Compile Include="Internal\AsicE\PortalManifestTests.cs" />
+    <Compile Include="Internal\AsicE\ManifestTests.cs" />
     <Compile Include="NotificationsTests.cs" />
     <Compile Include="NotificationsUsingLookupTests.cs" />
     <Compile Include="PortalClientTests.cs" />

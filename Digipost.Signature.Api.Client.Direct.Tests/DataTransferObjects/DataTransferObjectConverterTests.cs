@@ -173,7 +173,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
-                var source = new DirectManifest(
+                var source = new Manifest(
                     new Sender(organizationNumberSender),
                     new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
                     new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))

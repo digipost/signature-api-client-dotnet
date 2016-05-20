@@ -80,7 +80,7 @@
     <Compile Include="DirectJobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />
     <Compile Include="Job.cs" />
-    <Compile Include="Internal\AsicE\DirectManifest.cs" />
+    <Compile Include="Internal\AsicE\Manifest.cs" />
     <Compile Include="RedirectReference.cs" />
     <Compile Include="StatusReference.cs" />
     <Compile Include="JobResponse.cs" />

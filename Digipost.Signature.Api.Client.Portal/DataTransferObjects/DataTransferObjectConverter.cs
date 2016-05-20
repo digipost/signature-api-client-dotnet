@@ -20,26 +20,26 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return portalsignaturejobrequest;
         }
 
-        public static portalsignaturejobmanifest ToDataTransferObject(PortalManifest portalManifest)
+        public static portalsignaturejobmanifest ToDataTransferObject(Manifest manifest)
         {
             var dataTransferObject = new portalsignaturejobmanifest
             {
-                sender = ToDataTransferObject(portalManifest.Sender),
-                document = ToDataTransferObject(portalManifest.Document),
-                signers = ToDataTransferObject(portalManifest.Signers).ToArray()
+                sender = ToDataTransferObject(manifest.Sender),
+                document = ToDataTransferObject(manifest.Document),
+                signers = ToDataTransferObject(manifest.Signers).ToArray()
             };
 
-            if (portalManifest.Availability != null)
+            if (manifest.Availability != null)
             {
                 dataTransferObject.availability = new availability();
-                var activationTime = portalManifest.Availability.Activation;
+                var activationTime = manifest.Availability.Activation;
 
                 if (activationTime != null)
                 {
-                    dataTransferObject.availability.activationtime = portalManifest.Availability.Activation.Value;
+                    dataTransferObject.availability.activationtime = manifest.Availability.Activation.Value;
                 }
 
-                dataTransferObject.availability.availableseconds = portalManifest.Availability.AvailableSeconds;
+                dataTransferObject.availability.availableseconds = manifest.Availability.AvailableSeconds;
             }
 
             return dataTransferObject;

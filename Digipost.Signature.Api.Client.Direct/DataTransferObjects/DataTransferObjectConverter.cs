@@ -50,13 +50,13 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
 
-        internal static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
+        internal static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)
         {
             return new directsignaturejobmanifest
             {
-                sender = ToDataTransferObject(directManifest.Sender),
-                document = ToDataTransferObject((Document)directManifest.Document),
-                signer = ToDataTransferObject(directManifest.Signer)
+                sender = ToDataTransferObject(manifest.Sender),
+                document = ToDataTransferObject((Document)manifest.Document),
+                signer = ToDataTransferObject(manifest.Signer)
             };
         }
 

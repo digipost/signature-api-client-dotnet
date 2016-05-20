@@ -9,10 +9,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
 {
     [TestClass]
-    public class PortalManifestTests
+    public class ManifestTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalManifestTests
+        public class ConstructorMethod : ManifestTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 var signers = DomainUtility.GetSigners(2);
 
                 //Act
-                var manifest = new PortalManifest(sender, document, signers);
+                var manifest = new Manifest(sender, document, signers);
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class FileNameMethod : PortalManifestTests
+        public class FileNameMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
@@ -50,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class MimeTypeMethod : PortalManifestTests
+        public class MimeTypeMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
@@ -67,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class IdMethod : PortalManifestTests
+        public class IdMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
@@ -84,7 +84,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class BytesMethod : PortalManifestTests
+        public class BytesMethod : ManifestTests
         {
             [TestMethod]
             public void SuccessfulManifestToBytes()

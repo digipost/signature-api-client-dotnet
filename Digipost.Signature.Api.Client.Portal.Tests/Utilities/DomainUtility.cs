@@ -37,9 +37,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        internal static PortalManifest GetPortalManifest()
+        internal static Manifest GetPortalManifest()
         {
-            return new PortalManifest(
+            return new Manifest(
                 CoreDomainUtility.GetSender(),
                 GetPortalDocument(),
                 GetSigners(2)

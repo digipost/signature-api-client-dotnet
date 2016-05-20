@@ -86,7 +86,7 @@
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
-    <Compile Include="Internal\AsicE\DirectManifestTests.cs" />
+    <Compile Include="Internal\AsicE\ManifestTests.cs" />
     <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="JobResponseTests.cs" />

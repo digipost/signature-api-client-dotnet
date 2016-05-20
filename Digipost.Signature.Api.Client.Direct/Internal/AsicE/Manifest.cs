@@ -1,27 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
-namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
+namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
-    internal class PortalManifest : IAsiceAttachable
+    internal class Manifest : IAsiceAttachable
     {
-        public PortalManifest(Sender sender, Document document, IEnumerable<Signer> signers)
+        public Manifest(Sender sender, Document document, AbstractSigner signer)
         {
             Sender = sender;
             Document = document;
-            Signers = signers;
+            Signer = signer;
         }
 
         public Sender Sender { get; internal set; }
 
-        public Document Document { get; internal set; }
+        public AbstractDocument Document { get; internal set; }
 
-        public IEnumerable<Signer> Signers { get; internal set; }
-
-        public Availability Availability { get; set; }
+        public AbstractSigner Signer { get; internal set; }
 
         public byte[] Bytes
         {

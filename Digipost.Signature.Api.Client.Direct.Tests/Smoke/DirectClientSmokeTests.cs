@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
-using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -172,7 +170,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Assert
                 Assert.IsTrue(xades.CanRead);
             }
-            
 
             [TestMethod]
             public async Task ConfirmsSuccessfully()

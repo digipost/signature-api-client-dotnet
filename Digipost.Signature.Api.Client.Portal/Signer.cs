@@ -4,10 +4,6 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Signer : AbstractSigner
     {
-        public NotificationsUsingLookup NotificationsUsingLookup { get; }
-
-        public Notifications Notifications { get; }
-
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
             : base(personalIdentificationNumber)
         {
@@ -15,9 +11,13 @@ namespace Digipost.Signature.Api.Client.Portal
         }
 
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
-    : base(personalIdentificationNumber)
+            : base(personalIdentificationNumber)
         {
             NotificationsUsingLookup = notificationsUsingLookup;
         }
+
+        public NotificationsUsingLookup NotificationsUsingLookup { get; }
+
+        public Notifications Notifications { get; }
     }
 }

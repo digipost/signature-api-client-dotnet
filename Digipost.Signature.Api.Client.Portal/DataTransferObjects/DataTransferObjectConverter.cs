@@ -38,13 +38,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 {
                     dataTransferObject.availability.activationtime = activationTime.Value;
                     dataTransferObject.availability.activationtimeSpecified = true;
-
                 }
 
                 var availableSeconds = manifest.Availability.AvailableSeconds;
 
-                if(availableSeconds != null)
-                { 
+                if (availableSeconds != null)
+                {
                     dataTransferObject.availability.availableseconds = availableSeconds.Value;
                     dataTransferObject.availability.availablesecondsSpecified = true;
                 }
@@ -86,17 +85,17 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var notificationsDto = new List<object>();
 
-            if (notifications.Sms!= null)
+            if (notifications.Sms != null)
             {
-                notificationsDto.Add(new sms() { number = notifications.Sms.Number});
+                notificationsDto.Add(new sms {number = notifications.Sms.Number});
             }
 
             if (notifications.Email != null)
             {
-                notificationsDto.Add(new email() {address = notifications.Email.Address});
+                notificationsDto.Add(new email {address = notifications.Email.Address});
             }
 
-            return new notifications()
+            return new notifications
             {
                 Items = notificationsDto.ToArray()
             };

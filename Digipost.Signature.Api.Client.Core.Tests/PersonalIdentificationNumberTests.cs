@@ -23,6 +23,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.IsFalse(toString.Contains(pin));
             }
         }
-
     }
 }

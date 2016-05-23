@@ -1,12 +1,11 @@
-﻿using System.Data.Common;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class SignatureStatusTests
     {
         [TestClass]
@@ -20,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Act
                 var signatureStatus = new SignatureStatus(identifier);
-                
+
                 //Assert
                 Assert.AreEqual(signatureStatus.Identifier, identifier);
             }
@@ -28,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
     }
 
     [TestClass]
-    public class KnownStatusesProperty: SignatureStatusTests
+    public class KnownStatusesProperty : SignatureStatusTests
     {
         [TestMethod]
         public void ContainsAllKnownStatuses()
@@ -38,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 .GetType()
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(f => f.FieldType == typeof (SignatureStatus))
-                .Select(f =>(SignatureStatus) f.GetValue(null));
+                .Select(f => (SignatureStatus) f.GetValue(null));
 
             //Act
 

@@ -12,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public RedirectReference Redirect { get; set; }
 
-        public Uri StatusBaseUrl { get; private set; }
+        public Uri StatusBaseUrl { get; }
 
         /// <summary>
         ///     A <see cref="StatusReference" /> is constructed from the url acquired from

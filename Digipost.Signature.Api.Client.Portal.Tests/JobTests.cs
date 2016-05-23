@@ -1,5 +1,4 @@
-﻿using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+﻿using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests

@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
                 var notificationsSmsFirst = new Notifications(sms, email);
                 var notificationsEmailFirst = new Notifications(email, sms);
-                
+
                 //Assert
                 Assert.AreEqual(email, notificationsEmailFirst.Email);
                 Assert.AreEqual(email, notificationsSmsFirst.Email);
@@ -53,5 +53,4 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
         }
     }
-
 }

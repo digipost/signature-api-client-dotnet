@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -12,7 +11,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         private const string MultipartMixed = "multipart/mixed";
         private const string ApplicationOctetStream = "application/octet-stream";
-
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {

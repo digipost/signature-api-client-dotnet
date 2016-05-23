@@ -119,6 +119,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 
             return signers;
         }
-
     }
 }

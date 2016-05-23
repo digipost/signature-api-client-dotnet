@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
@@ -65,12 +64,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         }
                     }
                 };
@@ -108,12 +107,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value, order = 1,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value, order = 2,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         }
                     }
                 };
@@ -157,12 +156,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         }
                     },
                     availability = new availability
@@ -210,13 +209,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value, 
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
+                            Item = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         }
                     },
                     availability = new availability
@@ -262,12 +261,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
-                            Item = new notificationsusinglookup() {email = new enabled()}
+                            Item = new notificationsusinglookup {email = new enabled()}
                         }
                     },
                     availability = new availability
@@ -275,7 +274,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         activationtime = source.Availability.Activation.Value,
                         availableseconds = source.Availability.AvailableSeconds.Value,
                         activationtimeSpecified = true,
-                        availablesecondsSpecified = true,
+                        availablesecondsSpecified = true
                     }
                 };
 
@@ -388,8 +387,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsNotificationsUsingLookupSuccessfully()
             {
                 //Arrange
-                var source = new NotificationsUsingLookup() { SmsIfAvailable = true };
-                var expected = new notificationsusinglookup() { email = new enabled(), sms = new enabled()};
+                var source = new NotificationsUsingLookup {SmsIfAvailable = true};
+                var expected = new notificationsusinglookup {email = new enabled(), sms = new enabled()};
 
                 //Act
                 var actual = DataTransferObjectConverter.ToDataTransferObject(source);
@@ -409,17 +408,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new PersonalIdentificationNumber("11111111111"),
                     new Notifications(new Email("test@mail.no"))
                     );
-                var expected = new portalsigner()
+                var expected = new portalsigner
                 {
                     personalidentificationnumber = source.PersonalIdentificationNumber.Value,
-                    Item = new notifications()
+                    Item = new notifications
                     {
                         Items = new object[]
                         {
-                            new email() { address = source.Notifications.Email.Address }
+                            new email {address = source.Notifications.Email.Address}
                         }
                     }
-                
                 };
 
                 //Act
@@ -440,10 +438,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new PersonalIdentificationNumber("11111111111"),
                     new NotificationsUsingLookup()
                     );
-                var expected = new portalsigner()
+                var expected = new portalsigner
                 {
                     personalidentificationnumber = source.PersonalIdentificationNumber.Value,
-                    Item = new notificationsusinglookup() { email = new enabled()}
+                    Item = new notificationsusinglookup {email = new enabled()}
                 };
 
                 //Act
@@ -455,7 +453,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 comparator.AreEqual(expected, actual, out differences);
                 Assert.AreEqual(0, differences.Count());
             }
-
         }
 
         [TestClass]

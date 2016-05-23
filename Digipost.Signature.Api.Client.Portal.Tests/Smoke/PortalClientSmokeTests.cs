@@ -1,5 +1,4 @@
 ﻿using System;
-
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -92,7 +91,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                     if (statusChange.JobId == jobId)
                     {
                         jobStatusChanged = statusChange;
-                    } 
+                    }
                     else if (statusChange.Status == JobStatus.NoChanges)
                     {
                         throw new Exception("Expected receipt, got emtpy queue.");

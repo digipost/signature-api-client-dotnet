@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
+﻿namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
-    class DocumentStub : Core.AbstractDocument
+    internal class DocumentStub : AbstractDocument
     {
         public DocumentStub(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
             : base(title, message, fileName, fileType, documentBytes)

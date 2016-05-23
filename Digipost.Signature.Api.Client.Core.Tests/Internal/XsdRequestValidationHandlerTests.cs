@@ -8,8 +8,7 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Core.Utilities;
-using Digipost.Signature.Api.Client.Portal;
+using Digipost.Signature.Api.Client.Resources.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Internal
@@ -67,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
             [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
+            [ExpectedException(typeof (InvalidXmlException))]
             public async Task ThrowsExceptionOnInvalidManifestInAttachment()
             {
                 //Arrange
@@ -75,7 +74,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 var serializedfunc = new Func<IRequestContent, string>(p => ContentUtility.GetDirectSignatureJobRequestBody());
 
-                var manifestBytes = Encoding.UTF8.GetBytes(Resources.Xml.XmlResource.Request.GetPortalManifest().OuterXml);
+                var manifestBytes = Encoding.UTF8.GetBytes(XmlResource.Request.GetPortalManifest().OuterXml);
                 var asiceArchive = new AsiceArchive(new List<AsiceAttachableProcessor>());
                 asiceArchive.AddAttachable("manifest.xml", manifestBytes);
                 var documentBundle = new DocumentBundle(asiceArchive.GetBytes());
@@ -84,16 +83,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
                 //Act
                 await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
-                
+
                 //Assert
-                
             }
-
-            private class FakeJob : IRequestContent
-            {
-                
-            }
-
 
             [TestMethod]
             public async Task AcceptsRequestWithNoBody()
@@ -105,6 +97,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 await client.GetAsync("http://bogusurl.no");
 
                 //Assert
+            }
+
+            private class FakeJob : IRequestContent
+            {
             }
         }
     }

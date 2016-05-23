@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice
         {
             _attachables.Add(new KeyValuePair<string, byte[]>(FileName, attachable));
         }
-        
+
         public byte[] GetBytes()
         {
             using (var stream = new MemoryStream())

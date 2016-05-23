@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Digipost.Signature.Api.Client.Portal.Enums
 {
     public class SignatureStatus
     {
-        public string Identifier { get; }
-
         public static SignatureStatus Rejected = new SignatureStatus("REJECTED");
 
         public static SignatureStatus Cancelled = new SignatureStatus("CANCELLED");
@@ -21,8 +17,8 @@ namespace Digipost.Signature.Api.Client.Portal.Enums
         public static SignatureStatus Waiting = new SignatureStatus("WAITING");
 
         public static SignatureStatus Signed = new SignatureStatus("SIGNED");
-        
-        public static IEnumerable<SignatureStatus> KnownStatuses = new List<SignatureStatus>()
+
+        public static IEnumerable<SignatureStatus> KnownStatuses = new List<SignatureStatus>
         {
             Rejected,
             Cancelled,
@@ -35,8 +31,11 @@ namespace Digipost.Signature.Api.Client.Portal.Enums
 
         public SignatureStatus(string identifier)
         {
-           Identifier = identifier;
+            Identifier = identifier;
         }
+
+        public string Identifier { get; }
+
         public override string ToString()
         {
             return $"{GetType().Name}: {Identifier}";

@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var notificationsUsingLookup = new NotificationsUsingLookup();
-                
+
                 //Act
                 var portalSigner = new Signer(new PersonalIdentificationNumber("999999999"), notificationsUsingLookup);
 

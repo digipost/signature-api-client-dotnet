@@ -1,14 +1,7 @@
-﻿using System.Net.Configuration;
-using System.Reflection;
-
-namespace Digipost.Signature.Api.Client.Portal
+﻿namespace Digipost.Signature.Api.Client.Portal
 {
     public class Notifications
     {
-        public Sms Sms { get; internal set; }
-
-        public Email Email { get; internal set; }
-
         public Notifications(Email email, Sms sms = null)
         {
             Email = email;
@@ -20,5 +13,9 @@ namespace Digipost.Signature.Api.Client.Portal
             Email = email;
             Sms = sms;
         }
+
+        public Sms Sms { get; internal set; }
+
+        public Email Email { get; internal set; }
     }
 }

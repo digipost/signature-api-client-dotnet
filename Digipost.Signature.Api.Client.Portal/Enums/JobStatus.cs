@@ -3,7 +3,7 @@
     public enum JobStatus
     {
         /// <summary>
-        /// There has not been any changes since the last received status change.
+        ///     There has not been any changes since the last received status change.
         /// </summary>
         NoChanges,
 
@@ -12,7 +12,8 @@
         InProgress,
 
         /// <summary>
-        /// When the client(s) confirms a job with this status, the job and its associated resources will become unavailable through the Signature API.
+        ///     When the client(s) confirms a job with this status, the job and its associated resources will become unavailable
+        ///     through the Signature API.
         /// </summary>
         CompletedSuccessfully
     }

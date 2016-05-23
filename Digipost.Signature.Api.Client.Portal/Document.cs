@@ -4,8 +4,6 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Document : AbstractDocument
     {
-        public string NonsensitiveTitle { get; set; }
-
         public Document(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
             : base(title, message, fileName, fileType, documentBytes)
         {
@@ -15,5 +13,7 @@ namespace Digipost.Signature.Api.Client.Portal
             : base(title, message, fileName, fileType, documentPath)
         {
         }
+
+        public string NonsensitiveTitle { get; set; }
     }
 }

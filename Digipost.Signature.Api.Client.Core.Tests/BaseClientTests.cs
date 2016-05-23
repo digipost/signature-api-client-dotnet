@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(tlsSetup, ServicePointManager.SecurityProtocol);
                 Assert.IsNotNull(clientStub.RequestHelper);
                 Assert.AreEqual(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
-            } 
+            }
         }
 
         [TestClass]

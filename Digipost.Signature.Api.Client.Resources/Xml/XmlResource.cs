@@ -9,6 +9,12 @@ namespace Digipost.Signature.Api.Client.Resources.Xml
     {
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Resources.Xml.Data");
 
+        private static XmlDocument GetResource(params string[] path)
+        {
+            var bytes = ResourceUtility.ReadAllBytes(true, path);
+            return XmlUtility.ToXmlDocument(Encoding.UTF8.GetString(bytes));
+        }
+
         internal class Request
         {
             public static XmlDocument GetPortalManifest()
@@ -28,12 +34,6 @@ namespace Digipost.Signature.Api.Client.Resources.Xml
             {
                 return GetResource("Response", "CreateTransportOk.xml");
             }
-        }
-
-        private static XmlDocument GetResource(params string[] path)
-        {
-            var bytes = ResourceUtility.ReadAllBytes(true, path);
-            return XmlUtility.ToXmlDocument(Encoding.UTF8.GetString(bytes));
         }
     }
 }

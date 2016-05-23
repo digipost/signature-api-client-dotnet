@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
-using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -53,7 +51,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static List<Signer> GetSigner()
         {
-            return new List<Signer>()
+            return new List<Signer>
             {
                 new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
             };

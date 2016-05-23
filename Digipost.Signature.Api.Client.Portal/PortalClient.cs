@@ -54,7 +54,10 @@ namespace Digipost.Signature.Api.Client.Portal
         ///     all signers have <see cref="SignatureStatus">signed</see> their documents), the returned status must be
         ///     <see cref="Confirm(ConfirmationReference)">confirmed</see>.
         /// </summary>
-        /// <param name="sender">The organization the status change is requested on behalf of. Defaults to <see cref="ClientConfiguration.GlobalSender"/></param>
+        /// <param name="sender">
+        ///     The organization the status change is requested on behalf of. Defaults to
+        ///     <see cref="ClientConfiguration.GlobalSender" />
+        /// </param>
         /// <returns>the changed status for a job, never null.</returns>
         public async Task<JobStatusChanged> GetStatusChange(Sender sender = null)
         {
@@ -119,11 +122,15 @@ namespace Digipost.Signature.Api.Client.Portal
         }
 
         /// <summary>
-        /// Confirms that the status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see> is received and may be discarded by the 
-        /// Signature service and not retrieved again. Calling this method on a status update without
-        /// <see cref="ConfirmationReference"/> has no effect.
+        ///     Confirms that the status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see> is received and
+        ///     may be discarded by the
+        ///     Signature service and not retrieved again. Calling this method on a status update without
+        ///     <see cref="ConfirmationReference" /> has no effect.
         /// </summary>
-        /// <param name="confirmationReference">the updated status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see>{@link #getStatusChange()}</param>
+        /// <param name="confirmationReference">
+        ///     the updated status retrieved from
+        ///     <see cref="GetStatusChange(Sender)">GetStatusChange</see>{@link #getStatusChange()}
+        /// </param>
         /// <returns></returns>
         public async Task Confirm(ConfirmationReference confirmationReference)
         {

@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Xml;
 using ApiClientShared;
-using Difi.Felles.Utility.Utilities;
 using Digipost.Signature.Api.Client.Core.Utilities;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities

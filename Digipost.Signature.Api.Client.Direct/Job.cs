@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class Job : IRequestContent, ISignatureJob
     {
-        public Job(Document document, AbstractSigner signer, string reference, ExitUrls exitUrls, Sender sender = null)
+        public Job(Document document, Signer signer, string reference, ExitUrls exitUrls, Sender sender = null)
         {
             Reference = reference;
             Signer = signer;
@@ -14,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Direct
             Sender = sender;
         }
 
-        public AbstractSigner Signer { get; }
+        public Signer Signer { get; }
 
         public ExitUrls ExitUrls { get; }
 

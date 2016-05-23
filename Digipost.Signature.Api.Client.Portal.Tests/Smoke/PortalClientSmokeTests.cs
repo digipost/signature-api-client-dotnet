@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -20,6 +22,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static ConfirmationReference _confirmationReference;
 
         private static PortalClient _portalClient;
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         protected static PortalClient GetPortalClient()
         {
@@ -66,12 +70,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
+                Log.Debug($"Sending in PortalClient Class Initialize. {portalClient.ClientConfiguration}");
                 var portalJob = DomainUtility.GetPortalJob();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
+                Log.Debug($"Result of Create was: {portalJobResponse}");
 
                 var signer = portalJob.Signers.ElementAt(0);
-                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Wait();
+                var signResult = portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Result;
+                Log.Debug($"Trying to autosign. Status code: {signResult}");
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
 

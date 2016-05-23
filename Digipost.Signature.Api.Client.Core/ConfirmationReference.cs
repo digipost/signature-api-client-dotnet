@@ -10,5 +10,10 @@ namespace Digipost.Signature.Api.Client.Core
         }
 
         public Uri Url { get; set; }
+
+        public override string ToString()
+        {
+            return $"Url: {Url}";
+        }
     }
 }

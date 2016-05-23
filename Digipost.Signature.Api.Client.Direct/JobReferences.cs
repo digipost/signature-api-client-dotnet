@@ -17,5 +17,10 @@ namespace Digipost.Signature.Api.Client.Direct
         public XadesReference Xades { get; internal set; }
 
         public PadesReference Pades { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"Confirmation: {Confirmation}, Xades: {Xades}, Pades: {Pades}";
+        }
     }
 }

@@ -28,6 +28,11 @@ namespace Digipost.Signature.Api.Client.Direct
 
         internal Uri BaseUrl { get; }
 
+        public override string ToString()
+        {
+            return $"StatusQueryToken: {StatusQueryToken}, BaseUrl: {BaseUrl}";
+        }
+
         public Uri Url()
         {
             return new Uri($"{BaseUrl.AbsoluteUri}?{StatusQueryTokenParamName}={StatusQueryToken}");

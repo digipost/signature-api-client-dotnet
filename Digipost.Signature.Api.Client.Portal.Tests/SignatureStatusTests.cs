@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Digipost.Signature.Api.Client.Portal.Enums;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests

@@ -23,5 +23,10 @@ namespace Digipost.Signature.Api.Client.Direct
         public AbstractDocument Document { get; }
 
         public Sender Sender { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"Signer: {Signer}, ExitUrls: {ExitUrls}, Reference: {Reference}, Document: {Document}, Sender: {Sender}";
+        }
     }
 }

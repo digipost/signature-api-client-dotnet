@@ -23,5 +23,10 @@ namespace Digipost.Signature.Api.Client.Portal
         public string Reference { get; }
 
         public Sender Sender { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"Signers: {Signers}, Availability: {Availability}, Document: {Document}, Reference: {Reference}, Sender: {Sender}";
+        }
     }
 }

@@ -8,8 +8,13 @@
             ResponseUrls = responseUrls;
         }
 
-        public long JobId { get; private set; }
+        public long JobId { get; }
 
-        public ResponseUrls ResponseUrls { get; private set; }
+        public ResponseUrls ResponseUrls { get; }
+
+        public override string ToString()
+        {
+            return $"JobId: {JobId}, ResponseUrls: {ResponseUrls}";
+        }
     }
 }

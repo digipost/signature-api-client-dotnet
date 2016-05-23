@@ -57,6 +57,11 @@ namespace Digipost.Signature.Api.Client.Core
         /// </summary>
         public IEnumerable<IDocumentBundleProcessor> DocumentBundleProcessors { get; set; } = new List<IDocumentBundleProcessor>();
 
+        public override string ToString()
+        {
+            return $"Environment: {Environment}, GlobalSender: {GlobalSender}, Certificate: {Certificate.Subject}, HttpClientTimeoutInMilliseconds: {HttpClientTimeoutInMilliseconds}, ServerCertificateOrganizationNumber: {ServerCertificateOrganizationNumber}";
+        }
+
         /// <summary>
         ///     Have the library dump the generated document bundle zip files to disk before they are sent to the service to create
         ///     signature jobs.

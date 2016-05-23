@@ -15,5 +15,10 @@ namespace Digipost.Signature.Api.Client.Portal
         }
 
         public string NonsensitiveTitle { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, NonsensitiveTitle: {NonsensitiveTitle}";
+        }
     }
 }

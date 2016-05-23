@@ -19,5 +19,10 @@ namespace Digipost.Signature.Api.Client.Portal
         public NotificationsUsingLookup NotificationsUsingLookup { get; }
 
         public Notifications Notifications { get; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, NotificationsUsingLookup: {NotificationsUsingLookup}, Notifications: {Notifications}";
+        }
     }
 }

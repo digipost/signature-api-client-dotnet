@@ -31,5 +31,10 @@ namespace Digipost.Signature.Api.Client.Core
             new CertificateChainValidator(CertificateChainUtility.ProduksjonsSertifikater()),
             new Uri("https://api.signering.posten.no")
             );
+
+        public override string ToString()
+        {
+            return $"Url: {Url}";
+        }
     }
 }

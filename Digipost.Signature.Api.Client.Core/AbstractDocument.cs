@@ -20,9 +20,9 @@ namespace Digipost.Signature.Api.Client.Core
         {
         }
 
-        public string Title { get; private set; }
+        public string Title { get; }
 
-        public string Message { get; private set; }
+        public string Message { get; }
 
         public string FileName { get; }
 
@@ -31,5 +31,10 @@ namespace Digipost.Signature.Api.Client.Core
         public string MimeType { get; }
 
         public byte[] Bytes { get; }
+
+        public override string ToString()
+        {
+            return $"Title: {Title}, Message: {Message}, Id: {Id}, MimeType: {MimeType}";
+        }
     }
 }

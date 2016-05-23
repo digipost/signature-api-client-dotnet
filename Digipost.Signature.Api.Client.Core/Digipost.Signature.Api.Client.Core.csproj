@@ -117,7 +117,7 @@
     <Compile Include="Internal\XsdRequestValidationHandler.cs" />
     <Compile Include="Internal\XsdValidationHandler.cs" />
     <Compile Include="ISignatureJob.cs" />
-    <Compile Include="RequestHelper.cs" />
+    <Compile Include="Internal\RequestHelper.cs" />
     <Compile Include="AbstractSigner.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Digipost.Signature.Api.Client.Portal.Enums
+namespace Digipost.Signature.Api.Client.Portal
 {
     public class SignatureStatus
     {

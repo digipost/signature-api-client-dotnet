@@ -17,5 +17,10 @@
         public Sms Sms { get; internal set; }
 
         public Email Email { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"Sms: {Sms}, Email: {Email}";
+        }
     }
 }

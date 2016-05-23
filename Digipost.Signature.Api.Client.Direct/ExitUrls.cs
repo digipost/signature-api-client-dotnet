@@ -30,5 +30,10 @@ namespace Digipost.Signature.Api.Client.Direct
         ///     The user will be redirected to this url if any unexpected error happens during the signing ceremony.
         /// </summary>
         public Uri ErrorUrl { get; set; }
+
+        public override string ToString()
+        {
+            return $"CompletionUrl: {CompletionUrl}, RejectionUrl: {RejectionUrl}, ErrorUrl: {ErrorUrl}";
+        }
     }
 }

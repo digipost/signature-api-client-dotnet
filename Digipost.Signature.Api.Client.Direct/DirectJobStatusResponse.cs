@@ -11,10 +11,15 @@ namespace Digipost.Signature.Api.Client.Direct
             References = references;
         }
 
-        public long JobId { get; private set; }
+        public long JobId { get; }
 
-        public JobStatus Status { get; private set; }
+        public JobStatus Status { get; }
 
-        public JobReferences References { get; private set; }
+        public JobReferences References { get; }
+
+        public override string ToString()
+        {
+            return $"JobId: {JobId}, Status: {Status}, References: {References}";
+        }
     }
 }

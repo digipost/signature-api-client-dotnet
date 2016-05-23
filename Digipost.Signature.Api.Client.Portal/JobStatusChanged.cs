@@ -25,5 +25,10 @@ namespace Digipost.Signature.Api.Client.Portal
         public PadesReference PadesReference { get; internal set; }
 
         public List<Signature> Signatures { get; internal set; }
+
+        public override string ToString()
+        {
+            return $"JobId: {JobId}, Status: {Status}, ConfirmationReference: {ConfirmationReference}, PadesReference: {PadesReference}, Signatures: {Signatures}";
+        }
     }
 }

@@ -12,5 +12,10 @@ namespace Digipost.Signature.Api.Client.Portal
         }
 
         public DateTime NextPermittedPollTime { get; set; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}, NextPermittedPollTime: {NextPermittedPollTime}";
+        }
     }
 }

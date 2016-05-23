@@ -14,5 +14,10 @@ namespace Digipost.Signature.Api.Client.Portal
         public long JobId { get; }
 
         public CancellationReference CancellationReference { get; set; }
+
+        public override string ToString()
+        {
+            return $"JobId: {JobId}, CancellationReference: {CancellationReference}";
+        }
     }
 }

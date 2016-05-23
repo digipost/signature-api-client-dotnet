@@ -8,5 +8,10 @@
         }
 
         public string Number { get; set; }
+
+        public override string ToString()
+        {
+            return $"Number: {Number}";
+        }
     }
 }

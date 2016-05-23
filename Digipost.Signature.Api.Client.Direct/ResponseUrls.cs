@@ -14,6 +14,11 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public Uri StatusBaseUrl { get; }
 
+        public override string ToString()
+        {
+            return $"Redirect: {Redirect}, StatusBaseUrl: {StatusBaseUrl}";
+        }
+
         /// <summary>
         ///     A <see cref="StatusReference" /> is constructed from the url acquired from
         ///     <see cref="JobResponse.ResponseUrls" />, and a token provided as a

@@ -12,5 +12,10 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             set { AvailableSeconds = (long) value.TotalSeconds; }
         }
+
+        public override string ToString()
+        {
+            return $"Activation: {Activation}, AvailableSeconds: {AvailableSeconds}";
+        }
     }
 }

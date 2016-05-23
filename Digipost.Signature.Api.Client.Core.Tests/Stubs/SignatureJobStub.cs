@@ -4,7 +4,7 @@
     {
         public Sender Sender { get; }
 
-        public Document Document { get; }
+        public AbstractDocument Document { get; }
 
         public string Reference { get; set; }
     }

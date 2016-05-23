@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
-using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
@@ -39,6 +37,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                     break;
                 case Client.DifiQa:
                     _directClient = DirectClient(Environment.DifiQa);
+                    break;
+                case Client.Test:
+                    var testEnvironment = Environment.DifiTest;
+                    testEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
+                    _directClient = DirectClient(testEnvironment);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -106,9 +109,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 Assert.IsNotNull(_confirmationReference);
             }
 
-            private static async Task<string> AutoSignAndGetToken(DirectClient directClient, DirectJobResponse directJobResponse)
+            private static async Task<string> AutoSignAndGetToken(DirectClient directClient, JobResponse jobResponse)
             {
-                var statusUrl = await directClient.AutoSign(directJobResponse.JobId);
+                var statusUrl = await directClient.AutoSign(jobResponse.JobId);
                 var queryParams = new Uri(statusUrl).Query;
                 var queryDictionary = HttpUtility.ParseQueryString(queryParams);
                 var statusQueryToken = queryDictionary.Get(0);
@@ -167,7 +170,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Assert
                 Assert.IsTrue(xades.CanRead);
             }
-            
 
             [TestMethod]
             public async Task ConfirmsSuccessfully()

@@ -6,9 +6,9 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
-    internal class PortalManifest : IAsiceAttachable
+    internal class Manifest : IAsiceAttachable
     {
-        public PortalManifest(Sender sender, Document document, IEnumerable<Signer> signers)
+        public Manifest(Sender sender, Document document, IEnumerable<Signer> signers)
         {
             Sender = sender;
             Document = document;

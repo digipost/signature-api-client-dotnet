@@ -1,13 +1,13 @@
-﻿using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+﻿using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
     [TestClass]
-    public class PortalJobTests
+    public class JobTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalJobTests
+        public class ConstructorMethod : JobTests
         {
             [TestMethod]
             public void ConstructorWithoutSenderExists()
@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
 
                 //Act
-                new PortalJob(null, null, null);
+                new Job(null, null, null);
 
                 //Assert
             }
@@ -24,10 +24,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var document = CoreDomainUtility.GetDocument();
-                var signers = CoreDomainUtility.GetSigners(3);
+                var document = DomainUtility.GetPortalDocument();
+                var signers = DomainUtility.GetSigners(3);
                 var reference = "PortalJobReference";
-                var portalJob = new PortalJob(document, signers, reference);
+                var portalJob = new Job(document, signers, reference);
 
                 //Act
 

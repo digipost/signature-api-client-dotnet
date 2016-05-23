@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
                 var directClient = new DirectClient(clientConfiguration);
-                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
+                var directJob = new Job(DomainUtility.GetDirectDocument(), DomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
 
                 //Act
                 await directClient.Create(directJob);

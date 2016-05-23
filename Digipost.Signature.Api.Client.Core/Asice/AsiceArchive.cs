@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 
 namespace Digipost.Signature.Api.Client.Core.Asice
 {
     internal class AsiceArchive
     {
         private readonly IEnumerable<AsiceAttachableProcessor> _asiceAttachableProcessors;
-        private readonly IAsiceAttachable[] _attachables;
+        private readonly List<KeyValuePair<string, byte[]>> _attachables = new List<KeyValuePair<string, byte[]>>();
         private ZipArchive _zipArchive;
 
         public AsiceArchive(IEnumerable<AsiceAttachableProcessor> asiceAttachableProcessors, params IAsiceAttachable[] attachables)
         {
-            _attachables = attachables;
+            _attachables.AddRange(attachables.Select(a => new KeyValuePair<string, byte[]>(a.FileName, a.Bytes)));
             _asiceAttachableProcessors = asiceAttachableProcessors;
+        }
+
+        public void AddAttachable(string FileName, byte[] attachable)
+        {
+            _attachables.Add(new KeyValuePair<string, byte[]>(FileName, attachable));
         }
 
         public byte[] GetBytes()
@@ -25,8 +31,8 @@ namespace Digipost.Signature.Api.Client.Core.Asice
 
                 using (_zipArchive)
                 {
-                    foreach (var dokument in _attachables)
-                        AddToArchive(dokument.FileName, dokument.Bytes);
+                    foreach (var attachable in _attachables)
+                        AddToArchive(attachable.Key, attachable.Value);
                 }
 
                 var bundleArray = stream.ToArray();

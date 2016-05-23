@@ -4,23 +4,23 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 
 namespace Digipost.Signature.Api.Client.Core
 {
-    public class Document : IAsiceAttachable
+    public abstract class AbstractDocument : IAsiceAttachable
     {
-        public Document(string subject, string message, string fileName, FileType fileType, byte[] documentBytes)
+        protected AbstractDocument(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
         {
-            Subject = subject;
+            Title = title;
             Message = message;
             FileName = fileName;
             MimeType = fileType.ToMimeType();
             Bytes = documentBytes;
         }
 
-        public Document(string subject, string message, string fileName, FileType fileType, string documentPath)
-            : this(subject, message, fileName, fileType, File.ReadAllBytes(documentPath))
+        protected AbstractDocument(string title, string message, string fileName, FileType fileType, string documentPath)
+            : this(title, message, fileName, fileType, File.ReadAllBytes(documentPath))
         {
         }
 
-        public string Subject { get; private set; }
+        public string Title { get; private set; }
 
         public string Message { get; private set; }
 

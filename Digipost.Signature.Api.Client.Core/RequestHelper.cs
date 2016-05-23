@@ -11,7 +11,6 @@ using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 
-
 namespace Digipost.Signature.Api.Client.Core
 {
     internal class RequestHelper

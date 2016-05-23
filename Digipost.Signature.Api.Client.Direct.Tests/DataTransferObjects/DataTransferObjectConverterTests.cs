@@ -21,12 +21,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             [TestMethod]
             public void ConvertsDirectJobSuccessfully()
             {
-                var document = CoreDomainUtility.GetDocument();
-                var signer = CoreDomainUtility.GetSigner();
+                var document = DomainUtility.GetDirectDocument();
+                var signer = DomainUtility.GetSigner();
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();
 
-                var source = new DirectJob(
+                var source = new Job(
                     document,
                     signer,
                     reference,
@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     statusurl = "https://localhost:8443/api/signature-jobs/77/status"
                 };
 
-                var expected = new DirectJobResponse(
+                var expected = new JobResponse(
                     source.signaturejobid,
                     new ResponseUrls(new Uri(source.redirecturl), new Uri(source.statusurl)
                         )
@@ -173,23 +173,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
-                var source = new DirectManifest(
+                var source = new Manifest(
                     new Sender(organizationNumberSender),
                     new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
-                    new Signer(personalIdentificationNumber)
+                    new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))
                     );
 
                 var expected = new directsignaturejobmanifest
                 {
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new document
+                    document = new directdocument
                     {
                         title = documentSubject,
                         description = documentMessage,
                         href = documentFileName,
                         mime = expectedMimeType
                     },
-                    signer = new signer {personalidentificationnumber = personalIdentificationNumber}
+                    signer = new directsigner {personalidentificationnumber = personalIdentificationNumber}
                 };
 
                 //Act
@@ -242,7 +242,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     documentBytes
                     );
 
-                var expected = new document
+                var expected = new directdocument
                 {
                     title = subject,
                     description = message,
@@ -266,8 +266,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 //Arrange
                 const string personalIdentificationNumber = "0123456789";
 
-                var source = new Signer(personalIdentificationNumber);
-                var expected = new signer
+                var source = new Signer(new PersonalIdentificationNumber(personalIdentificationNumber));
+                var expected = new directsigner
                 {
                     personalidentificationnumber = personalIdentificationNumber
                 };

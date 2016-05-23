@@ -20,8 +20,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 //Arrange
                 var businessCertificate = CoreDomainUtility.GetTestCertificate();
                 var clientConfiguration = CoreDomainUtility.GetClientConfiguration();
-                var directJob = new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
-                var serializedDirectJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
+                var directJob = new Job(DomainUtility.GetDirectDocument(), DomainUtility.GetSigner(), "reference", DomainUtility.GetExitUrls(), CoreDomainUtility.GetSender());
+                var serializedJob = SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject(directJob));
 
                 var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate, clientConfiguration);
 
@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);
-                Assert.AreEqual(serializedDirectJob, action.RequestContentXml.InnerXml);
+                Assert.AreEqual(serializedJob, action.RequestContentXml.InnerXml);
 
                 Assert.AreEqual(null, action.MultipartFormDataContent);
             }

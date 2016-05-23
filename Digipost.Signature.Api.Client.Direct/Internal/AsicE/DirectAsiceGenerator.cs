@@ -7,12 +7,12 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
     internal class DirectAsiceGenerator : AsiceGenerator
     {
-        public static DocumentBundle CreateAsice(DirectJob directJob, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
+        public static DocumentBundle CreateAsice(Job job, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
         {
-            var manifest = new DirectManifest(directJob.Sender, directJob.Document, directJob.Signer);
-            var signature = new SignatureGenerator(certificate, directJob.Document, manifest);
+            var manifest = new Manifest(job.Sender, (Document) job.Document, job.Signer);
+            var signature = new SignatureGenerator(certificate, job.Document, manifest);
 
-            var asiceArchive = GetAsiceArchive(directJob, asiceConfiguration, directJob.Document, signature, manifest);
+            var asiceArchive = GetAsiceArchive(job, asiceConfiguration, job.Document, signature, manifest);
 
             return new DocumentBundle(asiceArchive.GetBytes());
         }

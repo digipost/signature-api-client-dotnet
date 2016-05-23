@@ -72,14 +72,14 @@ public partial class error {
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
 public partial class signature {
     
-    private signaturestatus statusField;
+    private string statusField;
     
     private string personalidentificationnumberField;
     
     private string xadesurlField;
     
     /// <remarks/>
-    public signaturestatus status {
+    public string status {
         get {
             return this.statusField;
         }
@@ -109,28 +109,6 @@ public partial class signature {
             this.xadesurlField = value;
         }
     }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Xml.Serialization.XmlTypeAttribute(TypeName="signature-status", Namespace="http://signering.posten.no/schema/v1")]
-public enum signaturestatus {
-    
-    /// <remarks/>
-    WAITING,
-    
-    /// <remarks/>
-    REJECTED,
-    
-    /// <remarks/>
-    CANCELLED,
-    
-    /// <remarks/>
-    EXPIRED,
-    
-    /// <remarks/>
-    SIGNED,
 }
 
 /// <remarks/>
@@ -234,8 +212,251 @@ public partial class availability {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="portal-document", Namespace="http://signering.posten.no/schema/v1")]
+public partial class portaldocument {
+    
+    private string titleField;
+    
+    private string nonsensitivetitleField;
+    
+    private string descriptionField;
+    
+    private string hrefField;
+    
+    private string mimeField;
+    
+    /// <remarks/>
+    public string title {
+        get {
+            return this.titleField;
+        }
+        set {
+            this.titleField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("nonsensitive-title")]
+    public string nonsensitivetitle {
+        get {
+            return this.nonsensitivetitleField;
+        }
+        set {
+            this.nonsensitivetitleField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public string description {
+        get {
+            return this.descriptionField;
+        }
+        set {
+            this.descriptionField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string href {
+        get {
+            return this.hrefField;
+        }
+        set {
+            this.hrefField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string mime {
+        get {
+            return this.mimeField;
+        }
+        set {
+            this.mimeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
-public partial class document {
+public partial class sms {
+    
+    private string numberField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string number {
+        get {
+            return this.numberField;
+        }
+        set {
+            this.numberField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class email {
+    
+    private string addressField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string address {
+        get {
+            return this.addressField;
+        }
+        set {
+            this.addressField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class notifications {
+    
+    private object[] itemsField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("email", typeof(email))]
+    [System.Xml.Serialization.XmlElementAttribute("sms", typeof(sms))]
+    public object[] Items {
+        get {
+            return this.itemsField;
+        }
+        set {
+            this.itemsField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class enabled {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="notifications-using-lookup", Namespace="http://signering.posten.no/schema/v1")]
+public partial class notificationsusinglookup {
+    
+    private enabled emailField;
+    
+    private enabled smsField;
+    
+    /// <remarks/>
+    public enabled email {
+        get {
+            return this.emailField;
+        }
+        set {
+            this.emailField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public enabled sms {
+        get {
+            return this.smsField;
+        }
+        set {
+            this.smsField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="portal-signer", Namespace="http://signering.posten.no/schema/v1")]
+public partial class portalsigner {
+    
+    private string personalidentificationnumberField;
+    
+    private object itemField;
+    
+    private int orderField;
+    
+    private bool orderFieldSpecified;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
+    public string personalidentificationnumber {
+        get {
+            return this.personalidentificationnumberField;
+        }
+        set {
+            this.personalidentificationnumberField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("notifications", typeof(notifications))]
+    [System.Xml.Serialization.XmlElementAttribute("notifications-using-lookup", typeof(notificationsusinglookup))]
+    public object Item {
+        get {
+            return this.itemField;
+        }
+        set {
+            this.itemField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int order {
+        get {
+            return this.orderField;
+        }
+        set {
+            this.orderField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool orderSpecified {
+        get {
+            return this.orderFieldSpecified;
+        }
+        set {
+            this.orderFieldSpecified = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="direct-document", Namespace="http://signering.posten.no/schema/v1")]
+public partial class directdocument {
     
     private string titleField;
     
@@ -315,14 +536,10 @@ public partial class sender {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
-public partial class signer {
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="direct-signer", Namespace="http://signering.posten.no/schema/v1")]
+public partial class directsigner {
     
     private string personalidentificationnumberField;
-    
-    private int orderField;
-    
-    private bool orderFieldSpecified;
     
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
@@ -332,28 +549,6 @@ public partial class signer {
         }
         set {
             this.personalidentificationnumberField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public int order {
-        get {
-            return this.orderField;
-        }
-        set {
-            this.orderField = value;
-        }
-    }
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public bool orderSpecified {
-        get {
-            return this.orderFieldSpecified;
-        }
-        set {
-            this.orderFieldSpecified = value;
         }
     }
 }
@@ -450,14 +645,14 @@ public partial class directsignaturejobrequest {
 [System.Xml.Serialization.XmlRootAttribute("direct-signature-job-manifest", Namespace="http://signering.posten.no/schema/v1", IsNullable=false)]
 public partial class directsignaturejobmanifest {
     
-    private signer signerField;
+    private directsigner signerField;
     
     private sender senderField;
     
-    private document documentField;
+    private directdocument documentField;
     
     /// <remarks/>
-    public signer signer {
+    public directsigner signer {
         get {
             return this.signerField;
         }
@@ -477,7 +672,7 @@ public partial class directsignaturejobmanifest {
     }
     
     /// <remarks/>
-    public document document {
+    public directdocument document {
         get {
             return this.documentField;
         }
@@ -657,17 +852,17 @@ public partial class portalsignaturejobrequest {
 [System.Xml.Serialization.XmlRootAttribute("portal-signature-job-manifest", Namespace="http://signering.posten.no/schema/v1", IsNullable=false)]
 public partial class portalsignaturejobmanifest {
     
-    private signer[] signersField;
+    private portalsigner[] signersField;
     
     private sender senderField;
     
-    private document documentField;
+    private portaldocument documentField;
     
     private availability availabilityField;
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlArrayItemAttribute(IsNullable=false)]
-    public signer[] signers {
+    [System.Xml.Serialization.XmlArrayItemAttribute("signer", IsNullable=false)]
+    public portalsigner[] signers {
         get {
             return this.signersField;
         }
@@ -687,7 +882,7 @@ public partial class portalsignaturejobmanifest {
     }
     
     /// <remarks/>
-    public document document {
+    public portaldocument document {
         get {
             return this.documentField;
         }
@@ -823,8 +1018,11 @@ public partial class portalsignaturejobstatuschangeresponse {
 public enum portalsignaturejobstatus {
     
     /// <remarks/>
-    PARTIALLY_COMPLETED,
+    IN_PROGRESS,
     
     /// <remarks/>
-    COMPLETED,
+    COMPLETED_SUCCESSFULLY,
+    
+    /// <remarks/>
+    FAILED,
 }

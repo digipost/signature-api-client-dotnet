@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
@@ -8,28 +11,28 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 {
     public class DomainUtility
     {
-        public static DirectJob GetDirectJob()
+        public static Job GetDirectJob()
         {
-            return new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls());
+            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
-        public static DirectJob GetDirectJobWithSender()
+        public static Job GetDirectJobWithSender()
         {
-            return new DirectJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
+            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
-        internal static DirectManifest GetDirectManifest()
+        internal static Manifest GetDirectManifest()
         {
-            return new DirectManifest(
+            return new Manifest(
                 CoreDomainUtility.GetSender(),
-                CoreDomainUtility.GetDocument(),
-                CoreDomainUtility.GetSigner()
+                GetDirectDocument(),
+                GetSigner()
                 );
         }
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.GetDocument(), GetDirectManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetDirectDocument(), GetDirectManifest());
         }
 
         public static DirectJobStatusResponse GetDirectJobStatusResponse()
@@ -70,12 +73,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Uri("http://signatureServiceRoot.Digipost.no");
         }
 
-        public static DirectJobResponse GetDirectJobResponse()
+        public static JobResponse GetDirectJobResponse()
         {
             var jobId = 123456789;
             var responseUrls = GetResponseUrls();
 
-            return new DirectJobResponse(
+            return new JobResponse(
                 jobId,
                 responseUrls
                 );
@@ -87,6 +90,34 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 new Uri("http://signatureRoot.digipost.no/confirmation"),
                 new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));
+        }
+
+        public static Document GetDirectDocument()
+        {
+            return new Document("TheTitle", "The direct document message", "TheFileName.pdf", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+        }
+
+        public static Signer GetSigner()
+        {
+            return GetSigners(1).First();
+        }
+
+        public static List<Signer> GetSigners(int count)
+        {
+            if (count > 9)
+            {
+                throw new ArgumentException("Maximum of 9 senders.");
+            }
+
+            var signers = new List<Signer>();
+
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
+            {
+                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i)));
+            }
+
+            return signers;
         }
     }
 }

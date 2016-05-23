@@ -23,13 +23,13 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public async Task<DirectJobResponse> Create(DirectJob directJob)
+        public async Task<JobResponse> Create(Job job)
         {
-            directJob.Sender = CurrentSender(directJob.Sender);
-            var relativeUrl = RelativeUrl(directJob);
+            job.Sender = CurrentSender(job.Sender);
+            var relativeUrl = RelativeUrl(job);
 
-            var documentBundle = DirectAsiceGenerator.CreateAsice(directJob, ClientConfiguration.Certificate, ClientConfiguration);
-            var createAction = new DirectCreateAction(directJob, documentBundle);
+            var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
+            var createAction = new DirectCreateAction(job, documentBundle);
             var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
@@ -37,9 +37,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
-        private static Uri RelativeUrl(DirectJob directJob)
+        private static Uri RelativeUrl(Job job)
         {
-            return new Uri($"/api/{directJob.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+            return new Uri($"/api/{job.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
 
         /// <summary>

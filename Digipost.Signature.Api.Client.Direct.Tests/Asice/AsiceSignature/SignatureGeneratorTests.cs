@@ -13,10 +13,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice.AsiceSignature
     {
         internal SignatureGenerator GetSignaturGenerator()
         {
-            var document = CoreDomainUtility.GetDocument();
+            var document = DomainUtility.GetDirectDocument();
             var sender = CoreDomainUtility.GetSender();
-            var signer = CoreDomainUtility.GetSigner();
-            var manifest = new DirectManifest(sender, document, signer);
+            var signer = DomainUtility.GetSigner();
+            var manifest = new Manifest(sender, document, signer);
             var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;
@@ -29,9 +29,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice.AsiceSignature
             public void InitializesWithDocumentDirectManifestAndCertificate()
             {
                 //Arrange
-                var document = CoreDomainUtility.GetDocument();
+                var document = DomainUtility.GetDirectDocument();
                 var sender = CoreDomainUtility.GetSender();
-                var manifest = new DirectManifest(sender, document, CoreDomainUtility.GetSigner());
+                var manifest = new Manifest(sender, document, DomainUtility.GetSigner());
                 var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
 
                 //Act

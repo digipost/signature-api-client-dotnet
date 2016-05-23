@@ -3,17 +3,17 @@
     public enum JobStatus
     {
         /// <summary>
-        /// The document(s) of the job has been signed by the receiver.
+        ///     The document(s) of the job has been signed by the receiver.
         /// </summary>
         Failed,
 
         /// <summary>
-        /// The signature job has been rejected by the receiver.
+        ///     The signature job has been rejected by the receiver.
         /// </summary>
         Rejected,
 
         /// <summary>
-        /// An error occured during the signing ceremony.
+        ///     An error occured during the signing ceremony.
         /// </summary>
         Signed
     }

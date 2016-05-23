@@ -5,7 +5,7 @@
                                              xmlns:ns3="http://www.w3.org/2000/09/xmldsig#"
                                              xmlns:ns4="http://uri.etsi.org/2918/v1.2.1#">
   <signature-job-id>155</signature-job-id>
-  <status>COMPLETED</status>
+  <status>COMPLETED_SUCCESSFULLY</status>
   <confirmation-url>https://localhost:8443/api/988015814/portal/signature-jobs/155/complete</confirmation-url>
   <signatures>
     <signature>

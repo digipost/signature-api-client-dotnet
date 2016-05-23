@@ -102,7 +102,7 @@
     <Compile Include="ClientConfigurationTests.cs" />
     <Compile Include="ConfirmationReferenceTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
-    <Compile Include="DocumentTests.cs" />
+    <Compile Include="AbstractDocumentTests.cs" />
     <Compile Include="EnvironmentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
@@ -119,11 +119,14 @@
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
     <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
+    <Compile Include="PersonalIdentificationNumberTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />
     <Compile Include="RequestHelperTests.cs" />
     <Compile Include="SenderTests.cs" />
     <Compile Include="Smoke\SmokeTests.cs" />
+    <Compile Include="Stubs\DocumentStub.cs" />
     <Compile Include="Stubs\SignatureJobStub.cs" />
+    <Compile Include="Stubs\SignerStub.cs" />
     <Compile Include="Utilities\CompareObjects\Comparator.cs" />
     <Compile Include="Utilities\CompareObjects\Difference.cs" />
     <Compile Include="Utilities\CompareObjects\IComparator.cs" />
@@ -131,7 +134,7 @@
     <Compile Include="Utilities\CoreDomainUtility.cs" />
     <Compile Include="PadesReferenceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignerTests.cs" />
+    <Compile Include="AbstractSignerTests.cs" />
     <Compile Include="Utilities\CoreResponseUtility.cs" />
     <Compile Include="Utilities\ContentUtility.cs" />
     <Compile Include="XadesReferenceTests.cs" />
@@ -158,6 +161,10 @@
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
+      <Project>{1f5941d7-0ae5-40c4-b1de-9adbb6926420}</Project>
+      <Name>Digipost.Signature.Api.Client.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
       <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>

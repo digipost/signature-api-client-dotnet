@@ -5,9 +5,9 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
-    internal class DirectManifest : IAsiceAttachable
+    internal class Manifest : IAsiceAttachable
     {
-        public DirectManifest(Sender sender, Document document, Signer signer)
+        public Manifest(Sender sender, Document document, AbstractSigner signer)
         {
             Sender = sender;
             Document = document;
@@ -16,9 +16,9 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 
         public Sender Sender { get; internal set; }
 
-        public Document Document { get; internal set; }
+        public AbstractDocument Document { get; internal set; }
 
-        public Signer Signer { get; internal set; }
+        public AbstractSigner Signer { get; internal set; }
 
         public byte[] Bytes
         {

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
+using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -16,38 +14,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new ClientConfiguration(Environment.DifiQa, GetTestCertificate(), GetSender());
         }
 
-        public static Document GetDocument()
+        public static AbstractDocument GetDocument()
         {
-            return new Document("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
+            return new DocumentStub("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
         }
 
         public static Sender GetSender()
         {
             var organizationNumberQaOrganization = "988015814";
             return new Sender(organizationNumberQaOrganization);
-        }
-
-        public static Signer GetSigner()
-        {
-            return GetSigners(1).First();
-        }
-
-        public static List<Signer> GetSigners(int count)
-        {
-            if (count > 9)
-            {
-                throw new ArgumentException("Maximum of 9 senders.");
-            }
-
-            var signers = new List<Signer>();
-
-            const string basePersonalIdentificationNumber = "0101330000";
-            for (var i = 1; i <= count; i++)
-            {
-                signers.Add(new Signer(basePersonalIdentificationNumber + i));
-            }
-
-            return signers;
         }
 
         public static byte[] GetPdfDocumentBytes()

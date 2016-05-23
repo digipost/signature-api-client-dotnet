@@ -73,7 +73,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(url, environment.Url);
                 CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
             }
-
         }
     }
 }

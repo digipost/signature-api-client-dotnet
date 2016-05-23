@@ -4,7 +4,6 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
 using Difi.Felles.Utility.Security;
-using Difi.Felles.Utility.Utilities;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Utilities.Difi.Felles.Utility.Utilities;
 
@@ -127,7 +126,7 @@ namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
 
         private void AddSignatureToDocument()
         {
-            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), deep: true));
+            _xml.DocumentElement.AppendChild(_xml.ImportNode(_signatureNode.GetXml(), true));
         }
     }
 }

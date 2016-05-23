@@ -7,6 +7,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
@@ -33,7 +34,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
                 var portalClient = new PortalClient(clientConfiguration);
-                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(1), "SendersReference");
+                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(1), "SendersReference");
 
                 //Act
                 await portalClient.Create(portalJob);
@@ -118,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var actualResponse = await portalClient.GetStatusChange();
 
                 //Assert
-                Assert.AreEqual(PortalJobStatusChanged.NoChangesJobStatusChanged, actualResponse);
+                Assert.AreEqual(JobStatusChanged.NoChangesJobStatusChanged, actualResponse);
             }
 
             [TestMethod]
@@ -130,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
 
-                object expectedResponseType = typeof (PortalJobStatusChanged);
+                object expectedResponseType = typeof (JobStatusChanged);
 
                 //Act
                 var actualResponseType = (await portalClient.GetStatusChange()).GetType();

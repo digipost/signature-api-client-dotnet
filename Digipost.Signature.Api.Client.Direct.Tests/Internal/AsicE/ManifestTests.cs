@@ -1,46 +1,45 @@
 ﻿using System.Text;
 using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
+namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
 {
-    [TestClass]
-    public class PortalManifestTests
+    public class ManifestTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalManifestTests
+        public class ConstructorMethod : ManifestTests
         {
             [TestMethod]
             public void SimpleConstructor()
             {
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
-                var document = CoreDomainUtility.GetDocument();
-                var signers = CoreDomainUtility.GetSigners(2);
+                var document = DomainUtility.GetDirectDocument();
+                var signer = DomainUtility.GetSigner();
 
                 //Act
-                var manifest = new PortalManifest(sender, document, signers);
+                var manifest = new Manifest(sender, document, signer);
 
                 //Assert
                 Assert.AreEqual(sender, manifest.Sender);
                 Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signers, manifest.Signers);
+                Assert.AreEqual(signer, manifest.Signer);
             }
         }
 
         [TestClass]
-        public class FileNameMethod : PortalManifestTests
+        public class FileNameMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string fileName = "manifest.xml";
-                var manifest = DomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -50,14 +49,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class MimeTypeMethod : PortalManifestTests
+        public class MimeTypeMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string mimeType = "application/xml";
-                var manifest = DomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -67,14 +66,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class IdMethod : PortalManifestTests
+        public class IdMethod : ManifestTests
         {
             [TestMethod]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
                 const string id = "Id_1";
-                var manifest = DomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetDirectManifest();
 
                 //Act
 
@@ -84,13 +83,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
         }
 
         [TestClass]
-        public class BytesMethod : PortalManifestTests
+        public class BytesMethod : ManifestTests
         {
             [TestMethod]
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
-                var manifest = DomainUtility.GetPortalManifest();
+                var manifest = DomainUtility.GetDirectManifest();
                 var manifestDataTranferObject = DataTransferObjectConverter.ToDataTransferObject(manifest);
                 var expectedResult = SerializeUtility.Serialize(manifestDataTranferObject);
 

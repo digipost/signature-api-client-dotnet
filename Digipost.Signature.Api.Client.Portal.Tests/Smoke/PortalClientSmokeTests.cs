@@ -39,6 +39,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 case Client.DifiQa:
                     _portalClient = GetPortalClient(Environment.DifiQa);
                     break;
+                case Client.Test:
+                    var testEnvironment = Environment.DifiTest;
+                    testEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
+                    _portalClient = GetPortalClient(testEnvironment);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -61,31 +66,35 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public static void CreateAndGetStatus(TestContext context)
             {
                 var portalClient = GetPortalClient();
-                var portalJob = DomainUtility.GetPortalJob(1);
+                var portalJob = DomainUtility.GetPortalJob();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 
                 var signer = portalJob.Signers.ElementAt(0);
-                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber).Wait();
+                portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Wait();
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
 
-                Assert.AreEqual(JobStatus.Completed, jobStatusChangeResponse.Status);
+                Assert.AreEqual(JobStatus.CompletedSuccessfully, jobStatusChangeResponse.Status);
 
                 _xadesReference = new XadesReference(GetUriFromRelativePath(jobStatusChangeResponse.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
                 _padesReference = new PadesReference(GetUriFromRelativePath(jobStatusChangeResponse.PadesReference.Url.AbsolutePath));
                 _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(jobStatusChangeResponse.ConfirmationReference.Url.AbsolutePath));
             }
 
-            private static PortalJobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
+            private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
             {
-                PortalJobStatusChanged portalJobStatusChanged = null;
-                while (portalJobStatusChanged == null)
+                JobStatusChanged jobStatusChanged = null;
+                while (jobStatusChanged == null)
                 {
                     var statusChange = portalClient.GetStatusChange().Result;
                     if (statusChange.JobId == jobId)
                     {
-                        portalJobStatusChanged = statusChange;
+                        jobStatusChanged = statusChange;
+                    }
+                    else if (statusChange.Status == JobStatus.NoChanges)
+                    {
+                        throw new Exception("Expected receipt, got emtpy queue.");
                     }
                     else
                     {
@@ -94,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                     }
                 }
 
-                return portalJobStatusChanged;
+                return jobStatusChanged;
             }
 
             [TestMethod]
@@ -151,7 +160,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task CancelsSuccessfully()
             {
                 //Arrange
-                var portalJob = new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(1), "aReference");
+                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigner(), "aReference");
                 var portalClient = GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob);

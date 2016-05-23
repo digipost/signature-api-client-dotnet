@@ -6,36 +6,36 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    public class PortalJobStatusChangeResponseTests
+    public class JobStatusChangedTests
     {
         [TestClass]
-        public class ConstructorMethod : PortalJobStatusChangeResponseTests
+        public class ConstructorMethod : JobStatusChangedTests
         {
             [TestMethod]
             public void SimpleConstructor()
             {
                 //Arrange
                 var jobId = 123456789;
-                var jobStatus = JobStatus.PartiallyCompleted;
+                var jobStatus = JobStatus.InProgress;
                 var confirmationReference = new ConfirmationReference(new Uri("http://confirmationreference.no"));
                 var signatures = new List<Signature>
                 {
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Signed,
-                        Signer = new Signer("123456789"),
+                        Signer = new PersonalIdentificationNumber("123456789"),
                         XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Waiting,
-                        Signer = new Signer("123456789"),
+                        Signer = new PersonalIdentificationNumber("123456789"),
                         XadesReference = null
                     }
                 };
 
                 //Act
-                var portalJobStatusChangeResponse = new PortalJobStatusChanged(
+                var portalJobStatusChangeResponse = new JobStatusChanged(
                     jobId,
                     jobStatus,
                     confirmationReference,

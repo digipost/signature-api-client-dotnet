@@ -70,6 +70,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -106,6 +107,7 @@
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
     <Compile Include="IDocumentBundleProcessor.cs" />
     <Compile Include="Internal\CreateAction.cs" />
+    <Compile Include="PersonalIdentificationNumber.cs" />
     <Compile Include="Utilities\NamespaceUtility.cs" />
     <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
@@ -116,14 +118,14 @@
     <Compile Include="Internal\XsdValidationHandler.cs" />
     <Compile Include="ISignatureJob.cs" />
     <Compile Include="RequestHelper.cs" />
-    <Compile Include="Signer.cs" />
+    <Compile Include="AbstractSigner.cs" />
     <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
     <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
     <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
     <Compile Include="Asice\IAsiceAttachable.cs" />
     <Compile Include="Asice\SerializeUtility.cs" />
     <Compile Include="ClientConfiguration.cs" />
-    <Compile Include="Document.cs" />
+    <Compile Include="AbstractDocument.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Exceptions\SignatureException.cs" />
     <Compile Include="Exceptions\XmlParseException.cs" />
@@ -140,6 +142,10 @@
     <Compile Include="Xsd\XsdValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
+      <Project>{1f5941d7-0ae5-40c4-b1de-9adbb6926420}</Project>
+      <Name>Digipost.Signature.Api.Client.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
       <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
       <Name>Digipost.Signature.Api.Client.Scripts</Name>

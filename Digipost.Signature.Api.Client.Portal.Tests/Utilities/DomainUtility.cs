@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
@@ -9,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
     {
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.GetDocument(), GetPortalManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetPortalDocument(), GetPortalManifest());
         }
 
         public static Availability GetAvailability()
@@ -21,9 +23,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        public static PortalJob GetPortalJob(int signers)
+        public static Job GetPortalJob()
         {
-            return new PortalJob(CoreDomainUtility.GetDocument(), CoreDomainUtility.GetSigners(signers), "PortalJobReference")
+            return new Job(GetPortalDocument(), GetSigner(), "PortalJobReference")
             {
                 Availability = new Availability
                 {
@@ -33,13 +35,44 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        internal static PortalManifest GetPortalManifest()
+        internal static Manifest GetPortalManifest()
         {
-            return new PortalManifest(
+            return new Manifest(
                 CoreDomainUtility.GetSender(),
-                CoreDomainUtility.GetDocument(),
-                CoreDomainUtility.GetSigners(2)
+                GetPortalDocument(),
+                GetSigners(2)
                 );
+        }
+
+        internal static Document GetPortalDocument()
+        {
+            return new Document("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+        }
+
+        public static List<Signer> GetSigner()
+        {
+            return new List<Signer>
+            {
+                new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
+            };
+        }
+
+        public static List<Signer> GetSigners(int count)
+        {
+            if (count > 9)
+            {
+                throw new ArgumentException("Maximum of 9 senders.");
+            }
+
+            var signers = new List<Signer>();
+
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
+            {
+                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new NotificationsUsingLookup()));
+            }
+
+            return signers;
         }
     }
 }

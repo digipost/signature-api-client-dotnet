@@ -71,17 +71,19 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Document.cs" />
+    <Compile Include="Signer.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\DirectAsiceGenerator.cs" />
     <Compile Include="Internal\DirectCreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="DirectJobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />
-    <Compile Include="DirectJob.cs" />
-    <Compile Include="Internal\AsicE\DirectManifest.cs" />
+    <Compile Include="Job.cs" />
+    <Compile Include="Internal\AsicE\Manifest.cs" />
     <Compile Include="RedirectReference.cs" />
     <Compile Include="StatusReference.cs" />
-    <Compile Include="DirectJobResponse.cs" />
+    <Compile Include="JobResponse.cs" />
     <Compile Include="ExitUrls.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

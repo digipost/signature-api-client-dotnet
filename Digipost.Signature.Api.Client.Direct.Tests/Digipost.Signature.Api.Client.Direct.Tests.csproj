@@ -86,12 +86,12 @@
     <Compile Include="Asice\AsiceSignature\SignatureGeneratorTests.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="DirectClientTests.cs" />
-    <Compile Include="Internal\AsicE\DirectManifestTests.cs" />
+    <Compile Include="Internal\AsicE\ManifestTests.cs" />
     <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
-    <Compile Include="DirectJobResponseTests.cs" />
+    <Compile Include="JobResponseTests.cs" />
     <Compile Include="DirectJobStatusResponseTests.cs" />
-    <Compile Include="DirectJobTests.cs" />
+    <Compile Include="JobTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />

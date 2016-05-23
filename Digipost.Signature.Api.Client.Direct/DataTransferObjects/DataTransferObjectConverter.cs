@@ -9,12 +9,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     public static class DataTransferObjectConverter
 
     {
-        public static directsignaturejobrequest ToDataTransferObject(DirectJob directJob)
+        public static directsignaturejobrequest ToDataTransferObject(Job job)
         {
             return new directsignaturejobrequest
             {
-                reference = directJob.Reference,
-                exiturls = ToDataTransferObject(directJob.ExitUrls)
+                reference = job.Reference,
+                exiturls = ToDataTransferObject(job.ExitUrls)
             };
         }
 
@@ -28,9 +28,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static DirectJobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
+        public static JobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
         {
-            return new DirectJobResponse(
+            return new JobResponse(
                 directsignaturejobresponse.signaturejobid,
                 new ResponseUrls(
                     new Uri(directsignaturejobresponse.redirecturl),
@@ -50,13 +50,13 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
 
-        internal static directsignaturejobmanifest ToDataTransferObject(DirectManifest directManifest)
+        internal static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)
         {
             return new directsignaturejobmanifest
             {
-                sender = ToDataTransferObject(directManifest.Sender),
-                document = ToDataTransferObject(directManifest.Document),
-                signer = ToDataTransferObject(directManifest.Signer)
+                sender = ToDataTransferObject(manifest.Sender),
+                document = ToDataTransferObject((Document) manifest.Document),
+                signer = ToDataTransferObject(manifest.Signer)
             };
         }
 
@@ -68,22 +68,22 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static document ToDataTransferObject(Document document)
+        public static directdocument ToDataTransferObject(Document document)
         {
-            return new document
+            return new directdocument
             {
-                title = document.Subject,
+                title = document.Title,
                 description = document.Message,
                 href = document.FileName,
                 mime = document.MimeType
             };
         }
 
-        public static signer ToDataTransferObject(Signer signer)
+        public static directsigner ToDataTransferObject(AbstractSigner signer)
         {
-            return new signer
+            return new directsigner
             {
-                personalidentificationnumber = signer.PersonalIdentificationNumber
+                personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
         }
     }

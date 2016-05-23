@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<portal-signature-job-manifest xmlns="http://signering.posten.no/schema/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<signers>
+		<signer>
+			<personal-identification-number>01013300001</personal-identification-number>
+		</signer>
+	</signers>
+	<sender>
+		<organization-number>988015814</organization-number>
+	</sender>
+	<document href="TestFileName.pdf" mime="application/pdf">
+		<title>Testdocument</title>
+		<description>A test document from domain Utility</description>
+	</document>
+	<availability/>
+</portal-signature-job-manifest>

@@ -7,11 +7,11 @@ namespace Digipost.Signature.Api.Client.Direct.Internal
 {
     internal class DirectCreateAction : CreateAction
     {
-        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((DirectJob) content));
-        public static readonly Func<string, DirectJobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobresponse>(content));
+        public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((Job) content));
+        public static readonly Func<string, JobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobresponse>(content));
 
-        public DirectCreateAction(DirectJob directJob, DocumentBundle documentBundle)
-            : base(directJob, documentBundle, SerializeFunc)
+        public DirectCreateAction(Job job, DocumentBundle documentBundle)
+            : base(job, documentBundle, SerializeFunc)
         {
         }
     }

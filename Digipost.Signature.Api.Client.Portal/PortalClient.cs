@@ -29,13 +29,13 @@ namespace Digipost.Signature.Api.Client.Portal
         {
         }
 
-        public async Task<PortalJobResponse> Create(PortalJob portalJob)
+        public async Task<JobResponse> Create(Job job)
         {
-            portalJob.Sender = CurrentSender(portalJob.Sender);
-            var relativeUrl = RelativeUrl(portalJob.Sender);
+            job.Sender = CurrentSender(job.Sender);
+            var relativeUrl = RelativeUrl(job.Sender);
 
-            var documentBundle = PortalAsiceGenerator.CreateAsice(portalJob, ClientConfiguration.Certificate, ClientConfiguration);
-            var portalCreateAction = new PortalCreateAction(portalJob, documentBundle);
+            var documentBundle = PortalAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
+            var portalCreateAction = new PortalCreateAction(job, documentBundle);
             var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), PortalCreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
@@ -54,11 +54,14 @@ namespace Digipost.Signature.Api.Client.Portal
         ///     all signers have <see cref="SignatureStatus">signed</see> their documents), the returned status must be
         ///     <see cref="Confirm(ConfirmationReference)">confirmed</see>.
         /// </summary>
-        /// <param name="sender">The organization the status change is requested on behalf of. Defaults to <see cref="ClientConfiguration.GlobalSender"/></param>
+        /// <param name="sender">
+        ///     The organization the status change is requested on behalf of. Defaults to
+        ///     <see cref="ClientConfiguration.GlobalSender" />
+        /// </param>
         /// <returns>the changed status for a job, never null.</returns>
-        public async Task<PortalJobStatusChanged> GetStatusChange(Sender sender = null)
+        public async Task<JobStatusChanged> GetStatusChange(Sender sender = null)
         {
-            PortalJobStatusChanged portalJobStatusChanged;
+            JobStatusChanged jobStatusChanged;
 
             var request = new HttpRequestMessage
             {
@@ -76,11 +79,11 @@ namespace Digipost.Signature.Api.Client.Portal
             {
                 case HttpStatusCode.NoContent:
                     Log.Debug("No content response received.");
-                    portalJobStatusChanged = PortalJobStatusChanged.NoChangesJobStatusChanged;
+                    jobStatusChanged = JobStatusChanged.NoChangesJobStatusChanged;
                     break;
                 case HttpStatusCode.OK:
-                    portalJobStatusChanged = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
-                    Log.Debug($"JobStatusChangeResponse received: JobId: {portalJobStatusChanged.JobId}, JobStatus: {portalJobStatusChanged.Status}");
+                    jobStatusChanged = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
+                    Log.Debug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
@@ -93,7 +96,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
 
-            return portalJobStatusChanged;
+            return jobStatusChanged;
         }
 
         private static Uri RelativeUrl(Sender sender)
@@ -101,7 +104,7 @@ namespace Digipost.Signature.Api.Client.Portal
             return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
-        private static async Task<PortalJobStatusChanged> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
+        private static async Task<JobStatusChanged> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
             var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);
@@ -119,11 +122,15 @@ namespace Digipost.Signature.Api.Client.Portal
         }
 
         /// <summary>
-        /// Confirms that the status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see> is received and may be discarded by the 
-        /// Signature service and not retrieved again. Calling this method on a status update without
-        /// <see cref="ConfirmationReference"/> has no effect.
+        ///     Confirms that the status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see> is received and
+        ///     may be discarded by the
+        ///     Signature service and not retrieved again. Calling this method on a status update without
+        ///     <see cref="ConfirmationReference" /> has no effect.
         /// </summary>
-        /// <param name="confirmationReference">the updated status retrieved from <see cref="GetStatusChange(Sender)">GetStatusChange</see>{@link #getStatusChange()}</param>
+        /// <param name="confirmationReference">
+        ///     the updated status retrieved from
+        ///     <see cref="GetStatusChange(Sender)">GetStatusChange</see>{@link #getStatusChange()}
+        /// </param>
         /// <returns></returns>
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
@@ -146,11 +153,12 @@ namespace Digipost.Signature.Api.Client.Portal
             }
         }
 
-        internal async Task AutoSign(int jobId, string signer)
+        internal async Task<string> AutoSign(int jobId, string signer)
         {
             Log.Warn($"Autosigning PortalJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
-            await HttpClient.PostAsync(url, null);
+            var httpResponseMessage = await HttpClient.PostAsync(url, null);
+            return await httpResponseMessage.Content.ReadAsStringAsync();
         }
     }
 }

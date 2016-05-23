@@ -71,19 +71,25 @@
     </Compile>
     <Compile Include="Availability.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
+    <Compile Include="Email.cs" />
     <Compile Include="Exceptions\JobCompletedException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\PortalAsiceGenerator.cs" />
-    <Compile Include="Internal\AsicE\PortalManifest.cs" />
+    <Compile Include="Internal\AsicE\Manifest.cs" />
     <Compile Include="Internal\PortalCreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
+    <Compile Include="Notifications.cs" />
+    <Compile Include="NotificationsUsingLookup.cs" />
     <Compile Include="PortalClient.cs" />
-    <Compile Include="PortalJob.cs" />
-    <Compile Include="PortalJobResponse.cs" />
-    <Compile Include="PortalJobStatusChanged.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="Job.cs" />
+    <Compile Include="JobResponse.cs" />
+    <Compile Include="JobStatusChanged.cs" />
+    <Compile Include="Signer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signature.cs" />
-    <Compile Include="Enums\SignatureStatus.cs" />
+    <Compile Include="SignatureStatus.cs" />
+    <Compile Include="Sms.cs" />
     <Compile Include="TooEagerPollingException.cs" />
   </ItemGroup>
   <ItemGroup>

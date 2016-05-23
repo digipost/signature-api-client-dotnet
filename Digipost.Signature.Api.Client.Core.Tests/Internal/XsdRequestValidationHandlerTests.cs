@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Digipost.Signature.Api.Client.Core.Asice;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Resources.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Internal
@@ -49,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
             [TestMethod]
             [ExpectedException(typeof (InvalidXmlException))]
-            public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipart()
+            public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipartBody()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
@@ -59,7 +63,28 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
 
                 //Assert
-                Assert.Fail();
+            }
+
+            [TestMethod]
+            [ExpectedException(typeof (InvalidXmlException))]
+            public async Task ThrowsExceptionOnInvalidManifestInAttachment()
+            {
+                //Arrange
+                var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
+
+                var serializedfunc = new Func<IRequestContent, string>(p => ContentUtility.GetDirectSignatureJobRequestBody());
+
+                var manifestBytes = Encoding.UTF8.GetBytes(XmlResource.Request.GetPortalManifest().OuterXml);
+                var asiceArchive = new AsiceArchive(new List<AsiceAttachableProcessor>());
+                asiceArchive.AddAttachable("manifest.xml", manifestBytes);
+                var documentBundle = new DocumentBundle(asiceArchive.GetBytes());
+
+                var createAction = new CreateAction(new FakeJob(), documentBundle, serializedfunc);
+
+                //Act
+                await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
+
+                //Assert
             }
 
             [TestMethod]
@@ -72,6 +97,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 await client.GetAsync("http://bogusurl.no");
 
                 //Assert
+            }
+
+            private class FakeJob : IRequestContent
+            {
             }
         }
     }

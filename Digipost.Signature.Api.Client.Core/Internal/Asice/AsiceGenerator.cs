@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Digipost.Signature.Api.Client.Core.Asice
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     internal abstract class AsiceGenerator
     {

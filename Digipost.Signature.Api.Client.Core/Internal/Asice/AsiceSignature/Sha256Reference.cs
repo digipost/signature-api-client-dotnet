@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Security.Cryptography.Xml;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {
     /// <summary>
     ///     Represents the &lt;reference&gt; element of an Xml Signature with http://www.w3.org/2001/04/xmlenc#sha256 as the

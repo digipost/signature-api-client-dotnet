@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE

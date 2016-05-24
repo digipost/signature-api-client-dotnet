@@ -89,17 +89,17 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Asice\AsiceAttachableProcessor.cs" />
-    <Compile Include="Asice\AsiceGenerator.cs" />
-    <Compile Include="Asice\DocumentBundleToDiskProcessor.cs" />
+    <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
+    <Compile Include="Internal\Asice\AsiceGenerator.cs" />
+    <Compile Include="Internal\Asice\DocumentBundleToDiskProcessor.cs" />
     <Compile Include="Exceptions\InvalidXmlException.cs" />
     <Compile Include="IAsiceConfiguration.cs" />
-    <Compile Include="Asice\AsiceArchive.cs" />
-    <Compile Include="Asice\DocumentBundle.cs" />
+    <Compile Include="Internal\Asice\AsiceArchive.cs" />
+    <Compile Include="Internal\Asice\DocumentBundle.cs" />
     <Compile Include="BaseClient.cs" />
     <Compile Include="CancellationReference.cs" />
     <Compile Include="ConfirmationReference.cs" />
-    <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
+    <Compile Include="Internal\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Exceptions\BrokerNotAuthorizedException.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="IDocumentBundleProcessor.cs" />
     <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="PersonalIdentificationNumber.cs" />
-    <Compile Include="Utilities\NamespaceUtility.cs" />
+    <Compile Include="Internal\Utilities\NamespaceUtility.cs" />
     <Compile Include="Internal\SignatureAction.cs" />
     <Compile Include="Internal\IRequestContent.cs" />
     <Compile Include="Internal\LoggingHandler.cs" />
@@ -119,27 +119,27 @@
     <Compile Include="ISignatureJob.cs" />
     <Compile Include="Internal\RequestHelper.cs" />
     <Compile Include="AbstractSigner.cs" />
-    <Compile Include="Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
-    <Compile Include="Asice\AsiceSignature\Sha256Reference.cs" />
-    <Compile Include="Asice\AsiceSignature\SignatureGenerator.cs" />
-    <Compile Include="Asice\IAsiceAttachable.cs" />
-    <Compile Include="Asice\SerializeUtility.cs" />
+    <Compile Include="Internal\Asice\AsiceSignature\QualifyingPropertiesObject.cs" />
+    <Compile Include="Internal\Asice\AsiceSignature\Sha256Reference.cs" />
+    <Compile Include="Internal\Asice\AsiceSignature\SignatureGenerator.cs" />
+    <Compile Include="Internal\Asice\IAsiceAttachable.cs" />
+    <Compile Include="Internal\Asice\SerializeUtility.cs" />
     <Compile Include="ClientConfiguration.cs" />
     <Compile Include="AbstractDocument.cs" />
     <Compile Include="Exceptions\ConfigurationException.cs" />
     <Compile Include="Exceptions\SignatureException.cs" />
     <Compile Include="Exceptions\XmlParseException.cs" />
-    <Compile Include="Extensions\XmlElementExtensions.cs" />
+    <Compile Include="Internal\Extensions\XmlElementExtensions.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="PadesReference.cs" />
     <Compile Include="Sender.cs" />
-    <Compile Include="Utilities\DateUtility.cs" />
-    <Compile Include="Extensions\FileTypeExtensions.cs" />
-    <Compile Include="Utilities\XmlUtility.cs" />
+    <Compile Include="Internal\Utilities\DateUtility.cs" />
+    <Compile Include="Internal\Extensions\FileTypeExtensions.cs" />
+    <Compile Include="Internal\Utilities\XmlUtility.cs" />
     <Compile Include="XadesReference.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Internal\SignatureValidator.cs" />
-    <Compile Include="Xsd\XsdValidator.cs" />
+    <Compile Include="Internal\Xsd\XsdValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
@@ -154,13 +154,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <EmbeddedResource Include="Xsd\Thirdparty\ts_102918v010201.xsd">
+    <EmbeddedResource Include="Internal\Xsd\Thirdparty\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\Thirdparty\XAdES.xsd">
+    <EmbeddedResource Include="Internal\Xsd\Thirdparty\XAdES.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Xsd\Thirdparty\xmldsig-core-schema.xsd">
+    <EmbeddedResource Include="Internal\Xsd\Thirdparty\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

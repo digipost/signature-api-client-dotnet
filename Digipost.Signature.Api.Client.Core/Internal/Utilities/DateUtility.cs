@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Digipost.Signature.Api.Client.Core.Utilities
+namespace Digipost.Signature.Api.Client.Core.Internal.Utilities
 {
     internal static class DateUtility
     {

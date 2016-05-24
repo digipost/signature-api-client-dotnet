@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Xml;
 using ApiClientShared;
-using Digipost.Signature.Api.Client.Resources.Xml.Data;
 
 namespace Digipost.Signature.Api.Client.Resources.Xml
 {

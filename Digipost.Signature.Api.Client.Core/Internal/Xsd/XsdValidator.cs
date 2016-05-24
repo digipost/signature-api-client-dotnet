@@ -1,8 +1,8 @@
 ﻿using Difi.Felles.Utility;
-using Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code;
 using Digipost.Signature.Api.Client.Resources.Xsd;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
-namespace Digipost.Signature.Api.Client.Core.Xsd
+namespace Digipost.Signature.Api.Client.Core.Internal.Xsd
 {
     internal class XsdValidator : XmlValidator
     {

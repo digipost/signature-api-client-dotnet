@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 
 namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE

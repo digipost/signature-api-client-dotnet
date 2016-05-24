@@ -1,4 +1,4 @@
-﻿using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+﻿using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice.AsiceSignature

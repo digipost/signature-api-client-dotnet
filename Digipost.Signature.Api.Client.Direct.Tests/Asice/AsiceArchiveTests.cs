@@ -3,7 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;

@@ -2,7 +2,7 @@
 using System.Xml;
 using ApiClientShared;
 
-namespace Digipost.Signature.Api.Client.DataTransferObjects.XsdToCode.Code
+namespace Digipost.Signature.Api.Client.Scripts.XsdToCode.Code
 {
     internal class XsdFiles
     {

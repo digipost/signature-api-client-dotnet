@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Internal;
+using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;

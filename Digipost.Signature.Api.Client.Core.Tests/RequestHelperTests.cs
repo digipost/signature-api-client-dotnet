@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests

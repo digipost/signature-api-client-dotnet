@@ -4,11 +4,11 @@ using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
-using Digipost.Signature.Api.Client.Core.Extensions;
-using Digipost.Signature.Api.Client.Core.Utilities;
-using Digipost.Signature.Api.Client.Core.Utilities.Difi.Felles.Utility.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Extensions;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities.Difi.Felles.Utility.Utilities;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {
     internal class QualifyingPropertiesObject : DataObject
     {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Digipost.Signature.Api.Client.Core.DataTransferObjects;
+using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects

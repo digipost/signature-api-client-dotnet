@@ -7,9 +7,10 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
-using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {

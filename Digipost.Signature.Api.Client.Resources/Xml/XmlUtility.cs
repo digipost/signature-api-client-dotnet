@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Digipost.Signature.Api.Client.Resources.Xml.Data
+namespace Digipost.Signature.Api.Client.Resources.Xml
 {
     internal class XmlUtility
     {

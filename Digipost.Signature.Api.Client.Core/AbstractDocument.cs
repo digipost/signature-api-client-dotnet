@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Extensions;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Extensions;
 
 namespace Digipost.Signature.Api.Client.Core
 {

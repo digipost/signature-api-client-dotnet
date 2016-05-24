@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Digipost.Signature.Api.Client.Core.Extensions
+namespace Digipost.Signature.Api.Client.Core.Internal.Extensions
 {
-    public static class FileTypeExtensions
+    internal static class FileTypeExtensions
     {
         public static string ToMimeType(this FileType fileType)
         {

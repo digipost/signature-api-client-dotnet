@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Digipost.Signature.Api.Client.Core.Asice
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     internal class AsiceAttachableProcessor
     {

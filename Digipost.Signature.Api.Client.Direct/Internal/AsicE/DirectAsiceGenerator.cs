@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {

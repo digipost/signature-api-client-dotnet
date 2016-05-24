@@ -1,6 +1,6 @@
 using System.Net.Http;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.Core.Xsd;
+using Digipost.Signature.Api.Client.Core.Internal.Xsd;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {

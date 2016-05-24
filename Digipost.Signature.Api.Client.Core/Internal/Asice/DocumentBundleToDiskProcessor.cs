@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using Digipost.Signature.Api.Client.Core.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities;
 
-namespace Digipost.Signature.Api.Client.Core.Asice
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     public class DocumentBundleToDiskProcessor : IDocumentBundleProcessor
     {

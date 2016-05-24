@@ -2,7 +2,7 @@
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
-using Digipost.Signature.Api.Client.Core.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
 {

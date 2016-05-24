@@ -1,4 +1,4 @@
-﻿namespace Digipost.Signature.Api.Client.Core.Asice
+﻿namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     public class DocumentBundle
     {

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Xml;
 using ApiClientShared;
-using Digipost.Signature.Api.Client.Core.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {

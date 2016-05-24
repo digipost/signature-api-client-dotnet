@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 
-namespace Digipost.Signature.Api.Client.Core.Asice
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     internal class AsiceArchive
     {

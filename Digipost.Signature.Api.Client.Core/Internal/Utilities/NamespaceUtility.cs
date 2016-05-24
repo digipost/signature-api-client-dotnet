@@ -1,4 +1,4 @@
-﻿namespace Digipost.Signature.Api.Client.Core.Utilities
+﻿namespace Digipost.Signature.Api.Client.Core.Internal.Utilities
 {
     namespace Difi.Felles.Utility.Utilities
     {

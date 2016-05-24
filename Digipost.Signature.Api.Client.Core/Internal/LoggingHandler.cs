@@ -44,8 +44,10 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             keyValuePairs.AddRange(SerializeHeaders(request.Headers));
 
-            if (request.Content != null)
+            if (request.Content != null && request.Content.Headers.ContentType?.MediaType == "JALLABALLA")
             {
+                
+
                 keyValuePairs.AddRange(SerializeHeaders(request.Content.Headers));
                 keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(request.Content)}"));
             }

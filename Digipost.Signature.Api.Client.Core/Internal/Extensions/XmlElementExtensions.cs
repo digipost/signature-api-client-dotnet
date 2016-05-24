@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace Digipost.Signature.Api.Client.Core.Extensions
+namespace Digipost.Signature.Api.Client.Core.Internal.Extensions
 {
     internal static class XmlElementExtensions
     {

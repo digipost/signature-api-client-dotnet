@@ -5,9 +5,9 @@ using System.Text;
 using System.Xml;
 using Difi.Felles.Utility.Security;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.Core.Utilities.Difi.Felles.Utility.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities.Difi.Felles.Utility.Utilities;
 
-namespace Digipost.Signature.Api.Client.Core.Asice.AsiceSignature
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {
     internal class SignatureGenerator : IAsiceAttachable
     {

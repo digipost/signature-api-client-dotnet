@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace Digipost.Signature.Api.Client.Core.Asice
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice
 {
     public class SerializeUtility
     {

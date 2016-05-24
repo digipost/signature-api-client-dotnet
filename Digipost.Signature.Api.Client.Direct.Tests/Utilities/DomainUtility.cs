@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Asice.AsiceSignature;
+using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;

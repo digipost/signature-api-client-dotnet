@@ -44,12 +44,18 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             keyValuePairs.AddRange(SerializeHeaders(request.Headers));
 
-            if (request.Content != null && request.Content.Headers.ContentType?.MediaType == "JALLABALLA")
+            if (request.Content != null && request.Content.IsMimeMultipartContent())
             {
+                var multipart = await request.Content.ReadAsMultipartAsync();
                 
-
-                keyValuePairs.AddRange(SerializeHeaders(request.Content.Headers));
-                keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(request.Content)}"));
+                foreach (var httpContent in multipart.Contents)
+                {
+                    if (httpContent.Headers.ContentType.MediaType == MediaType.ApplicationXml)
+                    {
+                        keyValuePairs.AddRange(SerializeHeaders(request.Content.Headers));
+                        keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(httpContent)}"));
+                    }
+                }
             }
 
             return FormatHttpData(keyValuePairs);

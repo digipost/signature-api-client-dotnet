@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static PortalClient GetPortalClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender) {HttpClientTimeoutInMilliseconds = 3000000};
             var client = new PortalClient(clientConfig);
             return client;
         }
@@ -77,8 +77,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 Log.Debug($"Result of Create was: {portalJobResponse}");
 
                 var signer = portalJob.Signers.ElementAt(0);
-                var signResult = portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Result;
-                Log.Debug($"Trying to autosign. Status code: {signResult}");
+                var httpResponseMessage = portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Result;
+                Log.Debug($"Trying to autosign. Status code: {httpResponseMessage.StatusCode}");
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);
 

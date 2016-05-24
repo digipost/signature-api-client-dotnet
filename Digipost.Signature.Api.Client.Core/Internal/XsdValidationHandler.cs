@@ -6,8 +6,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     public class XsdValidationHandler : DelegatingHandler
     {
-        protected const string ApplicationXml = "application/xml";
-
         protected static void ValidateXmlAndThrowIfInvalid(string xml)
         {
             var xsdValidator = new XsdValidator();

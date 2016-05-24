@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var contentMediaType = content?.Headers.ContentType?.MediaType;
 
-            if (contentMediaType == ApplicationXml)
+            if (contentMediaType == MediaType.ApplicationXml)
             {
                 var readAsStringAsync = await content.ReadAsStringAsync();
                 ValidateXmlAndThrowIfInvalid(readAsStringAsync);

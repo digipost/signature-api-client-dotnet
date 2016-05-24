@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -9,9 +10,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class XsdRequestValidationHandler : XsdValidationHandler
     {
-        private const string MultipartMixed = "multipart/mixed";
-        private const string ApplicationOctetStream = "application/octet-stream";
-
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             await ValidateAndThrowIfInvalid(request.Content, cancellationToken);
@@ -23,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var contentMediaType = content?.Headers.ContentType?.MediaType;
 
-            if (contentMediaType == MultipartMixed)
+            if (contentMediaType == MediaType.MultipartMixed)
             {
                 var multipart = await content.ReadAsMultipartAsync(cancellationToken);
 
@@ -31,15 +29,23 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                 {
                     switch (httpContent.Headers.ContentType.MediaType)
                     {
-                        case ApplicationXml:
+                        case MediaType.ApplicationXml:
                             ValidateXmlAndThrowIfInvalid(await httpContent.ReadAsStringAsync());
                             break;
-                        case ApplicationOctetStream:
+                        case MediaType.ApplicationOctetStream:
                             ValidateByteStreamAndThrowIfInvalid(await httpContent.ReadAsByteArrayAsync());
                             break;
                     }
                 }
+
+                await RewindContentStream(content);
             }
+        }
+
+        private static async Task RewindContentStream(HttpContent content)
+        {
+            Stream stream = await content.ReadAsStreamAsync();
+            stream.Seek(0, SeekOrigin.Begin);
         }
 
         private static void ValidateByteStreamAndThrowIfInvalid(byte[] bytes)

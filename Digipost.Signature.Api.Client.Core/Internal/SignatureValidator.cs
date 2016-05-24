@@ -7,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class SignatureValidator : XmlValidator
     {
-        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Xsd.Thirdparty");
+        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Internal.Xsd.Thirdparty");
 
         public SignatureValidator()
         {

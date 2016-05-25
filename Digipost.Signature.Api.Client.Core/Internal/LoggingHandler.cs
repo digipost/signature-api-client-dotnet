@@ -76,7 +76,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             keyValuePairs.AddRange(SerializeHeaders(response.Headers));
             keyValuePairs.AddRange(SerializeHeaders(response.Content.Headers));
-            keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}"));
+
+            if (response.Content != null && response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml)
+            {
+                keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}"));
+            }
 
             return FormatHttpData(keyValuePairs);
         }

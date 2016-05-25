@@ -2,9 +2,9 @@
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class DirectJobStatusResponse
+    public class JobStatusResponse
     {
-        public DirectJobStatusResponse(long jobId, JobStatus status, JobReferences references)
+        public JobStatusResponse(long jobId, JobStatus status, JobReferences references)
         {
             JobId = jobId;
             Status = status;

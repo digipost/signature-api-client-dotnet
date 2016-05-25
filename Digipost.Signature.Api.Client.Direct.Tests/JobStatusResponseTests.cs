@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class DirectJobStatusResponseTests
+    public class JobStatusResponseTests
     {
         [TestClass]
-        public class ConstructorMethod : DirectJobStatusResponseTests
+        public class ConstructorMethod : JobStatusResponseTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -19,16 +19,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobReferences = DomainUtility.GetJobReferences();
 
                 //Act
-                var directJobStatusResponse = new DirectJobStatusResponse(
+                var jobStatusResponse = new JobStatusResponse(
                     jobId,
                     jobStatus,
                     jobReferences
                     );
 
                 //Assert
-                Assert.AreEqual(jobId, directJobStatusResponse.JobId);
-                Assert.AreEqual(jobStatus, directJobStatusResponse.Status);
-                Assert.AreEqual(jobReferences, directJobStatusResponse.References);
+                Assert.AreEqual(jobId, jobStatusResponse.JobId);
+                Assert.AreEqual(jobStatus, jobStatusResponse.Status);
+                Assert.AreEqual(jobReferences, jobStatusResponse.References);
             }
         }
     }

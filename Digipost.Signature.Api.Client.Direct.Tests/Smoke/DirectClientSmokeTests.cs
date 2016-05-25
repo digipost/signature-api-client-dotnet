@@ -58,19 +58,19 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return client;
         }
 
-        internal static DirectJobStatusResponse MorphDirectJobStatusResponseIfMayBe(DirectJobStatusResponse directJobResponse)
+        internal static JobStatusResponse MorphJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
         {
             switch (ClientType)
             {
                 case Client.Localhost:
                     //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
-                    directJobResponse.References.Xades = new XadesReference(GetUriFromRelativePath(directJobResponse.References.Xades.Url.AbsolutePath));
-                    directJobResponse.References.Pades = new PadesReference(GetUriFromRelativePath(directJobResponse.References.Pades.Url.AbsolutePath));
-                    directJobResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(directJobResponse.References.Confirmation.Url.AbsolutePath));
+                    jobStatusResponse.References.Xades = new XadesReference(GetUriFromRelativePath(jobStatusResponse.References.Xades.Url.AbsolutePath));
+                    jobStatusResponse.References.Pades = new PadesReference(GetUriFromRelativePath(jobStatusResponse.References.Pades.Url.AbsolutePath));
+                    jobStatusResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(jobStatusResponse.References.Confirmation.Url.AbsolutePath));
                     break;
             }
 
-            return directJobResponse;
+            return jobStatusResponse;
         }
 
         internal static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
@@ -96,10 +96,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
 
-                var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(jobStatusResponse);
-                _xadesReference = directJobStatusResponse.References.Xades;
-                _padesReference = directJobStatusResponse.References.Pades;
-                _confirmationReference = directJobStatusResponse.References.Confirmation;
+                var morphedJobStatusResponse = MorphJobStatusResponseIfMayBe(jobStatusResponse);
+                _xadesReference = morphedJobStatusResponse.References.Xades;
+                _padesReference = morphedJobStatusResponse.References.Pades;
+                _confirmationReference = morphedJobStatusResponse.References.Confirmation;
 
                 //Assert
                 Assert.IsNotNull(_statusReference);
@@ -139,10 +139,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directClient = GetDirectClient();
 
                 //Act
-                var directJobStatusResponse = await directClient.GetStatus(_statusReference);
+                var jobStatusResponse = await directClient.GetStatus(_statusReference);
 
                 //Assert
-                Assert.IsNotNull(directJobStatusResponse.JobId);
+                Assert.IsNotNull(jobStatusResponse.JobId);
             }
 
             [TestMethod]

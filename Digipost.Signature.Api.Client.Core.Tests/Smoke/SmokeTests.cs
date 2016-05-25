@@ -1,6 +1,4 @@
 ﻿using System;
-using Common.Logging;
-using Common.Logging.Simple;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -18,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                 return Client.Test;
             }
         }
-        
+
         protected static bool IsOnBuildServer()
         {
             var isOnBuildServer = false;

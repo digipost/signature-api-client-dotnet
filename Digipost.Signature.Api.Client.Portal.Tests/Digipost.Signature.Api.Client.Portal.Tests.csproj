@@ -99,7 +99,6 @@
     <Compile Include="NotificationsTests.cs" />
     <Compile Include="NotificationsUsingLookupTests.cs" />
     <Compile Include="PortalClientTests.cs" />
-    <Compile Include="PortalClientWithAutoSign.cs" />
     <Compile Include="JobResponseTests.cs" />
     <Compile Include="JobStatusChangedTests.cs" />
     <Compile Include="JobTests.cs" />

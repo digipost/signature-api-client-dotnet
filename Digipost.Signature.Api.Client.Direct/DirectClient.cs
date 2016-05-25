@@ -30,8 +30,8 @@ namespace Digipost.Signature.Api.Client.Direct
             var relativeUrl = RelativeUrl(job);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
-            var createAction = new DirectCreateAction(job, documentBundle);
-            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
+            var createAction = new CreateAction(job, documentBundle);
+            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
@@ -52,10 +52,10 @@ namespace Digipost.Signature.Api.Client.Direct
         /// </summary>
         /// <param name="statusReference">The reference to the status of a specific job.</param>
         /// <returns>
-        ///     the <see cref="DirectJobStatusResponse" /> for the job referenced by the given <see cref="StatusReference" />,
+        ///     the <see cref="JobStatusResponse" /> for the job referenced by the given <see cref="StatusReference" />,
         ///     never null.
         /// </returns>
-        public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
+        public async Task<JobStatusResponse> GetStatus(StatusReference statusReference)
         {
             var request = new HttpRequestMessage
             {
@@ -70,9 +70,9 @@ namespace Digipost.Signature.Api.Client.Direct
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var directJobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
-                    Log.Debug($"Requested status for JobId: {directJobStatusResponse.JobId}, status was: {directJobStatusResponse.Status}.");
-                    return directJobStatusResponse;
+                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                    Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
+                    return jobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }

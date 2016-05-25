@@ -292,7 +292,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void ConvertsPortalDocumentSuccessfully()
             {
                 //Arrange
-                var source = new Document("subject", "message", "fileName", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
+                var source = new Document("subject", "message", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
                 var expected = new portaldocument
                 {
                     title = source.Title,

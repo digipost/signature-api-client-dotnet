@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var asiceBundle = DirectAsiceGenerator.CreateAsice(directJob, businessCertificate, clientConfiguration);
 
                 //Act
-                var action = new DirectCreateAction(directJob, asiceBundle);
+                var action = new CreateAction(directJob, asiceBundle);
 
                 //Assert
                 Assert.AreEqual(directJob, action.RequestContent);

@@ -25,13 +25,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static Job GetPortalJob()
         {
-            return new Job(GetPortalDocument(), GetSigner(), "PortalJobReference")
-            {
-                Availability = new Availability
-                {
-                    AvailableFor = new TimeSpan(0, 0, 10, 0)
-                }
-            };
+            return new Job(GetPortalDocument(), GetSigner(), "PortalJobReference");
         }
 
         internal static Manifest GetPortalManifest()

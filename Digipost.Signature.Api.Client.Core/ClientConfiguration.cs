@@ -42,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Core
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
         ///     a <see cref="Sender" />.
         /// </summary>
-        public Sender GlobalSender { get; internal set; }
+        public Sender GlobalSender { get; set; }
 
         public X509Certificate2 Certificate { get; internal set; }
 

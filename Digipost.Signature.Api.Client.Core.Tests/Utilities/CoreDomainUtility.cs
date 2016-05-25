@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static AbstractDocument GetDocument()
         {
-            return new DocumentStub("Testdocument", "A test document from domain Utility", "TestFileName.pdf", FileType.Pdf, GetPdfDocumentBytes());
+            return new DocumentStub("Testdocument", "A test document from domain Utility", FileType.Pdf, GetPdfDocumentBytes());
         }
 
         public static Sender GetSender()

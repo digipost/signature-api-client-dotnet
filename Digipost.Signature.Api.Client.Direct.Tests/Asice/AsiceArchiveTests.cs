@@ -21,7 +21,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
             public void ConstructorGeneratesBytes()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), DomainUtility.GetDirectDocument());
+                var document = DomainUtility.GetDirectDocument();
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), document);
 
                 //Act
                 var archiveBytes = asiceArchive.GetBytes();
@@ -33,7 +34,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                     {
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
                         Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "TheFileName.pdf"));
+                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == document.FileName));
                     }
                 }
             }

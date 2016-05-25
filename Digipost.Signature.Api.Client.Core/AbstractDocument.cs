@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Internal.Extensions;
 
@@ -6,18 +7,18 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class AbstractDocument : IAsiceAttachable
     {
-        protected AbstractDocument(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
+        protected AbstractDocument(string title, string message, FileType fileType, string documentPath)
+            : this(title, message, fileType, File.ReadAllBytes(documentPath))
+        {
+        }
+
+        protected AbstractDocument(string title, string message, FileType fileType, byte[] documentBytes)
         {
             Title = title;
             Message = message;
-            FileName = fileName;
+            FileName = $"{DateTime.Now.ToString("yyyyMMddssfff")}document";
             MimeType = fileType.ToMimeType();
             Bytes = documentBytes;
-        }
-
-        protected AbstractDocument(string title, string message, string fileName, FileType fileType, string documentPath)
-            : this(title, message, fileName, fileType, File.ReadAllBytes(documentPath))
-        {
         }
 
         public string Title { get; }

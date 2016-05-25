@@ -2,13 +2,13 @@
 {
     internal class DocumentStub : AbstractDocument
     {
-        public DocumentStub(string title, string message, string fileName, FileType fileType, byte[] documentBytes)
-            : base(title, message, fileName, fileType, documentBytes)
+        public DocumentStub(string title, string message, FileType fileType, byte[] documentBytes)
+            : base(title, message, fileType, documentBytes)
         {
         }
 
-        public DocumentStub(string title, string message, string fileName, FileType fileType, string documentPath)
-            : base(title, message, fileName, fileType, documentPath)
+        public DocumentStub(string title, string message, FileType fileType, string documentPath)
+            : base(title, message, fileType, documentPath)
         {
         }
     }

@@ -169,14 +169,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string documentSubject = "Subject";
                 const string documentMessage = "Message";
-                const string documentFileName = "Filename.pdf";
                 var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
                 var source = new Manifest(
                     new Sender(organizationNumberSender),
-                    new Document(documentSubject, documentMessage, documentFileName, FileType.Pdf, pdfDocumentBytes),
+                    new Document(documentSubject, documentMessage, FileType.Pdf, pdfDocumentBytes),
                     new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))
                     );
 
@@ -187,7 +186,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     {
                         title = documentSubject,
                         description = documentMessage,
-                        href = documentFileName,
+                        href = source.Document.FileName,
                         mime = expectedMimeType
                     },
                     signer = new directsigner {personalidentificationnumber = personalIdentificationNumber}
@@ -231,14 +230,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 //Arrange
                 const string subject = "Subject";
                 const string message = "Message";
-                const string fileName = "FileName";
                 const FileType fileType = FileType.Pdf;
                 var documentBytes = new byte[] {0x21, 0x22};
 
                 var source = new Document(
                     subject,
                     message,
-                    fileName,
                     fileType,
                     documentBytes
                     );
@@ -247,7 +244,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 {
                     title = subject,
                     description = message,
-                    href = fileName,
+                    href = source.FileName,
                     mime = "application/pdf"
                 };
 

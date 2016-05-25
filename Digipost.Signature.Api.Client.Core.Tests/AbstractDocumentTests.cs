@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(subject, document.Title);
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(expectedMimeType, document.MimeType);
-                pdfDocumentBytes.SequenceEqual(document.Bytes);
+                Assert.IsTrue(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
 
             [TestMethod]
@@ -65,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.AreEqual(subject, document.Title);
                 Assert.AreEqual(message, document.Message);
                 Assert.AreEqual(expectedMimeType, document.MimeType);
-                pdfDocumentBytes.SequenceEqual(document.Bytes);
+                Assert.IsTrue(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
 
             private static string DocumentFilePath()

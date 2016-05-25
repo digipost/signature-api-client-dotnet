@@ -47,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             if (request.Content != null && request.Content.IsMimeMultipartContent())
             {
                 var multipart = await request.Content.ReadAsMultipartAsync();
-                
+
                 foreach (var httpContent in multipart.Contents)
                 {
                     if (httpContent.Headers.ContentType.MediaType == MediaType.ApplicationXml)

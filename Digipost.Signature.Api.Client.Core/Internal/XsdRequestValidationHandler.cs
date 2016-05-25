@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
@@ -44,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task RewindContentStream(HttpContent content)
         {
-            Stream stream = await content.ReadAsStreamAsync();
+            var stream = await content.ReadAsStreamAsync();
             stream.Seek(0, SeekOrigin.Begin);
         }
 

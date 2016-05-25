@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         internal static Document GetPortalDocument()
         {
-            return new Document("TheTitle", "Some cool portal document message", "TheFileName", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+            return new Document("TheTitle", "Some cool portal document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
         public static List<Signer> GetSigner()

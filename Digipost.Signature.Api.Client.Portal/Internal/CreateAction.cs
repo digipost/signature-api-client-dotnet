@@ -6,13 +6,13 @@ using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Portal.Internal
 {
-    internal class PortalCreateAction : CreateAction
+    internal class CreateAction : Core.Internal.CreateAction
     {
         public static readonly Func<IRequestContent, string> SerializeFunc = content => SerializeUtility.Serialize(DataTransferObjectConverter.ToDataTransferObject((Job) content));
 
         public static readonly Func<string, JobResponse> DeserializeFunc = content => DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<portalsignaturejobresponse>(content));
 
-        public PortalCreateAction(Job job, DocumentBundle documentBundle)
+        public CreateAction(Job job, DocumentBundle documentBundle)
             : base(job, documentBundle, SerializeFunc)
         {
         }

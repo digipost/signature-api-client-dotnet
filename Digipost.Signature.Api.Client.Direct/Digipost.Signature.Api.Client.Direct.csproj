@@ -75,7 +75,7 @@
     <Compile Include="Signer.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\DirectAsiceGenerator.cs" />
-    <Compile Include="Internal\DirectCreateAction.cs" />
+    <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="JobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />

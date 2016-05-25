@@ -76,7 +76,7 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\PortalAsiceGenerator.cs" />
     <Compile Include="Internal\AsicE\Manifest.cs" />
-    <Compile Include="Internal\PortalCreateAction.cs" />
+    <Compile Include="Internal\CreateAction.cs" />
     <Compile Include="Enums\JobStatus.cs" />
     <Compile Include="Notifications.cs" />
     <Compile Include="NotificationsUsingLookup.cs" />

@@ -30,8 +30,8 @@ namespace Digipost.Signature.Api.Client.Direct
             var relativeUrl = RelativeUrl(job);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
-            var createAction = new DirectCreateAction(job, documentBundle);
-            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), DirectCreateAction.DeserializeFunc);
+            var createAction = new CreateAction(job, documentBundle);
+            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 

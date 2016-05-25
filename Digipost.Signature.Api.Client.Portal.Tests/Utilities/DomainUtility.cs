@@ -29,7 +29,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             {
                 Availability = new Availability
                 {
-                    Activation = DateTime.Now,
                     AvailableFor = new TimeSpan(0, 0, 10, 0)
                 }
             };

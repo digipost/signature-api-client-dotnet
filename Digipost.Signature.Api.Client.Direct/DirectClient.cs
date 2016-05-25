@@ -70,9 +70,9 @@ namespace Digipost.Signature.Api.Client.Direct
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var directJobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
-                    Log.Debug($"Requested status for JobId: {directJobStatusResponse.JobId}, status was: {directJobStatusResponse.Status}.");
-                    return directJobStatusResponse;
+                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                    Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
+                    return jobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }

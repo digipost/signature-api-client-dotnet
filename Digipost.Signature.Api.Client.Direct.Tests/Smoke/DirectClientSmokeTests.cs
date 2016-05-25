@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return client;
         }
 
-        internal static JobStatusResponse MorphDirectJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
+        internal static JobStatusResponse MorphJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
         {
             switch (ClientType)
             {
@@ -96,10 +96,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
 
-                var directJobStatusResponse = MorphDirectJobStatusResponseIfMayBe(jobStatusResponse);
-                _xadesReference = directJobStatusResponse.References.Xades;
-                _padesReference = directJobStatusResponse.References.Pades;
-                _confirmationReference = directJobStatusResponse.References.Confirmation;
+                var morphedJobStatusResponse = MorphJobStatusResponseIfMayBe(jobStatusResponse);
+                _xadesReference = morphedJobStatusResponse.References.Xades;
+                _padesReference = morphedJobStatusResponse.References.Pades;
+                _confirmationReference = morphedJobStatusResponse.References.Confirmation;
 
                 //Assert
                 Assert.IsNotNull(_statusReference);
@@ -139,10 +139,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var directClient = GetDirectClient();
 
                 //Act
-                var directJobStatusResponse = await directClient.GetStatus(_statusReference);
+                var jobStatusResponse = await directClient.GetStatus(_statusReference);
 
                 //Assert
-                Assert.IsNotNull(directJobStatusResponse.JobId);
+                Assert.IsNotNull(jobStatusResponse.JobId);
             }
 
             [TestMethod]

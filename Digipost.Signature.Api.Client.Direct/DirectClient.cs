@@ -52,10 +52,10 @@ namespace Digipost.Signature.Api.Client.Direct
         /// </summary>
         /// <param name="statusReference">The reference to the status of a specific job.</param>
         /// <returns>
-        ///     the <see cref="DirectJobStatusResponse" /> for the job referenced by the given <see cref="StatusReference" />,
+        ///     the <see cref="JobStatusResponse" /> for the job referenced by the given <see cref="StatusReference" />,
         ///     never null.
         /// </returns>
-        public async Task<DirectJobStatusResponse> GetStatus(StatusReference statusReference)
+        public async Task<JobStatusResponse> GetStatus(StatusReference statusReference)
         {
             var request = new HttpRequestMessage
             {

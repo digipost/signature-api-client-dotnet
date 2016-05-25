@@ -120,7 +120,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     padesurl = "http://signatureRoot.digipost.no/pades"
                 };
 
-                var expected = new DirectJobStatusResponse(
+                var expected = new JobStatusResponse(
                     source.signaturejobid,
                     JobStatus.Signed,
                     new JobReferences(new Uri(source.confirmationurl), new Uri(source.xadesurl), new Uri(source.padesurl))
@@ -146,7 +146,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     status = directsignaturejobstatus.REJECTED
                 };
 
-                var expected = new DirectJobStatusResponse(
+                var expected = new JobStatusResponse(
                     source.signaturejobid,
                     JobStatus.Rejected,
                     new JobReferences(null, null, null)

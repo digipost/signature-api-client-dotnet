@@ -35,13 +35,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetDirectDocument(), GetDirectManifest());
         }
 
-        public static DirectJobStatusResponse GetDirectJobStatusResponse()
+        public static JobStatusResponse GetDirectJobStatusResponse()
         {
             var jobId = 22;
             var jobStatus = JobStatus.Failed;
             var statusResponseUrls = GetJobReferences();
 
-            return new DirectJobStatusResponse(
+            return new JobStatusResponse(
                 jobId,
                 jobStatus,
                 statusResponseUrls

@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 );
         }
 
-        public static DirectJobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
+        public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
         {
             var jobStatus = directsignaturejobstatusresponse.status.ToJobStatus();
 
@@ -48,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 ? new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl))
                 : new JobReferences(null, null, null);
 
-            return new DirectJobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
+            return new JobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }
 
         internal static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)

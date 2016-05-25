@@ -5,10 +5,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     [TestClass]
-    public class DirectJobStatusResponseTests
+    public class JobStatusResponseTests
     {
         [TestClass]
-        public class ConstructorMethod : DirectJobStatusResponseTests
+        public class ConstructorMethod : JobStatusResponseTests
         {
             [TestMethod]
             public void SimpleConstructor()
@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobReferences = DomainUtility.GetJobReferences();
 
                 //Act
-                var directJobStatusResponse = new DirectJobStatusResponse(
+                var directJobStatusResponse = new JobStatusResponse(
                     jobId,
                     jobStatus,
                     jobReferences

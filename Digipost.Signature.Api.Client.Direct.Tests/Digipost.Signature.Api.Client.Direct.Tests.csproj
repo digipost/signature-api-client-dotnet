@@ -90,7 +90,7 @@
     <Compile Include="RedirectReferenceTests.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="JobResponseTests.cs" />
-    <Compile Include="DirectJobStatusResponseTests.cs" />
+    <Compile Include="JobStatusResponseTests.cs" />
     <Compile Include="JobTests.cs" />
     <Compile Include="ExitUrlsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />

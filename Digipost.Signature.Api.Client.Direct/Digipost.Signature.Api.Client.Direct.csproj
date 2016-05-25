@@ -77,7 +77,7 @@
     <Compile Include="Internal\AsicE\DirectAsiceGenerator.cs" />
     <Compile Include="Internal\DirectCreateAction.cs" />
     <Compile Include="DataTransferObjects\DataTransferObjectConverter.cs" />
-    <Compile Include="DirectJobStatusResponse.cs" />
+    <Compile Include="JobStatusResponse.cs" />
     <Compile Include="DirectClient.cs" />
     <Compile Include="Job.cs" />
     <Compile Include="Internal\AsicE\Manifest.cs" />

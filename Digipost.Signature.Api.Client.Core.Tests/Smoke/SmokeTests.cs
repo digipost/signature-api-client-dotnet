@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             {
                 if (IsOnBuildServer())
                 {
-                    return Client.Test;
+                    return Client.DifiTest;
                 }
 
                 return Client.Test;

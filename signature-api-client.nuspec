@@ -10,6 +10,7 @@
         <description>Klientbibliotek for å administrere elektronisk signering av dokumenter av borgere for en virksomhet. Sentrale funksjoner er opprettelse av signeringsoppdrag, sjekke status på signeringsoppdrag og laste ned dokumenter som er signerte.</description>
         <copyright>Copyright 2016</copyright>
         <tags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</tags>
+        <serviceable>false</serviceable>
         <dependencies>
             <group targetFramework=".NETFramework4.5">
                 <dependency id="Common.Logging" version="3.3.1" />
@@ -28,6 +29,7 @@
         <file src="Digipost.Signature.Api.Client.Direct\bin\Release\Digipost.Signature.Api.Client.Direct.xml" target="lib\net45\Digipost.Signature.Api.Client.Direct.xml" />
         <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Portal.dll" target="lib\net45\Digipost.Signature.Api.Client.Portal.dll" />
         <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Portal.xml" target="lib\net45\Digipost.Signature.Api.Client.Portal.xml" />
+        <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Resources.dll" target="lib\net45\Digipost.Signature.Api.Client.Resources.dll" />
         <file src="Digipost.Signature.Api.Client.Core\bin\Release\Digipost.Signature.Api.Client.Scripts.dll" target="lib\net45\Digipost.Signature.Api.Client.Scripts.dll" />
     </files>
 </package>

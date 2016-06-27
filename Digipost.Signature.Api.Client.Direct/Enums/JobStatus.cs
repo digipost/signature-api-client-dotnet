@@ -15,6 +15,16 @@
         /// <summary>
         ///     An error occured during the signing ceremony.
         /// </summary>
-        Signed
+        Signed,
+
+        /// <summary>
+        ///     There has not been any changes since the last received status change.
+        /// </summary>
+        NoChanges,
+
+        /// <summary>
+        ///     The user didn't sign the document before the job expired.
+        /// </summary>
+        Expired
     }
 }

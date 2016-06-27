@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
-            var relativeUrl = RelativeUrl(job);
+            var relativeUrl = RelativeUrl(job.Sender);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var createAction = new CreateAction(job, documentBundle);
@@ -38,9 +38,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
-        private static Uri RelativeUrl(Job job)
+        private static Uri RelativeUrl(Sender sender)
         {
-            return new Uri($"/api/{job.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+            return new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
 
         /// <summary>
@@ -73,6 +73,30 @@ namespace Digipost.Signature.Api.Client.Direct
                     var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
                     Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
+                default:
+                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+            }
+        }
+
+        public async Task<JobStatusResponse> GetStatusChange(Sender sender = null)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = RelativeUrl(CurrentSender(sender)),
+                Method = HttpMethod.Get
+            };
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            var requestResult = await HttpClient.SendAsync(request);
+            var requestContent = await requestResult.Content.ReadAsStringAsync();
+
+            Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+
+            switch (requestResult.StatusCode)
+            {
+                case HttpStatusCode.NoContent:
+                    Log.Debug("No content response received.");
+                    return JobStatusResponse.NoChanges;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }

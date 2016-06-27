@@ -105,6 +105,7 @@
     <Compile Include="AbstractDocumentTests.cs" />
     <Compile Include="EnvironmentTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
     <Compile Include="Fakes\FakeHttpClientForNoContentResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientForDataResponse.cs" />
@@ -173,6 +174,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Schema\Examples\Response\EmptyQueueResponse.txt" />
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequest.xml" />
     <EmbeddedResource Include="Resources\Body\CreateResponse.xml" />
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequestInvalid.xml" />

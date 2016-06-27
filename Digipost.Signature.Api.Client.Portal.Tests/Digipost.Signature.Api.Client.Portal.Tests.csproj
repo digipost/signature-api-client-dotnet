@@ -92,7 +92,6 @@
     <Compile Include="Fakes\FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerChecksCorrectSenderResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobCompletedResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForJobStatusChangeResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
     <Compile Include="Internal\AsicE\ManifestTests.cs" />
@@ -144,7 +143,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Schema\Examples\Response\TooManyRequestsResponse.txt" />
-    <EmbeddedResource Include="Schema\Examples\Response\EmptyQueueResponse.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

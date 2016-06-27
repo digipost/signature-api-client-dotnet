@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -16,14 +15,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
     [TestClass]
     public class PortalClientTests
     {
-        internal HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
-        {
-            return new HttpClient(delegatingHandler)
-            {
-                BaseAddress = new Uri("http://mockUrl.no")
-            };
-        }
-
         [TestClass]
         public class CreateMethod : PortalClientTests
         {
@@ -32,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsExceptionOnNoSender()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var portalClient = new PortalClient(clientConfiguration);
                 var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(1), "SendersReference");
 
@@ -52,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsExceptionOnSenderNotSpecified()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerForJobStatusChangeResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {
@@ -70,8 +61,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task CanBeCalledWithoutSenderUsesSenderInClientConfiguration()
             {
                 //Arrange
-                var sender = CoreDomainUtility.GetSender();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), sender);
+                var sender = GetSender();
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), sender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {
@@ -91,7 +82,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var parameterSender = new Sender("000000000");
                 var clientConfigurationSender = new Sender("999999999");
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), clientConfigurationSender);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), clientConfigurationSender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {
@@ -109,11 +100,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ReturnsEmptyObjectOnEmptyQueue()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
                 };
-                object expectedResponse = null;
 
                 //Act
                 var actualResponse = await portalClient.GetStatusChange();
@@ -126,7 +116,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ReturnsPortalJobStatusChangeOnOkResponse()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
@@ -145,7 +135,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsExceptionOnTooManyRequests()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
                 };
@@ -162,7 +152,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsUnexpectedExceptionWithErrorClassOnUnexpectedError()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForErrorResponse())
                 };
@@ -183,7 +173,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsJobCompletedExceptionOnConflict()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobCompletedResponse())
                 };
@@ -200,7 +190,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsUnexpectedErrorOnUnexpectedErrorCode()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForInternalServerErrorResponse())
                 };
@@ -221,7 +211,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task ThrowsUnexpectedResponseException()
             {
                 //Arrange
-                var portalClient = new PortalClient(CoreDomainUtility.GetClientConfiguration())
+                var portalClient = new PortalClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForInternalServerErrorResponse())
                 };

@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System;
+using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
@@ -63,6 +65,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes(true, "Certificates", "Unittests", "DigipostCert.p12"), "", X509KeyStorageFlags.Exportable);
+        }
+
+        public static HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)
+        {
+            return new HttpClient(delegatingHandler)
+            {
+                BaseAddress = new Uri("http://mockUrl.no")
+            };
         }
     }
 }

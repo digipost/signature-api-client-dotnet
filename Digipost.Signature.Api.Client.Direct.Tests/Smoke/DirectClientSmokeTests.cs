@@ -183,5 +183,34 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 //Assert
             }
         }
+
+        [TestClass]
+        public class StatusCanBeRetrievedByPolling : DirectClientSmokeTests
+        {
+
+            private static JobResponse _createdPollableJob;
+
+            [ClassInitialize]
+            public static void CreatePollableJob(TestContext context)
+            {
+                var directClient = GetDirectClient();
+                var directJob = DomainUtility.GetDirectJob();
+
+                _createdPollableJob = directClient.Create(directJob).Result;
+
+                directClient.AutoSign(_createdPollableJob.JobId).Wait();
+            }
+
+            [TestMethod]
+            public void ReturnsSignedJobWhenPolling()
+            {
+                var directClient = GetDirectClient();
+
+                var statusChange = directClient.GetStatusChange().Result;
+
+                Assert.AreEqual(_createdPollableJob.JobId, statusChange.JobId);
+            }
+        }
+
     }
 }

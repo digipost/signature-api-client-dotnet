@@ -104,6 +104,7 @@
     <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
     <Compile Include="AbstractDocumentTests.cs" />
     <Compile Include="EnvironmentTests.cs" />
+    <Compile Include="Exceptions\TooEagerPollingExceptionTests.cs" />
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponseInvalid.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
+    <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForXadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
@@ -174,6 +176,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Schema\Examples\Response\TooManyRequestsResponse.txt" />
     <EmbeddedResource Include="Schema\Examples\Response\EmptyQueueResponse.txt" />
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequest.xml" />
     <EmbeddedResource Include="Resources\Body\CreateResponse.xml" />

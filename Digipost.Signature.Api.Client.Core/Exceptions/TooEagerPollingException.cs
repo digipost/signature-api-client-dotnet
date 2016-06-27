@@ -1,7 +1,6 @@
-﻿using System;
-using Digipost.Signature.Api.Client.Core.Exceptions;
+using System;
 
-namespace Digipost.Signature.Api.Client.Portal
+namespace Digipost.Signature.Api.Client.Core.Exceptions
 {
     public class TooEagerPollingException : SignatureException
     {

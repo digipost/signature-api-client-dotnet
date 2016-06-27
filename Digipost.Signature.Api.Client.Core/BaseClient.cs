@@ -13,6 +13,9 @@ namespace Digipost.Signature.Api.Client.Core
     {
         private HttpClient _httpClient;
 
+        protected const int TooManyRequestsStatusCode = 429;
+        protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
+
         protected BaseClient(ClientConfiguration clientConfiguration)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;

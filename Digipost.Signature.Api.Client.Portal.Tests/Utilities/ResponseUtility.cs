@@ -14,11 +14,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return GetXml("JobStatusChangeResponse.xml").OuterXml;
         }
 
-        public static string GetTooManyRequestsResponse()
-        {
-            return GetContent("TooManyRequestsResponse.txt");
-        }
-
         internal static XmlDocument GetXml(string kvittering)
         {
             return XmlUtility.ToXmlDocument(GetContent(kvittering));

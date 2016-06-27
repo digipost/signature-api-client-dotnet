@@ -1,7 +1,8 @@
-﻿using System;
+using System;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Digipost.Signature.Api.Client.Portal.Tests
+namespace Digipost.Signature.Api.Client.Core.Tests.Exceptions
 {
     [TestClass]
     public class TooEagerPollingExceptionTests

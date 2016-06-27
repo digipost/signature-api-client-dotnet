@@ -119,6 +119,21 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var statusChange = await directClient.GetStatusChange();
                 var invalidOperation = statusChange.JobId;
             }
+
+            [TestMethod]
+            [ExpectedException(typeof(TooEagerPollingException))]
+            public async Task ThrowsExceptionOnTooManyRequests()
+            {
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
+                };
+
+                await directClient.GetStatusChange();
+
+                Assert.Fail("Should fail with " + typeof(TooEagerPollingException).Name);
+            }
+
         }
     }
 }

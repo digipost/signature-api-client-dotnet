@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,8 +8,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
@@ -97,6 +100,13 @@ namespace Digipost.Signature.Api.Client.Direct
                 case HttpStatusCode.NoContent:
                     Log.Debug("No content response received.");
                     return JobStatusResponse.NoChanges;
+                case (HttpStatusCode)TooManyRequestsStatusCode:
+                    var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
+                    var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+
+                    Log.Warn(tooEagerPollingException.Message);
+
+                    throw tooEagerPollingException;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }

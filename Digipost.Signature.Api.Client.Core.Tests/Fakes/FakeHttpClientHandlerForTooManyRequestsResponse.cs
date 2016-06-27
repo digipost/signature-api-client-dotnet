@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 
-namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
+namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
     public class FakeHttpClientHandlerForTooManyRequestsResponse : FakeHttpClientHandlerResponse
     {
@@ -17,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
 
         public override HttpContent GetContent()
         {
-            return new StringContent(ResponseUtility.GetTooManyRequestsResponse());
+            return new StringContent(CoreResponseUtility.GetTooManyRequestsResponse());
         }
     }
 }

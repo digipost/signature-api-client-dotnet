@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
@@ -20,9 +21,6 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-        private const int TooManyRequestsStatusCode = 429;
-        private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public PortalClient(ClientConfiguration clientConfiguration)

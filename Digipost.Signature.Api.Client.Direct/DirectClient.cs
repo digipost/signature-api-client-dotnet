@@ -80,6 +80,19 @@ namespace Digipost.Signature.Api.Client.Direct
             }
         }
 
+        /// <summary>
+        ///     If there is a job with an updated <see cref="JobStatus" />, the returned object contains necessary information to
+        ///     act on the status change. If the returned object has status <see cref="JobStatus.NoChanges" />, there is no
+        ///     changes.
+        ///     When processing of the status change is complete, (e.g. retrieving <see cref="GetPades(PadesReference)">Pades</see>
+        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.Signed" /> job),
+        ///     the returned status must be <see cref="Confirm(ConfirmationReference)">confirmed</see>.
+        /// </summary>
+        /// <param name="sender">
+        ///     The organization the status change is requested on behalf of. Defaults to
+        ///     <see cref="ClientConfiguration.GlobalSender" />
+        /// </param>
+        /// <returns>the changed status for a job, never null.</returns>
         public async Task<JobStatusResponse> GetStatusChange(Sender sender = null)
         {
             var request = new HttpRequestMessage

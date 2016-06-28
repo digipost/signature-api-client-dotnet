@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice
                 return null;
             }
 
-            var serializer = new XmlSerializer(typeof (T));
+            var serializer = new XmlSerializer(typeof(T));
 
             var settings = new XmlWriterSettings
             {
@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice
                 return default(T);
             }
 
-            var serializer = new XmlSerializer(typeof (T));
+            var serializer = new XmlSerializer(typeof(T));
 
             var settings = new XmlReaderSettings();
 

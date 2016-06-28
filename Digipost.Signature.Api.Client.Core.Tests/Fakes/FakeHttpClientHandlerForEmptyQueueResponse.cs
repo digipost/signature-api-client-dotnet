@@ -1,9 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http;
-using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 
-namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
+namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
     public class FakeHttpClientHandlerForEmptyQueueResponse : FakeHttpClientHandlerResponse
     {
@@ -14,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
 
         public override HttpContent GetContent()
         {
-            return new StringContent(ResponseUtility.GetEmptyQueueContent());
+            return new StringContent(CoreResponseUtility.GetEmptyQueueContent());
         }
     }
 }

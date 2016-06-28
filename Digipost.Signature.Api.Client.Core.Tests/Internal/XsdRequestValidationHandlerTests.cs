@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
             [TestMethod]
-            [ExpectedException(typeof (InvalidXmlException))]
+            [ExpectedException(typeof(InvalidXmlException))]
             public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipartBody()
             {
                 //Arrange
@@ -66,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             }
 
             [TestMethod]
-            [ExpectedException(typeof (InvalidXmlException))]
+            [ExpectedException(typeof(InvalidXmlException))]
             public async Task ThrowsExceptionOnInvalidManifestInAttachment()
             {
                 //Arrange

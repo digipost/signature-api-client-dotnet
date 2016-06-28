@@ -9,19 +9,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
     {
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Portal.Tests.Schema.Examples.Response");
 
-        public static string GetEmptyQueueContent()
-        {
-            return GetContent("EmptyQueueResponse.txt");
-        }
-
         public static string GetJobStatusChangeResponse()
         {
             return GetXml("JobStatusChangeResponse.xml").OuterXml;
-        }
-
-        public static string GetTooManyRequestsResponse()
-        {
-            return GetContent("TooManyRequestsResponse.txt");
         }
 
         internal static XmlDocument GetXml(string kvittering)

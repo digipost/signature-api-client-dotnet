@@ -8,7 +8,6 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
@@ -26,6 +25,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var signer = DomainUtility.GetSigner();
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();
+                var statusretrieval = statusretrievalmethod.WAIT_FOR_CALLBACK;
 
                 var source = new Job(
                     document,
@@ -41,7 +41,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         completionurl = source.ExitUrls.CompletionUrl.AbsoluteUri,
                         rejectionurl = source.ExitUrls.RejectionUrl.AbsoluteUri,
                         errorurl = source.ExitUrls.ErrorUrl.AbsoluteUri
-                    }
+                    },
+                    statusretrievalmethod = statusretrieval,
+                    statusretrievalmethodSpecified = true
                 };
 
                 //Act
@@ -143,13 +145,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
-                    status = directsignaturejobstatus.REJECTED
+                    status = directsignaturejobstatus.REJECTED,
+                    confirmationurl = "https://example.com/confirmation-url"
                 };
 
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
                     JobStatus.Rejected,
-                    new JobReferences(null, null, null)
+                    new JobReferences(new Uri("https://example.com/confirmation-url"), null, null)
                     );
 
                 //Act

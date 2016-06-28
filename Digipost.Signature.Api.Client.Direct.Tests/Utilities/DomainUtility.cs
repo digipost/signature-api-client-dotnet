@@ -21,6 +21,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
+        public static Job GetPollableDirectJob()
+        {
+            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), statusRetrievalMethod: StatusRetrievalMethod.Polling);
+        }
+
         internal static Manifest GetDirectManifest()
         {
             return new Manifest(

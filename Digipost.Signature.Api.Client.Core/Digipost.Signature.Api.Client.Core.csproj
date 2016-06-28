@@ -89,6 +89,7 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Exceptions\TooEagerPollingException.cs" />
     <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Internal\Asice\AsiceGenerator.cs" />
     <Compile Include="Internal\Asice\DocumentBundleToDiskProcessor.cs" />

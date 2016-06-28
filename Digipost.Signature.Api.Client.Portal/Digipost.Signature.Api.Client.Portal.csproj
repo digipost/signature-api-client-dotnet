@@ -90,7 +90,6 @@
     <Compile Include="Signature.cs" />
     <Compile Include="SignatureStatus.cs" />
     <Compile Include="Sms.cs" />
-    <Compile Include="TooEagerPollingException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -7,11 +8,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -27,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
-            var relativeUrl = RelativeUrl(job);
+            var relativeUrl = RelativeUrl(job.Sender);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var createAction = new CreateAction(job, documentBundle);
@@ -38,9 +40,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
-        private static Uri RelativeUrl(Job job)
+        private static Uri RelativeUrl(Sender sender)
         {
-            return new Uri($"/api/{job.Sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
+            return new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
 
         /// <summary>
@@ -76,6 +78,60 @@ namespace Digipost.Signature.Api.Client.Direct
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
+        }
+
+        /// <summary>
+        ///     If there is a job with an updated <see cref="JobStatus" />, the returned object contains necessary information to
+        ///     act on the status change. If the returned object has status <see cref="JobStatus.NoChanges" />, there is no
+        ///     changes.
+        ///     When processing of the status change is complete, (e.g. retrieving <see cref="GetPades(PadesReference)">Pades</see>
+        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.Signed" /> job),
+        ///     the returned status must be <see cref="Confirm(ConfirmationReference)">confirmed</see>.
+        /// </summary>
+        /// <param name="sender">
+        ///     The organization the status change is requested on behalf of. Defaults to
+        ///     <see cref="ClientConfiguration.GlobalSender" />
+        /// </param>
+        /// <returns>the changed status for a job, never null.</returns>
+        public async Task<JobStatusResponse> GetStatusChange(Sender sender = null)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = RelativeUrl(CurrentSender(sender)),
+                Method = HttpMethod.Get
+            };
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            var requestResult = await HttpClient.SendAsync(request);
+            var requestContent = await requestResult.Content.ReadAsStringAsync();
+
+            Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+
+            switch (requestResult.StatusCode)
+            {
+                case HttpStatusCode.NoContent:
+                    Log.Debug("Received empty response. No jobs have had their status changed.");
+                    return JobStatusResponse.NoChanges;
+                case HttpStatusCode.OK:
+                    var changedJob = ParseResponseToJobStatusResponse(requestContent);
+                    Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
+                    return changedJob;
+                case (HttpStatusCode) TooManyRequestsStatusCode:
+                    var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
+                    var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+
+                    Log.Warn(tooEagerPollingException.Message);
+
+                    throw tooEagerPollingException;
+                default:
+                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+            }
+        }
+
+        private static JobStatusResponse ParseResponseToJobStatusResponse(string requestContent)
+        {
+            var deserialized = SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent);
+            return DataTransferObjectConverter.FromDataTransferObject(deserialized);
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

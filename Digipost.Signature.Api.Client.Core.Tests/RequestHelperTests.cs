@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
             public async Task ThrowsGeneralErrorOnNotSuccessResponse()
             {
                 //Arrange
@@ -66,7 +66,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
             public async Task ThrowsSignatureExceptionIfNotSuccessStatusCode()
             {
                 //Arrange
@@ -95,7 +95,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var exception = requestHelper.HandleGeneralException(await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync(), brokerNotAuthorizedResponse.ResultCode.Value);
 
                 //Assert
-                Assert.IsInstanceOfType(exception, typeof (BrokerNotAuthorizedException));
+                Assert.IsInstanceOfType(exception, typeof(BrokerNotAuthorizedException));
             }
 
             [TestMethod]

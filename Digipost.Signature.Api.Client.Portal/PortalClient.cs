@@ -8,21 +8,18 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-        private const int TooManyRequestsStatusCode = 429;
-        private const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public PortalClient(ClientConfiguration clientConfiguration)
@@ -83,7 +80,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     jobStatusChanged = JobStatusChanged.NoChangesJobStatusChanged;
                     break;
                 case HttpStatusCode.OK:
-                    jobStatusChanged = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
+                    jobStatusChanged = ParseResponseToPortalJobStatusChangeResponse(requestContent);
                     Log.Debug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
@@ -105,7 +102,7 @@ namespace Digipost.Signature.Api.Client.Portal
             return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
-        private static async Task<JobStatusChanged> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
+        private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
             var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);

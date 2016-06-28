@@ -188,7 +188,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         [TestClass]
         public class StatusCanBeRetrievedByPolling : DirectClientSmokeTests
         {
-
             private static JobResponse _createdPollableJob;
 
             [ClassInitialize]
@@ -216,6 +215,5 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 directClient.Confirm(morphedJobStatusResponse.References.Confirmation).Wait();
             }
         }
-
     }
 }

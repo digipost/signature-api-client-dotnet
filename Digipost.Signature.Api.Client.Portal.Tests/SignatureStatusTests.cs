@@ -35,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             var knownStatusesInClass = new SignatureStatus("lolzor")
                 .GetType()
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
-                .Where(f => f.FieldType == typeof (SignatureStatus))
+                .Where(f => f.FieldType == typeof(SignatureStatus))
                 .Select(f => (SignatureStatus) f.GetValue(null));
 
             //Act

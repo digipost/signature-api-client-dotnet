@@ -14,7 +14,6 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -104,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Direct
                     var changedJob = ParseResponseToJobStatusResponse(requestContent);
                     Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
                     return changedJob;
-                case (HttpStatusCode)TooManyRequestsStatusCode:
+                case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
 

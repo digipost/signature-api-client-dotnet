@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Resources;
-using System.Runtime.InteropServices;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {

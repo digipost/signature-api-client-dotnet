@@ -38,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         public class CreateMethod : DirectClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            [ExpectedException(typeof(SenderNotSpecifiedException))]
             public async Task ThrowsExceptionOnNoSender()
             {
                 //Arrange
@@ -74,7 +74,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof (SignatureException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
             public async Task GetStatusThrowsSignatureException()
             {
                 //Arrange

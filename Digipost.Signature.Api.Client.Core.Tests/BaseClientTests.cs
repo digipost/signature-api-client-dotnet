@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         public class CurrentSenderMethod : BaseClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            [ExpectedException(typeof(SenderNotSpecifiedException))]
             public void ThrowsExceptionOnNoSender()
             {
                 //Arrange

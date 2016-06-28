@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class CreateMethod : PortalClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            [ExpectedException(typeof(SenderNotSpecifiedException))]
             public async Task ThrowsExceptionOnNoSender()
             {
                 //Arrange
@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class GetStatusChangeMethod : PortalClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (SenderNotSpecifiedException))]
+            [ExpectedException(typeof(SenderNotSpecifiedException))]
             public async Task ThrowsExceptionOnSenderNotSpecified()
             {
                 //Arrange
@@ -121,7 +121,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
                 };
 
-                object expectedResponseType = typeof (JobStatusChanged);
+                object expectedResponseType = typeof(JobStatusChanged);
 
                 //Act
                 var actualResponseType = (await portalClient.GetStatusChange()).GetType();
@@ -131,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof (TooEagerPollingException))]
+            [ExpectedException(typeof(TooEagerPollingException))]
             public async Task ThrowsExceptionOnTooManyRequests()
             {
                 //Arrange
@@ -148,7 +148,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
 
             [TestMethod]
-            [ExpectedException(typeof (UnexpectedResponseException))]
+            [ExpectedException(typeof(UnexpectedResponseException))]
             public async Task ThrowsUnexpectedExceptionWithErrorClassOnUnexpectedError()
             {
                 //Arrange
@@ -168,7 +168,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         [TestClass]
         public class CancelMethod : PortalClientTests
         {
-            [ExpectedException(typeof (JobCompletedException))]
+            [ExpectedException(typeof(JobCompletedException))]
             [TestMethod]
             public async Task ThrowsJobCompletedExceptionOnConflict()
             {
@@ -185,7 +185,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 Assert.Fail();
             }
 
-            [ExpectedException(typeof (UnexpectedResponseException))]
+            [ExpectedException(typeof(UnexpectedResponseException))]
             [TestMethod]
             public async Task ThrowsUnexpectedErrorOnUnexpectedErrorCode()
             {
@@ -207,7 +207,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class ConfirmMethod : PortalClientTests
         {
             [TestMethod]
-            [ExpectedException(typeof (UnexpectedResponseException), AllowDerivedTypes = true)]
+            [ExpectedException(typeof(UnexpectedResponseException), AllowDerivedTypes = true)]
             public async Task ThrowsUnexpectedResponseException()
             {
                 //Arrange

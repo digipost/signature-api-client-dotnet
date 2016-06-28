@@ -20,13 +20,13 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public ExitUrls ExitUrls { get; }
 
+        public StatusRetrievalMethod StatusRetrievalMethod { get; }
+
         public string Reference { get; }
 
         public AbstractDocument Document { get; }
 
         public Sender Sender { get; internal set; }
-
-        public StatusRetrievalMethod StatusRetrievalMethod { get; }
 
         public override string ToString()
         {

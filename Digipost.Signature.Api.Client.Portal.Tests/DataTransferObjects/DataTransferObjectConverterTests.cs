@@ -7,7 +7,6 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects

@@ -1,12 +1,10 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobStatusResponse
     {
-
         public static JobStatusResponse NoChanges = new JobStatusResponse(null, JobStatus.NoChanges, null);
 
         private long? _jobId;

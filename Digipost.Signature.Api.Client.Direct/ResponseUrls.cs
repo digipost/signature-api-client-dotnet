@@ -4,8 +4,7 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
-
-        private Uri _statusBaseUrl;
+        private readonly Uri _statusBaseUrl;
 
         public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
         {

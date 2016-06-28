@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
         public class SendAsync : XsdResponseValidationHandlerTests
         {
             [TestMethod]
-            [ExpectedException(typeof (InvalidXmlException))]
+            [ExpectedException(typeof(InvalidXmlException))]
             public async Task ThrowsExceptionOnResponseWithInvalidXmlInContent()
             {
                 var client = GetClientWithResponseValidator(new FakeHttpClientHandlerForStatusResponseInvalid());

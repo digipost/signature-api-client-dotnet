@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public override string ToString()
         {
-            return $"Signer: {Signer}, ExitUrls: {ExitUrls}, Reference: {Reference}, Document: {Document}, Sender: {Sender}, Retrieving status bu {StatusRetrievalMethod}";
+            return $"Signer: {Signer}, ExitUrls: {ExitUrls}, Reference: {Reference}, Document: {Document}, Sender: {Sender}, Retrieving status by {StatusRetrievalMethod}";
         }
     }
 }

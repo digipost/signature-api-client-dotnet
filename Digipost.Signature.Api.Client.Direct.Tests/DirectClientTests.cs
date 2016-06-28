@@ -134,6 +134,18 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.Fail("Should fail with " + typeof(TooEagerPollingException).Name);
             }
 
+            [TestMethod]
+            public async Task ReturnsStatusResponse()
+            {
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerGetStatusResponse())
+                };
+
+                var result = await directClient.GetStatusChange();
+
+                Assert.IsNotNull(result);
+            }
         }
     }
 }

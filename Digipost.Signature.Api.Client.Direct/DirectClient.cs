@@ -98,8 +98,12 @@ namespace Digipost.Signature.Api.Client.Direct
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    Log.Debug("No content response received.");
+                    Log.Debug("Received empty response. No jobs have had their status changed.");
                     return JobStatusResponse.NoChanges;
+                case HttpStatusCode.OK:
+                    var changedJob = ParseResponseToJobStatusResponse(requestContent);
+                    Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
+                    return changedJob;
                 case (HttpStatusCode)TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
@@ -110,6 +114,12 @@ namespace Digipost.Signature.Api.Client.Direct
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
+        }
+
+        private static JobStatusResponse ParseResponseToJobStatusResponse(string requestContent)
+        {
+            var deserialized = SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent);
+            return DataTransferObjectConverter.FromDataTransferObject(deserialized);
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

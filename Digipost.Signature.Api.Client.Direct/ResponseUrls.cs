@@ -4,15 +4,29 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class ResponseUrls
     {
+
+        private Uri _statusBaseUrl;
+
         public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
         {
-            StatusBaseUrl = statusBaseUrl;
+            _statusBaseUrl = statusBaseUrl;
             Redirect = new RedirectReference(redirectUrl);
         }
 
         public RedirectReference Redirect { get; set; }
 
-        public Uri StatusBaseUrl { get; }
+        public Uri StatusBaseUrl
+        {
+            get
+            {
+                if (_statusBaseUrl == null)
+                {
+                    throw new InvalidOperationException("The status base URL is not available. This is most likely because status for this job is retrieved by polling. " +
+                                                        "Use DirectClient.GetStatusChange() to check for updated statuses for this job.");
+                }
+                return _statusBaseUrl;
+            }
+        }
 
         public override string ToString()
         {

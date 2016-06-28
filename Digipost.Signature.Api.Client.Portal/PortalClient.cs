@@ -81,7 +81,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     jobStatusChanged = JobStatusChanged.NoChangesJobStatusChanged;
                     break;
                 case HttpStatusCode.OK:
-                    jobStatusChanged = await ParseResponseToPortalJobStatusChangeResponse(requestContent);
+                    jobStatusChanged = ParseResponseToPortalJobStatusChangeResponse(requestContent);
                     Log.Debug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
@@ -103,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Portal
             return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
         }
 
-        private static async Task<JobStatusChanged> ParseResponseToPortalJobStatusChangeResponse(string requestContent)
+        private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
             var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);

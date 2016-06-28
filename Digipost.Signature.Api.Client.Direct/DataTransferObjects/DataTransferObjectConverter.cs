@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Resources;
+using System.Runtime.InteropServices;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Extensions;
@@ -15,7 +17,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new directsignaturejobrequest
             {
                 reference = job.Reference,
-                exiturls = ToDataTransferObject(job.ExitUrls)
+                exiturls = ToDataTransferObject(job.ExitUrls),
+                statusretrievalmethod = job.StatusRetrievalMethod.ToStatusretrievalmethod(),
+                statusretrievalmethodSpecified = true
             };
         }
 
@@ -35,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 directsignaturejobresponse.signaturejobid,
                 new ResponseUrls(
                     new Uri(directsignaturejobresponse.redirecturl),
-                    new Uri(directsignaturejobresponse.statusurl)
+                    directsignaturejobresponse.statusurl == null ? null : new Uri(directsignaturejobresponse.statusurl)
                     )
                 );
         }
@@ -44,9 +48,11 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             var jobStatus = directsignaturejobstatusresponse.status.ToJobStatus();
 
-            var jobReferences = jobStatus == JobStatus.Signed
-                ? new JobReferences(new Uri(directsignaturejobstatusresponse.confirmationurl), new Uri(directsignaturejobstatusresponse.xadesurl), new Uri(directsignaturejobstatusresponse.padesurl))
-                : new JobReferences(null, null, null);
+            var jobReferences = new JobReferences(
+                directsignaturejobstatusresponse.confirmationurl == null ? null : new Uri(directsignaturejobstatusresponse.confirmationurl),
+                directsignaturejobstatusresponse.xadesurl == null ? null : new Uri(directsignaturejobstatusresponse.xadesurl),
+                directsignaturejobstatusresponse.padesurl == null ? null : new Uri(directsignaturejobstatusresponse.padesurl)
+                );
 
             return new JobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences);
         }

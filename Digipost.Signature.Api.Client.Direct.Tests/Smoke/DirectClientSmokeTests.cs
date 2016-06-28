@@ -4,6 +4,7 @@ using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
@@ -194,7 +195,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             public static void CreatePollableJob(TestContext context)
             {
                 var directClient = GetDirectClient();
-                var directJob = DomainUtility.GetDirectJob();
+                var directJob = DomainUtility.GetPollableDirectJob();
 
                 _createdPollableJob = directClient.Create(directJob).Result;
 
@@ -208,7 +209,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 var statusChange = directClient.GetStatusChange().Result;
 
+                Assert.AreEqual(JobStatus.Signed, statusChange.Status);
                 Assert.AreEqual(_createdPollableJob.JobId, statusChange.JobId);
+
+                var morphedJobStatusResponse = MorphJobStatusResponseIfMayBe(statusChange);
+                directClient.Confirm(morphedJobStatusResponse.References.Confirmation).Wait();
             }
         }
 

@@ -22,16 +22,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return GetContent("CreateResponse.xml");
         }
 
-        internal static string GetStatusResponse()
-        {
-            return GetContent("StatusResponse.xml");
-        }
-
-        public static string GetStatusResponseInvalid()
-        {
-            return GetContent("StatusResponseInvalid.xml");
-        }
-
         internal static string GetContent(string path)
         {
             return Encoding.UTF8.GetString(ResourceUtility.ReadAllBytes(true, path));

@@ -108,19 +108,14 @@
     <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
-    <Compile Include="Fakes\FakeHttpClientForNoContentResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientForDataResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientForPadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForBrokerNotAuthorizedErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponseInvalid.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForGetStatusResponse .cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForXadesResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
-    <Compile Include="Internal\XsdResponseValidationHandlerTests.cs" />
     <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
     <Compile Include="PersonalIdentificationNumberTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />
@@ -181,10 +176,7 @@
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequest.xml" />
     <EmbeddedResource Include="Resources\Body\CreateResponse.xml" />
     <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequestInvalid.xml" />
-    <EmbeddedResource Include="Resources\Body\StatusResponse.xml" />
-    <EmbeddedResource Include="Resources\Body\StatusResponseInvalid.xml" />
     <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
-    <EmbeddedResource Include="Schema\Examples\Response\Xades.xml" />
     <EmbeddedResource Include="Schema\Examples\Response\ErrorResponse.xml" />
     <EmbeddedResource Include="Schema\Examples\Response\BrokerNotAuthorizedErrorResponse.xml" />
   </ItemGroup>

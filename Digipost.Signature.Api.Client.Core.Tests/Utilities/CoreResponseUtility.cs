@@ -20,11 +20,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return GetXml("ErrorResponse.xml").OuterXml;
         }
 
-        public static Stream GetXades()
-        {
-            return new MemoryStream(GetContentBytes("Xades.xml"));
-        }
-
         public static Stream GetPades()
         {
             return new MemoryStream(GetContentBytes("Pades.pdf"));

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Threading.Tasks;
-using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
-using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Digipost.Signature.Api.Client.Direct.Tests.Smoke.TestHelper;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
@@ -16,12 +14,76 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     {
         private static DirectClient _directClient;
 
-        private static StatusReference _statusReference;
-        private static ConfirmationReference _confirmationReference;
-        private static XadesReference _xadesReference;
-        private static PadesReference _padesReference;
+        private static TestHelper _t;
 
-        protected static DirectClient GetDirectClient()
+        [ClassInitialize]
+        public static void Setup(TestContext context)
+        {
+            _t = new TestHelper(GetDirectClient());
+        }
+
+        [TestMethod]
+        public void Can_create_job_with_one_signer()
+        {
+            var signer = new PersonalIdentificationNumber("12345678910");
+
+            _t.Create_direct_job(signer)
+                .Sign_job(signer)
+                .Get_status()
+                .Expect_job_to_have_status(
+                    JobStatus.CompletedSuccessfully,
+                    ExpectedSignerStatus(signer, SignatureStatus.Signed)
+                )
+                .Get_XAdES(signer)
+                .Get_PAdES()
+                .Confirm_status();
+        }
+
+        [TestMethod]
+        public void Can_create_job_with_multiple_signers()
+        {
+            var signer1 = new PersonalIdentificationNumber("12345678910");
+            var signer2 = new PersonalIdentificationNumber("10987654321");
+
+            _t.Create_direct_job(signer1, signer2)
+                .Sign_job(signer1)
+                .Get_status()
+                .Expect_job_to_have_status(
+                    JobStatus.InProgress,
+                    ExpectedSignerStatus(signer1, SignatureStatus.Signed),
+                    ExpectedSignerStatus(signer2, SignatureStatus.Waiting)
+                )
+                .Get_XAdES(signer1)
+                .Sign_job(signer2)
+                .Get_status()
+                .Expect_job_to_have_status(
+                    JobStatus.CompletedSuccessfully,
+                    ExpectedSignerStatus(signer1, SignatureStatus.Signed),
+                    ExpectedSignerStatus(signer2, SignatureStatus.Signed)
+                )
+                .Get_XAdES(signer2)
+                .Get_PAdES()
+                .Confirm_status();
+        }
+
+        [TestMethod]
+        public void Can_retrieve_status_by_polling()
+        {
+            var signer = new PersonalIdentificationNumber("12345678910");
+
+            _t.Create_pollable_direct_job(signer)
+                .Sign_job(signer)
+                .Get_status_by_polling()
+                .Expect_job_to_have_status(
+                    JobStatus.CompletedSuccessfully,
+                    ExpectedSignerStatus(signer, SignatureStatus.Signed)
+                )
+                .Get_XAdES(signer)
+                .Get_PAdES()
+                .Confirm_status();
+        }
+
+        private static DirectClient GetDirectClient()
         {
             if (_directClient != null)
             {
@@ -57,163 +119,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
             var client = new DirectClient(clientConfig);
             return client;
-        }
-
-        internal static JobStatusResponse MorphJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
-        {
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
-                    jobStatusResponse.References.Xades = new XadesReference(GetUriFromRelativePath(jobStatusResponse.References.Xades.Url.AbsolutePath));
-                    jobStatusResponse.References.Pades = new PadesReference(GetUriFromRelativePath(jobStatusResponse.References.Pades.Url.AbsolutePath));
-                    jobStatusResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(jobStatusResponse.References.Confirmation.Url.AbsolutePath));
-                    break;
-            }
-
-            return jobStatusResponse;
-        }
-
-        internal static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
-        {
-            var statusReferenceUri = GetUriFromRelativePath(statusReference.Url().AbsolutePath);
-            return new StatusReference(statusReferenceUri, statusReference.StatusQueryToken);
-        }
-
-        [TestClass]
-        public class RunsEndpointCallsSuccessfully : DirectClientSmokeTests
-        {
-            [ClassInitialize]
-            public static void CreateAndGetStatus(TestContext context)
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-                var directJob = DomainUtility.GetDirectJob();
-
-                //Act
-                var directJobResponse = directClient.Create(directJob).Result;
-                var statusQueryToken = AutoSignAndGetToken(directClient, directJobResponse).Result;
-                _statusReference = MorphStatusReferenceIfMayBe(directJobResponse.ResponseUrls.Status(statusQueryToken));
-
-                var jobStatusResponse = directClient.GetStatus(_statusReference).Result;
-
-                var morphedJobStatusResponse = MorphJobStatusResponseIfMayBe(jobStatusResponse);
-                _xadesReference = morphedJobStatusResponse.References.Xades;
-                _padesReference = morphedJobStatusResponse.References.Pades;
-                _confirmationReference = morphedJobStatusResponse.References.Confirmation;
-
-                //Assert
-                Assert.IsNotNull(_statusReference);
-                Assert.IsNotNull(directJobResponse.JobId);
-                Assert.IsNotNull(_xadesReference);
-                Assert.IsNotNull(_padesReference);
-                Assert.IsNotNull(_confirmationReference);
-            }
-
-            private static async Task<string> AutoSignAndGetToken(DirectClient directClient, JobResponse jobResponse)
-            {
-                var statusUrl = await directClient.AutoSign(jobResponse.JobId);
-                var queryParams = new Uri(statusUrl).Query;
-                var queryDictionary = HttpUtility.ParseQueryString(queryParams);
-                var statusQueryToken = queryDictionary.Get(0);
-                return statusQueryToken;
-            }
-
-            [TestMethod]
-            public async Task CreatesSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-                var directJob = DomainUtility.GetDirectJob();
-
-                //Act
-                var result = await directClient.Create(directJob);
-
-                //Assert
-                Assert.IsNotNull(result.JobId);
-            }
-
-            [TestMethod]
-            public async Task GetsStatusSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-
-                //Act
-                var jobStatusResponse = await directClient.GetStatus(_statusReference);
-
-                //Assert
-                Assert.IsNotNull(jobStatusResponse.JobId);
-            }
-
-            [TestMethod]
-            public async Task GetsPadesSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-
-                //Act
-                var pades = await directClient.GetPades(_padesReference);
-
-                //Assert
-                Assert.IsTrue(pades.CanRead);
-            }
-
-            [TestMethod]
-            public async Task GetsXadesSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-
-                //Act
-                var xades = await directClient.GetXades(_xadesReference);
-
-                //Assert
-                Assert.IsTrue(xades.CanRead);
-            }
-
-            [TestMethod]
-            public async Task ConfirmsSuccessfully()
-            {
-                //Arrange
-                var directClient = GetDirectClient();
-
-                //Act
-                await directClient.Confirm(_confirmationReference);
-
-                //Assert
-            }
-        }
-
-        [TestClass]
-        public class StatusCanBeRetrievedByPolling : DirectClientSmokeTests
-        {
-            private static JobResponse _createdPollableJob;
-
-            [ClassInitialize]
-            public static void CreatePollableJob(TestContext context)
-            {
-                var directClient = GetDirectClient();
-                var directJob = DomainUtility.GetPollableDirectJob();
-
-                _createdPollableJob = directClient.Create(directJob).Result;
-
-                directClient.AutoSign(_createdPollableJob.JobId).Wait();
-            }
-
-            [TestMethod]
-            public void ReturnsSignedJobWhenPolling()
-            {
-                var directClient = GetDirectClient();
-
-                var statusChange = directClient.GetStatusChange().Result;
-
-                Assert.AreEqual(JobStatus.Signed, statusChange.Status);
-                Assert.AreEqual(_createdPollableJob.JobId, statusChange.JobId);
-
-                var morphedJobStatusResponse = MorphJobStatusResponseIfMayBe(statusChange);
-                directClient.Confirm(morphedJobStatusResponse.References.Confirmation).Wait();
-            }
         }
     }
 }

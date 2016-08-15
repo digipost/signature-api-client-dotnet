@@ -1,16 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Digipost.Signature.Api.Client.Portal
+namespace Digipost.Signature.Api.Client.Direct
 {
     public class SignatureStatus
     {
         public static SignatureStatus Rejected = new SignatureStatus("REJECTED");
 
-        public static SignatureStatus Cancelled = new SignatureStatus("CANCELLED");
-
-        public static SignatureStatus Reserved = new SignatureStatus("RESERVED");
-
-        public static SignatureStatus ContactInformationMissing = new SignatureStatus("CONTACT_INFORMATION_MISSING");
+        public static SignatureStatus Failed = new SignatureStatus("FAILED");
 
         public static SignatureStatus Expired = new SignatureStatus("EXPIRED");
 
@@ -21,9 +17,7 @@ namespace Digipost.Signature.Api.Client.Portal
         public static IEnumerable<SignatureStatus> KnownStatuses = new List<SignatureStatus>
         {
             Rejected,
-            Cancelled,
-            Reserved,
-            ContactInformationMissing,
+            Failed,
             Expired,
             Waiting,
             Signed

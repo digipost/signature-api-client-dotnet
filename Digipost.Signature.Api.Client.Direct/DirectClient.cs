@@ -48,8 +48,9 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <summary>
         ///     Get the current status for the given <see cref="StatusReference" />, which references the status for a specific
         ///     job.
-        ///     When processing of the status is complete (e.g. retrieving <see cref="GetPades(PadesReference)" /> and/or
-        ///     <see cref="GetXades(XadesReference)" /> documents for a <see cref="JobStatus.Signed" /> job), the returned  status
+        ///     When processing of the status is complete (e.g. retrieving <see cref="GetPades(PadesReference)">PAdES</see> and/or
+        ///     <see cref="GetXades(XadesReference)">XAdES</see> documents for a <see cref="JobStatus.CompletedSuccessfully" /> job
+        ///     where all the signers have <see cref="SignatureStatus.Signed" /> their documents), the returned  status
         ///     must be confirmed via <see cref="Confirm(ConfirmationReference)" />.
         /// </summary>
         /// <param name="statusReference">The reference to the status of a specific job.</param>
@@ -84,8 +85,10 @@ namespace Digipost.Signature.Api.Client.Direct
         ///     If there is a job with an updated <see cref="JobStatus" />, the returned object contains necessary information to
         ///     act on the status change. If the returned object has status <see cref="JobStatus.NoChanges" />, there is no
         ///     changes.
-        ///     When processing of the status change is complete, (e.g. retrieving <see cref="GetPades(PadesReference)">Pades</see>
-        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.Signed" /> job),
+        ///     When processing of the status change is complete, (e.g. retrieving <see cref="GetPades(PadesReference)">PAdES</see>
+        ///     and/or <see cref="GetXades(XadesReference)">XAdES</see> documents for a
+        ///     <see cref="JobStatus.CompletedSuccessfully" /> job
+        ///     where all the signers have <see cref="SignatureStatus.Signed" /> their documents),
         ///     the returned status must be <see cref="Confirm(ConfirmationReference)">confirmed</see>.
         /// </summary>
         /// <param name="sender">
@@ -146,8 +149,8 @@ namespace Digipost.Signature.Api.Client.Direct
 
         /// <summary>
         ///     Confirms that the status retrieved from <see cref="GetStatus(StatusReference)" /> is received. If the confirmed
-        ///     <see cref="JobStatus" /> is a terminal status (e.g. <see cref="JobStatus.Signed" /> or
-        ///     <see cref="JobStatus.Rejected" />),
+        ///     <see cref="JobStatus" /> is a terminal status (i.e. <see cref="JobStatus.CompletedSuccessfully" /> or
+        ///     <see cref="JobStatus.Failed" />),
         ///     the Signature service may make the job's associated resources unavailable through the API when receiving the
         ///     confirmation. Calling this method for a response with no <see cref="ConfirmationReference" /> has no effect.
         /// </summary>
@@ -157,10 +160,10 @@ namespace Digipost.Signature.Api.Client.Direct
             await RequestHelper.Confirm(confirmationReference);
         }
 
-        internal async Task<string> AutoSign(long jobId)
+        internal async Task<string> AutoSign(long jobId, string signer)
         {
-            Log.Warn($"Autosigning DirectJob with id: `{jobId}`. Should only happen in tests.");
-            var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign", UriKind.Relative);
+            Log.Warn($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
+            var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             var httpResponseMessage = await HttpClient.PostAsync(url, null);
             return await httpResponseMessage.Content.ReadAsStringAsync();
         }

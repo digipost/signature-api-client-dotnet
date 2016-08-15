@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
@@ -7,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
     internal class Manifest : IAsiceAttachable
     {
-        public Manifest(Sender sender, Document document, AbstractSigner signer)
+        public Manifest(Sender sender, Document document, IEnumerable<AbstractSigner> signer)
         {
             Sender = sender;
             Document = document;
@@ -18,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 
         public AbstractDocument Document { get; internal set; }
 
-        public AbstractSigner Signer { get; internal set; }
+        public IEnumerable<AbstractSigner> Signer { get; internal set; }
 
         public byte[] Bytes
         {

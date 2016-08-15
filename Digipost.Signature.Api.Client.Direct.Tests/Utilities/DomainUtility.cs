@@ -16,14 +16,19 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
+        public static Job GetDirectJob(params PersonalIdentificationNumber[] signers)
+        {
+            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls());
+        }
+
         public static Job GetDirectJobWithSender()
         {
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
-        public static Job GetPollableDirectJob()
+        public static Job GetPollableDirectJob(params PersonalIdentificationNumber[] signers)
         {
-            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), statusRetrievalMethod: StatusRetrievalMethod.Polling);
+            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), statusRetrievalMethod: StatusRetrievalMethod.Polling);
         }
 
         internal static Manifest GetDirectManifest()
@@ -49,13 +54,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new JobStatusResponse(
                 jobId,
                 jobStatus,
-                statusResponseUrls
+                statusResponseUrls,
+                new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Failed)}
                 );
         }
 
         public static ResponseUrls GetResponseUrls()
         {
-            var redirectUrl = new Uri("http://responseurl.no");
+            var redirectUrl = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
             var statusUrl = new Uri("http://statusurl.no");
 
             return new ResponseUrls(
@@ -93,8 +99,25 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         {
             return new JobReferences(
                 new Uri("http://signatureRoot.digipost.no/confirmation"),
-                new Uri("http://signatureRoot.digipost.no/xades"),
                 new Uri("http://signatureRoot.digipost.no/pades"));
+        }
+
+        public static List<Signature> GetSignatures(int count)
+        {
+            if (count > 9)
+            {
+                throw new ArgumentException("Maximum of 9 senders.");
+            }
+
+            var signatures = new List<Signature>();
+
+            const string basePersonalIdentificationNumber = "0101330000";
+            for (var i = 1; i <= count; i++)
+            {
+                signatures.Add(new Signature(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new XadesReference(new Uri("https://signatureRoot.digipost.no/xades")), SignatureStatus.Signed));
+            }
+
+            return signatures;
         }
 
         public static Document GetDirectDocument()
@@ -102,9 +125,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Document("TheTitle", "The direct document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static Signer GetSigner()
+        public static List<Signer> GetSigner()
         {
-            return GetSigners(1).First();
+            return GetSigners(1);
         }
 
         public static List<Signer> GetSigners(int count)

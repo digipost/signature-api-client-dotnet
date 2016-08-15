@@ -88,6 +88,7 @@
     <Compile Include="DirectClientTests.cs" />
     <Compile Include="Internal\AsicE\ManifestTests.cs" />
     <Compile Include="RedirectReferenceTests.cs" />
+    <Compile Include="Smoke\TestHelper.cs" />
     <Compile Include="StatusReferenceTests.cs" />
     <Compile Include="JobResponseTests.cs" />
     <Compile Include="JobStatusResponseTests.cs" />

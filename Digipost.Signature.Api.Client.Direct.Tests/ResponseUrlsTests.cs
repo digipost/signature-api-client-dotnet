@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Digipost.Signature.Api.Client.Core;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
@@ -12,17 +14,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void SimpleConstructor()
             {
                 //Arrange
-                var redirectUrl = new Uri("http://responseurl.no");
+                var redirectUrls = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
                 var statusUrl = new Uri("http://statusurl.no");
 
                 //Act
                 var responseUrls = new ResponseUrls(
-                    redirectUrl,
+                    redirectUrls,
                     statusUrl
                     );
 
                 //Assert
-                Assert.AreEqual(redirectUrl, responseUrls.Redirect.Url);
+                Assert.AreEqual(redirectUrls, responseUrls.Redirect.Urls);
             }
         }
 
@@ -33,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void ReturnsStatusNotNull()
             {
                 //Arrange
-                var redirectUrl = new Uri("http://responseurl.no");
+                var redirectUrl = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
                 var statusUrl = new Uri("http://statusurl.no");
                 var statusQueryToken = "StatusQueryToken";
 

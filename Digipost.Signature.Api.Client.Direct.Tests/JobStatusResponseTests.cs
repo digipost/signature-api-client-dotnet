@@ -17,18 +17,21 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobId = 22;
                 var jobStatus = JobStatus.Failed;
                 var jobReferences = DomainUtility.GetJobReferences();
+                var signatures = DomainUtility.GetSignatures(1);
 
                 //Act
                 var jobStatusResponse = new JobStatusResponse(
                     jobId,
                     jobStatus,
-                    jobReferences
+                    jobReferences,
+                    signatures
                     );
 
                 //Assert
                 Assert.AreEqual(jobId, jobStatusResponse.JobId);
                 Assert.AreEqual(jobStatus, jobStatusResponse.Status);
                 Assert.AreEqual(jobReferences, jobStatusResponse.References);
+                Assert.AreEqual(signatures, jobStatusResponse.Signatures);
             }
         }
     }

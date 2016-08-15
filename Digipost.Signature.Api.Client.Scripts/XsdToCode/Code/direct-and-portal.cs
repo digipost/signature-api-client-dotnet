@@ -455,6 +455,76 @@ public partial class portalsigner {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="signer-status", Namespace="http://signering.posten.no/schema/v1")]
+public partial class signerstatus {
+    
+    private string signerField;
+    
+    private string valueField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string signer {
+        get {
+            return this.signerField;
+        }
+        set {
+            this.signerField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value {
+        get {
+            return this.valueField;
+        }
+        set {
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="signer-specific-url", Namespace="http://signering.posten.no/schema/v1")]
+public partial class signerspecificurl {
+    
+    private string signerField;
+    
+    private string valueField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string signer {
+        get {
+            return this.signerField;
+        }
+        set {
+            this.signerField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value {
+        get {
+            return this.valueField;
+        }
+        set {
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(TypeName="direct-document", Namespace="http://signering.posten.no/schema/v1")]
 public partial class directdocument {
     
@@ -684,14 +754,15 @@ public enum statusretrievalmethod {
 [System.Xml.Serialization.XmlRootAttribute("direct-signature-job-manifest", Namespace="http://signering.posten.no/schema/v1", IsNullable=false)]
 public partial class directsignaturejobmanifest {
     
-    private directsigner signerField;
+    private directsigner[] signerField;
     
     private sender senderField;
     
     private directdocument documentField;
     
     /// <remarks/>
-    public directsigner signer {
+    [System.Xml.Serialization.XmlElementAttribute("signer")]
+    public directsigner[] signer {
         get {
             return this.signerField;
         }
@@ -732,7 +803,7 @@ public partial class directsignaturejobresponse {
     
     private long signaturejobidField;
     
-    private string redirecturlField;
+    private signerspecificurl[] redirecturlField;
     
     private string statusurlField;
     
@@ -749,7 +820,7 @@ public partial class directsignaturejobresponse {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("redirect-url")]
-    public string redirecturl {
+    public signerspecificurl[] redirecturl {
         get {
             return this.redirecturlField;
         }
@@ -781,11 +852,13 @@ public partial class directsignaturejobstatusresponse {
     
     private long signaturejobidField;
     
-    private directsignaturejobstatus statusField;
+    private directsignaturejobstatus signaturejobstatusField;
+    
+    private signerstatus[] statusField;
     
     private string confirmationurlField;
     
-    private string xadesurlField;
+    private signerspecificurl[] xadesurlField;
     
     private string padesurlField;
     
@@ -801,7 +874,19 @@ public partial class directsignaturejobstatusresponse {
     }
     
     /// <remarks/>
-    public directsignaturejobstatus status {
+    [System.Xml.Serialization.XmlElementAttribute("signature-job-status")]
+    public directsignaturejobstatus signaturejobstatus {
+        get {
+            return this.signaturejobstatusField;
+        }
+        set {
+            this.signaturejobstatusField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("status")]
+    public signerstatus[] status {
         get {
             return this.statusField;
         }
@@ -823,7 +908,7 @@ public partial class directsignaturejobstatusresponse {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("xades-url")]
-    public string xadesurl {
+    public signerspecificurl[] xadesurl {
         get {
             return this.xadesurlField;
         }
@@ -851,16 +936,13 @@ public partial class directsignaturejobstatusresponse {
 public enum directsignaturejobstatus {
     
     /// <remarks/>
-    SIGNED,
+    IN_PROGRESS,
     
     /// <remarks/>
-    REJECTED,
+    COMPLETED_SUCCESSFULLY,
     
     /// <remarks/>
     FAILED,
-    
-    /// <remarks/>
-    EXPIRED,
 }
 
 /// <remarks/>

@@ -4,7 +4,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
-        protected static Client ClientType
+        internal static Client ClientType
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             return isOnBuildServer;
         }
 
-        protected static Uri GetUriFromRelativePath(string relativeUri)
+        internal static Uri GetUriFromRelativePath(string relativeUri)
         {
             Uri result;
 
@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             return result;
         }
 
-        protected enum Client
+        internal enum Client
         {
             Localhost,
             DifiTest,

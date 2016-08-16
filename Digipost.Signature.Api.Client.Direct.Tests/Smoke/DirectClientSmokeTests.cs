@@ -62,7 +62,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                     ExpectedSignerStatus(signer2, SignatureStatus.Signed)
                 )
                 .Get_XAdES(signer2)
-                .Get_PAdES()
                 .Confirm_status();
         }
 

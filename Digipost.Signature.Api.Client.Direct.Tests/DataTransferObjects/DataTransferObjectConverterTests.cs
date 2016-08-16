@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
         public class ToDataTransferObjectMethod : DataTransferObjectConverterTests
         {
             [TestMethod]
-            public void ConvertsDirectJobSuccessfully()
+            public void Converts_direct_job_successfully()
             {
                 var document = DomainUtility.GetDirectDocument();
                 var signer = DomainUtility.GetSigner();
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsExitUrlsSuccessfully()
+            public void Converts_exit_urls_successfully()
             {
                 //Arrange
                 var source = DomainUtility.GetExitUrls();
@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
         public class FromDataTransferObjectMethod : DataTransferObjectConverterTests
         {
             [TestMethod]
-            public void ConvertsDirectJobSuccessfully()
+            public void Converts_direct_job_successfully()
             {
                 //Arrange
                 var redirecturl = "https://localhost:9000/redirect/#/c316e5b62df86a5d80e517b3ff4532738a9e7e43d4ae6075d427b1b58355bc63";
@@ -113,7 +113,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsDirectJobWithMultipleSignersSuccessfully()
+            public void Converts_direct_job_with_multiple_signers_successfully()
             {
                 //Arrange
                 var redirecturl = "https://localhost:9000/redirect/#/some-reference";
@@ -152,7 +152,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSignedDirectJobStatusSuccessfully()
+            public void Converts_signed_direct_job_status_successfully()
             {
                 //Arrange
                 var source = new directsignaturejobstatusresponse
@@ -183,7 +183,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsUnsignedDirectJobStatusSuccessfully()
+            public void Converts_unsigned_direct_job_status_successfully()
             {
                 //Arrange
                 var source = new directsignaturejobstatusresponse
@@ -212,7 +212,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsDirectJobStatusWithMultipleSignersSuccessfully()
+            public void Converts_direct_job_status_with_multiple_signers_successfully()
             {
                 //Arrange
                 var source = new directsignaturejobstatusresponse
@@ -253,7 +253,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsManifestSuccessfully()
+            public void Converts_manifest_successfully()
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
@@ -293,7 +293,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSenderSuccessfully()
+            public void Converts_sender_successfully()
             {
                 //Arrange
                 const string organizationNumber = "123456789";
@@ -315,7 +315,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsDocumentSuccessfully()
+            public void Converts_document_successfully()
             {
                 //Arrange
                 const string subject = "Subject";
@@ -349,7 +349,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSignerSuccessfully()
+            public void Converts_signer_successfully()
             {
                 //Arrange
                 const string personalIdentificationNumber = "0123456789";

@@ -178,6 +178,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
                 var changeResponse = await portalClient.GetStatusChange();
 
+                await portalClient.Confirm(changeResponse.ConfirmationReference);
+
                 //Assert
                 Assert.AreEqual(SignatureStatus.Cancelled, changeResponse.Signatures.ElementAt(0).SignatureStatus);
             }

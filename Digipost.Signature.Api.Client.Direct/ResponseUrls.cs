@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -6,13 +7,13 @@ namespace Digipost.Signature.Api.Client.Direct
     {
         private readonly Uri _statusBaseUrl;
 
-        public ResponseUrls(Uri redirectUrl, Uri statusBaseUrl)
+        public ResponseUrls(List<RedirectReference> redirectUrls, Uri statusBaseUrl)
         {
             _statusBaseUrl = statusBaseUrl;
-            Redirect = new RedirectReference(redirectUrl);
+            Redirect = new RedirectUrls(redirectUrls);
         }
 
-        public RedirectReference Redirect { get; set; }
+        public RedirectUrls Redirect { get; set; }
 
         public Uri StatusBaseUrl
         {
@@ -25,6 +26,18 @@ namespace Digipost.Signature.Api.Client.Direct
                 }
                 return _statusBaseUrl;
             }
+        }
+
+        /// <summary>
+        ///     Gets the only redirect URL for this job.
+        ///     Convenience method for retrieving the redirect URL for jobs with exactly one signer.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">if there are multiple redirect URLs</exception>
+        /// <seealso cref="RedirectUrls.GetFor" />
+        /// <seealso cref="RedirectUrls.Urls" />
+        public RedirectReference GetSingleRedirectUrl()
+        {
+            return Redirect.GetSingleRedirectUrl();
         }
 
         public override string ToString()
@@ -46,6 +59,11 @@ namespace Digipost.Signature.Api.Client.Direct
         public StatusReference Status(string statusQueryToken)
         {
             return new StatusReference(StatusBaseUrl, statusQueryToken);
+        }
+
+        internal bool HasStatusUrl()
+        {
+            return _statusBaseUrl != null;
         }
     }
 }

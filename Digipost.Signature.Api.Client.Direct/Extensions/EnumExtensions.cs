@@ -10,17 +10,14 @@ namespace Digipost.Signature.Api.Client.Direct.Extensions
             JobStatus result;
             switch (status)
             {
-                case directsignaturejobstatus.SIGNED:
-                    result = JobStatus.Signed;
+                case directsignaturejobstatus.COMPLETED_SUCCESSFULLY:
+                    result = JobStatus.CompletedSuccessfully;
                     break;
-                case directsignaturejobstatus.REJECTED:
-                    result = JobStatus.Rejected;
+                case directsignaturejobstatus.IN_PROGRESS:
+                    result = JobStatus.InProgress;
                     break;
                 case directsignaturejobstatus.FAILED:
                     result = JobStatus.Failed;
-                    break;
-                case directsignaturejobstatus.EXPIRED:
-                    result = JobStatus.Expired;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);

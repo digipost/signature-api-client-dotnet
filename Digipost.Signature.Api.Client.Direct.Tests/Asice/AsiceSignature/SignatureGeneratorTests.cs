@@ -15,8 +15,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice.AsiceSignature
         {
             var document = DomainUtility.GetDirectDocument();
             var sender = CoreDomainUtility.GetSender();
-            var signer = DomainUtility.GetSigner();
-            var manifest = new Manifest(sender, document, signer);
+            var signers = DomainUtility.GetSigner();
+            var manifest = new Manifest(sender, document, signers);
             var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
             var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
             return signaturGenerator;

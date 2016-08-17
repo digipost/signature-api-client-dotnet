@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="Document.cs" />
     <Compile Include="Enums\StatusRetrievalMethod.cs" />
+    <Compile Include="RedirectUrls.cs" />
+    <Compile Include="Signature.cs" />
+    <Compile Include="SignatureStatus.cs" />
     <Compile Include="Signer.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\AsicE\DirectAsiceGenerator.cs" />

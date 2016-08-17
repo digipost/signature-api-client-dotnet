@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
         public class ToDataTransferObjectMethod : DataTransferObjectConverterTests
         {
             [TestMethod]
-            public void ConvertsDirectJobSuccessfully()
+            public void Converts_direct_job_successfully()
             {
                 var document = DomainUtility.GetDirectDocument();
                 var signer = DomainUtility.GetSigner();
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsExitUrlsSuccessfully()
+            public void Converts_exit_urls_successfully()
             {
                 //Arrange
                 var source = DomainUtility.GetExitUrls();
@@ -83,19 +83,22 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
         public class FromDataTransferObjectMethod : DataTransferObjectConverterTests
         {
             [TestMethod]
-            public void ConvertsDirectJobSuccessfully()
+            public void Converts_direct_job_successfully()
             {
                 //Arrange
+                var redirecturl = "https://localhost:9000/redirect/#/c316e5b62df86a5d80e517b3ff4532738a9e7e43d4ae6075d427b1b58355bc63";
                 var source = new directsignaturejobresponse
                 {
                     signaturejobid = 1444,
-                    redirecturl = "https://localhost:9000/redirect/#/c316e5b62df86a5d80e517b3ff4532738a9e7e43d4ae6075d427b1b58355bc63",
+                    redirecturl = new[] {new signerspecificurl {signer = "12345678910", Value = redirecturl}},
                     statusurl = "https://localhost:8443/api/signature-jobs/77/status"
                 };
 
                 var expected = new JobResponse(
                     source.signaturejobid,
-                    new ResponseUrls(new Uri(source.redirecturl), new Uri(source.statusurl)
+                    new ResponseUrls(
+                        new List<RedirectReference> {new RedirectReference(new Uri(redirecturl), new PersonalIdentificationNumber("12345678910"))},
+                        new Uri(source.statusurl)
                         )
                     );
 
@@ -110,22 +113,63 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSignedDirectJobStatusSuccessfully()
+            public void Converts_direct_job_with_multiple_signers_successfully()
+            {
+                //Arrange
+                var redirecturl = "https://localhost:9000/redirect/#/some-reference";
+                var redirecturl2 = "https://localhost:9000/redirect/#/some-other-reference";
+                var source = new directsignaturejobresponse
+                {
+                    signaturejobid = 1444,
+                    redirecturl = new[]
+                    {
+                        new signerspecificurl {signer = "12345678910", Value = redirecturl},
+                        new signerspecificurl {signer = "10987654321", Value = redirecturl2}
+                    },
+                    statusurl = "https://localhost:8443/api/signature-jobs/77/status"
+                };
+
+                var expected = new JobResponse(
+                    source.signaturejobid,
+                    new ResponseUrls(
+                        new List<RedirectReference>
+                        {
+                            new RedirectReference(new Uri(redirecturl), new PersonalIdentificationNumber("12345678910")),
+                            new RedirectReference(new Uri(redirecturl2), new PersonalIdentificationNumber("10987654321"))
+                        },
+                        new Uri(source.statusurl)
+                        )
+                    );
+
+                //Act
+                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void Converts_signed_direct_job_status_successfully()
             {
                 //Arrange
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
-                    status = directsignaturejobstatus.SIGNED,
+                    signaturejobstatus = directsignaturejobstatus.COMPLETED_SUCCESSFULLY,
+                    status = new[] {new signerstatus {signer = "12345678910", Value = "SIGNED"}},
                     confirmationurl = "http://signatureRoot.digipost.no/confirmation",
-                    xadesurl = "http://signatureRoot.digipost.no/xades",
+                    xadesurl = new[] {new signerspecificurl {signer = "12345678910", Value = "http://signatureRoot.digipost.no/xades"}},
                     padesurl = "http://signatureRoot.digipost.no/pades"
                 };
 
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
-                    JobStatus.Signed,
-                    new JobReferences(new Uri(source.confirmationurl), new Uri(source.xadesurl), new Uri(source.padesurl))
+                    JobStatus.CompletedSuccessfully,
+                    new JobReferences(new Uri(source.confirmationurl), new Uri(source.padesurl)),
+                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed)}
                     );
 
                 //Act
@@ -139,20 +183,22 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsUnsignedDirectJobStatusSuccessfully()
+            public void Converts_unsigned_direct_job_status_successfully()
             {
                 //Arrange
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
-                    status = directsignaturejobstatus.REJECTED,
+                    signaturejobstatus = directsignaturejobstatus.FAILED,
+                    status = new[] {new signerstatus {signer = "12345678910", Value = "REJECTED"}},
                     confirmationurl = "https://example.com/confirmation-url"
                 };
 
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
-                    JobStatus.Rejected,
-                    new JobReferences(new Uri("https://example.com/confirmation-url"), null, null)
+                    JobStatus.Failed,
+                    new JobReferences(new Uri("https://example.com/confirmation-url"), null),
+                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected)}
                     );
 
                 //Act
@@ -166,7 +212,48 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsManifestSuccessfully()
+            public void Converts_direct_job_status_with_multiple_signers_successfully()
+            {
+                //Arrange
+                var source = new directsignaturejobstatusresponse
+                {
+                    signaturejobid = 77,
+                    signaturejobstatus = directsignaturejobstatus.FAILED,
+                    status = new[]
+                    {
+                        new signerstatus {signer = "12345678910", Value = "REJECTED"},
+                        new signerstatus {signer = "10987654321", Value = "SIGNED"}
+                    },
+                    xadesurl = new[]
+                    {
+                        new signerspecificurl {signer = "10987654321", Value = "https://example.com/xades-url"}
+                    },
+                    confirmationurl = "https://example.com/confirmation-url"
+                };
+
+                var expected = new JobStatusResponse(
+                    source.signaturejobid,
+                    JobStatus.Failed,
+                    new JobReferences(new Uri("https://example.com/confirmation-url"), null),
+                    new List<Signature>
+                    {
+                        new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected),
+                        new Signature(new PersonalIdentificationNumber("10987654321"), new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed)
+                    }
+                    );
+
+                //Act
+                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.AreEqual(0, differences.Count());
+            }
+
+            [TestMethod]
+            public void Converts_manifest_successfully()
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
@@ -179,7 +266,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var source = new Manifest(
                     new Sender(organizationNumberSender),
                     new Document(documentSubject, documentMessage, FileType.Pdf, pdfDocumentBytes),
-                    new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))
+                    new[] {new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))}
                     );
 
                 var expected = new directsignaturejobmanifest
@@ -192,7 +279,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         href = source.Document.FileName,
                         mime = expectedMimeType
                     },
-                    signer = new directsigner {personalidentificationnumber = personalIdentificationNumber}
+                    signer = new[] {new directsigner {personalidentificationnumber = personalIdentificationNumber}}
                 };
 
                 //Act
@@ -206,7 +293,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSenderSuccessfully()
+            public void Converts_sender_successfully()
             {
                 //Arrange
                 const string organizationNumber = "123456789";
@@ -228,7 +315,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsDocumentSuccessfully()
+            public void Converts_document_successfully()
             {
                 //Arrange
                 const string subject = "Subject";
@@ -262,7 +349,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             }
 
             [TestMethod]
-            public void ConvertsSignerSuccessfully()
+            public void Converts_signer_successfully()
             {
                 //Arrange
                 const string personalIdentificationNumber = "0123456789";

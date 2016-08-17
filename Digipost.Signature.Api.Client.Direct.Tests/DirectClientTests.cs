@@ -30,7 +30,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Assert
                 Assert.AreEqual(clientConfiguration, client.ClientConfiguration);
                 Assert.IsNotNull(client.HttpClient);
-                Assert.IsNotNull(client.HttpClient);
             }
         }
 

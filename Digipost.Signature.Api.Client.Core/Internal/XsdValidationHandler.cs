@@ -11,9 +11,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             var xsdValidator = new XsdValidator();
             xsdValidator.Validate(xml);
 
-            if (!string.IsNullOrEmpty(xsdValidator.ValidationWarnings))
+            string validationWarnings;
+            xsdValidator.Validate(xml, out validationWarnings);
+
+            if (!string.IsNullOrEmpty(validationWarnings))
             {
-                throw new InvalidXmlException(xsdValidator.ValidationWarnings);
+                throw new InvalidXmlException(validationWarnings);
             }
         }
     }

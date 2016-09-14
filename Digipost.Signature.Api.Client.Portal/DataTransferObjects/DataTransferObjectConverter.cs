@@ -84,14 +84,14 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var notificationsDto = new List<object>();
 
+            if (notifications.Email != null)
+            {
+                notificationsDto.Add(new email { address = notifications.Email.Address });
+            }
+
             if (notifications.Sms != null)
             {
                 notificationsDto.Add(new sms {number = notifications.Sms.Number});
-            }
-
-            if (notifications.Email != null)
-            {
-                notificationsDto.Add(new email {address = notifications.Email.Address});
             }
 
             return new notifications

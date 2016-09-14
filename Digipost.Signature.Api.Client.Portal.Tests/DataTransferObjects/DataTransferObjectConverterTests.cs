@@ -367,8 +367,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     Items = new object[]
                     {
-                        new sms {number = sms.Number},
-                        new email {address = email.Address}
+                        new email {address = email.Address},
+                        new sms {number = sms.Number}
                     }
                 };
 

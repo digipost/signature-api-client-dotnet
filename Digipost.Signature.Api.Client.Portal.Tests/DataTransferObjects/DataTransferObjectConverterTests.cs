@@ -46,7 +46,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(2));
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                     new List<Signer>()
+                    {
+                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
+                         new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup()),
+                    });
 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -132,7 +137,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(2))
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer>()
+                    {
+                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
+                         new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup()),
+                    })
                 {
                     Availability = new Availability
                     {
@@ -186,7 +195,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(2))
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer>()
+                    {
+                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
+                         new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup()),
+                    })
                 {
                     Availability = new Availability
                     {
@@ -240,7 +253,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 const string organizationNumberSender = "12345678902";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(2))
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), 
+                    new List<Signer>()
+                    {
+                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
+                         new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup()),
+                    })
                 {
                     Availability = DomainUtility.GetAvailability()
                 };

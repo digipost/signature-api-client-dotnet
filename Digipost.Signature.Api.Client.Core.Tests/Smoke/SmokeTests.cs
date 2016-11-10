@@ -10,10 +10,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             {
                 if (IsOnBuildServer())
                 {
-                    return Client.DifiTest;
+                    return Client.Qa;
                 }
 
-                return Client.DifiTest;
+                return Client.Qa;
             }
         }
 
@@ -48,8 +48,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                     result = new Uri(Environment.DifiQa.Url, relativeUri);
                     break;
                 case Client.Test:
-                    var uriString = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
-                    result = new Uri(uriString, relativeUri);
+                    var testUri = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
+                    result = new Uri(testUri, relativeUri);
+                    break;
+                case Client.Qa:
+                    var qaUri = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "qa"));
+                    result = new Uri(qaUri, relativeUri);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -63,7 +67,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             Localhost,
             DifiTest,
             DifiQa,
-            Test
+            Test,
+            Qa
         }
     }
 }

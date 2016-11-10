@@ -46,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         {
             return new List<Signer>
             {
-                new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
+                new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com")))
             };
         }
 
@@ -62,7 +62,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             const string basePersonalIdentificationNumber = "0101330000";
             for (var i = 1; i <= count; i++)
             {
-                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new NotificationsUsingLookup()));
+                signers.Add(new Signer(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new Notifications(new Email("email@example.com"))));
             }
 
             return signers;

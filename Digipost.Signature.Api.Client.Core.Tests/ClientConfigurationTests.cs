@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using ApiClientShared;
+using ApiClientShared.Enums;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,17 +32,17 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiQa;
                 var sender = CoreDomainUtility.GetSender();
 
-                var aCertificateFromCertificateStore = CoreDomainUtility.GetPostenTestCertificate();
+                var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed", Language.English);
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(
                     environment,
-                    aCertificateFromCertificateStore.Thumbprint, sender);
+                    certificate.Thumbprint, sender);
 
                 //Assert
                 Assert.AreEqual(environment, clientConfiguration.Environment);
                 Assert.AreEqual(sender, clientConfiguration.GlobalSender);
-                Assert.AreEqual(aCertificateFromCertificateStore, clientConfiguration.Certificate);
+                Assert.AreEqual(certificate, clientConfiguration.Certificate);
             }
 
             [TestMethod]

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Exceptions
@@ -14,8 +17,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Exceptions
             public void InitializeWithDateString()
             {
                 //Arrange
-                var source = "2016-02-16T16:22:23.045+01:00";
-                var expected = new DateTime(2016, 02, 16, 16, 22, 23, 045).ToUniversalTime();
+                const string source = "2016-11-10T10:39:46.610+01:00";
+                var expected = new DateTime(2016, 11, 10, 09, 39, 46, 610, DateTimeKind.Utc);
 
                 //Act
                 var tooEagerPollingException = new TooEagerPollingException(source);

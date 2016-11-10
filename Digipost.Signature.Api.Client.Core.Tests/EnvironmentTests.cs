@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
             }
 
             [TestMethod]
@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
             }
 
             [TestMethod]
@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
             }
 
             [TestMethod]
@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.IsNotNull(environment.CertificateChainValidator);
                 Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.SertifikatLager);
+                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
             }
         }
     }

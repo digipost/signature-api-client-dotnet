@@ -1,9 +1,14 @@
 using System.Reflection;
 
-[assembly: AssemblyVersion("1.6.*")]
+[assembly: AssemblyCompany("Digipost AS")]
+[assembly: AssemblyTrademark("Digipost AS")]
+[assembly: AssemblyProduct("Digipost API Client")]
+[assembly: AssemblyDescription("Digipost Client library for API integration.")]
+[assembly: AssemblyVersion("1.7.0")]
+[assembly: AssemblyFileVersion("1.7.0")]
+[assembly: AssemblyInformationalVersion("1.7.0")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyCopyright("© 2015-2016 Digipost AS")]
 
-#pragma warning disable CS7035 // The specified version string does not conform to the recommended format - major.minor.build.revision.
-//Disable warning as, it will be in the format stated.
 
-[assembly: AssemblyFileVersion("1.6.*")]
-#pragma warning restore CS7035
+

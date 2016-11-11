@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Digipost.Signature.Api.Client.Core.Exceptions
 {
@@ -7,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
         public TooEagerPollingException(string nextPermittedPollTime)
             : base($"Excessive polling is not allowed. The next permitted poll time is: {nextPermittedPollTime}, and can also be found in variable 'NextPermittedPollTime' on exception class.")
         {
-            NextPermittedPollTime = DateTime.Parse(nextPermittedPollTime);
+            NextPermittedPollTime = DateTime.Parse(nextPermittedPollTime).ToUniversalTime();
         }
 
         public DateTime NextPermittedPollTime { get; set; }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>digipost-signature-api-client</id>
-        <version>0.0.0.0</version>
+        <version>$version$</version>
         <authors>Digipost AS</authors>
         <owners>Posten Norge AS</owners>
         <projectUrl>https://github.com/digipost/signature-api-client-dotnet/</projectUrl>
@@ -16,8 +16,8 @@
                 <dependency id="Common.Logging.Core" version="[3.3.1,4)" />
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="[5.2.3,6)" />
                 <dependency id="Newtonsoft.Json" version="[6.0.4,7)" />
-                <dependency id="difi-felles-utility-dotnet" version="[0.6,0.7)" />
-                <dependency id="api-client-shared" version="[1.0.5968.19413,1.1)" />
+                <dependency id="difi-felles-utility-dotnet" version="[1.0.0,2.0.0)" />
+                <dependency id="api-client-shared" version="[2.0.0,3.0.0)" />
             </group>
         </dependencies>
     </metadata>

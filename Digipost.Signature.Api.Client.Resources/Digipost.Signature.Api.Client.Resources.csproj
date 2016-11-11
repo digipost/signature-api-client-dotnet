@@ -34,11 +34,11 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>C:\Keys\digipost.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApiClientShared, Version=1.0.5968.19413, Culture=neutral, PublicKeyToken=683b8efceae684a6, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.1.0.5968.19413\lib\net45\ApiClientShared.dll</HintPath>
+    <Reference Include="ApiClientShared, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
+      <HintPath>..\packages\api-client-shared.2.0.0\lib\net45\ApiClientShared.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -60,7 +60,9 @@
     <Compile Include="Xsd\XsdResource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="C:\Keys\signingkey.snk">
+      <Link>signingkey.snk</Link>
+    </None>
     <EmbeddedResource Include="Xsd\Data\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -70,6 +72,7 @@
     <EmbeddedResource Include="Xsd\Data\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Xml\Data\Request\PortalManifest.xml" />

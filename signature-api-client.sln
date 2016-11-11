@@ -8,8 +8,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09346DFD-5DA1-42E4-B3E3-79720846FB60}"
 	ProjectSection(SolutionItems) = preProject
 		SolutionItems\App.config = SolutionItems\App.config
-		C:\Keys\digipost.pfx = C:\Keys\digipost.pfx
 		SolutionItems\SharedAssemblyInfo.cs = SolutionItems\SharedAssemblyInfo.cs
+		C:\Keys\signingkey.snk = C:\Keys\signingkey.snk
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.TestClient", "Digipost.Signature.Api.Client.TestClient\Digipost.Signature.Api.Client.TestClient.csproj", "{469E8C38-800F-4107-8779-CC918AE0DA23}"

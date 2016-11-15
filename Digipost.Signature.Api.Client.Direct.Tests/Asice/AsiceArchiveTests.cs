@@ -7,17 +7,15 @@ using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
 {
-    [TestClass]
     public class AsiceArchiveTests
     {
-        [TestClass]
         public class ConstructorMethod : AsiceArchiveTests
         {
-            [TestMethod]
+            [Fact]
             public void ConstructorGeneratesBytes()
             {
                 //Arrange
@@ -32,18 +30,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 {
                     using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                     {
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == document.FileName));
+                        Assert.True(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
+                        Assert.True(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
+                        Assert.True(archive.Entries.Any(entry => entry.FullName == document.FileName));
                     }
                 }
             }
         }
 
-        [TestClass]
         public class AddAttachableMethod : AsiceArchiveTests
         {
-            [TestMethod]
+            [Fact]
             public void AddsAttachableToZip()
             {
                 //Arrange
@@ -60,16 +57,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 {
                     using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                     {
-                        Assert.IsTrue(archive.Entries.Any(entry => entry.FullName == attachment.FileName));
+                        Assert.True(archive.Entries.Any(entry => entry.FullName == attachment.FileName));
                     }
                 }
             }
         }
 
-        [TestClass]
         public class BytesMethod : AsiceArchiveTests
         {
-            [TestMethod]
+            [Fact]
             public void SendsBytesThroughDocumentBundleProcessor()
             {
                 //Arrange
@@ -93,9 +89,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 //Assert
                 foreach (var simpleProcessor in clientConfiguration.DocumentBundleProcessors.Cast<SimpleDocumentBundleProcessor>())
                 {
-                    Assert.IsTrue(simpleProcessor.StreamLength > 1000);
-                    Assert.IsTrue(simpleProcessor.CouldReadBytesStream);
-                    Assert.AreEqual(0, simpleProcessor.Initialposition);
+                    Assert.True(simpleProcessor.StreamLength > 1000);
+                    Assert.True(simpleProcessor.CouldReadBytesStream);
+                    Assert.Equal(0, simpleProcessor.Initialposition);
                 }
             }
         }

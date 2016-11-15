@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Portal.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
     public class JobStatusChangedTests
     {
-        [TestClass]
         public class ConstructorMethod : JobStatusChangedTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var jobId = 123456789;
@@ -42,10 +41,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     signatures);
 
                 //Assert
-                Assert.AreEqual(jobId, portalJobStatusChangeResponse.JobId);
-                Assert.AreEqual(jobStatus, portalJobStatusChangeResponse.Status);
-                Assert.AreEqual(confirmationReference, portalJobStatusChangeResponse.ConfirmationReference);
-                Assert.AreEqual(signatures, portalJobStatusChangeResponse.Signatures);
+                Assert.Equal(jobId, portalJobStatusChangeResponse.JobId);
+                Assert.Equal(jobStatus, portalJobStatusChangeResponse.Status);
+                Assert.Equal(confirmationReference, portalJobStatusChangeResponse.ConfirmationReference);
+                Assert.Equal(signatures, portalJobStatusChangeResponse.Signatures);
             }
         }
     }

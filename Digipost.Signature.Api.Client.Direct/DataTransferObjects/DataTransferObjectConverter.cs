@@ -38,8 +38,8 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 new ResponseUrls(
                     directsignaturejobresponse.redirecturl.Select(redirecturl => new RedirectReference(new Uri(redirecturl.Value), new PersonalIdentificationNumber(redirecturl.signer))).ToList(),
                     directsignaturejobresponse.statusurl == null ? null : new Uri(directsignaturejobresponse.statusurl)
-                    )
-                );
+                )
+            );
         }
 
         public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             var jobReferences = new JobReferences(
                 directsignaturejobstatusresponse.confirmationurl == null ? null : new Uri(directsignaturejobstatusresponse.confirmationurl),
                 directsignaturejobstatusresponse.padesurl == null ? null : new Uri(directsignaturejobstatusresponse.padesurl)
-                );
+            );
 
             return new JobStatusResponse(directsignaturejobstatusresponse.signaturejobid, jobStatus, jobReferences, signatures);
         }

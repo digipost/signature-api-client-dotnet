@@ -2,18 +2,16 @@
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class BaseClientTests
     {
-        [TestClass]
         public class ConstructorMethod : BaseClientTests
         {
-            [TestMethod]
-            public void InitializesWithProperties()
+            [Fact]
+            public void Initializes_with_properties()
             {
                 //Arrange
                 var tlsSetup = SecurityProtocolType.Tls12;
@@ -26,33 +24,17 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var clientStub = new ClientStub(clientConfiguration);
 
                 //Assert
-                Assert.AreEqual(clientConfiguration, clientStub.ClientConfiguration);
-                Assert.AreEqual(tlsSetup, ServicePointManager.SecurityProtocol);
-                Assert.IsNotNull(clientStub.RequestHelper);
-                Assert.AreEqual(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
+                Assert.Equal(clientConfiguration, clientStub.ClientConfiguration);
+                Assert.Equal(tlsSetup, ServicePointManager.SecurityProtocol);
+                Assert.NotNull(clientStub.RequestHelper);
+                Assert.Equal(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
             }
         }
 
-        [TestClass]
         public class CurrentSenderMethod : BaseClientTests
         {
-            [TestMethod]
-            [ExpectedException(typeof(SenderNotSpecifiedException))]
-            public void ThrowsExceptionOnNoSender()
-            {
-                //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
-                var client = new ClientStub(clientConfiguration);
-
-                //Act
-                client.GetCurrentSender(null);
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            public void ReturnsClientClientConfigurationSenderIfOnlySet()
+            [Fact]
+            public void Returns_client_client_configuration_sender_if_only_set()
             {
                 //Arrange
                 var expected = new Sender("000000000");
@@ -63,26 +45,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var actual = client.GetCurrentSender(null);
 
                 //Assert
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
 
-            [TestMethod]
-            public void ReturnsJobSenderIfOnlySet()
-            {
-                //Arrange
-                var expected = new Sender("000000000");
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
-                var client = new ClientStub(clientConfiguration);
-
-                //Act
-                var actual = client.GetCurrentSender(expected);
-
-                //Assert
-                Assert.AreEqual(expected, actual);
-            }
-
-            [TestMethod]
-            public void ReturnsJobSenderIfBothSet()
+            [Fact]
+            public void Returns_job_sender_if_both_set()
             {
                 //Arrange
                 var expected = new Sender("000000000");
@@ -94,7 +61,33 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var actual = client.GetCurrentSender(expected);
 
                 //Assert
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
+            }
+
+            [Fact]
+            public void Returns_job_sender_if_only_set()
+            {
+                //Arrange
+                var expected = new Sender("000000000");
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var client = new ClientStub(clientConfiguration);
+
+                //Act
+                var actual = client.GetCurrentSender(expected);
+
+                //Assert
+                Assert.Equal(expected, actual);
+            }
+
+            [Fact]
+            public void Throws_exception_on_no_sender()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var client = new ClientStub(clientConfiguration);
+
+                //Act
+                Assert.Throws<SenderNotSpecifiedException>(() => client.GetCurrentSender(null));
             }
         }
     }

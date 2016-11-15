@@ -16,14 +16,14 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             if (Log.IsDebugEnabled)
             {
-                await LogRequest(request);
+                await LogRequest(request).ConfigureAwait(false);
             }
 
-            var httpResponseMessage = await base.SendAsync(request, cancellationToken);
+            var httpResponseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
             if (Log.IsDebugEnabled)
             {
-                await LogResponse(httpResponseMessage);
+                await LogResponse(httpResponseMessage).ConfigureAwait(false);
             }
 
             return httpResponseMessage;
@@ -31,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task LogRequest(HttpRequestMessage request)
         {
-            var requestData = await GetRequestData(request);
+            var requestData = await GetRequestData(request).ConfigureAwait(false);
             Log.Debug($"Outgoing: {requestData}");
         }
 
@@ -44,16 +44,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             keyValuePairs.AddRange(SerializeHeaders(request.Headers));
 
-            if (request.Content != null && request.Content.IsMimeMultipartContent())
+            if ((request.Content != null) && request.Content.IsMimeMultipartContent())
             {
-                var multipart = await request.Content.ReadAsMultipartAsync();
+                var multipart = await request.Content.ReadAsMultipartAsync().ConfigureAwait(false);
 
                 foreach (var httpContent in multipart.Contents)
                 {
                     if (httpContent.Headers.ContentType.MediaType == MediaType.ApplicationXml)
                     {
                         keyValuePairs.AddRange(SerializeHeaders(request.Content.Headers));
-                        keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(httpContent)}"));
+                        keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(httpContent).ConfigureAwait(false)}"));
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task LogResponse(HttpResponseMessage response)
         {
-            var responseData = await GetResponseData(response);
+            var responseData = await GetResponseData(response).ConfigureAwait(false);
             Log.Debug($"Incoming: {responseData}");
         }
 
@@ -77,9 +77,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             keyValuePairs.AddRange(SerializeHeaders(response.Headers));
             keyValuePairs.AddRange(SerializeHeaders(response.Content.Headers));
 
-            if (response.Content != null && response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml)
+            if ((response.Content != null) && (response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml))
             {
-                keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content)}"));
+                keyValuePairs.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content).ConfigureAwait(false)}"));
             }
 
             return FormatHttpData(keyValuePairs);

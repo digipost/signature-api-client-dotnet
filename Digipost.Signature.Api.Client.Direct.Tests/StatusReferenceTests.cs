@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-    [TestClass]
     public class StatusReferenceTests
     {
-        [TestClass]
         public class ConstructorMethod : StatusReferenceTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var urlWithoutToken = new Uri("http://organizationdomain.com/completionUrl/");
@@ -20,8 +18,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var statusReference = new StatusReference(urlWithoutToken, statusQueryToken);
 
                 //Assert
-                Assert.AreEqual(urlWithoutToken, statusReference.BaseUrl);
-                Assert.AreEqual(statusQueryToken, statusReference.StatusQueryToken);
+                Assert.Equal(urlWithoutToken, statusReference.BaseUrl);
+                Assert.Equal(statusQueryToken, statusReference.StatusQueryToken);
             }
         }
     }

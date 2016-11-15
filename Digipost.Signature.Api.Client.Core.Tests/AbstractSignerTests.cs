@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Core.Tests.Stubs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class AbstractSignerTests
     {
-        [TestClass]
         public class ConstructorMethod : AbstractSignerTests
         {
-            [TestMethod]
-            public void InitializesWithProperties()
+            [Fact]
+            public void Initializes_with_properties()
             {
                 //Arrange
                 var personalIdentificationNumber = new PersonalIdentificationNumber("01013300001");
@@ -19,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var signer = new SignerStub(personalIdentificationNumber);
 
                 //Assert
-                Assert.AreEqual(personalIdentificationNumber, signer.PersonalIdentificationNumber);
+                Assert.Equal(personalIdentificationNumber, signer.PersonalIdentificationNumber);
             }
         }
     }

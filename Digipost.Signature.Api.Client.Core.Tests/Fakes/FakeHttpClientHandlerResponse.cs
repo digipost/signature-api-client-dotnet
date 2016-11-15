@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
             };
             AddResponseHeader(response);
 
-            return await Task.FromResult(response);
+            return await Task.FromResult(response).ConfigureAwait(false);
         }
 
         private void AddResponseHeader(HttpResponseMessage response)

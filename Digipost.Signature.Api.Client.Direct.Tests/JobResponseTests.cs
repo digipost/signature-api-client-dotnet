@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-    [TestClass]
     public class JobResponseTests
     {
-        [TestClass]
         public class ConstructorMethod : JobResponseTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void SSimple_constructor()
             {
                 //Arrange
                 var jobId = 123456789;
@@ -20,11 +18,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var directJobResponse = new JobResponse(
                     jobId,
                     responseUrls
-                    );
+                );
 
                 //Assert
-                Assert.AreEqual(jobId, directJobResponse.JobId);
-                Assert.AreEqual(responseUrls, directJobResponse.ResponseUrls);
+                Assert.Equal(jobId, directJobResponse.JobId);
+                Assert.Equal(responseUrls, directJobResponse.ResponseUrls);
             }
         }
     }

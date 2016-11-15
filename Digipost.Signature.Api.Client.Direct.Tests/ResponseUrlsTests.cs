@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
     public class ResponseurlsTests
     {
-        [TestClass]
         public class ConstructorMethod : ResponseurlsTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var redirectUrls = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
@@ -21,18 +20,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var responseUrls = new ResponseUrls(
                     redirectUrls,
                     statusUrl
-                    );
+                );
 
                 //Assert
-                Assert.AreEqual(redirectUrls, responseUrls.Redirect.Urls);
+                Assert.Equal(redirectUrls, responseUrls.Redirect.Urls);
             }
         }
 
-        [TestClass]
         public class StatusMethod : ResponseurlsTests
         {
-            [TestMethod]
-            public void ReturnsStatusNotNull()
+            [Fact]
+            public void Returns_status_not_null()
             {
                 //Arrange
                 var redirectUrl = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
@@ -43,10 +41,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var responseUrls = new ResponseUrls(
                     redirectUrl,
                     statusUrl
-                    );
+                );
 
                 //Assert
-                Assert.IsNotNull(responseUrls.Status(statusQueryToken));
+                Assert.NotNull(responseUrls.Status(statusQueryToken));
             }
         }
     }

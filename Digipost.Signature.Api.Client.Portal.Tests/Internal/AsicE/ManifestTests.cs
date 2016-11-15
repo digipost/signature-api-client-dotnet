@@ -4,18 +4,16 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
 {
-    [TestClass]
     public class ManifestTests
     {
-        [TestClass]
         public class ConstructorMethod : ManifestTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
@@ -26,17 +24,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 var manifest = new Manifest(sender, document, signers);
 
                 //Assert
-                Assert.AreEqual(sender, manifest.Sender);
-                Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signers, manifest.Signers);
+                Assert.Equal(sender, manifest.Sender);
+                Assert.Equal(document, manifest.Document);
+                Assert.Equal(signers, manifest.Signers);
             }
         }
 
-        [TestClass]
         public class FileNameMethod : ManifestTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticString()
+            [Fact]
+            public void Returns_correct_static_string()
             {
                 //Arrange
                 const string fileName = "manifest.xml";
@@ -45,15 +42,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(fileName, manifest.FileName);
+                Assert.Equal(fileName, manifest.FileName);
             }
         }
 
-        [TestClass]
         public class MimeTypeMethod : ManifestTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticString()
+            [Fact]
+            public void Returns_correct_static_string()
             {
                 //Arrange
                 const string mimeType = "application/xml";
@@ -62,15 +58,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(mimeType, manifest.MimeType);
+                Assert.Equal(mimeType, manifest.MimeType);
             }
         }
 
-        [TestClass]
         public class IdMethod : ManifestTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticString()
+            [Fact]
+            public void Returns_correct_static_string()
             {
                 //Arrange
                 const string id = "Id_1";
@@ -79,15 +74,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(id, manifest.Id);
+                Assert.Equal(id, manifest.Id);
             }
         }
 
-        [TestClass]
         public class BytesMethod : ManifestTests
         {
-            [TestMethod]
-            public void SuccessfulManifestToBytes()
+            [Fact]
+            public void Successful_manifest_to_bytes()
             {
                 //Arrange
                 var manifest = DomainUtility.GetPortalManifest();
@@ -99,7 +93,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
                 var actualResult = Encoding.UTF8.GetString(bytes);
 
                 //Assert
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.Equal(expectedResult, actualResult);
             }
         }
     }

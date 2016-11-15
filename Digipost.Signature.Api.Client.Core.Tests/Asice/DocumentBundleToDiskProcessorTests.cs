@@ -3,37 +3,32 @@ using System.IO;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice
 {
-    [TestClass]
     public class DocumentBundleToDiskProcessorTests
     {
-        [TestClass]
         public class ProcessMethod : DocumentBundleToDiskProcessorTests
         {
-            [TestMethod]
-            public void PersistsFileToDisk()
+            public class ConstructorMethod : DocumentBundleToDiskProcessorTests
             {
-                //Arrange
-                var tmpDirectory = Path.GetTempPath();
-                var processor = new DocumentBundleToDiskProcessor(tmpDirectory);
-                var mockSignatureJob = new SignatureJobStub {Reference = "AReference"};
-                var documentBytes = CoreDomainUtility.GetDocument().Bytes;
-                var fileStream = new MemoryStream(documentBytes);
+                [Fact]
+                public void Simple_constructor()
+                {
+                    //Arrange
+                    var directory = "C:\\directory";
 
-                //Act
-                processor.Process(mockSignatureJob, fileStream);
-                var processedFileName = processor.LastFileProcessed;
-                var tempFile = Path.Combine(tmpDirectory, processedFileName);
+                    //Act
+                    var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
 
-                //Assert
-                Assert.AreEqual(documentBytes.Length, new FileInfo(tempFile).Length);
+                    //Assert
+                    Assert.Equal(directory, documentBundleToDiskProcessor.Directory);
+                }
             }
 
-            [TestMethod]
-            public void FileNameContainsEssentialData()
+            [Fact]
+            public void File_name_contains_essential_data()
             {
                 //Arrange
                 var tmpDirectory = Path.GetTempPath();
@@ -50,27 +45,29 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 var tempFile = Path.Combine(tmpDirectory, processedFileName);
 
                 //Assert
-                Assert.IsTrue(tempFile.Contains(tmpDirectory));
-                Assert.IsTrue(tempFile.Contains(fileEnding));
-                Assert.IsTrue(tempFile.Contains(mockSignatureJob.Reference));
-                Assert.IsTrue(tempFile.Contains(DateTime.Now.Year.ToString()));
+                Assert.True(tempFile.Contains(tmpDirectory));
+                Assert.True(tempFile.Contains(fileEnding));
+                Assert.True(tempFile.Contains(mockSignatureJob.Reference));
+                Assert.True(tempFile.Contains(DateTime.Now.Year.ToString()));
             }
 
-            [TestClass]
-            public class ConstructorMethod : DocumentBundleToDiskProcessorTests
+            [Fact]
+            public void Persists_file_to_disk()
             {
-                [TestMethod]
-                public void SimpleConstructor()
-                {
-                    //Arrange
-                    var directory = "C:\\directory";
+                //Arrange
+                var tmpDirectory = Path.GetTempPath();
+                var processor = new DocumentBundleToDiskProcessor(tmpDirectory);
+                var mockSignatureJob = new SignatureJobStub {Reference = "AReference"};
+                var documentBytes = CoreDomainUtility.GetDocument().Bytes;
+                var fileStream = new MemoryStream(documentBytes);
 
-                    //Act
-                    var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
+                //Act
+                processor.Process(mockSignatureJob, fileStream);
+                var processedFileName = processor.LastFileProcessed;
+                var tempFile = Path.Combine(tmpDirectory, processedFileName);
 
-                    //Assert
-                    Assert.AreEqual(directory, documentBundleToDiskProcessor.Directory);
-                }
+                //Assert
+                Assert.Equal(documentBytes.Length, new FileInfo(tempFile).Length);
             }
         }
     }

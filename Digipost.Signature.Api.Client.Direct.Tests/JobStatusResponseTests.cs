@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-    [TestClass]
     public class JobStatusResponseTests
     {
-        [TestClass]
         public class ConstructorMethod : JobStatusResponseTests
         {
-            [TestMethod]
+            [Fact]
             public void SimpleConstructor()
             {
                 //Arrange
@@ -25,13 +23,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     jobStatus,
                     jobReferences,
                     signatures
-                    );
+                );
 
                 //Assert
-                Assert.AreEqual(jobId, jobStatusResponse.JobId);
-                Assert.AreEqual(jobStatus, jobStatusResponse.Status);
-                Assert.AreEqual(jobReferences, jobStatusResponse.References);
-                Assert.AreEqual(signatures, jobStatusResponse.Signatures);
+                Assert.Equal(jobId, jobStatusResponse.JobId);
+                Assert.Equal(jobStatus, jobStatusResponse.Status);
+                Assert.Equal(jobReferences, jobStatusResponse.References);
+                Assert.Equal(signatures, jobStatusResponse.Signatures);
             }
         }
     }

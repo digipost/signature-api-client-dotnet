@@ -4,18 +4,24 @@ using System.Linq;
 using System.Reflection;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class AbstractDocumentTests
     {
-        [TestClass]
         public class ConstructorMethod : AbstractDocumentTests
         {
-            [TestMethod]
-            public void InitializesAllValuesWithDocumentBytes()
+            private static string Document_file_path()
+            {
+                var executingAssembly = Assembly.GetExecutingAssembly();
+                var executablePath = Path.GetDirectoryName(executingAssembly.CodeBase);
+                var documentPath = Path.Combine(executablePath, "Resources", "Documents", "Dokument.pdf");
+                return new Uri(documentPath).LocalPath;
+            }
+
+            [Fact]
+            public void Initializes_all_values_with_document_bytes()
             {
                 //Arrange
                 const string subject = "subject";
@@ -31,17 +37,17 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                     message,
                     fileType,
                     pdfDocumentBytes
-                    );
+                );
 
                 //Assert
-                Assert.AreEqual(subject, document.Title);
-                Assert.AreEqual(message, document.Message);
-                Assert.AreEqual(expectedMimeType, document.MimeType);
-                Assert.IsTrue(pdfDocumentBytes.SequenceEqual(document.Bytes));
+                Assert.Equal(subject, document.Title);
+                Assert.Equal(message, document.Message);
+                Assert.Equal(expectedMimeType, document.MimeType);
+                Assert.True(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
 
-            [TestMethod]
-            public void InitializesAllValuesWithDocumentPath()
+            [Fact]
+            public void Initializes_all_values_with_document_path()
             {
                 //Arrange
                 const string subject = "subject";
@@ -57,31 +63,22 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                     message,
                     fileType,
                     documentPath
-                    );
+                );
 
                 var pdfDocumentBytes = File.ReadAllBytes(documentPath);
 
                 //Assert
-                Assert.AreEqual(subject, document.Title);
-                Assert.AreEqual(message, document.Message);
-                Assert.AreEqual(expectedMimeType, document.MimeType);
-                Assert.IsTrue(pdfDocumentBytes.SequenceEqual(document.Bytes));
-            }
-
-            private static string DocumentFilePath()
-            {
-                var executingAssembly = Assembly.GetExecutingAssembly();
-                var executablePath = Path.GetDirectoryName(executingAssembly.Location);
-                var documentPath = Path.Combine(executablePath, "Resources", "Documents", "Dokument.pdf");
-                return documentPath;
+                Assert.Equal(subject, document.Title);
+                Assert.Equal(message, document.Message);
+                Assert.Equal(expectedMimeType, document.MimeType);
+                Assert.True(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
         }
 
-        [TestClass]
         public class IdMethod : AbstractDocumentTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticString()
+            [Fact]
+            public void Returns_correct_static_string()
             {
                 //Arrange
                 var id = "Id_0";
@@ -90,15 +87,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var document = CoreDomainUtility.GetDocument();
 
                 //Assert
-                Assert.AreEqual(id, document.Id);
+                Assert.Equal(id, document.Id);
             }
         }
 
-        [TestClass]
         public class FileNameMethod : AbstractDocumentTests
         {
-            [TestMethod]
-            public void ReturnsFileNameWithDate()
+            [Fact]
+            public void Returns_file_name_with_date()
             {
                 //Arrange
 
@@ -106,7 +102,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var document = new DocumentStub("title", "message", FileType.Txt, new byte[] {0xb});
 
                 //Assert
-                Assert.IsTrue(document.FileName.Contains(DateTime.Now.ToString("yyyyMMdd")) && document.FileName.Contains("document"));
+                Assert.True(document.FileName.Contains(DateTime.Now.ToString("yyyyMMdd")) && document.FileName.Contains("document"));
             }
         }
     }

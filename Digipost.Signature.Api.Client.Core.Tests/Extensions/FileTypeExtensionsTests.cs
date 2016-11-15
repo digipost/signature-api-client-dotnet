@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Core.Internal.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Extensions
 {
-    [TestClass]
     public class FileTypeExtensionsTests
     {
-        [TestClass]
         public class ToMimeTypeMethod : FileTypeExtensionsTests
         {
-            [TestMethod]
-            public void ConvertsPdf()
+            [Fact]
+            public void Converts_pdf()
             {
                 //Arrange
                 const string expectedPdfMimeType = "application/pdf";
@@ -19,11 +17,11 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Extensions
                 var pdfMimeType = FileType.Pdf.ToMimeType();
 
                 //Assert
-                Assert.AreEqual(expectedPdfMimeType, pdfMimeType);
+                Assert.Equal(expectedPdfMimeType, pdfMimeType);
             }
 
-            [TestMethod]
-            public void ConvertsTxt()
+            [Fact]
+            public void Converts_txt()
             {
                 //Arrange
                 const string expectedTxtMimeType = "text/plain";
@@ -32,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Extensions
                 var txtMimeType = FileType.Txt.ToMimeType();
 
                 //Assert
-                Assert.AreEqual(expectedTxtMimeType, txtMimeType);
+                Assert.Equal(expectedTxtMimeType, txtMimeType);
             }
         }
     }

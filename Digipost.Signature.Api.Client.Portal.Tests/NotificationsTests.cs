@@ -1,15 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class NotificationsTests
     {
-        [TestClass]
         public class ConstructorMethod : NotificationsTests
         {
-            [TestMethod]
-            public void InitializesWithEnforcedEmail()
+            [Fact]
+            public void Initializes_with_enforced_email()
             {
                 //Arrange
                 var email = new Email("tull@ball.no");
@@ -18,11 +16,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notifications = new Notifications(email);
 
                 //Assert
-                Assert.AreEqual(email, notifications.Email);
+                Assert.Equal(email, notifications.Email);
             }
 
-            [TestMethod]
-            public void InitializesWithEnforcedSms()
+            [Fact]
+            public void Initializes_with_enforced_sms()
             {
                 //Arrange
                 var sms = new Sms("1233456789");
@@ -31,11 +29,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notifications = new Notifications(sms);
 
                 //Assert
-                Assert.AreEqual(sms, notifications.Sms);
+                Assert.Equal(sms, notifications.Sms);
             }
 
-            [TestMethod]
-            public void InitializesWithSmsAndEmailBothOrderings()
+            [Fact]
+            public void Initializes_with_sms_and_email_both_orderings()
             {
                 //Arrange
                 var email = new Email("tull@ball.no");
@@ -46,10 +44,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notificationsEmailFirst = new Notifications(email, sms);
 
                 //Assert
-                Assert.AreEqual(email, notificationsEmailFirst.Email);
-                Assert.AreEqual(email, notificationsSmsFirst.Email);
-                Assert.AreEqual(sms, notificationsSmsFirst.Sms);
-                Assert.AreEqual(sms, notificationsEmailFirst.Sms);
+                Assert.Equal(email, notificationsEmailFirst.Email);
+                Assert.Equal(email, notificationsSmsFirst.Email);
+                Assert.Equal(sms, notificationsSmsFirst.Sms);
+                Assert.Equal(sms, notificationsEmailFirst.Sms);
             }
         }
     }

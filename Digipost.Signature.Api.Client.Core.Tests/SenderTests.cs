@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
     public class SenderTests
     {
-        [TestClass]
         public class ConstructorMethod : SenderTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 const string organizationNumber = "123456789";
@@ -17,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var sender = new Sender(organizationNumber);
 
                 //Assert
-                Assert.AreEqual(organizationNumber, sender.OrganizationNumber);
+                Assert.Equal(organizationNumber, sender.OrganizationNumber);
             }
         }
     }

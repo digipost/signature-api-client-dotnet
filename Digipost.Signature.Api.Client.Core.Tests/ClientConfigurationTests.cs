@@ -4,29 +4,35 @@ using ApiClientShared;
 using ApiClientShared.Enums;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class ClientConfigurationTests
     {
-        [TestClass]
         public class ConstructorMethod : ClientConfigurationTests
         {
-            [TestMethod]
-            public void ConstructorWithNoSenderAndCertificateThumbprintExists()
+            [Fact]
+            public void Constructor_with_certificate()
             {
                 //Arrange
+                var environment = Environment.DifiQa;
+                var sender = CoreDomainUtility.GetSender();
+                var x509Certificate = CoreDomainUtility.GetTestCertificate();
 
                 //Act
-                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(
+                    environment,
+                    x509Certificate, sender);
 
                 //Assert
+                Assert.Equal(environment, clientConfiguration.Environment);
+                Assert.Equal(sender, clientConfiguration.GlobalSender);
+                Assert.Equal(x509Certificate, clientConfiguration.Certificate);
             }
 
-            [TestMethod]
-            public void ConstructorWithCertificateThumbprint()
+            [Fact]
+            public void Constructor_with_certificate_thumbprint()
             {
                 //Arrange
                 var environment = Environment.DifiQa;
@@ -40,32 +46,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                     certificate.Thumbprint, sender);
 
                 //Assert
-                Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
-                Assert.AreEqual(certificate, clientConfiguration.Certificate);
+                Assert.Equal(environment, clientConfiguration.Environment);
+                Assert.Equal(sender, clientConfiguration.GlobalSender);
+                Assert.Equal(certificate, clientConfiguration.Certificate);
             }
 
-            [TestMethod]
-            public void ConstructorWithCertificate()
-            {
-                //Arrange
-                var environment = Environment.DifiQa;
-                var sender = CoreDomainUtility.GetSender();
-                var x509Certificate = CoreDomainUtility.GetTestCertificate();
-
-                //Act
-                var clientConfiguration = new ClientConfiguration(
-                    environment,
-                    x509Certificate, sender);
-
-                //Assert
-                Assert.AreEqual(environment, clientConfiguration.Environment);
-                Assert.AreEqual(sender, clientConfiguration.GlobalSender);
-                Assert.AreEqual(x509Certificate, clientConfiguration.Certificate);
-            }
-
-            [TestMethod]
-            public void ConstructorWithNoSenderAndCertificateExists()
+            [Fact]
+            public void Constructor_with_no_sender_and_certificate_exists()
             {
                 //Arrange
 
@@ -74,13 +61,23 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
             }
+
+            [Fact]
+            public void Constructor_with_no_sender_and_certificate_thumbprint_exists()
+            {
+                //Arrange
+
+                //Act
+                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+
+                //Assert
+            }
         }
 
-        [TestClass]
         public class EnableDocumentBundleDiskDumpMethod : ClientConfigurationTests
         {
-            [TestMethod]
-            public void AddsDocumentBundleToDiskProcessor()
+            [Fact]
+            public void Adds_document_bundle_to_disk_processor()
             {
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
@@ -89,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");
 
                 //Assert
-                Assert.IsTrue(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof(DocumentBundleToDiskProcessor)));
+                Assert.True(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof(DocumentBundleToDiskProcessor)));
             }
         }
     }

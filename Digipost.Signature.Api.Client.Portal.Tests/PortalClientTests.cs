@@ -6,21 +6,18 @@ using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class PortalClientTests
     {
-        [TestClass]
         public class CreateMethod : PortalClientTests
         {
-            [TestMethod]
-            [ExpectedException(typeof(SenderNotSpecifiedException))]
-            public async Task ThrowsExceptionOnNoSender()
+            [Fact]
+            public async Task Throws_exception_on_no_sender()
             {
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
@@ -28,56 +25,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(1), "SendersReference");
 
                 //Act
-                await portalClient.Create(portalJob);
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<SenderNotSpecifiedException>(async () => await portalClient.Create(portalJob).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class GetStatusChangeMethod : PortalClientTests
         {
-            [TestMethod]
-            [ExpectedException(typeof(SenderNotSpecifiedException))]
-            public async Task ThrowsExceptionOnSenderNotSpecified()
-            {
-                //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
-                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerForJobStatusChangeResponse();
-                var portalClient = new PortalClient(clientConfiguration)
-                {
-                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
-                };
-
-                //Act
-                await portalClient.GetStatusChange();
-
-                //Assert
-                Assert.Fail();
-            }
-
-            [TestMethod]
-            public async Task CanBeCalledWithoutSenderUsesSenderInClientConfiguration()
-            {
-                //Arrange
-                var sender = GetSender();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), sender);
-                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
-                var portalClient = new PortalClient(clientConfiguration)
-                {
-                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
-                };
-
-                //Act
-                await portalClient.GetStatusChange();
-
-                //Assert
-                Assert.IsTrue(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(sender.OrganizationNumber));
-            }
-
-            [TestMethod]
-            public async Task CalledWithBothSendersUsesInput()
+            [Fact]
+            public async Task Called_with_both_senders_uses_input()
             {
                 //Arrange
                 var parameterSender = new Sender("000000000");
@@ -90,14 +45,33 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.GetStatusChange(parameterSender);
+                await portalClient.GetStatusChange(parameterSender).ConfigureAwait(false);
 
                 //Assert
-                Assert.IsTrue(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(parameterSender.OrganizationNumber));
+                Assert.True(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(parameterSender.OrganizationNumber));
             }
 
-            [TestMethod]
-            public async Task ReturnsEmptyObjectOnEmptyQueue()
+            [Fact]
+            public async Task Can_be_called_without_sender_uses_sender_in_client_configuration()
+            {
+                //Arrange
+                var sender = GetSender();
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), sender);
+                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
+                var portalClient = new PortalClient(clientConfiguration)
+                {
+                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                };
+
+                //Act
+                await portalClient.GetStatusChange().ConfigureAwait(false);
+
+                //Assert
+                Assert.True(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(sender.OrganizationNumber));
+            }
+
+            [Fact]
+            public async Task Returns_empty_object_on_empty_queue()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -106,14 +80,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                var actualResponse = await portalClient.GetStatusChange();
+                var actualResponse = await portalClient.GetStatusChange().ConfigureAwait(false);
 
                 //Assert
-                Assert.AreEqual(JobStatusChanged.NoChangesJobStatusChanged, actualResponse);
+                Assert.Equal(JobStatusChanged.NoChangesJobStatusChanged, actualResponse);
             }
 
-            [TestMethod]
-            public async Task ReturnsPortalJobStatusChangeOnOkResponse()
+            [Fact]
+            public async Task Returns_portal_job_status_change_on_ok_response()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -124,15 +98,29 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 object expectedResponseType = typeof(JobStatusChanged);
 
                 //Act
-                var actualResponseType = (await portalClient.GetStatusChange()).GetType();
+                var actualResponseType = (await portalClient.GetStatusChange().ConfigureAwait(false)).GetType();
 
                 //Assert
-                Assert.AreEqual(expectedResponseType, actualResponseType);
+                Assert.Equal(expectedResponseType, actualResponseType);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(TooEagerPollingException))]
-            public async Task ThrowsExceptionOnTooManyRequests()
+            [Fact]
+            public async Task Throws_exception_on_sender_not_specified()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
+                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerForJobStatusChangeResponse();
+                var portalClient = new PortalClient(clientConfiguration)
+                {
+                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                };
+
+                //Act
+                await Assert.ThrowsAsync<SenderNotSpecifiedException>(async () => await portalClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
+            }
+
+            [Fact]
+            public async Task Throws_exception_on_too_many_requests()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -141,15 +129,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.GetStatusChange();
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<TooEagerPollingException>(async () => await portalClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(UnexpectedResponseException))]
-            public async Task ThrowsUnexpectedExceptionWithErrorClassOnUnexpectedError()
+            [Fact]
+            public async Task Throws_unexpected_exception_with_error_class_on_unexpected_error()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -158,19 +142,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.GetStatusChange();
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await portalClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class CancelMethod : PortalClientTests
         {
-            [ExpectedException(typeof(JobCompletedException))]
-            [TestMethod]
-            public async Task ThrowsJobCompletedExceptionOnConflict()
+            [Fact]
+            public async Task Throws_job_completed_exception_on_conflict()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -179,15 +158,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<JobCompletedException>(async () => await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no"))).ConfigureAwait(false)).ConfigureAwait(false);
             }
 
-            [ExpectedException(typeof(UnexpectedResponseException))]
-            [TestMethod]
-            public async Task ThrowsUnexpectedErrorOnUnexpectedErrorCode()
+            [Fact]
+            public async Task Throws_unexpected_error_on_unexpected_error_code()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -196,19 +171,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no")));
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await portalClient.Cancel(new CancellationReference(new Uri("http://cancellationuri.no"))).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class ConfirmMethod : PortalClientTests
         {
-            [TestMethod]
-            [ExpectedException(typeof(UnexpectedResponseException), AllowDerivedTypes = true)]
-            public async Task ThrowsUnexpectedResponseException()
+            [Fact]
+            public async Task Throws_unexpected_response_exception()
             {
                 //Arrange
                 var portalClient = new PortalClient(GetClientConfiguration())
@@ -217,10 +187,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 };
 
                 //Act
-                await portalClient.Confirm(new ConfirmationReference(new Uri("http://cancellationuri.no")));
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await portalClient.Confirm(new ConfirmationReference(new Uri("http://cancellationuri.no"))).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
     }

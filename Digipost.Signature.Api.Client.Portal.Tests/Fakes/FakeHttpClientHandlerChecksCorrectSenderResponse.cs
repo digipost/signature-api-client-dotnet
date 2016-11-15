@@ -14,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
             HttpRequestMessage request, CancellationToken cancellationToken)
         {
             RequestUri = request.RequestUri.ToString();
-            return await base.SendAsync(request, cancellationToken);
+            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         public override HttpContent GetContent()

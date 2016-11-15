@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class CancellationReferenceTests
     {
-        [TestClass]
         public class ConstructorMethod : CancellationReferenceTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var url = new Uri("http://testuri");
@@ -19,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var cancellationReference = new CancellationReference(url);
 
                 //Assert
-                Assert.AreEqual(url, cancellationReference.Url);
+                Assert.Equal(url, cancellationReference.Url);
             }
         }
     }

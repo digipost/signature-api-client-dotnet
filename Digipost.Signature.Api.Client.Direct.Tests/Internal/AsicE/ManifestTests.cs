@@ -4,16 +4,15 @@ using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
 {
     public class ManifestTests
     {
-        [TestClass]
         public class ConstructorMethod : ManifestTests
         {
-            [TestMethod]
+            [Fact]
             public void SimpleConstructor()
             {
                 //Arrange
@@ -25,16 +24,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 var manifest = new Manifest(sender, document, signer);
 
                 //Assert
-                Assert.AreEqual(sender, manifest.Sender);
-                Assert.AreEqual(document, manifest.Document);
-                Assert.AreEqual(signer, manifest.Signer);
+                Assert.Equal(sender, manifest.Sender);
+                Assert.Equal(document, manifest.Document);
+                Assert.Equal(signer, manifest.Signer);
             }
         }
 
-        [TestClass]
         public class FileNameMethod : ManifestTests
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
@@ -44,14 +42,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(fileName, manifest.FileName);
+                Assert.Equal(fileName, manifest.FileName);
             }
         }
 
-        [TestClass]
         public class MimeTypeMethod : ManifestTests
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
@@ -61,14 +58,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(mimeType, manifest.MimeType);
+                Assert.Equal(mimeType, manifest.MimeType);
             }
         }
 
-        [TestClass]
         public class IdMethod : ManifestTests
         {
-            [TestMethod]
+            [Fact]
             public void ReturnsCorrectStaticString()
             {
                 //Arrange
@@ -78,14 +74,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 //Act
 
                 //Assert
-                Assert.AreEqual(id, manifest.Id);
+                Assert.Equal(id, manifest.Id);
             }
         }
 
-        [TestClass]
         public class BytesMethod : ManifestTests
         {
-            [TestMethod]
+            [Fact]
             public void SuccessfulManifestToBytes()
             {
                 //Arrange
@@ -98,7 +93,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal.AsicE
                 var actualResult = Encoding.UTF8.GetString(bytes);
 
                 //Assert
-                Assert.AreEqual(expectedResult, actualResult);
+                Assert.Equal(expectedResult, actualResult);
             }
         }
     }

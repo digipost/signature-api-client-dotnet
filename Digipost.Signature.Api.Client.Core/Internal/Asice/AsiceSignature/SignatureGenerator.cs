@@ -93,8 +93,8 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             _signatureNode.AddObject(
                 new QualifyingPropertiesObject(
                     Certificate, "#Signature", Attachables, _xml.DocumentElement
-                    )
-                );
+                )
+            );
 
             _signatureNode.AddReference(SignedPropertiesReference());
         }

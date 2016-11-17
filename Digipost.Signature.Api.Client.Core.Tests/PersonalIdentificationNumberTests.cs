@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
     public class PersonalIdentificationNumberTests
     {
-        [TestClass]
         public class ToStringMethod : AbstractSignerTests
         {
-            [TestMethod]
-            public void ReturnsMaskedPersonalIdentificationNumber()
+            [Fact]
+            public void Returns_masked_personal_identification_number()
             {
                 //Arrange
                 var pin = "01013300001";
@@ -19,8 +18,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var toString = personalIdentificationNumber.ToString();
 
                 //Assert
-                Assert.IsTrue(toString.Contains(maskedPersonalIdentificationNumber));
-                Assert.IsFalse(toString.Contains(pin));
+                Assert.True(toString.Contains(maskedPersonalIdentificationNumber));
+                Assert.False(toString.Contains(pin));
             }
         }
     }

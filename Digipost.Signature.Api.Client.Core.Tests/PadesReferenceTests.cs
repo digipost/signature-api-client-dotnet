@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class PadesReferenceTests
     {
-        [TestClass]
         public class ConstructorMethod : PadesReferenceTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var uri = new Uri("http://localhost/test");
@@ -19,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
 
                 //Assert
-                Assert.AreEqual(uri, padesReference.Url);
+                Assert.Equal(uri, padesReference.Url);
             }
         }
     }

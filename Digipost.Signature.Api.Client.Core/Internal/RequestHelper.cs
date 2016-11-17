@@ -34,8 +34,8 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var responseMessage = await _httpClient.SendAsync(request);
-            var responseContent = await responseMessage.Content.ReadAsStringAsync();
+            var responseMessage = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (!responseMessage.IsSuccessStatusCode)
             {
@@ -57,25 +57,25 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Octet));
 
-            var requestResult = await _httpClient.SendAsync(request);
+            var requestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
             Log.Debug($"A stream was requested from {uri}");
 
             if (!requestResult.IsSuccessStatusCode)
             {
-                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
             }
 
-            return await requestResult.Content.ReadAsStreamAsync();
+            return await requestResult.Content.ReadAsStreamAsync().ConfigureAwait(false);
         }
 
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            var requestResult = await _httpClient.PostAsync(confirmationReference.Url, null);
+            var requestResult = await _httpClient.PostAsync(confirmationReference.Url, null).ConfigureAwait(false);
 
             if (!requestResult.IsSuccessStatusCode)
             {
-                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync(), requestResult.StatusCode);
+                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
             }
 
             Log.Debug($"Successfully confirmed job with confirmation reference: {confirmationReference.Url}");

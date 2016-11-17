@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class JobResponseTests
     {
-        [TestClass]
         public class ConstructorMethod : JobResponseTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var jobId = 123456789101112;
@@ -20,8 +18,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var jobResponse = new JobResponse(jobId, cancellationUrl);
 
                 //Assert
-                Assert.AreEqual(jobId, jobResponse.JobId);
-                Assert.AreEqual(cancellationUrl, jobResponse.CancellationReference.Url);
+                Assert.Equal(jobId, jobResponse.JobId);
+                Assert.Equal(cancellationUrl, jobResponse.CancellationReference.Url);
             }
         }
     }

@@ -86,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
             if (notifications.Email != null)
             {
-                notificationsDto.Add(new email { address = notifications.Email.Address });
+                notificationsDto.Add(new email {address = notifications.Email.Address});
             }
 
             if (notifications.Sms != null)

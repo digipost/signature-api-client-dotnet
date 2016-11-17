@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 
 namespace Digipost.Signature.Api.Client.Core.Exceptions
 {

@@ -6,12 +6,12 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
-    internal class TestHelper
+    public class TestHelper
     {
         private readonly DirectClient _directClient;
 
@@ -74,10 +74,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_status);
 
-            Assert.AreEqual(expectedJobStatus, _status.Status);
+            Assert.Equal(expectedJobStatus, _status.Status);
             foreach (var expectedSignatureStatus in expectedSignatureStatuses)
             {
-                Assert.AreEqual(expectedSignatureStatus.Value, _status.GetSignatureFrom(expectedSignatureStatus.Key).SignatureStatus);
+                Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFrom(expectedSignatureStatus.Key).SignatureStatus);
             }
             return this;
         }
@@ -87,7 +87,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             Assert_state(_status);
 
             var xades = _directClient.GetXades(_status.GetSignatureFrom(signer).XadesReference).Result;
-            Assert.IsTrue(xades.CanRead);
+            Assert.True(xades.CanRead);
             return this;
         }
 
@@ -96,7 +96,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             Assert_state(_status);
 
             var pades = _directClient.GetPades(_status.References.Pades).Result;
-            Assert.IsTrue(pades.CanRead);
+            Assert.True(pades.CanRead);
             return this;
         }
 

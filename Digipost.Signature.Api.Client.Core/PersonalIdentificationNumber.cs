@@ -20,7 +20,7 @@
         {
             var other = obj as PersonalIdentificationNumber;
 
-            return other != null && string.Equals(other.Value, Value);
+            return (other != null) && string.Equals(other.Value, Value);
         }
 
         public override int GetHashCode()

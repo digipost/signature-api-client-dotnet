@@ -4,17 +4,15 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
 {
-    [TestClass]
     public class DirectClientIntegrationTests
     {
-        [TestClass]
         public class CreateMethod : DirectClientTests
         {
-            [TestMethod]
+            [Fact]
             public async Task SendsSuccessfully()
             {
                 //Arrange
@@ -29,17 +27,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var directJob = DomainUtility.GetDirectJob();
 
                 //Act
-                var result = await directClient.Create(directJob);
+                var result = await directClient.Create(directJob).ConfigureAwait(false);
 
                 //Assert
-                Assert.IsNotNull(result.JobId);
+                Assert.NotNull(result.JobId);
             }
         }
 
-        [TestClass]
         public class GetStatusMethod : DirectClientTests
         {
-            [TestMethod]
+            [Fact]
             public async Task SendsSuccessfully()
             {
                 //Arrange
@@ -55,10 +52,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var directJobResponse = DomainUtility.GetDirectJobResponse();
 
                 //Act
-                var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status("StatusQueryToken"));
+                var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status("StatusQueryToken")).ConfigureAwait(false);
 
                 //Assert
-                Assert.IsNotNull(result.JobId);
+                Assert.NotNull(result.JobId);
             }
         }
     }

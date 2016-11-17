@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class AvailabilityTests
     {
-        [TestClass]
         public class AvailableForMethod : AvailabilityTests
         {
-            [TestMethod]
-            public void ReturnsNullWhenUninitialized()
+            [Fact]
+            public void Returns_null_when_uninitialized()
             {
                 //Arrange
                 object expectedAvailableSeconds = null;
@@ -19,11 +17,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var availability = new Availability();
 
                 //Assert
-                Assert.AreEqual(expectedAvailableSeconds, availability.AvailableSeconds);
+                Assert.Equal(expectedAvailableSeconds, availability.AvailableSeconds);
             }
 
-            [TestMethod]
-            public void ReturnsSecondsWhenInitialized()
+            [Fact]
+            public void Returns_seconds_when_initialized()
             {
                 //Arrange
                 var expectedAvailableSeconds = 86400 + 3600 + 60 + 1;
@@ -32,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var availability = new Availability {AvailableFor = new TimeSpan(1, 1, 1, 1)};
 
                 //Assert
-                Assert.AreEqual(expectedAvailableSeconds, availability.AvailableSeconds);
+                Assert.Equal(expectedAvailableSeconds, availability.AvailableSeconds);
             }
         }
     }

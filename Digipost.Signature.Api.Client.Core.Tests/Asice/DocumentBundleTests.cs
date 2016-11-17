@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Core.Internal.Asice;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Asice
 {
-    [TestClass]
     public class DocumentBundleTests
     {
-        [TestClass]
         public class ConstructorMethod : DocumentBundleTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var bundleBytes = new byte[] {0x21, 0x22};
@@ -19,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 var documentBundle = new DocumentBundle(bundleBytes);
 
                 //Assert
-                Assert.AreEqual(bundleBytes, documentBundle.BundleBytes);
+                Assert.Equal(bundleBytes, documentBundle.BundleBytes);
             }
         }
     }

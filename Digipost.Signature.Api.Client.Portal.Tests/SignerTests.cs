@@ -1,15 +1,13 @@
 ﻿using Digipost.Signature.Api.Client.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class SignerTests
     {
-        [TestClass]
         public class ConstructorMethod : SignerTests
         {
-            [TestMethod]
+            [Fact]
             public void InitializesWithNotifications()
             {
                 //Arrange
@@ -19,10 +17,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var portalSigner = new Signer(new PersonalIdentificationNumber("99999999999"), notifications);
 
                 //Assert
-                Assert.AreEqual(notifications, portalSigner.Notifications);
+                Assert.Equal(notifications, portalSigner.Notifications);
             }
 
-            [TestMethod]
+            [Fact]
             public void InitializesWithNotificationsUsingLookup()
             {
                 //Arrange
@@ -32,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var portalSigner = new Signer(new PersonalIdentificationNumber("999999999"), notificationsUsingLookup);
 
                 //Assert
-                Assert.AreEqual(notificationsUsingLookup, portalSigner.NotificationsUsingLookup);
+                Assert.Equal(notificationsUsingLookup, portalSigner.NotificationsUsingLookup);
             }
         }
     }

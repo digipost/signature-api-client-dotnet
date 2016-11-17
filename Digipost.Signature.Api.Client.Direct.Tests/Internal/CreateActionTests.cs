@@ -4,17 +4,15 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
 {
-    [TestClass]
     public class CreateActionTests
     {
-        [TestClass]
         public class ConstructorMethod : CreateActionTests
         {
-            [TestMethod]
+            [Fact]
             public void InitializesClassAndParentProperties()
             {
                 //Arrange
@@ -29,10 +27,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 var action = new CreateAction(directJob, asiceBundle);
 
                 //Assert
-                Assert.AreEqual(directJob, action.RequestContent);
-                Assert.AreEqual(serializedJob, action.RequestContentXml.InnerXml);
+                Assert.Equal(directJob, action.RequestContent);
+                Assert.Equal(serializedJob, action.RequestContentXml.InnerXml);
 
-                Assert.AreEqual(null, action.MultipartFormDataContent);
+                Assert.Equal(null, action.MultipartFormDataContent);
             }
         }
     }

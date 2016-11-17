@@ -9,11 +9,10 @@ using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Resources.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 {
-    [TestClass]
     public class XsdRequestValidationHandlerTests
     {
         private static HttpRequestMessage GetHttpRequestMessage(HttpContent httpContent)
@@ -31,43 +30,43 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             var client = HttpClientFactory.Create(
                 new XsdRequestValidationHandler(),
                 lastHandler
-                );
+            );
             return client;
         }
 
-        [TestClass]
         public class SendAsync : XsdRequestValidationHandlerTests
         {
-            [TestMethod]
-            public async Task AcceptsRequestWithXmlInMultipart()
+            private class FakeJob : IRequestContent
+            {
+            }
+
+            [Fact]
+            public async Task Accepts_request_with_no_body()
+            {
+                //Arrange
+                var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
+
+                //Act
+                await client.GetAsync("http://bogusurl.no").ConfigureAwait(false);
+
+                //Assert
+            }
+
+            [Fact]
+            public async Task Accepts_request_with_xml_in_multipart()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
                 var validRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBody()).GetContent();
 
                 //Act
-                await client.SendAsync(GetHttpRequestMessage(validRequestContent));
+                await client.SendAsync(GetHttpRequestMessage(validRequestContent)).ConfigureAwait(false);
 
                 //Assert
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
-            public async Task ThrowsExceptionOnRequestWithInvalidXmlInMultipartBody()
-            {
-                //Arrange
-                var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
-                var invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBodyInvalid()).GetContent();
-
-                //Act
-                await client.SendAsync(GetHttpRequestMessage(invalidRequestContent));
-
-                //Assert
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(InvalidXmlException))]
-            public async Task ThrowsExceptionOnInvalidManifestInAttachment()
+            [Fact]
+            public async Task Throws_exception_on_invalid_manifest_in_attachment()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
@@ -82,25 +81,20 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                 var createAction = new CreateAction(new FakeJob(), documentBundle, serializedfunc);
 
                 //Act
-                await client.SendAsync(GetHttpRequestMessage(createAction.Content()));
+                await Assert.ThrowsAsync<InvalidXmlException>(async () => await client.SendAsync(GetHttpRequestMessage(createAction.Content())).ConfigureAwait(false)).ConfigureAwait(false);
 
                 //Assert
             }
 
-            [TestMethod]
-            public async Task AcceptsRequestWithNoBody()
+            [Fact]
+            public async Task Throws_exception_on_request_with_invalid_xml_in_multipart_body()
             {
                 //Arrange
                 var client = GetClientWithRequestValidator(new FakeHttpClientForDataResponse());
+                var invalidRequestContent = new FakeHttpClientHandlerForMultipartXml(ContentUtility.GetDirectSignatureJobRequestBodyInvalid()).GetContent();
 
                 //Act
-                await client.GetAsync("http://bogusurl.no");
-
-                //Assert
-            }
-
-            private class FakeJob : IRequestContent
-            {
+                await Assert.ThrowsAsync<InvalidXmlException>(async () => await client.SendAsync(GetHttpRequestMessage(invalidRequestContent)).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
     }

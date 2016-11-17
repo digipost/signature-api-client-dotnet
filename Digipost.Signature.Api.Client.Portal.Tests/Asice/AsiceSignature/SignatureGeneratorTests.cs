@@ -4,11 +4,10 @@ using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
 {
-    [TestClass]
     public class SignatureGeneratorTests
     {
         internal SignatureGenerator GetSignaturGenerator()
@@ -22,11 +21,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
             return signaturGenerator;
         }
 
-        [TestClass]
         public class ConstructorMethod : SignatureGeneratorTests
         {
-            [TestMethod]
-            public void InitializesWithDocumentPortalManifestAndCertificate()
+            [Fact]
+            public void Initializes_with_document_portal_manifest_and_certificate()
             {
                 //Arrange
                 var document = DomainUtility.GetPortalDocument();
@@ -38,17 +36,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 var signatur = new SignatureGenerator(x509Certificate2, document, manifest);
 
                 //Assert
-                Assert.AreEqual(document, signatur.Attachables.ElementAt(0));
-                Assert.AreEqual(manifest, signatur.Attachables.ElementAt(1));
-                Assert.AreEqual(x509Certificate2, signatur.Certificate);
+                Assert.Equal(document, signatur.Attachables.ElementAt(0));
+                Assert.Equal(manifest, signatur.Attachables.ElementAt(1));
+                Assert.Equal(x509Certificate2, signatur.Certificate);
             }
         }
 
-        [TestClass]
         public class FileNameMethod : SignatureGeneratorTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticFileName()
+            [Fact]
+            public void Returns_correct_static_file_name()
             {
                 //Arrange
                 var signaturGenerator = GetSignaturGenerator();
@@ -57,15 +54,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 //Act
 
                 //Assert
-                Assert.AreEqual(expectedFileName, signaturGenerator.FileName);
+                Assert.Equal(expectedFileName, signaturGenerator.FileName);
             }
         }
 
-        [TestClass]
         public class IdMethod : SignatureGeneratorTests
         {
-            [TestMethod]
-            public void ReturnsCorrectStaticId()
+            [Fact]
+            public void Returns_correct_static_id()
             {
                 //Arrange
                 var signaturGenerator = GetSignaturGenerator();
@@ -74,15 +70,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 //Act
 
                 //Assert
-                Assert.AreEqual(expectedId, signaturGenerator.Id);
+                Assert.Equal(expectedId, signaturGenerator.Id);
             }
         }
 
-        [TestClass]
         public class XmlMethod : SignatureGeneratorTests
         {
-            [TestMethod]
-            public void GeneratesValidSignatureXml()
+            [Fact]
+            public void Generates_valid_signature_xml()
             {
                 ////Arrange
                 var signatureGenerator = DomainUtility.GetSignature();
@@ -94,8 +89,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
                 var signatureLength = xml.Length;
 
                 //Assert
-                Assert.IsTrue(isValidSignatureXml);
-                Assert.IsTrue(signatureLength > 3200);
+                Assert.True(isValidSignatureXml);
+                Assert.True(signatureLength > 3200);
             }
         }
     }

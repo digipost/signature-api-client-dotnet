@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class ConfirmationReferenceTests
     {
-        [TestClass]
         public class ConstructorMethod : ConfirmationReferenceTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var confirmationUri = new Uri("http://confirmationUri.no");
@@ -19,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var confirmationReference = new ConfirmationReference(confirmationUri);
 
                 //Assert
-                Assert.AreEqual(confirmationUri, confirmationReference.Url);
+                Assert.Equal(confirmationUri, confirmationReference.Url);
             }
         }
     }

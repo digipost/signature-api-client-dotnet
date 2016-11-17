@@ -2,18 +2,16 @@
 using System.Linq;
 using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects
 {
-    [TestClass]
     public class DataTransferObjectConverterTests
     {
-        [TestClass]
         public class FromDataTransferObjectMethod : DataTransferObjectConverterTests
         {
-            [TestMethod]
-            public void ConvertsErrorSuccessfully()
+            [Fact]
+            public void Converts_error_successfully()
             {
                 //Arrange
                 var source = new error
@@ -37,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects
                 var compartor = new Comparator();
                 IEnumerable<IDifference> differences;
                 compartor.AreEqual(expected, actual, out differences);
-                Assert.AreEqual(0, differences.Count());
+                Assert.Equal(0, differences.Count());
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Portal;

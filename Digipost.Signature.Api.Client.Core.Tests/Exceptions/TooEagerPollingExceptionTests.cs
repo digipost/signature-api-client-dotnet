@@ -1,20 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Exceptions
 {
-    [TestClass]
     public class TooEagerPollingExceptionTests
     {
-        [TestClass]
         public class ConstructorMethod : TooEagerPollingExceptionTests
         {
-            [TestMethod]
-            public void InitializeWithDateString()
+            [Fact]
+            public void Initialize_with_date_string()
             {
                 //Arrange
                 const string source = "2016-11-10T10:39:46.610+01:00";
@@ -24,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Exceptions
                 var tooEagerPollingException = new TooEagerPollingException(source);
 
                 //Assert
-                Assert.AreEqual(expected, tooEagerPollingException.NextPermittedPollTime.ToUniversalTime());
+                Assert.Equal(expected, tooEagerPollingException.NextPermittedPollTime.ToUniversalTime());
             }
         }
     }

@@ -1,16 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-    [TestClass]
     public class ExitUrlsTests
     {
-        [TestClass]
         public class ConstructorMethod : ExitUrlsTests
         {
-            [TestMethod]
-            public void SimpleContructor()
+            [Fact]
+            public void Simple_contructor()
             {
                 //Arrange
                 var completionUrl = new Uri("http://localhost/completion");
@@ -21,9 +19,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var exitUrls = new ExitUrls(completionUrl, cancellationUrl, errorUrl);
 
                 //Assert
-                Assert.AreEqual(completionUrl, exitUrls.CompletionUrl);
-                Assert.AreEqual(cancellationUrl, exitUrls.RejectionUrl);
-                Assert.AreEqual(errorUrl, exitUrls.ErrorUrl);
+                Assert.Equal(completionUrl, exitUrls.CompletionUrl);
+                Assert.Equal(cancellationUrl, exitUrls.RejectionUrl);
+                Assert.Equal(errorUrl, exitUrls.ErrorUrl);
             }
         }
     }

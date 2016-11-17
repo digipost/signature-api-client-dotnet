@@ -1,17 +1,15 @@
 ﻿using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Extensions
 {
-    [TestClass]
     public class EnumExtensionsTests
     {
-        [TestClass]
         public class ToPortalJobExtension : EnumExtensionsTests
         {
-            [TestMethod]
-            public void ConvertsAllPortalJobEnumValues()
+            [Fact]
+            public void Converts_all_portal_job_enum_values()
             {
                 //Arrange
                 var partiallyCompletedSource = portalsignaturejobstatus.IN_PROGRESS;
@@ -28,9 +26,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Extensions
                 var failed = failedSource.ToJobStatus();
 
                 //Assert
-                Assert.AreEqual(expectedPartiallyCompleted, partiallyCompleted);
-                Assert.AreEqual(expectedCompleted, completed);
-                Assert.AreEqual(expectedFailed, failed);
+                Assert.Equal(expectedPartiallyCompleted, partiallyCompleted);
+                Assert.Equal(expectedCompleted, completed);
+                Assert.Equal(expectedFailed, failed);
             }
         }
     }

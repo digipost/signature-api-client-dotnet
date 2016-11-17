@@ -1,15 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class NotificationsUsingLookupTests
     {
-        [TestClass]
         public class SmsIfAvailableProperty : NotificationsUsingLookupTests
         {
-            [TestMethod]
-            public void ReturnsTrue()
+            [Fact]
+            public void Returns_true()
             {
                 //Arrange
 
@@ -17,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var notificationsUsingLookup = new NotificationsUsingLookup();
 
                 //Assert
-                Assert.IsTrue(notificationsUsingLookup.EmailIfAvailable);
+                Assert.True(notificationsUsingLookup.EmailIfAvailable);
             }
         }
     }

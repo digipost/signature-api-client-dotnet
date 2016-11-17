@@ -11,9 +11,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            await ValidateAndThrowIfInvalid(request.Content, cancellationToken);
+            await ValidateAndThrowIfInvalid(request.Content, cancellationToken).ConfigureAwait(false);
 
-            return await base.SendAsync(request, cancellationToken);
+            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task ValidateAndThrowIfInvalid(HttpContent content, CancellationToken cancellationToken)
@@ -22,28 +22,28 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             if (contentMediaType == MediaType.MultipartMixed)
             {
-                var multipart = await content.ReadAsMultipartAsync(cancellationToken);
+                var multipart = await content.ReadAsMultipartAsync(cancellationToken).ConfigureAwait(false);
 
                 foreach (var httpContent in multipart.Contents)
                 {
                     switch (httpContent.Headers.ContentType.MediaType)
                     {
                         case MediaType.ApplicationXml:
-                            ValidateXmlAndThrowIfInvalid(await httpContent.ReadAsStringAsync());
+                            ValidateXmlAndThrowIfInvalid(await httpContent.ReadAsStringAsync().ConfigureAwait(false));
                             break;
                         case MediaType.ApplicationOctetStream:
-                            ValidateByteStreamAndThrowIfInvalid(await httpContent.ReadAsByteArrayAsync());
+                            ValidateByteStreamAndThrowIfInvalid(await httpContent.ReadAsByteArrayAsync().ConfigureAwait(false));
                             break;
                     }
                 }
 
-                await RewindContentStream(content);
+                await RewindContentStream(content).ConfigureAwait(false);
             }
         }
 
         private static async Task RewindContentStream(HttpContent content)
         {
-            var stream = await content.ReadAsStreamAsync();
+            var stream = await content.ReadAsStreamAsync().ConfigureAwait(false);
             stream.Seek(0, SeekOrigin.Begin);
         }
 

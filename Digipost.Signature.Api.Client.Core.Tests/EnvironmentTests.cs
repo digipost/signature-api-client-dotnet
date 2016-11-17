@@ -1,17 +1,15 @@
 ﻿using System;
 using Difi.Felles.Utility.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class EnvironmentTests
     {
-        [TestClass]
         public class GetEnvironmentMethod : EnvironmentTests
         {
-            [TestMethod]
-            public void GetsInitializeLocalhostEnvironment()
+            [Fact]
+            public void Gets_initialize_localhost_environment()
             {
                 //Arrange
                 var url = new Uri("https://172.16.91.1:8443");
@@ -21,29 +19,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.Localhost;
 
                 //Assert
-                Assert.IsNotNull(environment.CertificateChainValidator);
-                Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.NotNull(environment.CertificateChainValidator);
+                Assert.Equal(url, environment.Url);
+                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
             }
 
-            [TestMethod]
-            public void GetsInitializedDifiTestEnvironment()
-            {
-                //Arrange
-                var url = new Uri("https://api.difitest.signering.posten.no");
-                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
-
-                //Act
-                var environment = Environment.DifiTest;
-
-                //Assert
-                Assert.IsNotNull(environment.CertificateChainValidator);
-                Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
-            }
-
-            [TestMethod]
-            public void GetsInitializedDifiQaEnvironment()
+            [Fact]
+            public void Gets_initialized_difi_qa_environment()
             {
                 //Arrange
                 var url = new Uri("https://api.difiqa.signering.posten.no");
@@ -53,13 +35,29 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiQa;
 
                 //Assert
-                Assert.IsNotNull(environment.CertificateChainValidator);
-                Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.NotNull(environment.CertificateChainValidator);
+                Assert.Equal(url, environment.Url);
+                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
             }
 
-            [TestMethod]
-            public void GetsInitializedProductionEnvironment()
+            [Fact]
+            public void Gets_initialized_difi_test_environment()
+            {
+                //Arrange
+                var url = new Uri("https://api.difitest.signering.posten.no");
+                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
+
+                //Act
+                var environment = Environment.DifiTest;
+
+                //Assert
+                Assert.NotNull(environment.CertificateChainValidator);
+                Assert.Equal(url, environment.Url);
+                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
+            }
+
+            [Fact]
+            public void Gets_initialized_production_environment()
             {
                 //Arrange
                 var url = new Uri("https://api.signering.posten.no");
@@ -69,9 +67,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.Production;
 
                 //Assert
-                Assert.IsNotNull(environment.CertificateChainValidator);
-                Assert.AreEqual(url, environment.Url);
-                CollectionAssert.AreEqual(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.NotNull(environment.CertificateChainValidator);
+                Assert.Equal(url, environment.Url);
+                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
             }
         }
     }

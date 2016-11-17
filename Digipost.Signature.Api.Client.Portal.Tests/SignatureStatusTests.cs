@@ -1,17 +1,15 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class SignatureStatusTests
     {
-        [TestClass]
         public class ConstructorMethod : SignatureStatusTests
         {
-            [TestMethod]
-            public void InitializesWithProperties()
+            [Fact]
+            public void Initializes_with_properties()
             {
                 //Arrange
                 var identifier = "IDENTIFIER";
@@ -20,16 +18,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var signatureStatus = new SignatureStatus(identifier);
 
                 //Assert
-                Assert.AreEqual(signatureStatus.Identifier, identifier);
+                Assert.Equal(signatureStatus.Identifier, identifier);
             }
         }
     }
 
-    [TestClass]
     public class KnownStatusesProperty : SignatureStatusTests
     {
-        [TestMethod]
-        public void ContainsAllKnownStatuses()
+        [Fact]
+        public void Contains_all_known_statuses()
         {
             //Arrange
             var knownStatusesInClass = new SignatureStatus("lolzor")
@@ -43,32 +40,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             //Assert
             foreach (var status in knownStatusesInClass)
             {
-                Assert.IsTrue(SignatureStatus.KnownStatuses.Contains(status), "Status not contained in known statuses");
+                Assert.True(SignatureStatus.KnownStatuses.Contains(status), "Status not contained in known statuses");
             }
         }
     }
 
-    [TestClass]
     public class EqualsMethod : SignatureStatusTests
     {
-        [TestMethod]
-        public void ReturnsTrueOnEquality()
-        {
-            //Arrange
-            const string identifier = "IDENTIFIER";
-
-            //Act
-            var signatureStatus1 = new SignatureStatus(identifier);
-            var signatureStatus2 = new SignatureStatus(identifier);
-
-            //Assert
-            Assert.IsTrue(signatureStatus1.Equals(signatureStatus2));
-            Assert.IsTrue(signatureStatus2.Equals(signatureStatus1));
-            Assert.IsTrue(signatureStatus1.Equals(signatureStatus1));
-        }
-
-        [TestMethod]
-        public void ReturnsFalseOnDifference()
+        [Fact]
+        public void Returns_false_on_difference()
         {
             //Arrange
             const string identifier1 = "IDENTIFIER1";
@@ -79,9 +59,25 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             var signatureStatus2 = new SignatureStatus(identifier2);
 
             //Assert
-            Assert.IsFalse(signatureStatus1.Equals(signatureStatus2));
-            Assert.IsFalse(signatureStatus2.Equals(signatureStatus1));
-            Assert.IsFalse(signatureStatus1.Equals(null));
+            Assert.False(signatureStatus1.Equals(signatureStatus2));
+            Assert.False(signatureStatus2.Equals(signatureStatus1));
+            Assert.False(signatureStatus1.Equals(null));
+        }
+
+        [Fact]
+        public void Returns_true_on_equality()
+        {
+            //Arrange
+            const string identifier = "IDENTIFIER";
+
+            //Act
+            var signatureStatus1 = new SignatureStatus(identifier);
+            var signatureStatus2 = new SignatureStatus(identifier);
+
+            //Assert
+            Assert.True(signatureStatus1.Equals(signatureStatus2));
+            Assert.True(signatureStatus2.Equals(signatureStatus1));
+            Assert.True(signatureStatus1.Equals(signatureStatus1));
         }
     }
 }

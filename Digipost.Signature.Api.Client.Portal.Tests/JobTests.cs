@@ -1,16 +1,14 @@
 ﻿using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
 {
-    [TestClass]
     public class JobTests
     {
-        [TestClass]
         public class ConstructorMethod : JobTests
         {
-            [TestMethod]
-            public void ConstructorWithoutSenderExists()
+            [Fact]
+            public void Constructor_without_sender_exists()
             {
                 //Arrange
 
@@ -20,8 +18,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Assert
             }
 
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var document = DomainUtility.GetPortalDocument();
@@ -32,9 +30,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
 
                 //Assert
-                Assert.AreEqual(document, portalJob.Document);
-                Assert.AreEqual(signers, portalJob.Signers);
-                Assert.AreEqual(reference, portalJob.Reference);
+                Assert.Equal(document, portalJob.Document);
+                Assert.Equal(signers, portalJob.Signers);
+                Assert.Equal(reference, portalJob.Reference);
             }
         }
     }

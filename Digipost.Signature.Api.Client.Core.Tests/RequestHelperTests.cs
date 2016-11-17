@@ -4,36 +4,33 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
-    [TestClass]
     public class RequestHelperTests
     {
-        [TestClass]
         public class DoPostMethod : RequestHelperTests
         {
-            [TestMethod]
-            public async Task DeserializesClassOnOkResponse()
+            [Fact]
+            public async Task Deserializes_class_on_ok_response()
             {
                 //Arrange
                 var fakeHandler = new FakeHttpClientForDataResponse();
-                var responseData = await fakeHandler.GetContent().ReadAsStringAsync();
+                var responseData = await fakeHandler.GetContent().ReadAsStringAsync().ConfigureAwait(false);
                 var expectedResponseData = $"Appended{responseData}";
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
                 var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
 
                 //Act
-                var actualResponseData = await requestHelper.Create(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc);
+                var actualResponseData = await requestHelper.Create(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc).ConfigureAwait(false);
 
                 //Assert
-                Assert.AreEqual(expectedResponseData, actualResponseData);
+                Assert.Equal(expectedResponseData, actualResponseData);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
-            public async Task ThrowsGeneralErrorOnNotSuccessResponse()
+            [Fact]
+            public async Task Throws_general_exception_error_on_not_success_response()
             {
                 //Arrange
                 var fakeHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
@@ -41,93 +38,84 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Act
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
-                await requestHelper.Create(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc);
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await requestHelper.Create(new Uri("http://fakeUri.no"), new StringContent("SomePostData"), deserializeFunc).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class DoStreamRequestMethod : RequestHelperTests
         {
-            [TestMethod]
-            public async Task ReturnsStreamOnSuccessStatusCode()
+            [Fact]
+            public async Task Returns_stream_on_success_status_code()
             {
                 //Arrange
                 var internalServerErrorHandler = new FakeHttpClientForPadesResponse();
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
 
                 //Act
-                var result = await requestHelper.GetStream(new Uri("http://fakeUri.no"));
+                var result = await requestHelper.GetStream(new Uri("http://fakeUri.no")).ConfigureAwait(false);
 
                 //Assert
-                Assert.IsTrue(result.Length > 5000);
+                Assert.True(result.Length > 5000);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
-            public async Task ThrowsSignatureExceptionIfNotSuccessStatusCode()
+            [Fact]
+            public async Task Throws_signature_exception_if_not_success_status_code()
             {
                 //Arrange
                 var internalServerErrorHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
 
                 //Act
-                var result = await requestHelper.GetStream(new Uri("http://fakeUri.no"));
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await requestHelper.GetStream(new Uri("http://fakeUri.no")).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class HandleGeneralErrorMethod : RequestHelperTests
         {
-            [TestMethod]
-            public async Task ThrowsBrokerNotAuthorizedExceptionOnNotAuthorized()
-            {
-                //Arrange
-                var brokerNotAuthorizedResponse = new FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(brokerNotAuthorizedResponse));
-
-                //Act
-                var exception = requestHelper.HandleGeneralException(await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync(), brokerNotAuthorizedResponse.ResultCode.Value);
-
-                //Assert
-                Assert.IsInstanceOfType(exception, typeof(BrokerNotAuthorizedException));
-            }
-
-            [TestMethod]
-            public async Task ReturnsUnexpectedResponseExceptionWithErrorAndCodeOnXmlErrorResult()
+            [Fact]
+            public async Task Returns_unexpected_response_exception_with_error_and_code_on_xml_error_result()
             {
                 //Arrange
                 var errorResponse = new FakeHttpClientHandlerForErrorResponse();
                 var requestHelper = new RequestHelper(new HttpClient(errorResponse));
 
                 //Act
-                var exception = requestHelper.HandleGeneralException(await errorResponse.GetContent().ReadAsStringAsync(), errorResponse.ResultCode.Value);
+                var exception = requestHelper.HandleGeneralException(await errorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), errorResponse.ResultCode.Value);
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
-                Assert.IsNotNull(unexpectedResponseException.Error);
-                Assert.AreEqual(errorResponse.ResultCode, unexpectedResponseException.StatusCode);
+                Assert.NotNull(unexpectedResponseException.Error);
+                Assert.Equal(errorResponse.ResultCode, unexpectedResponseException.StatusCode);
             }
 
-            [TestMethod]
-            public async Task ReturnsUnexpectedResponseExceptionWithoutErrorAndCodeOnNotXmlResult()
+            [Fact]
+            public async Task Returns_unexpected_response_exception_without_error_and_code_on_not_xml_result()
             {
                 //Arrange
                 var internalServerErrorResponse = new FakeHttpClientHandlerForInternalServerErrorResponse();
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorResponse));
 
                 //Act
-                var exception = requestHelper.HandleGeneralException(await internalServerErrorResponse.GetContent().ReadAsStringAsync(), internalServerErrorResponse.ResultCode.Value);
+                var exception = requestHelper.HandleGeneralException(await internalServerErrorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), internalServerErrorResponse.ResultCode.Value);
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
-                Assert.IsNull(unexpectedResponseException.Error);
-                Assert.AreEqual(internalServerErrorResponse.ResultCode, unexpectedResponseException.StatusCode);
+                Assert.Null(unexpectedResponseException.Error);
+                Assert.Equal(internalServerErrorResponse.ResultCode, unexpectedResponseException.StatusCode);
+            }
+
+            [Fact]
+            public async Task Throws_broker_not_authorized_exception_on_not_authorized()
+            {
+                //Arrange
+                var brokerNotAuthorizedResponse = new FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse();
+                var requestHelper = new RequestHelper(new HttpClient(brokerNotAuthorizedResponse));
+
+                //Act
+                var exception = requestHelper.HandleGeneralException(await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), brokerNotAuthorizedResponse.ResultCode.Value);
+
+                //Assert
+                Assert.IsType<BrokerNotAuthorizedException>(exception);
             }
         }
     }

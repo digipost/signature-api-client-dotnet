@@ -6,20 +6,18 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests
 {
-    [TestClass]
     public class DirectClientTests
     {
-        [TestClass]
         public class ConstructorMethod : DirectClientTests
         {
-            [TestMethod]
-            public void SimpleConstructor()
+            [Fact]
+            public void Simple_constructor()
             {
                 //Arrange
                 var clientConfiguration = GetClientConfiguration();
@@ -28,17 +26,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var client = new DirectClient(clientConfiguration);
 
                 //Assert
-                Assert.AreEqual(clientConfiguration, client.ClientConfiguration);
-                Assert.IsNotNull(client.HttpClient);
+                Assert.Equal(clientConfiguration, client.ClientConfiguration);
+                Assert.NotNull(client.HttpClient);
             }
         }
 
-        [TestClass]
         public class CreateMethod : DirectClientTests
         {
-            [TestMethod]
-            [ExpectedException(typeof(SenderNotSpecifiedException))]
-            public async Task ThrowsExceptionOnNoSender()
+            [Fact]
+            public async Task Throws_exception_on_no_sender()
             {
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
@@ -46,35 +42,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var directJob = new Job(DomainUtility.GetDirectDocument(), DomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
 
                 //Act
-                await directClient.Create(directJob);
-
-                //Assert
-                Assert.Fail();
+                await Assert.ThrowsAsync<SenderNotSpecifiedException>(async () => await directClient.Create(directJob).ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
 
-        [TestClass]
         public class GetStatusMethod : DirectClientTests
         {
-            [TestMethod]
-            public async Task ReturnsStatusResponse()
-            {
-                //Arrange
-                var directClient = new DirectClient(GetClientConfiguration())
-                {
-                    HttpClient = new HttpClient(new FakeHttpClientHandlerGetStatusResponse())
-                };
-
-                //Act
-                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
-
-                //Assert
-                Assert.IsNotNull(result);
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(SignatureException), AllowDerivedTypes = true)]
-            public async Task GetStatusThrowsSignatureException()
+            [Fact]
+            public async Task Get_status_throws_unexpected_response_exception_on_server_error()
             {
                 //Arrange
                 var directClient = new DirectClient(GetClientConfiguration())
@@ -83,67 +58,75 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 //Act
-                await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken"));
+                await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken")).ConfigureAwait(false)).ConfigureAwait(false);
+            }
+
+            [Fact]
+            public async Task Returns_status_response()
+            {
+                //Arrange
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = new HttpClient(new FakeHttpClientHandlerGetStatusResponse())
+                };
+
+                //Act
+                var result = await directClient.GetStatus(new StatusReference(new Uri("http://statusReference.no"), "StatusQueryToken")).ConfigureAwait(false);
 
                 //Assert
-                Assert.Fail();
+                Assert.NotNull(result);
             }
         }
 
-        [TestClass]
         public class GetStatusChangeMethod : DirectClientTests
         {
-            [TestMethod]
-            public async Task ReturnsEmptyObjectOnEmptyQueue()
+            [Fact]
+            public async Task Cant_get_signature_job_id_from_empty_response()
             {
                 var directClient = new DirectClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
                 };
 
-                var actualResponse = await directClient.GetStatusChange();
-
-                Assert.AreEqual(JobStatusResponse.NoChanges, actualResponse);
+                var statusChange = await directClient.GetStatusChange().ConfigureAwait(false);
+                Assert.Throws<InvalidOperationException>(() => statusChange.JobId);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(InvalidOperationException))]
-            public async Task CantGetSignatureJobIdFromEmptyResponse()
+            [Fact]
+            public async Task Returns_empty_object_on_empty_queue()
             {
                 var directClient = new DirectClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
                 };
 
-                var statusChange = await directClient.GetStatusChange();
-                var invalidOperation = statusChange.JobId;
+                var actualResponse = await directClient.GetStatusChange().ConfigureAwait(false);
+
+                Assert.Equal(JobStatusResponse.NoChanges, actualResponse);
             }
 
-            [TestMethod]
-            [ExpectedException(typeof(TooEagerPollingException))]
-            public async Task ThrowsExceptionOnTooManyRequests()
-            {
-                var directClient = new DirectClient(GetClientConfiguration())
-                {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
-                };
-
-                await directClient.GetStatusChange();
-
-                Assert.Fail("Should fail with " + typeof(TooEagerPollingException).Name);
-            }
-
-            [TestMethod]
-            public async Task ReturnsStatusResponse()
+            [Fact]
+            public async Task Returns_status_response()
             {
                 var directClient = new DirectClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerGetStatusResponse())
                 };
 
-                var result = await directClient.GetStatusChange();
+                var result = await directClient.GetStatusChange().ConfigureAwait(false);
 
-                Assert.IsNotNull(result);
+                Assert.NotNull(result);
+            }
+
+            [Fact]
+            public async Task Throws_too_eager_polling_exception_on_too_many_requests()
+            {
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForTooManyRequestsResponse())
+                };
+
+                await Assert.ThrowsAsync<TooEagerPollingException>(async () => await directClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
     }

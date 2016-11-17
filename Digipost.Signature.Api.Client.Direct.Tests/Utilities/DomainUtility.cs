@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 CoreDomainUtility.GetSender(),
                 GetDirectDocument(),
                 GetSigner()
-                );
+            );
         }
 
         internal static SignatureGenerator GetSignature()
@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 jobStatus,
                 statusResponseUrls,
                 new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Failed)}
-                );
+            );
         }
 
         public static ResponseUrls GetResponseUrls()
@@ -67,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new ResponseUrls(
                 redirectUrl,
                 statusUrl
-                );
+            );
         }
 
         public static ExitUrls GetExitUrls()
@@ -92,7 +92,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new JobResponse(
                 jobId,
                 responseUrls
-                );
+            );
         }
 
         public static JobReferences GetJobReferences()

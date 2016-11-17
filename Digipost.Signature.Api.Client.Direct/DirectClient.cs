@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var createAction = new CreateAction(job, documentBundle);
-            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc);
+            var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc).ConfigureAwait(false);
 
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
@@ -67,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Direct
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var requestResult = await HttpClient.SendAsync(request);
+            var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
             var requestContent = requestResult.Content.ReadAsStringAsync().Result;
 
             switch (requestResult.StatusCode)
@@ -105,8 +105,8 @@ namespace Digipost.Signature.Api.Client.Direct
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var requestResult = await HttpClient.SendAsync(request);
-            var requestContent = await requestResult.Content.ReadAsStringAsync();
+            var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
@@ -139,12 +139,12 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public async Task<Stream> GetXades(XadesReference xadesReference)
         {
-            return await RequestHelper.GetStream(xadesReference.Url);
+            return await RequestHelper.GetStream(xadesReference.Url).ConfigureAwait(false);
         }
 
         public async Task<Stream> GetPades(PadesReference padesReference)
         {
-            return await RequestHelper.GetStream(padesReference.Url);
+            return await RequestHelper.GetStream(padesReference.Url).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -157,15 +157,15 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <param name="confirmationReference">the updated status retrieved from <see cref="GetStatus(StatusReference)" /></param>
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
-            await RequestHelper.Confirm(confirmationReference);
+            await RequestHelper.Confirm(confirmationReference).ConfigureAwait(false);
         }
 
         internal async Task<string> AutoSign(long jobId, string signer)
         {
             Log.Warn($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
-            var httpResponseMessage = await HttpClient.PostAsync(url, null);
-            return await httpResponseMessage.Content.ReadAsStringAsync();
+            var httpResponseMessage = await HttpClient.PostAsync(url, null).ConfigureAwait(false);
+            return await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
     }
 }

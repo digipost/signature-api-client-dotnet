@@ -20,6 +20,14 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 return new Uri(documentPath).LocalPath;
             }
 
+            private static string DocumentFilePath()
+            {
+                var executingAssembly = Assembly.GetExecutingAssembly();
+                var executablePath = Path.GetDirectoryName(executingAssembly.CodeBase);
+                var documentPath = Path.Combine(executablePath, "Resources", "Documents", "Dokument.pdf");
+                return new Uri(documentPath).AbsolutePath;
+            }
+
             [Fact]
             public void Initializes_all_values_with_document_bytes()
             {

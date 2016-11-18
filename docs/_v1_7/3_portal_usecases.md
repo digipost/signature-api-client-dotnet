@@ -12,10 +12,9 @@ const string organizationNumber = "123456789";
 const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
 
 var clientConfiguration = new ClientConfiguration(
-    Environment.DifiQa,
+    Environment.DifiTest,
     certificateThumbprint,
     new Sender(organizationNumber));
-
 {% endhighlight %}
 
 <blockquote>
@@ -31,17 +30,17 @@ The following example shows how to create a document and send it to two signers.
 PortalClient portalClient = null; //As initialized earlier
 
 var documentToSign = new Document(
-    "Subject of Message", 
-    "This is the content", 
-    FileType.Pdf, 
+    "Subject of Message",
+    "This is the content",
+    FileType.Pdf,
     @"C:\Path\ToDocument\File.pdf"
     );
 
 var signers = new List<Signer>
 {
-    new Signer(new PersonalIdentificationNumber("12345678910"), new NotificationsUsingLookup()),
-    new Signer(new PersonalIdentificationNumber("12345678911"), new Notifications(
-        new Email("overridden@mail.com"), 
+    new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()),
+    new Signer(new PersonalIdentificationNumber("11111111111"), new Notifications(
+        new Email("test@example.com"),
         new Sms("999999999")))
 };
 

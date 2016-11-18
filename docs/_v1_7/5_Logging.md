@@ -104,7 +104,7 @@ Logging of document bundle can be enabled via the `ClientConfiguration`:
 
 {% highlight csharp %}
 
-var clientConfiguration = new ClientConfiguration(Environment.DifiQa, "3k 7f 30 dd 05 d3 b7 fc...");
+var clientConfiguration = new ClientConfiguration(Environment.DifiTest, "3k 7f 30 dd 05 d3 b7 fc...");
 clientConfiguration.EnableDocumentBundleDiskDump("/directory/path/for/bundle/disk/dump");
 
 {% endhighlight %}

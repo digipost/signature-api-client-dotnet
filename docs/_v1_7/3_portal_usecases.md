@@ -87,19 +87,19 @@ catch (TooEagerPollingException eagerPollingException)
 
 {% endhighlight %}
 
-### Get Xades and Pades
+### Get XAdES and PAdES
 
-When getting Xades and Pades for a `PortalJob`, remember that the Xades is per signer, while there is only one Pades. 
+When getting XAdES and PAdES for a `PortalJob`, remember that the XAdES is per signer, while there is only one PAdES. 
 
 {% highlight csharp %}
 
 PortalClient portalClient = null; //As initialized earlier
 var jobStatusChanged = await portalClient.GetStatusChange();
 
-//Get Xades:
+//Get XAdES:
 var xades = await portalClient.GetXades(jobStatusChanged.Signatures.ElementAt(0).XadesReference);
 
-//Get Pades:
+//Get PAdES:
 var pades = await portalClient.GetPades(jobStatusChanged.PadesReference);
 
 {% endhighlight %}

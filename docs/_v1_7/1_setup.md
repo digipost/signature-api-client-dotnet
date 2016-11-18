@@ -27,12 +27,12 @@ To communicate over HTTPS you need to sign your request with a business certific
 1.  Select _Automatically select the certificate store based on the type of certificate_
 1.  Click _Next_ and _Finish_
 1.  Accept the certificate if prompted.
-1.  When prompted that the import was successful, click _Ok_.
+1.  When prompted that the import was successful, click _Ok_
 
 ### Use business certificate thumbprint
 
 1. Start mmc.exe (Click windowsbutton and type mmc.exe)
-1. _Choose File_ -> _Add/Remove Snap-in…_(Ctrl + M)
+1. _Choose File_ -> _Add/Remove Snap-in…_ (Ctrl + M)
 1. Mark certificate and click _Add >_
 1. If the certificate was installed in _Current User_ choose _My User Account_ and if installed on _Local Machine_ choose _Computer Account_. Then click _Finish_ and then _OK_
 1. Expand _Certificates_ node, select _Personal_ and open _Certificates_

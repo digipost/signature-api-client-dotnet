@@ -4,7 +4,7 @@ title: Direct use cases
 layout: default
 ---
 
-<h3 id="uc01">Create Client Configuration</h3>
+### Create Client Configuration
 
 {% highlight csharp %}
 
@@ -22,7 +22,7 @@ var clientConfiguration = new ClientConfiguration(
 Note: If the sender changes per signature job created, the sender can be set on the job itself. The sender of the job will always take precedence over the sender in <code>ClientConfiguration</code>. This means that a default sender can be set in <code>ClientConfiguration</code> and, when required, on a specific job.   
 </blockquote>
 
-<h3 id="uc02">Create signature job</h3>
+### Create signature job
 
 {% highlight csharp %}
 
@@ -53,7 +53,7 @@ var directJobResponse = await directClient.Create(job);
 
 {% endhighlight %}
 
-<h3 id="uc03">Get direct job status</h3>
+### Get direct job status
 
 The signing process is a synchrounous operation in the direct use case. There is no need to poll for changes to a signature job, as the status is well known to the sender of the job. As soon as the signer cancels, completes or an error occurs, the user is redirected to the respective Urls set in `ExitUrls`. A `status_query_token` parameter has been added to the url. Use this when requesting a status change.
 
@@ -71,7 +71,7 @@ var jobStatus = jobStatusResponse.Status;
 
 {% endhighlight %}
 
-<h3 id="uc04">Get direct job status by polling</h3>
+### Get direct job status by polling
 
 If you, for any reason, are unable to retrieve status by using the status query token specified <a href="#uc03">above</a>, you may poll the service for any changes done to your organization's jobs. If the queue is empty, additional polling will give an exception.
 
@@ -123,7 +123,7 @@ await directClient.Confirm(changedJob.References.Confirmation);
 
 {% endhighlight %}
 
-<h3 id="uc05">Get Xades And Pades</h3>
+### Get Xades And Pades
 
 {% highlight csharp %}
 
@@ -145,7 +145,7 @@ if (signature.Equals(SignatureStatus.Signed))
 
 {% endhighlight %}
 
-<h3 id="uc06">Confirm received signature job</h3>
+Confirm received signature job
 
 {% highlight csharp %}
 

@@ -4,7 +4,7 @@ title: Portal use cases
 layout: default
 ---
 
-<h3 id="uc07">Create Client Configuration</h3>
+### Create Client Configuration
 
 {% highlight csharp %}
 
@@ -21,7 +21,7 @@ var clientConfiguration = new ClientConfiguration(
 Note: If the sender changes per signature job created, the sender can be set on the job itself. The sender of the job will always take precedence over the sender in <code>ClientConfiguration</code>. This means that a default sender can be set in <code>ClientConfiguration</code> and, when required, on a specific job.   
 </blockquote>
 
-<h3 id="uc08">Create and send portal signature job</h3>
+### Create and send portal signature job
 
 The following example shows how to create a document and send it to two signers.
 
@@ -51,8 +51,9 @@ var portalJobResponse = await portalClient.Create(portalJob);
 
 {% endhighlight %}
 
+> Note that only public organizations can do `NotificationsUsingLookup`.
 
-<h3 id="uc09">Get portal job status change</h3>
+### Get portal job status change
 
 All changes to signature jobs will be added to a queue. You can poll for these changes. If the queue is empty, then additional polling will give an exception. The following example shows how this can be handled and examples of data to extract from a change response.
 
@@ -86,7 +87,7 @@ catch (TooEagerPollingException eagerPollingException)
 
 {% endhighlight %}
 
-<h3 id="uc10">Get Xades and Pades</h3>
+### Get Xades and Pades
 
 When getting Xades and Pades for a `PortalJob`, remember that the Xades is per signer, while there is only one Pades. 
 
@@ -103,7 +104,7 @@ var pades = await portalClient.GetPades(jobStatusChanged.PadesReference);
 
 {% endhighlight %}
 
-<h3 id="uc11">Confirm portal job</h3>
+### Confirm portal job
 
 {% highlight csharp %}
 

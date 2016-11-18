@@ -4,7 +4,7 @@ title: Error Handling
 layout: default
 ---
 
-<h3 id="errorHandlerHeader">Handling error</h3>
+### Handling error
 
 There are differet forms of exceptions that can occur. Some are more specific than others. All exceptions related to client behavior inherits from `SignatureException`. 
 

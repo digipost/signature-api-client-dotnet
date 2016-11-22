@@ -46,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         public X509Certificate2 Certificate { get; internal set; }
 
-        public int HttpClientTimeoutInMilliseconds { get; set; } = 3000;
+        public int HttpClientTimeoutInMilliseconds { get; set; } = 10000;
 
         public string ServerCertificateOrganizationNumber { get; } = "984661185";
 

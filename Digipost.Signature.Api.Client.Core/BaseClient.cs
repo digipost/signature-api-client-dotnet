@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Core
                 MutualTlsHandler(),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
-                new LoggingHandler()
+                new LoggingHandler(ClientConfiguration)
             );
 
             client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);

@@ -10,18 +10,25 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class LoggingHandler : DelegatingHandler
     {
-        private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestLogger");
+        public ClientConfiguration ClientConfiguration { get; }
+
+        private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestResponse");
+
+        public LoggingHandler(ClientConfiguration clientClientConfiguration)
+        {
+            ClientConfiguration = clientClientConfiguration;
+        }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (Log.IsDebugEnabled)
+            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
             {
                 await LogRequest(request).ConfigureAwait(false);
             }
 
             var httpResponseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-            if (Log.IsDebugEnabled)
+            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
             {
                 await LogResponse(httpResponseMessage).ConfigureAwait(false);
             }

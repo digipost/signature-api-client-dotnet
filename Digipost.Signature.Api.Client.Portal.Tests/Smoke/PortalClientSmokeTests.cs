@@ -110,6 +110,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                         throw new ArgumentOutOfRangeException();
                 }
 
+                _portalClient.ClientConfiguration.LogRequestAndResponse = true;
+
                 return _portalClient;
             }
 

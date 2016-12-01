@@ -75,5 +75,10 @@ namespace Digipost.Signature.Api.Client.Core
             var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
             ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
         }
+
+        /// <summary>
+        ///     Set to true to enable request and response logging with level DEBUG 
+        /// </summary>
+        public bool LogRequestAndResponse { get; set; } = false;
     }
 }

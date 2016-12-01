@@ -10,14 +10,14 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class LoggingHandler : DelegatingHandler
     {
-        public ClientConfiguration ClientConfiguration { get; }
-
         private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestResponse");
 
         public LoggingHandler(ClientConfiguration clientClientConfiguration)
         {
             ClientConfiguration = clientClientConfiguration;
         }
+
+        public ClientConfiguration ClientConfiguration { get; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -79,13 +79,19 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             var contentDescriptionAndData = new List<KeyValuePair<string, string>>();
             var hasContent = (request.Content != null) && request.Content.IsMimeMultipartContent();
 
-            if (!hasContent) { return contentDescriptionAndData; }
+            if (!hasContent)
+            {
+                return contentDescriptionAndData;
+            }
 
             var multipart = await request.Content.ReadAsMultipartAsync().ConfigureAwait(false);
 
             foreach (var httpContent in multipart.Contents)
             {
-                if (httpContent.Headers.ContentType.MediaType != MediaType.ApplicationXml) { continue; }
+                if (httpContent.Headers.ContentType.MediaType != MediaType.ApplicationXml)
+                {
+                    continue;
+                }
 
                 contentDescriptionAndData.AddRange(SerializeHeaders(request.Content.Headers));
                 contentDescriptionAndData.Add(new KeyValuePair<string, string>(null, $"{await GetContentData(httpContent).ConfigureAwait(false)}"));
@@ -105,7 +111,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static KeyValuePair<string, string> GetResponseStatusCodeDescription(HttpResponseMessage response)
         {
-            return new KeyValuePair<string, string>("StatusCode", $"{(int)response.StatusCode}, {response.StatusCode}");
+            return new KeyValuePair<string, string>("StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}");
         }
 
         private static List<KeyValuePair<string, string>> GetHeadersDescription(HttpHeaders headers)

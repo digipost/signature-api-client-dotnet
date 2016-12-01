@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
+using Difi.Felles.Utility;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -44,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Core
         /// </summary>
         public Sender GlobalSender { get; set; }
 
-        public X509Certificate2 Certificate { get; internal set; }
+        public X509Certificate2 Certificate { get; set; }
 
         public int HttpClientTimeoutInMilliseconds { get; set; } = 10000;
 

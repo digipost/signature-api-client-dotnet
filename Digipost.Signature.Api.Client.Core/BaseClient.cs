@@ -46,7 +46,21 @@ namespace Digipost.Signature.Api.Client.Core
                 throw new SenderNotSpecifiedException();
             }
 
+            ValidateSenderCertificateThrowIfInvalid(sender);
+
             return sender;
+        }
+
+        private void ValidateSenderCertificateThrowIfInvalid(Sender sender)
+        {
+            var x509Certificate2 = new X509Certificate2(ClientConfiguration.Certificate);
+
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, sender.OrganizationNumber, ClientConfiguration.Environment.CertificateChainValidator.CertificateStore);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new SecurityException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
         }
 
         private HttpClient MutualTlsClient()
@@ -69,16 +83,16 @@ namespace Digipost.Signature.Api.Client.Core
             var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateAndThrowIfInvalid;
+            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
             return mutualTlsHandler;
         }
 
-        private bool ValidateServerCertificateAndThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
             var x509Certificate2 = new X509Certificate2(certificate);
 
-            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, "984661184", ClientConfiguration.Environment.CertificateChainValidator.CertificateStore);
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.CertificateChainValidator.CertificateStore);
 
             if (validationResult.Type != CertificateValidationType.Valid)
             {

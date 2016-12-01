@@ -69,18 +69,23 @@ namespace Digipost.Signature.Api.Client.Core
             var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = IsValidServerCertificate;
+            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateAndThrowIfInvalid;
 
             return mutualTlsHandler;
         }
 
-        private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool ValidateServerCertificateAndThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
             var x509Certificate2 = new X509Certificate2(certificate);
-            var isValidCertificate = CertificateValidator.IsValidCertificate(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber);
-            var isValidCertificateChain = new CertificateChainValidator(ClientConfiguration.Environment.CertificateChainValidator.CertificateStore).IsValidChain(x509Certificate2);
 
-            return isValidCertificate && isValidCertificateChain;
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, "984661184", ClientConfiguration.Environment.CertificateChainValidator.CertificateStore);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new SecurityException($"Certificate received in response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
+
+            return true;
         }
     }
 }

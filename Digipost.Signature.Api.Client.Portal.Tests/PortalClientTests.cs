@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
@@ -35,8 +36,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Called_with_both_senders_uses_input()
             {
                 //Arrange
-                var parameterSender = new Sender("000000000");
-                var clientConfigurationSender = new Sender("999999999");
+                var parameterSender = new Sender(PostenOrganizationNumber);
+                var clientConfigurationSender = new Sender(BringOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), clientConfigurationSender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
@@ -55,8 +56,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Can_be_called_without_sender_uses_sender_in_client_configuration()
             {
                 //Arrange
-                var sender = GetSender();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), sender);
+                var sender = new Sender(BringOrganizationNumber);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), sender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {

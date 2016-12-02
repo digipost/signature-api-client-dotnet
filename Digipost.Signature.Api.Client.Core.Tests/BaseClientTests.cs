@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
 {
@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var tlsSetup = SecurityProtocolType.Tls12;
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetTestIntegrasjonSertifikat())
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate())
                 {
                     HttpClientTimeoutInMilliseconds = 1441
                 };
@@ -37,8 +37,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_client_client_configuration_sender_if_only_set()
             {
                 //Arrange
-                var expected = new Sender("000000000");
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), expected);
+                var expected = new Sender(BringOrganizationNumber);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), expected);
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
@@ -52,9 +52,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_job_sender_if_both_set()
             {
                 //Arrange
-                var expected = new Sender("000000000");
-                var clientConfigurationSender = new Sender("999999999");
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), clientConfigurationSender);
+                var expected = new Sender(BringOrganizationNumber);
+                var clientConfigurationSender = new Sender(PostenOrganizationNumber);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), clientConfigurationSender);
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
@@ -68,8 +68,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_job_sender_if_only_set()
             {
                 //Arrange
-                var expected = new Sender("000000000");
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var expected = new Sender(BringOrganizationNumber);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate());
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Throws_exception_on_no_sender()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var client = new ClientStub(clientConfiguration);
 
                 //Act

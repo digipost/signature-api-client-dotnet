@@ -103,6 +103,7 @@ namespace Digipost.Signature.Api.Client.Core
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
                 Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+                return true;
             }
 
             var x509Certificate2 = new X509Certificate2(certificate);

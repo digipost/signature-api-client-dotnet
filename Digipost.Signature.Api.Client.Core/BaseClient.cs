@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Core
         {
             var x509Certificate2 = new X509Certificate2(certificate);
             var isValidCertificate = CertificateValidator.IsValidCertificate(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber);
-            var isValidCertificateChain = new CertificateChainValidator(ClientConfiguration.Environment.CertificateChainValidator.CertificateStore).IsValidChain(x509Certificate2);
+            var isValidCertificateChain = new CertificateChainValidator(ClientConfiguration.Environment.AllowedChainCertificates).IsValidChain(x509Certificate2);
 
             return isValidCertificate && isValidCertificateChain;
         }

@@ -2,7 +2,9 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Common.Logging;
 using Difi.Felles.Utility;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
@@ -11,6 +13,7 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class BaseClient
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
         private HttpClient _httpClient;
@@ -46,6 +49,13 @@ namespace Digipost.Signature.Api.Client.Core
                 throw new SenderNotSpecifiedException();
             }
 
+            if (!ClientConfiguration.CertificateValidationPreference.ValidateSenderCertificate)
+            {
+                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
+
+                return sender;
+            }
+
             ValidateSenderCertificateThrowIfInvalid(sender);
 
             return sender;
@@ -59,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (validationResult.Type != CertificateValidationType.Valid)
             {
-                throw new SecurityException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
             }
         }
 
@@ -90,13 +100,18 @@ namespace Digipost.Signature.Api.Client.Core
 
         private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
+            if (!ClientConfiguration.CertificateValidationPreference.ValidateResponseCertificate)
+            {
+                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+            }
+
             var x509Certificate2 = new X509Certificate2(certificate);
 
             var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.CertificateChainValidator.CertificateStore);
 
             if (validationResult.Type != CertificateValidationType.Valid)
             {
-                throw new SecurityException($"Certificate received in response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
             }
 
             return true;

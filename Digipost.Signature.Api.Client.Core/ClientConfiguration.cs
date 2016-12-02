@@ -54,6 +54,12 @@ namespace Digipost.Signature.Api.Client.Core
         public string ServerCertificateOrganizationNumber { get; } = "984661185";
 
         /// <summary>
+        /// Preferences used for enabling and disabling validation of certificates used in the client
+        /// </summary>
+        public CertificateValidationPreference CertificateValidationPreference { get; } = new CertificateValidationPreference();
+        
+
+        /// <summary>
         ///     All bundle processors used for processing document bundle zip files before they are sent to the service to create
         ///     signature jobs. Add a <see cref="IDocumentBundleProcessor">DocumentBundleProcessor</see> here if requirements are
         ///     more specific than what can be achieved from <see cref="EnableDocumentBundleDiskDump" />

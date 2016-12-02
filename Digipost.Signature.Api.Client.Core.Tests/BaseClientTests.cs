@@ -89,6 +89,39 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
                 Assert.Throws<SenderNotSpecifiedException>(() => client.GetCurrentSender(null));
             }
+
+            [Fact]
+            public void Throws_exception_on_invalid_certificate()
+            {
+                //Arrange
+                var sender = new Sender(BringOrganizationNumber);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
+                var client = new ClientStub(clientConfiguration);
+
+                //Act
+
+                //Assert
+                Assert.Throws<CertificateException>(() => client.GetCurrentSender(sender));
+            }
+
+
+            [Fact]
+            public void Can_disable_sender_certificate_validation()
+            {
+                //Arrange
+                var sender = new Sender(BringOrganizationNumber);
+                var incorrectSenderCertificate = GetPostenTestCertificate();
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate)
+                {
+                    CertificateValidationPreference = { ValidateSenderCertificate = false }
+                };
+                var client = new ClientStub(clientConfiguration);
+
+                //Act
+                var actual = client.GetCurrentSender(sender);
+
+                //Assert
+            }
         }
     }
 }

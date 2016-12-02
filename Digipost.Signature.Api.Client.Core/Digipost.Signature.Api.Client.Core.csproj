@@ -89,7 +89,7 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CertificateValidationPreference.cs" />
+    <Compile Include="CertificateValidationPreferences.cs" />
     <Compile Include="Exceptions\CertificateException.cs" />
     <Compile Include="Exceptions\SecurityException.cs" />
     <Compile Include="Exceptions\TooEagerPollingException.cs" />

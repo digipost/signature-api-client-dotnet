@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core
         /// <summary>
         /// Preferences used for enabling and disabling validation of certificates used in the client
         /// </summary>
-        public CertificateValidationPreference CertificateValidationPreference { get; } = new CertificateValidationPreference();
+        public CertificateValidationPreferences CertificateValidationPreferences { get; } = new CertificateValidationPreferences();
         
 
         /// <summary>

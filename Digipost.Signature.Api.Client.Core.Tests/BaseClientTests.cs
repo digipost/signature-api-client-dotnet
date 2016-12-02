@@ -34,6 +34,24 @@ namespace Digipost.Signature.Api.Client.Core.Tests
         public class CurrentSenderMethod : BaseClientTests
         {
             [Fact]
+            public void Can_disable_sender_certificate_validation()
+            {
+                //Arrange
+                var sender = new Sender(BringOrganizationNumber);
+                var incorrectSenderCertificate = GetPostenTestCertificate();
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate)
+                {
+                    CertificateValidationPreferences = {ValidateSenderCertificate = false}
+                };
+                var client = new ClientStub(clientConfiguration);
+
+                //Act
+                var actual = client.GetCurrentSender(sender);
+
+                //Assert
+            }
+
+            [Fact]
             public void Returns_client_client_configuration_sender_if_only_set()
             {
                 //Arrange
@@ -80,17 +98,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public void Throws_exception_on_no_sender()
-            {
-                //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
-                var client = new ClientStub(clientConfiguration);
-
-                //Act
-                Assert.Throws<SenderNotSpecifiedException>(() => client.GetCurrentSender(null));
-            }
-
-            [Fact]
             public void Throws_exception_on_invalid_certificate()
             {
                 //Arrange
@@ -104,23 +111,15 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.Throws<CertificateException>(() => client.GetCurrentSender(sender));
             }
 
-
             [Fact]
-            public void Can_disable_sender_certificate_validation()
+            public void Throws_exception_on_no_sender()
             {
                 //Arrange
-                var sender = new Sender(BringOrganizationNumber);
-                var incorrectSenderCertificate = GetPostenTestCertificate();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate)
-                {
-                    CertificateValidationPreference = { ValidateSenderCertificate = false }
-                };
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
-                var actual = client.GetCurrentSender(sender);
-
-                //Assert
+                Assert.Throws<SenderNotSpecifiedException>(() => client.GetCurrentSender(null));
             }
         }
     }

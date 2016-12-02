@@ -13,9 +13,9 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class BaseClient
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private HttpClient _httpClient;
 
         protected BaseClient(ClientConfiguration clientConfiguration)
@@ -49,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Core
                 throw new SenderNotSpecifiedException();
             }
 
-            if (!ClientConfiguration.CertificateValidationPreference.ValidateSenderCertificate)
+            if (!ClientConfiguration.CertificateValidationPreferences.ValidateSenderCertificate)
             {
                 Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
 
@@ -100,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            if (!ClientConfiguration.CertificateValidationPreference.ValidateResponseCertificate)
+            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
                 Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
             }

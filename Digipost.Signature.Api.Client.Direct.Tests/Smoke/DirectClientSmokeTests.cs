@@ -9,7 +9,7 @@ using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
-    public class DirectSmokeTestsFixture : SmokeTests, IDisposable
+    public class DirectSmokeTestsFixture : SmokeTests
     {
         public DirectSmokeTestsFixture()
         {
@@ -18,16 +18,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         public TestHelper TestHelper { get; set; }
 
-        public void Dispose()
-        {
-        }
-
         private static DirectClient DirectClient(Environment environment)
         {
             var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender);
-            var client = new DirectClient(clientConfig);
-            return client;
+            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetTestIntegrasjonSertifikat(), sender)
+            {
+                LogRequestAndResponse = true
+            };
+
+            return new DirectClient(clientConfig);
         }
 
         private static DirectClient GetDirectClient()

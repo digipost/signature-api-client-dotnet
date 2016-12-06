@@ -4,33 +4,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
-        internal static Client ClientType
-        {
-            get
-            {
-                if (IsOnBuildServer())
-                {
-                    return Client.Qa;
-                }
-
-                return Client.Qa;
-            }
-        }
-
-        protected static bool IsOnBuildServer()
-        {
-            var isOnBuildServer = false;
-
-            const string buildServerUser = "administrator";
-            var currentUser = System.Environment.UserName.ToLower();
-            var isCurrentUserBuildServer = currentUser.Contains(buildServerUser);
-            if (isCurrentUserBuildServer)
-            {
-                isOnBuildServer = true;
-            }
-
-            return isOnBuildServer;
-        }
+        internal static Client ClientType => Client.Qa;
 
         internal static Uri GetUriFromRelativePath(string relativeUri)
         {

@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(Environment.DifiQa, GetTestCertificate(), GetSender());
+            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), GetSender());
         }
 
         public static AbstractDocument GetDocument()
@@ -23,9 +23,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static Sender GetSender()
         {
-            var organizationNumberQaOrganization = "988015814";
+            var organizationNumberQaOrganization = BringOrganizationNumber;
             return new Sender(organizationNumberQaOrganization);
         }
+
+        public static string BringOrganizationNumber => "988015814";
+
+        public static string PostenOrganizationNumber => "984661185";
 
         public static byte[] GetPdfDocumentBytes()
         {
@@ -37,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return EternalTestCertificateWithPrivateKey();
         }
 
-        public static X509Certificate2 GetTestIntegrasjonSertifikat()
+        public static X509Certificate2 GetBringCertificate()
         {
             return BringTestSertifikat();
         }

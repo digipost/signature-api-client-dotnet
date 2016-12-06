@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using ApiClientShared;
 using ApiClientShared.Enums;
+using Difi.Felles.Utility;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -44,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Core
         /// </summary>
         public Sender GlobalSender { get; set; }
 
-        public X509Certificate2 Certificate { get; internal set; }
+        public X509Certificate2 Certificate { get; set; }
 
         public int HttpClientTimeoutInMilliseconds { get; set; } = 10000;
 
@@ -55,6 +58,10 @@ namespace Digipost.Signature.Api.Client.Core
         /// </summary>
         public bool LogRequestAndResponse { get; set; } = false;
 
+        /// Preferences used for enabling and disabling validation of certificates used in the client
+        /// </summary>
+        public CertificateValidationPreferences CertificateValidationPreferences { get; } = new CertificateValidationPreferences();
+        
         /// <summary>
         ///     All bundle processors used for processing document bundle zip files before they are sent to the service to create
         ///     signature jobs. Add a <see cref="IDocumentBundleProcessor">DocumentBundleProcessor</see> here if requirements are

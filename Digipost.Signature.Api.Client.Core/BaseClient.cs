@@ -2,8 +2,11 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Common.Logging;
 using Difi.Felles.Utility;
+using Difi.Felles.Utility.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 
@@ -13,6 +16,7 @@ namespace Digipost.Signature.Api.Client.Core
     {
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private HttpClient _httpClient;
 
         protected BaseClient(ClientConfiguration clientConfiguration)
@@ -22,6 +26,7 @@ namespace Digipost.Signature.Api.Client.Core
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient);
+            SetMessageLanguageForDifiFellesUtility();
         }
 
         public ClientConfiguration ClientConfiguration { get; }
@@ -46,7 +51,28 @@ namespace Digipost.Signature.Api.Client.Core
                 throw new SenderNotSpecifiedException();
             }
 
+            if (!ClientConfiguration.CertificateValidationPreferences.ValidateSenderCertificate)
+            {
+                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
+
+                return sender;
+            }
+
+            ValidateSenderCertificateThrowIfInvalid(sender);
+
             return sender;
+        }
+
+        private void ValidateSenderCertificateThrowIfInvalid(Sender sender)
+        {
+            var x509Certificate2 = new X509Certificate2(ClientConfiguration.Certificate);
+
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, sender.OrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
         }
 
         private HttpClient MutualTlsClient()
@@ -69,18 +95,34 @@ namespace Digipost.Signature.Api.Client.Core
             var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
             var mutualTlsHandler = new WebRequestHandler();
             mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = IsValidServerCertificate;
+            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
             return mutualTlsHandler;
         }
 
-        private bool IsValidServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            var x509Certificate2 = new X509Certificate2(certificate);
-            var isValidCertificate = CertificateValidator.IsValidCertificate(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber);
-            var isValidCertificateChain = new CertificateChainValidator(ClientConfiguration.Environment.AllowedChainCertificates).IsValidChain(x509Certificate2);
+            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
+            {
+                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+                return true;
+            }
 
-            return isValidCertificate && isValidCertificateChain;
+            var x509Certificate2 = new X509Certificate2(certificate);
+
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
+
+            return true;
+        }
+
+        private static void SetMessageLanguageForDifiFellesUtility()
+        {
+            LanguageResource.CurrentLanguage = Language.English;
         }
     }
 }

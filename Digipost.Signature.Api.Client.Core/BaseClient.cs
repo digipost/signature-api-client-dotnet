@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Common.Logging;
 using Difi.Felles.Utility;
+using Difi.Felles.Utility.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 
@@ -25,6 +26,7 @@ namespace Digipost.Signature.Api.Client.Core
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient);
+            SetMessageLanguageForDifiFellesUtility();
         }
 
         public ClientConfiguration ClientConfiguration { get; }
@@ -116,6 +118,11 @@ namespace Digipost.Signature.Api.Client.Core
             }
 
             return true;
+        }
+
+        private static void SetMessageLanguageForDifiFellesUtility()
+        {
+            LanguageResource.CurrentLanguage = Language.English;
         }
     }
 }

@@ -19,9 +19,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.Localhost;
 
                 //Assert
-                Assert.NotNull(environment.CertificateChainValidator);
                 Assert.Equal(url, environment.Url);
-                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.Equal(certificates, environment.AllowedChainCertificates);
             }
 
             [Fact]
@@ -35,9 +34,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiQa;
 
                 //Assert
-                Assert.NotNull(environment.CertificateChainValidator);
                 Assert.Equal(url, environment.Url);
-                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.Equal(certificates, environment.AllowedChainCertificates);
             }
 
             [Fact]
@@ -51,9 +49,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiTest;
 
                 //Assert
-                Assert.NotNull(environment.CertificateChainValidator);
                 Assert.Equal(url, environment.Url);
-                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.Equal(certificates, environment.AllowedChainCertificates);
             }
 
             [Fact]
@@ -67,9 +64,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.Production;
 
                 //Assert
-                Assert.NotNull(environment.CertificateChainValidator);
                 Assert.Equal(url, environment.Url);
-                Assert.Equal(certificates, environment.CertificateChainValidator.CertificateStore);
+                Assert.Equal(certificates, environment.AllowedChainCertificates);
             }
         }
     }

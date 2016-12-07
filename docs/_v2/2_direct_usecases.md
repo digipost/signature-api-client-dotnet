@@ -4,7 +4,10 @@ title: Direct use cases
 layout: default
 ---
 
-### Create Client Configuration
+
+[comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
+
+<h3 id="crete-client-configuration-direct">Create Client Configuration</h3>
 
 {% highlight csharp %}
 
@@ -123,7 +126,9 @@ await directClient.Confirm(changedJob.References.Confirmation);
 
 {% endhighlight %}
 
-### Get Xades And Pades
+[comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
+
+<h3 id="get-xades-and-pades-direct"> Get XAdES And PAdES</h3>   
 
 {% highlight csharp %}
 

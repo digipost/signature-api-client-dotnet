@@ -72,13 +72,14 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 document = ToDataTransferObject((Document) manifest.Document),
                 signer = ToDataTransferObject(manifest.Signer).ToArray()
             };
+
             if (manifest.AuthenticationLevel != null)
             {
                 dataTransferObject.requiredauthentication = manifest.AuthenticationLevel.Value.ToAuthenticationlevel();
                 dataTransferObject.requiredauthenticationSpecified = true;
             }
-            return dataTransferObject;
 
+            return dataTransferObject;
         }
 
         public static sender ToDataTransferObject(Sender sender)
@@ -111,11 +112,13 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
+
             if (signer.SignatureType != null)
             {
                 dataTransferObject.signaturetype = signer.SignatureType.Value.ToSignaturtype();
                 dataTransferObject.signaturetypeSpecified = true;
             }
+
             return dataTransferObject;
         }
     }

@@ -327,8 +327,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     new Sender(organizationNumberSender),
                     new Document(documentSubject, documentMessage, FileType.Pdf, pdfDocumentBytes),
                     new[] {new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))}
-                );
-                source.AuthenticationLevel = AuthenticationLevel.Four;
+                )
+                {
+                    AuthenticationLevel = AuthenticationLevel.Four
+                };
 
                 var expected = new directsignaturejobmanifest
                 {

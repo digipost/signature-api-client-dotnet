@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             var that = obj as SignatureStatus;
 
-            return (that != null) && Identifier.Equals(that.Identifier);
+            return that != null && Identifier.Equals(that.Identifier);
         }
 
         public override int GetHashCode()
@@ -53,7 +53,7 @@ namespace Digipost.Signature.Api.Client.Portal
             unchecked
             {
                 var hash = 17;
-                hash = hash*23 + Identifier.GetHashCode();
+                hash = hash * 23 + Identifier.GetHashCode();
                 return hash;
             }
         }

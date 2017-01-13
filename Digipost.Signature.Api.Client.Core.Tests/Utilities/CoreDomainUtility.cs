@@ -11,6 +11,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
     {
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
 
+        public static string BringOrganizationNumber => "988015814";
+
+        public static string PostenOrganizationNumber => "984661185";
+
         public static ClientConfiguration GetClientConfiguration()
         {
             return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), GetSender());
@@ -26,10 +30,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             var organizationNumberQaOrganization = BringOrganizationNumber;
             return new Sender(organizationNumberQaOrganization);
         }
-
-        public static string BringOrganizationNumber => "988015814";
-
-        public static string PostenOrganizationNumber => "984661185";
 
         public static byte[] GetPdfDocumentBytes()
         {

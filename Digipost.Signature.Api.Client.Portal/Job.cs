@@ -19,13 +19,13 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public Availability Availability { get; set; }
 
+        public AuthenticationLevel? AuthenticationLevel { get; set; }
+
         public AbstractDocument Document { get; }
 
         public string Reference { get; }
 
         public Sender Sender { get; internal set; }
-
-        public AuthenticationLevel? AuthenticationLevel { get; set;}
 
         public override string ToString()
         {

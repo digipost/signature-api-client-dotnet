@@ -24,13 +24,13 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public StatusRetrievalMethod StatusRetrievalMethod { get; }
 
+        public AuthenticationLevel? AuthenticationLevel { get; set; }
+
         public string Reference { get; }
 
         public AbstractDocument Document { get; }
 
         public Sender Sender { get; internal set; }
-
-        public AuthenticationLevel? AuthenticationLevel { get; set; }
 
         public override string ToString()
         {

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ApiClientShared;
 using Digipost.Signature.Api.Client.Core.Enums;
 
 namespace Digipost.Signature.Api.Client.Core.Extensions
@@ -28,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Core.Extensions
             switch (authenticationLevel)
             {
                 case AuthenticationLevel.Three:
-                    return authenticationlevel.Item3; 
+                    return authenticationlevel.Item3;
                 case AuthenticationLevel.Four:
                     return authenticationlevel.Item4;
                 default:

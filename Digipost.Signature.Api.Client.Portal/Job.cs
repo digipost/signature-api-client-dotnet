@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Portal
@@ -23,6 +24,8 @@ namespace Digipost.Signature.Api.Client.Portal
         public string Reference { get; }
 
         public Sender Sender { get; internal set; }
+
+        public AuthenticationLevel? AuthenticationLevel { get; set;}
 
         public override string ToString()
         {

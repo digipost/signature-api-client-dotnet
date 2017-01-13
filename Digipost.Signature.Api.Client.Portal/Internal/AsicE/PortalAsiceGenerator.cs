@@ -11,7 +11,8 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
         {
             var manifest = new Manifest(job.Sender, (Document) job.Document, job.Signers)
             {
-                Availability = job.Availability
+                Availability = job.Availability,
+                AuthenticationLevel = job.AuthenticationLevel
             };
             var signature = new SignatureGenerator(certificate, job.Document, manifest);
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
@@ -28,6 +29,8 @@ namespace Digipost.Signature.Api.Client.Direct
         public AbstractDocument Document { get; }
 
         public Sender Sender { get; internal set; }
+
+        public AuthenticationLevel? AuthenticationLevel { get; set; }
 
         public override string ToString()
         {

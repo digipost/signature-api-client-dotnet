@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
@@ -27,6 +28,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 document = ToDataTransferObject(manifest.Document),
                 signers = ToDataTransferObject(manifest.Signers).ToArray()
             };
+
+            if (manifest.AuthenticationLevel != null)
+            {
+                dataTransferObject.requiredauthentication = manifest.AuthenticationLevel.Value.ToAuthenticationlevel();
+                dataTransferObject.requiredauthenticationSpecified = true;
+            }
 
             if (manifest.Availability != null)
             {
@@ -75,6 +82,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             if (signer.Order != null)
             {
                 dataTransferObject.order = signer.Order.Value;
+            }
+
+            if (signer.SignatureType != null)
+            {
+                dataTransferObject.signaturetype = signer.SignatureType.Value.ToSignaturtype();
+                dataTransferObject.signaturetypeSpecified = true;
             }
 
             return dataTransferObject;

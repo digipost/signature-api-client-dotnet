@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             return result;
         }
 

@@ -60,9 +60,6 @@
     <Compile Include="Xsd\XsdResource.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Keys\signingkey.snk">
-      <Link>signingkey.snk</Link>
-    </None>
     <EmbeddedResource Include="Xsd\Data\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -76,6 +73,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="signingkey.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Xml\Data\Request\PortalManifest.xml" />

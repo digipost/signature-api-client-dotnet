@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
@@ -15,6 +16,56 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
     {
         public class ToDataTransferObjectMethod : DataTransferObjectConverterTests
         {
+            [Fact]
+            public void Converts_manifest_with_authentication_level_successfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                    new List<Signer>
+                    {
+                        new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
+                        new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
+                    });
+                source.AuthenticationLevel = AuthenticationLevel.Four;
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender {organizationnumber = organizationNumberSender},
+                    document = new portaldocument
+                    {
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new portalsigner
+                        {
+                            personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
+                            Item = new notificationsusinglookup {email = new enabled()}
+                        },
+                        new portalsigner
+                        {
+                            personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
+                            Item = new notificationsusinglookup {email = new enabled()}
+                        }
+                    },
+                    requiredauthentication = authenticationlevel.Item4,
+                    requiredauthenticationSpecified = true
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
             [Fact]
             public void Converts_manifest_with_availability_successfully()
             {
@@ -218,6 +269,63 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         {
                             personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value, order = 2,
                             Item = new notificationsusinglookup {email = new enabled()}
+                        }
+                    }
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_manifest_with_signature_type_successfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                    new List<Signer>
+                    {
+                        new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
+                        {
+                            SignatureType = SignatureType.AdvancedSignature
+                        },
+                        new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
+                        {
+                            SignatureType = SignatureType.AuthenticatedSignature
+                        }
+                    });
+
+                var expected = new portalsignaturejobmanifest
+                {
+                    sender = new sender {organizationnumber = organizationNumberSender},
+                    document = new portaldocument
+                    {
+                        title = source.Document.Title,
+                        description = source.Document.Message,
+                        href = source.Document.FileName,
+                        mime = source.Document.MimeType
+                    },
+                    signers = new[]
+                    {
+                        new portalsigner
+                        {
+                            personalidentificationnumber = source.Signers.ElementAt(0).PersonalIdentificationNumber.Value,
+                            Item = new notificationsusinglookup {email = new enabled()},
+                            signaturetype = signaturetype.ADVANCED_ELECTRONIC_SIGNATURE,
+                            signaturetypeSpecified = true
+                        },
+                        new portalsigner
+                        {
+                            personalidentificationnumber = source.Signers.ElementAt(1).PersonalIdentificationNumber.Value,
+                            Item = new notificationsusinglookup {email = new enabled()},
+                            signaturetype = signaturetype.AUTHENTICATED_ELECTRONIC_SIGNATURE,
+                            signaturetypeSpecified = true
                         }
                     }
                 };

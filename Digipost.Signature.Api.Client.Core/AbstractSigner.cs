@@ -11,6 +11,8 @@
 
         public int? Order { get; set; } = null;
 
+        public SignatureType? SignatureType { get; set; } = null;
+
         public override string ToString()
         {
             return $"PersonalIdentificationNumber: {PersonalIdentificationNumber}, Order: {Order}";

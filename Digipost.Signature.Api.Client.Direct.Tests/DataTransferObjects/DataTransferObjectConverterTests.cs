@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
@@ -251,6 +252,105 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         mime = expectedMimeType
                     },
                     signer = new[] {new directsigner {personalidentificationnumber = personalIdentificationNumber}}
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_manifest_with_authentication_level_successfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                const string documentSubject = "Subject";
+                const string documentMessage = "Message";
+                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
+                var personalIdentificationNumber = "12345678901";
+                var expectedMimeType = "application/pdf";
+
+                var source = new Manifest(
+                    new Sender(organizationNumberSender),
+                    new Document(documentSubject, documentMessage, FileType.Pdf, pdfDocumentBytes),
+                    new[] {new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))}
+                )
+                {
+                    AuthenticationLevel = AuthenticationLevel.Four
+                };
+
+                var expected = new directsignaturejobmanifest
+                {
+                    sender = new sender {organizationnumber = organizationNumberSender},
+                    document = new directdocument
+                    {
+                        title = documentSubject,
+                        description = documentMessage,
+                        href = source.Document.FileName,
+                        mime = expectedMimeType
+                    },
+                    signer = new[] {new directsigner {personalidentificationnumber = personalIdentificationNumber}},
+                    requiredauthentication = authenticationlevel.Item4,
+                    requiredauthenticationSpecified = true
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_manifest_with_signature_type_successfully()
+            {
+                //Arrange
+                const string organizationNumberSender = "12345678902";
+                const string documentSubject = "Subject";
+                const string documentMessage = "Message";
+                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
+                var personalIdentificationNumber = "12345678901";
+                var expectedMimeType = "application/pdf";
+
+                var source = new Manifest(
+                    new Sender(organizationNumberSender),
+                    new Document(documentSubject, documentMessage, FileType.Pdf, pdfDocumentBytes),
+                    new[]
+                    {
+                        new Signer(new PersonalIdentificationNumber(personalIdentificationNumber))
+                        {
+                            SignatureType = SignatureType.AdvancedSignature
+                        }
+                    }
+                );
+
+                var expected = new directsignaturejobmanifest
+                {
+                    sender = new sender {organizationnumber = organizationNumberSender},
+                    document = new directdocument
+                    {
+                        title = documentSubject,
+                        description = documentMessage,
+                        href = source.Document.FileName,
+                        mime = expectedMimeType
+                    },
+                    signer = new[]
+                    {
+                        new directsigner
+                        {
+                            personalidentificationnumber = personalIdentificationNumber,
+                            signaturetype = signaturetype.ADVANCED_ELECTRONIC_SIGNATURE,
+                            signaturetypeSpecified = true
+                        }
+                    }
                 };
 
                 //Act

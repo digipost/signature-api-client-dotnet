@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
@@ -22,6 +23,8 @@ namespace Digipost.Signature.Api.Client.Direct
         public ExitUrls ExitUrls { get; }
 
         public StatusRetrievalMethod StatusRetrievalMethod { get; }
+
+        public AuthenticationLevel? AuthenticationLevel { get; set; }
 
         public string Reference { get; }
 

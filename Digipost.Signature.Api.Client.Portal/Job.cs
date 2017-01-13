@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Portal
@@ -17,6 +18,8 @@ namespace Digipost.Signature.Api.Client.Portal
         public IEnumerable<Signer> Signers { get; }
 
         public Availability Availability { get; set; }
+
+        public AuthenticationLevel? AuthenticationLevel { get; set; }
 
         public AbstractDocument Document { get; }
 

@@ -398,6 +398,10 @@ public partial class portalsigner {
     
     private string personalidentificationnumberField;
     
+    private signaturetype signaturetypeField;
+    
+    private bool signaturetypeFieldSpecified;
+    
     private object itemField;
     
     private int orderField;
@@ -412,6 +416,28 @@ public partial class portalsigner {
         }
         set {
             this.personalidentificationnumberField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("signature-type")]
+    public signaturetype signaturetype {
+        get {
+            return this.signaturetypeField;
+        }
+        set {
+            this.signaturetypeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool signaturetypeSpecified {
+        get {
+            return this.signaturetypeFieldSpecified;
+        }
+        set {
+            this.signaturetypeFieldSpecified = value;
         }
     }
     
@@ -448,6 +474,19 @@ public partial class portalsigner {
             this.orderFieldSpecified = value;
         }
     }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="signature-type", Namespace="http://signering.posten.no/schema/v1")]
+public enum signaturetype {
+    
+    /// <remarks/>
+    ADVANCED_ELECTRONIC_SIGNATURE,
+    
+    /// <remarks/>
+    AUTHENTICATED_ELECTRONIC_SIGNATURE,
 }
 
 /// <remarks/>
@@ -611,6 +650,10 @@ public partial class directsigner {
     
     private string personalidentificationnumberField;
     
+    private signaturetype signaturetypeField;
+    
+    private bool signaturetypeFieldSpecified;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
     public string personalidentificationnumber {
@@ -619,6 +662,28 @@ public partial class directsigner {
         }
         set {
             this.personalidentificationnumberField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("signature-type")]
+    public signaturetype signaturetype {
+        get {
+            return this.signaturetypeField;
+        }
+        set {
+            this.signaturetypeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool signaturetypeSpecified {
+        get {
+            return this.signaturetypeFieldSpecified;
+        }
+        set {
+            this.signaturetypeFieldSpecified = value;
         }
     }
 }
@@ -760,6 +825,10 @@ public partial class directsignaturejobmanifest {
     
     private directdocument documentField;
     
+    private authenticationlevel requiredauthenticationField;
+    
+    private bool requiredauthenticationFieldSpecified;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("signer")]
     public directsigner[] signer {
@@ -790,6 +859,43 @@ public partial class directsignaturejobmanifest {
             this.documentField = value;
         }
     }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("required-authentication")]
+    public authenticationlevel requiredauthentication {
+        get {
+            return this.requiredauthenticationField;
+        }
+        set {
+            this.requiredauthenticationField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool requiredauthenticationSpecified {
+        get {
+            return this.requiredauthenticationFieldSpecified;
+        }
+        set {
+            this.requiredauthenticationFieldSpecified = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="authentication-level", Namespace="http://signering.posten.no/schema/v1")]
+public enum authenticationlevel {
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlEnumAttribute("3")]
+    Item3,
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlEnumAttribute("4")]
+    Item4,
 }
 
 /// <remarks/>
@@ -982,6 +1088,10 @@ public partial class portalsignaturejobmanifest {
     
     private portaldocument documentField;
     
+    private authenticationlevel requiredauthenticationField;
+    
+    private bool requiredauthenticationFieldSpecified;
+    
     private availability availabilityField;
     
     /// <remarks/>
@@ -1012,6 +1122,28 @@ public partial class portalsignaturejobmanifest {
         }
         set {
             this.documentField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("required-authentication")]
+    public authenticationlevel requiredauthentication {
+        get {
+            return this.requiredauthenticationField;
+        }
+        set {
+            this.requiredauthenticationField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool requiredauthenticationSpecified {
+        get {
+            return this.requiredauthenticationFieldSpecified;
+        }
+        set {
+            this.requiredauthenticationFieldSpecified = value;
         }
     }
     

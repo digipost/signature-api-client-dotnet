@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 
@@ -65,12 +66,20 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         internal static directsignaturejobmanifest ToDataTransferObject(Manifest manifest)
         {
-            return new directsignaturejobmanifest
+            var dataTransferObject = new directsignaturejobmanifest
             {
                 sender = ToDataTransferObject(manifest.Sender),
                 document = ToDataTransferObject((Document) manifest.Document),
                 signer = ToDataTransferObject(manifest.Signer).ToArray()
             };
+
+            if (manifest.AuthenticationLevel != null)
+            {
+                dataTransferObject.requiredauthentication = manifest.AuthenticationLevel.Value.ToAuthenticationlevel();
+                dataTransferObject.requiredauthenticationSpecified = true;
+            }
+
+            return dataTransferObject;
         }
 
         public static sender ToDataTransferObject(Sender sender)
@@ -99,10 +108,18 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 
         public static directsigner ToDataTransferObject(AbstractSigner signer)
         {
-            return new directsigner
+            var dataTransferObject = new directsigner
             {
                 personalidentificationnumber = signer.PersonalIdentificationNumber.Value
             };
+
+            if (signer.SignatureType != null)
+            {
+                dataTransferObject.signaturetype = signer.SignatureType.Value.ToSignaturtype();
+                dataTransferObject.signaturetypeSpecified = true;
+            }
+
+            return dataTransferObject;
         }
     }
 }

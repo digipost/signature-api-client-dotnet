@@ -69,17 +69,52 @@ public partial class error {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="signature-status", Namespace="http://signering.posten.no/schema/v1")]
+public partial class signaturestatus {
+    
+    private System.DateTime sinceField;
+    
+    private string valueField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public System.DateTime since {
+        get {
+            return this.sinceField;
+        }
+        set {
+            this.sinceField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value {
+        get {
+            return this.valueField;
+        }
+        set {
+            this.valueField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
 public partial class signature {
     
-    private string statusField;
+    private signaturestatus statusField;
     
     private string personalidentificationnumberField;
     
     private string xadesurlField;
     
     /// <remarks/>
-    public string status {
+    public signaturestatus status {
         get {
             return this.statusField;
         }
@@ -499,6 +534,8 @@ public partial class signerstatus {
     
     private string signerField;
     
+    private System.DateTime sinceField;
+    
     private string valueField;
     
     /// <remarks/>
@@ -509,6 +546,17 @@ public partial class signerstatus {
         }
         set {
             this.signerField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public System.DateTime since {
+        get {
+            return this.sinceField;
+        }
+        set {
+            this.sinceField = value;
         }
     }
     

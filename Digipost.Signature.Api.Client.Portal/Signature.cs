@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core;
+﻿using System;
+using Digipost.Signature.Api.Client.Core;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -10,9 +11,11 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public XadesReference XadesReference { get; set; }
 
+        public DateTime DateTimeForStatus { get; set; }
+
         public override string ToString()
         {
-            return $"SignatureStatus: {SignatureStatus}, Signer: {Signer}, XadesReference: {XadesReference}";
+            return $"SignatureStatus: {SignatureStatus} (since {DateTimeForStatus}), Signer: {Signer}, XadesReference: {XadesReference}";
         }
     }
 }

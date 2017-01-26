@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 var xadesurl = directsignaturejobstatusresponse.xadesurl?.SingleOrDefault(xades => xades.signer.Equals(signerstatus.signer));
                 var xadesReference = xadesurl == null ? null : new XadesReference(new Uri(xadesurl.Value));
-                var signature = new Signature(new PersonalIdentificationNumber(signerstatus.signer), xadesReference, new SignatureStatus(signerstatus.Value));
+                var signature = new Signature(new PersonalIdentificationNumber(signerstatus.signer), xadesReference, new SignatureStatus(signerstatus.Value), signerstatus.since);
                 signatures.Add(signature);
             }
 

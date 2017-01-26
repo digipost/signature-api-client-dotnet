@@ -607,6 +607,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_job_status_change_response_successfully()
             {
                 //Arrange
+                var now = DateTime.Now;
+
                 var source = new portalsignaturejobstatuschangeresponse
                 {
                     confirmationurl = "http://confirmationurl.no",
@@ -619,13 +621,21 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 personalidentificationnumber = "01013300001",
-                                status = SignatureStatus.Signed.Identifier,
+                                status = new signaturestatus()
+                                {
+                                    Value = SignatureStatus.Signed.Identifier,
+                                    since = now
+                                },
                                 xadesurl = "http://xadesurl1.no"
                             },
                             new signature
                             {
                                 personalidentificationnumber = "01013300002",
-                                status = SignatureStatus.Waiting.Identifier,
+                                status = new signaturestatus()
+                                {
+                                    Value = SignatureStatus.Waiting.Identifier,
+                                    since = now
+                                },
                                 xadesurl = "http://xadesurl2.no"
                             }
                         }
@@ -641,15 +651,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     new Signature
                     {
-                        SignatureStatus = new SignatureStatus(signature1.status),
+                        SignatureStatus = new SignatureStatus(signature1.status.Value),
                         Signer = new PersonalIdentificationNumber(signature1.personalidentificationnumber),
-                        XadesReference = new XadesReference(new Uri(signature1.xadesurl))
+                        XadesReference = new XadesReference(new Uri(signature1.xadesurl)),
+                        DateTimeForStatus = now
                     },
                     new Signature
                     {
-                        SignatureStatus = new SignatureStatus(signature2.status),
+                        SignatureStatus = new SignatureStatus(signature2.status.Value),
                         Signer = new PersonalIdentificationNumber(signature2.personalidentificationnumber),
-                        XadesReference = new XadesReference(new Uri(signature2.xadesurl))
+                        XadesReference = new XadesReference(new Uri(signature2.xadesurl)),
+                        DateTimeForStatus = now
                     }
                 };
 

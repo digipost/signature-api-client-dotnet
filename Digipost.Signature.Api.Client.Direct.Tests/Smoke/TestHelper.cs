@@ -123,7 +123,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 jobStatusResponse.Signatures = jobStatusResponse.Signatures.Select(signature =>
                 {
                     var xadesReference = signature.XadesReference == null ? null : new XadesReference(GetUriFromRelativePath(signature.XadesReference.Url.AbsolutePath));
-                    return new Signature(signature.Signer, xadesReference, signature.SignatureStatus);
+                    return new Signature(signature.Signer, xadesReference, signature.SignatureStatus, signature.DateTimeForStatus);
                 }).ToList();
                 jobStatusResponse.References.Pades = new PadesReference(GetUriFromRelativePath(jobStatusResponse.References.Pades.Url.AbsolutePath));
                 jobStatusResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(jobStatusResponse.References.Confirmation.Url.AbsolutePath));

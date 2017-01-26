@@ -84,14 +84,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             public void Converts_direct_job_status_with_multiple_signers_successfully()
             {
                 //Arrange
+                var now = DateTime.Now;
+                
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
                     signaturejobstatus = directsignaturejobstatus.FAILED,
                     status = new[]
                     {
-                        new signerstatus {signer = "12345678910", Value = "REJECTED"},
-                        new signerstatus {signer = "10987654321", Value = "SIGNED"}
+                        new signerstatus {signer = "12345678910", Value = "REJECTED", since = now},
+                        new signerstatus {signer = "10987654321", Value = "SIGNED", since = now}
                     },
                     xadesurl = new[]
                     {
@@ -106,8 +108,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     new JobReferences(new Uri("https://example.com/confirmation-url"), null),
                     new List<Signature>
                     {
-                        new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected),
-                        new Signature(new PersonalIdentificationNumber("10987654321"), new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed)
+                        new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected, now),
+                        new Signature(new PersonalIdentificationNumber("10987654321"), new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
                     }
                 );
 
@@ -389,11 +391,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             public void Converts_signed_direct_job_status_successfully()
             {
                 //Arrange
+                var now = DateTime.Now;
+
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
                     signaturejobstatus = directsignaturejobstatus.COMPLETED_SUCCESSFULLY,
-                    status = new[] {new signerstatus {signer = "12345678910", Value = "SIGNED"}},
+                    status = new[] {new signerstatus {signer = "12345678910", Value = "SIGNED", since = now}},
                     confirmationurl = "http://signatureRoot.digipost.no/confirmation",
                     xadesurl = new[] {new signerspecificurl {signer = "12345678910", Value = "http://signatureRoot.digipost.no/xades"}},
                     padesurl = "http://signatureRoot.digipost.no/pades"
@@ -403,7 +407,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     source.signaturejobid,
                     JobStatus.CompletedSuccessfully,
                     new JobReferences(new Uri(source.confirmationurl), new Uri(source.padesurl)),
-                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed)}
+                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, now)}
                 );
 
                 //Act
@@ -442,11 +446,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             public void Converts_unsigned_direct_job_status_successfully()
             {
                 //Arrange
+                var now = DateTime.Now;
+
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
                     signaturejobstatus = directsignaturejobstatus.FAILED,
-                    status = new[] {new signerstatus {signer = "12345678910", Value = "REJECTED"}},
+                    status = new[] {new signerstatus {signer = "12345678910", Value = "REJECTED", since = now}},
                     confirmationurl = "https://example.com/confirmation-url"
                 };
 
@@ -454,7 +460,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     source.signaturejobid,
                     JobStatus.Failed,
                     new JobReferences(new Uri("https://example.com/confirmation-url"), null),
-                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected)}
+                    new List<Signature> {new Signature(new PersonalIdentificationNumber("12345678910"), null, SignatureStatus.Rejected, now)}
                 );
 
                 //Act

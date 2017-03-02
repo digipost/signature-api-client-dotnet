@@ -30,5 +30,18 @@ namespace Digipost.Signature.Api.Client.Core.Extensions
                     throw new ArgumentOutOfRangeException(nameof(authenticationLevel), authenticationLevel, null);
             }
         }
+
+        public static signingonbehalfof ToSigningonbehalfof(this OnBehalfOf onBehalfOf)
+        {
+            switch (onBehalfOf)
+            {
+                case OnBehalfOf.Self:
+                    return signingonbehalfof.SELF;
+                case OnBehalfOf.Other:
+                    return signingonbehalfof.OTHER;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(onBehalfOf), onBehalfOf, null);
+            }
+        }
     }
 }

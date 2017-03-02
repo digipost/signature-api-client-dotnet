@@ -5,7 +5,7 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class Signature
     {
-        public Signature(PersonalIdentificationNumber signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
+        public Signature(Identifier signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
         {
             Signer = signer;
             XadesReference = xadesReference;
@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Direct
             DateTimeForStatus = dateTimeForStatus;
         }
 
-        public PersonalIdentificationNumber Signer { get; set; }
+        public Identifier Signer { get; set; }
 
         public XadesReference XadesReference { get; set; }
 

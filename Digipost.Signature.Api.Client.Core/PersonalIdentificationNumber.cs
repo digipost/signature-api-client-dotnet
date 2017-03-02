@@ -2,7 +2,8 @@
 {
     public class PersonalIdentificationNumber : SignerIdentifier
     {
-        public PersonalIdentificationNumber(string value) : base(value)
+        public PersonalIdentificationNumber(string value)
+            : base(value)
         {
         }
 

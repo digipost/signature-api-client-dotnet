@@ -621,7 +621,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 personalidentificationnumber = "01013300001",
-                                status = new signaturestatus()
+                                status = new signaturestatus
                                 {
                                     Value = SignatureStatus.Signed.Identifier,
                                     since = now
@@ -631,7 +631,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 personalidentificationnumber = "01013300002",
-                                status = new signaturestatus()
+                                status = new signaturestatus
                                 {
                                     Value = SignatureStatus.Waiting.Identifier,
                                     since = now

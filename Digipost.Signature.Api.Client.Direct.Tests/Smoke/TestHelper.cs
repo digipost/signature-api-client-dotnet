@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
                 return this;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new InvalidOperationException("Unable to auto-sign. This is probably a result of the backend not supporting the kind of job you are trying to sign.");
             }

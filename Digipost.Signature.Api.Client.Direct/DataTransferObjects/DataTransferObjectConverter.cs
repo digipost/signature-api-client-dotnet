@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
@@ -116,7 +115,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof(),
                 onbehalfofSpecified = true
             };
-            
+
             if (signer.SignatureType != null)
             {
                 dataTransferObject.signaturetype = signer.SignatureType.Value.ToSignaturtype();

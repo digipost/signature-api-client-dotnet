@@ -1,5 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core;
-using System;
+﻿using System;
+using Digipost.Signature.Api.Client.Core;
 
 namespace Digipost.Signature.Api.Client.Direct
 {

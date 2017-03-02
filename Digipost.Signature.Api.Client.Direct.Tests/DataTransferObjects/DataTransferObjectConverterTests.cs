@@ -85,7 +85,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             {
                 //Arrange
                 var now = DateTime.Now;
-                
+
                 var source = new directsignaturejobstatusresponse
                 {
                     signaturejobid = 77,
@@ -253,13 +253,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         href = source.Document.FileName,
                         mime = expectedMimeType
                     },
-                    signer = new[] {new directsigner
+                    signer = new[]
                     {
-                        ItemElementName = ItemChoiceType.personalidentificationnumber,
-                        Item = personalIdentificationNumber,
-                        onbehalfof = signingonbehalfof.SELF,
-                        onbehalfofSpecified = true
-                    }}
+                        new directsigner
+                        {
+                            ItemElementName = ItemChoiceType.personalidentificationnumber,
+                            Item = personalIdentificationNumber,
+                            onbehalfof = signingonbehalfof.SELF,
+                            onbehalfofSpecified = true
+                        }
+                    }
                 };
 
                 //Act
@@ -302,13 +305,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         href = source.Document.FileName,
                         mime = expectedMimeType
                     },
-                    signer = new[] {new directsigner
+                    signer = new[]
                     {
-                        ItemElementName = ItemChoiceType.personalidentificationnumber,
-                        Item = personalIdentificationNumber,
-                        onbehalfof = signingonbehalfof.SELF,
-                        onbehalfofSpecified = true
-                    }},
+                        new directsigner
+                        {
+                            ItemElementName = ItemChoiceType.personalidentificationnumber,
+                            Item = personalIdentificationNumber,
+                            onbehalfof = signingonbehalfof.SELF,
+                            onbehalfofSpecified = true
+                        }
+                    },
                     requiredauthentication = authenticationlevel.Item4,
                     requiredauthenticationSpecified = true
                 };
@@ -366,7 +372,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                             signaturetypeSpecified = true,
                             onbehalfof = signingonbehalfof.SELF,
                             onbehalfofSpecified = true
-                            
                         }
                     }
                 };
@@ -473,7 +478,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     ItemElementName = ItemChoiceType.signeridentifier,
                     Item = customIdentifier,
                     onbehalfofSpecified = true,
-                    onbehalfof = signingonbehalfof.OTHER,
+                    onbehalfof = signingonbehalfof.OTHER
                 };
 
                 //Act
@@ -497,7 +502,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     signaturejobid = 77,
                     signaturejobstatus = directsignaturejobstatus.FAILED,
                     status = new[] {new signerstatus {signer = "12345678910", Value = "REJECTED", since = now}},
-                    confirmationurl = "https://example.com/confirmation-url",
+                    confirmationurl = "https://example.com/confirmation-url"
                 };
 
                 var expected = new JobStatusResponse(

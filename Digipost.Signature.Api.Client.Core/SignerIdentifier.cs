@@ -13,14 +13,14 @@
         {
             var other = obj as SignerIdentifier;
 
-            return other != null && string.Equals(other.Value, Value);
+            return (other != null) && string.Equals(other.Value, Value);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return 17 * 23 + Value.GetHashCode();
+                return 17*23 + Value.GetHashCode();
             }
         }
     }

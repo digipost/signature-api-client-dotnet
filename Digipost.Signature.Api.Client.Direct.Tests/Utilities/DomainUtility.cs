@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 
         public static Job GetDirectJob(params SignerIdentifier[] signers)
         {
-            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin) {SignatureType = SignatureType.AdvancedSignature }), "Reference", GetExitUrls());
+            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin) {SignatureType = SignatureType.AuthenticatedSignature}), "Reference", GetExitUrls());
         }
 
         public static Job GetDirectJobWithSender()

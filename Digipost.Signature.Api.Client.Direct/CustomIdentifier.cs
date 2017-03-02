@@ -4,7 +4,8 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class CustomIdentifier : SignerIdentifier
     {
-        public CustomIdentifier(string identifier) : base(identifier)
+        public CustomIdentifier(string identifier)
+            : base(identifier)
         {
         }
 

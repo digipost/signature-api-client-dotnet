@@ -44,12 +44,12 @@ namespace Digipost.Signature.Api.Client.Direct
         /// </summary>
         /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature from this signer</exception>
         /// <seealso cref="Signatures" />
-        public Signature GetSignatureFrom(PersonalIdentificationNumber signer)
+        public Signature GetSignatureFrom(SignerIdentifier signer)
         {
             var signature = Signatures.SingleOrDefault(s => s.Signer.Equals(signer));
             if (signature == null)
             {
-                throw new InvalidOperationException($"Unable to find signature from {signer}");
+                throw new InvalidOperationException($"Unable to find signature from Signer '{signer}'");
             }
             return signature;
         }

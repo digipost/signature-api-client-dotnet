@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 Log.Debug($"Result of Create was: {portalJobResponse}");
 
                 var signer = portalJob.Signers.ElementAt(0);
-                var httpResponseMessage = portalClient.AutoSign((int) portalJobResponse.JobId, signer.PersonalIdentificationNumber.Value).Result;
+                var httpResponseMessage = portalClient.AutoSign((int) portalJobResponse.JobId, signer.Identifier.Value).Result;
                 Log.Debug($"Trying to autosign. Status code: {httpResponseMessage.StatusCode}");
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);

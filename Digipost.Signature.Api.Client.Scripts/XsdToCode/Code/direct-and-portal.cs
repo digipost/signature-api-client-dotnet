@@ -439,6 +439,10 @@ public partial class portalsigner {
     
     private object itemField;
     
+    private signingonbehalfof onbehalfofField;
+    
+    private bool onbehalfofFieldSpecified;
+    
     private int orderField;
     
     private bool orderFieldSpecified;
@@ -489,6 +493,28 @@ public partial class portalsigner {
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("on-behalf-of")]
+    public signingonbehalfof onbehalfof {
+        get {
+            return this.onbehalfofField;
+        }
+        set {
+            this.onbehalfofField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool onbehalfofSpecified {
+        get {
+            return this.onbehalfofFieldSpecified;
+        }
+        set {
+            this.onbehalfofFieldSpecified = value;
+        }
+    }
+    
+    /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
     public int order {
         get {
@@ -522,6 +548,19 @@ public enum signaturetype {
     
     /// <remarks/>
     AUTHENTICATED_ELECTRONIC_SIGNATURE,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="signing-on-behalf-of", Namespace="http://signering.posten.no/schema/v1")]
+public enum signingonbehalfof {
+    
+    /// <remarks/>
+    SELF,
+    
+    /// <remarks/>
+    OTHER,
 }
 
 /// <remarks/>
@@ -696,20 +735,39 @@ public partial class sender {
 [System.Xml.Serialization.XmlTypeAttribute(TypeName="direct-signer", Namespace="http://signering.posten.no/schema/v1")]
 public partial class directsigner {
     
-    private string personalidentificationnumberField;
+    private string itemField;
+    
+    private ItemChoiceType itemElementNameField;
     
     private signaturetype signaturetypeField;
     
     private bool signaturetypeFieldSpecified;
     
+    private signingonbehalfof onbehalfofField;
+    
+    private bool onbehalfofFieldSpecified;
+    
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
-    public string personalidentificationnumber {
+    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number", typeof(string))]
+    [System.Xml.Serialization.XmlElementAttribute("signer-identifier", typeof(string))]
+    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
+    public string Item {
         get {
-            return this.personalidentificationnumberField;
+            return this.itemField;
         }
         set {
-            this.personalidentificationnumberField = value;
+            this.itemField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public ItemChoiceType ItemElementName {
+        get {
+            return this.itemElementNameField;
+        }
+        set {
+            this.itemElementNameField = value;
         }
     }
     
@@ -734,6 +792,43 @@ public partial class directsigner {
             this.signaturetypeFieldSpecified = value;
         }
     }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("on-behalf-of")]
+    public signingonbehalfof onbehalfof {
+        get {
+            return this.onbehalfofField;
+        }
+        set {
+            this.onbehalfofField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool onbehalfofSpecified {
+        get {
+            return this.onbehalfofFieldSpecified;
+        }
+        set {
+            this.onbehalfofFieldSpecified = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1", IncludeInSchema=false)]
+public enum ItemChoiceType {
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlEnumAttribute("personal-identification-number")]
+    personalidentificationnumber,
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlEnumAttribute("signer-identifier")]
+    signeridentifier,
 }
 
 /// <remarks/>

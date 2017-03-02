@@ -1,11 +1,11 @@
-﻿using Digipost.Signature.Api.Client.Core;
-using System;
+﻿using System;
+using Digipost.Signature.Api.Client.Core;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class Signature
     {
-        public Signature(PersonalIdentificationNumber signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
+        public Signature(SignerIdentifier signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
         {
             Signer = signer;
             XadesReference = xadesReference;
@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Direct
             DateTimeForStatus = dateTimeForStatus;
         }
 
-        public PersonalIdentificationNumber Signer { get; set; }
+        public SignerIdentifier Signer { get; set; }
 
         public XadesReference XadesReference { get; set; }
 

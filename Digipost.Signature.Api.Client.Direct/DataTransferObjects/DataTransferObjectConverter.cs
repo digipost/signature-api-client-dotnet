@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 var xadesurl = directsignaturejobstatusresponse.xadesurl?.SingleOrDefault(xades => xades.signer.Equals(signerstatus.signer));
                 var xadesReference = xadesurl == null ? null : new XadesReference(new Uri(xadesurl.Value));
-                var signature = new Signature(new PersonalIdentificationNumber(signerstatus.signer), xadesReference, new SignatureStatus(signerstatus.Value), signerstatus.since);
+                var signature = new Signature(new SignerIdentifier(signerstatus.signer), xadesReference, new SignatureStatus(signerstatus.Value), signerstatus.since);
                 signatures.Add(signature);
             }
 
@@ -110,7 +110,10 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             var dataTransferObject = new directsigner
             {
-                personalidentificationnumber = signer.PersonalIdentificationNumber.Value
+                Item = signer.Identifier.Value,
+                ItemElementName = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber) ? ItemChoiceType.personalidentificationnumber : ItemChoiceType.signeridentifier,
+                onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof(),
+                onbehalfofSpecified = true
             };
 
             if (signer.SignatureType != null)

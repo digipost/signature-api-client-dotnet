@@ -25,35 +25,43 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             _directClient = directClient;
         }
 
-        public TestHelper Create_direct_job(params PersonalIdentificationNumber[] signers)
+        public TestHelper Create_direct_job(params SignerIdentifier[] signers)
         {
             var job = DomainUtility.GetDirectJob(signers);
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
 
-        public TestHelper Create_pollable_direct_job(params PersonalIdentificationNumber[] signers)
+        public TestHelper Create_pollable_direct_job(params SignerIdentifier[] signers)
         {
             var job = DomainUtility.GetPollableDirectJob(signers);
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
 
-        public TestHelper Sign_job(PersonalIdentificationNumber signer)
+        public TestHelper Sign_job(SignerIdentifier signer)
         {
             Assert_state(_jobResponse);
 
             var statusUrl = _directClient.AutoSign(_jobResponse.JobId, signer.Value).Result;
-            var queryParams = new Uri(statusUrl).Query;
-            var queryDictionary = HttpUtility.ParseQueryString(queryParams);
-            var statusQueryToken = queryDictionary.Get(0);
-
-            if (_jobResponse.ResponseUrls.HasStatusUrl())
+            try
             {
-                _statusReference = MorphStatusReferenceIfMayBe(_jobResponse.ResponseUrls.Status(statusQueryToken));
-            }
+                var queryParams = new Uri(statusUrl).Query;
 
-            return this;
+                var queryDictionary = HttpUtility.ParseQueryString(queryParams);
+                var statusQueryToken = queryDictionary.Get(0);
+
+                if (_jobResponse.ResponseUrls.HasStatusUrl())
+                {
+                    _statusReference = MorphStatusReferenceIfMayBe(_jobResponse.ResponseUrls.Status(statusQueryToken));
+                }
+
+                return this;
+            }
+            catch (Exception)
+            {
+                throw new InvalidOperationException("Unable to auto-sign. This is probably a result of the backend not supporting the kind of job you are trying to sign.");
+            }
         }
 
         public TestHelper Get_status()
@@ -70,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<PersonalIdentificationNumber, SignatureStatus>[] expectedSignatureStatuses)
+        public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<SignerIdentifier, SignatureStatus>[] expectedSignatureStatuses)
         {
             Assert_state(_status);
 
@@ -82,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Get_XAdES(PersonalIdentificationNumber signer)
+        public TestHelper Get_XAdES(SignerIdentifier signer)
         {
             Assert_state(_status);
 
@@ -132,9 +140,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return jobStatusResponse;
         }
 
-        internal static KeyValuePair<PersonalIdentificationNumber, SignatureStatus> ExpectedSignerStatus(PersonalIdentificationNumber signer, SignatureStatus status)
+        internal static KeyValuePair<SignerIdentifier, SignatureStatus> ExpectedSignerStatus(SignerIdentifier signer, SignatureStatus status)
         {
-            return new KeyValuePair<PersonalIdentificationNumber, SignatureStatus>(signer, status);
+            return new KeyValuePair<SignerIdentifier, SignatureStatus>(signer, status);
         }
 
         private static void Assert_state(object obj)

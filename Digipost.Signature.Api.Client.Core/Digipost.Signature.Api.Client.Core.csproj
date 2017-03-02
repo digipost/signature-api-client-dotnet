@@ -99,6 +99,7 @@
     <Compile Include="Exceptions\SecurityException.cs" />
     <Compile Include="Exceptions\TooEagerPollingException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="SignerIdentifier.cs" />
     <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Internal\Asice\AsiceGenerator.cs" />
     <Compile Include="Internal\Asice\DocumentBundleToDiskProcessor.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Exceptions\UnexpectedResponseException.cs" />
     <Compile Include="IDocumentBundleProcessor.cs" />
     <Compile Include="Internal\CreateAction.cs" />
+    <Compile Include="Enums\OnBehalfOf.cs" />
     <Compile Include="PersonalIdentificationNumber.cs" />
     <Compile Include="Internal\Utilities\NamespaceUtility.cs" />
     <Compile Include="Internal\SignatureAction.cs" />

@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Direct
         /// </summary>
         /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature from this signer</exception>
         /// <seealso cref="Signatures" />
-        public Signature GetSignatureFrom(Identifier signer)
+        public Signature GetSignatureFrom(SignerIdentifier signer)
         {
             var signature = Signatures.SingleOrDefault(s => s.Signer.Equals(signer));
             if (signature == null)

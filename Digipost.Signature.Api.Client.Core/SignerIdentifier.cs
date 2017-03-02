@@ -1,8 +1,8 @@
 ﻿namespace Digipost.Signature.Api.Client.Core
 {
-    public class Identifier
+    public class SignerIdentifier
     {
-        public Identifier(string value)
+        internal SignerIdentifier(string value)
         {
             Value = value;
         }
@@ -11,7 +11,7 @@
 
         public override bool Equals(object obj)
         {
-            var other = obj as Identifier;
+            var other = obj as SignerIdentifier;
 
             return other != null && string.Equals(other.Value, Value);
         }

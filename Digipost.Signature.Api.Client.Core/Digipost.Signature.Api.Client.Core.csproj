@@ -99,7 +99,7 @@
     <Compile Include="Exceptions\SecurityException.cs" />
     <Compile Include="Exceptions\TooEagerPollingException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
-    <Compile Include="Identifier.cs" />
+    <Compile Include="SignerIdentifier.cs" />
     <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Internal\Asice\AsiceGenerator.cs" />
     <Compile Include="Internal\Asice\DocumentBundleToDiskProcessor.cs" />

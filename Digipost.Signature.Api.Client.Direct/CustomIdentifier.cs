@@ -2,15 +2,15 @@
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class SignerIdentifier : Identifier
+    public class CustomIdentifier : SignerIdentifier
     {
-        public SignerIdentifier(string identifier) : base(identifier)
+        public CustomIdentifier(string identifier) : base(identifier)
         {
         }
 
         public override string ToString()
         {
-            return $"{nameof(Value)}: {Value}";
+            return $"custom identifier of {Value}";
         }
     }
 }

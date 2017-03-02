@@ -25,21 +25,21 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             _directClient = directClient;
         }
 
-        public TestHelper Create_direct_job(params Identifier[] signers)
+        public TestHelper Create_direct_job(params SignerIdentifier[] signers)
         {
             var job = DomainUtility.GetDirectJob(signers);
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
 
-        public TestHelper Create_pollable_direct_job(params Identifier[] signers)
+        public TestHelper Create_pollable_direct_job(params SignerIdentifier[] signers)
         {
             var job = DomainUtility.GetPollableDirectJob(signers);
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
 
-        public TestHelper Sign_job(Identifier signer)
+        public TestHelper Sign_job(SignerIdentifier signer)
         {
             Assert_state(_jobResponse);
 
@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<Identifier, SignatureStatus>[] expectedSignatureStatuses)
+        public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<SignerIdentifier, SignatureStatus>[] expectedSignatureStatuses)
         {
             Assert_state(_status);
 
@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Get_XAdES(Identifier signer)
+        public TestHelper Get_XAdES(SignerIdentifier signer)
         {
             Assert_state(_status);
 
@@ -140,9 +140,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return jobStatusResponse;
         }
 
-        internal static KeyValuePair<Identifier, SignatureStatus> ExpectedSignerStatus(Identifier signer, SignatureStatus status)
+        internal static KeyValuePair<SignerIdentifier, SignatureStatus> ExpectedSignerStatus(SignerIdentifier signer, SignatureStatus status)
         {
-            return new KeyValuePair<Identifier, SignatureStatus>(signer, status);
+            return new KeyValuePair<SignerIdentifier, SignatureStatus>(signer, status);
         }
 
         private static void Assert_state(object obj)

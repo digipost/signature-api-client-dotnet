@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
         }
 
-        public static Job GetDirectJob(params Identifier[] signers)
+        public static Job GetDirectJob(params SignerIdentifier[] signers)
         {
             return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin) {SignatureType = SignatureType.AdvancedSignature }), "Reference", GetExitUrls());
         }
@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
-        public static Job GetPollableDirectJob(params Identifier[] signers)
+        public static Job GetPollableDirectJob(params SignerIdentifier[] signers)
         {
             return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), statusRetrievalMethod: StatusRetrievalMethod.Polling);
         }

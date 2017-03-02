@@ -1,6 +1,6 @@
 ﻿namespace Digipost.Signature.Api.Client.Core
 {
-    public class PersonalIdentificationNumber : Identifier
+    public class PersonalIdentificationNumber : SignerIdentifier
     {
         public PersonalIdentificationNumber(string value) : base(value)
         {
@@ -10,7 +10,7 @@
 
         public override string ToString()
         {
-            return $"{nameof(MaskedValue)}: {MaskedValue}";
+            return $"personal identification number of {MaskedValue}";
         }
     }
 }

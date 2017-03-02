@@ -4,12 +4,12 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class AbstractSigner
     {
-        protected AbstractSigner(Identifier identifier)
+        protected AbstractSigner(SignerIdentifier signerIdentifier)
         {
-            Identifier = identifier;
+            Identifier = signerIdentifier;
         }
 
-        public Identifier Identifier { get; }
+        public SignerIdentifier Identifier { get; }
 
         public int? Order { get; set; } = null;
 

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography.X509Certificates;
-using ApiClientShared;
-using ApiClientShared.Enums;
+using Digipost.Api.Client.Shared.Certificate;
+using Digipost.Api.Client.Shared.Enums;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;

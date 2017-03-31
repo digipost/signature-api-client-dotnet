@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
-using ApiClientShared;
-using ApiClientShared.Enums;
+using Digipost.Api.Client.Shared.Certificate;
+using Digipost.Api.Client.Shared.Enums;
+using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities

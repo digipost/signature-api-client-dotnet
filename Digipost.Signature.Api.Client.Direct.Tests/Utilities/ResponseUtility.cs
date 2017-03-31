@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using ApiClientShared;
+using Digipost.Api.Client.Shared.Resources.Resource;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 {

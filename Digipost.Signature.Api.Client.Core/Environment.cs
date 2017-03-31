@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
-using Difi.Felles.Utility.Utilities;
+using Digipost.Api.Client.Shared.Certificate;
 
 namespace Digipost.Signature.Api.Client.Core
 {

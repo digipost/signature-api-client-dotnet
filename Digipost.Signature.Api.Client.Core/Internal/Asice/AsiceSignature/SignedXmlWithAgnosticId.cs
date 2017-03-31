@@ -5,8 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Xml;
 using Difi.Felles.Utility.Exceptions;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 
-namespace Difi.Felles.Utility.Security
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {
     /// <summary>
     ///     Enhances the core SignedXml provider with namespace agnostic query for Id elements.

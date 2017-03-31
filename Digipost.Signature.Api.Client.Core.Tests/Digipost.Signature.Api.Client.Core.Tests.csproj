@@ -42,10 +42,6 @@
     <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApiClientShared, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.2.0.0\lib\net45\ApiClientShared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -54,9 +50,12 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Difi.Felles.Utility, Version=1.2.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
-      <HintPath>..\packages\difi-felles-utility-dotnet.1.2.0\lib\net45\Difi.Felles.Utility.dll</HintPath>
+    <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.151, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
+      <HintPath>..\packages\api-client-shared.3.0.0.151-beta\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Digipost.Api.Client.Shared.Resources">
+      <HintPath>..\packages\api-client-shared.3.0.0.151-beta\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
     </Reference>
     <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=3.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
       <HintPath>..\packages\CompareNETObjects.3.06.0.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
-using Digipost.Api.Client.Shared.Enums;
+using Digipost.Api.Client.Shared.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;
@@ -38,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var environment = Environment.DifiQa;
                 var sender = CoreDomainUtility.GetSender();
 
-                var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed", Language.English);
+                var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
 
                 //Act
                 var clientConfiguration = new ClientConfiguration(

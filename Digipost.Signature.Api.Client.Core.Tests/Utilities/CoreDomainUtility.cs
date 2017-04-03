@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
-using Digipost.Api.Client.Shared.Enums;
 using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 
@@ -64,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         private static X509Certificate2 BringTestSertifikat()
         {
-            return CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed", Language.English);
+            return CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
         }
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()

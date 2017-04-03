@@ -37,10 +37,6 @@
     <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.151, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.3.0.0.151-beta\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Digipost.Api.Client.Shared.Resources">
       <HintPath>..\packages\api-client-shared.3.0.0.151-beta\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
     </Reference>
@@ -75,7 +71,6 @@
     <None Include="Document\Data\Dokument.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="signingkey.snk" />
   </ItemGroup>
   <ItemGroup>

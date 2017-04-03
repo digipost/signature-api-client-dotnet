@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
-using Digipost.Api.Client.Shared.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;

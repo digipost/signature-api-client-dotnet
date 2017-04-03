@@ -20,7 +20,7 @@ namespace Difi.Felles.Utility.Exceptions
 
         public override AsymmetricSignatureDeformatter CreateDeformatter(AsymmetricAlgorithm key)
         {
-            var asymmetricSignatureDeformatter = (AsymmetricSignatureDeformatter)CryptoConfig.CreateFromName(DeformatterAlgorithm);
+            var asymmetricSignatureDeformatter = (AsymmetricSignatureDeformatter) CryptoConfig.CreateFromName(DeformatterAlgorithm);
             asymmetricSignatureDeformatter.SetKey(key);
             asymmetricSignatureDeformatter.SetHashAlgorithm("SHA256");
             return asymmetricSignatureDeformatter;

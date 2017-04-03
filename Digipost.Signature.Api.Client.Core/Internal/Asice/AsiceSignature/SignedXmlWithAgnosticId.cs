@@ -76,7 +76,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             SignedInfo.SignatureMethod = signatureMethod;
             SignedInfo.CanonicalizationMethod = "http://www.w3.org/2001/10/xml-exc-c14n#";
             if (inclusiveNamespacesPrefixList != null)
-                ((XmlDsigExcC14NTransform)SignedInfo.CanonicalizationMethodObject).InclusiveNamespacesPrefixList = inclusiveNamespacesPrefixList;
+                ((XmlDsigExcC14NTransform) SignedInfo.CanonicalizationMethodObject).InclusiveNamespacesPrefixList = inclusiveNamespacesPrefixList;
 
             _xmlDokument = xmlDocument;
         }
@@ -91,11 +91,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             // Check to se if id element is within the signatures object node. This is used by ESIs Xml Advanced Electronic Signatures (Xades)
             if (idElem == null)
             {
-                if ((Signature != null) && (Signature.ObjectList != null))
+                if (Signature != null && Signature.ObjectList != null)
                 {
                     foreach (DataObject dataObject in Signature.ObjectList)
                     {
-                        if ((dataObject.Data != null) && (dataObject.Data.Count > 0))
+                        if (dataObject.Data != null && dataObject.Data.Count > 0)
                         {
                             foreach (XmlNode dataNode in dataObject.Data)
                             {
@@ -122,7 +122,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         private XmlElement FindIdElement(XmlNode node, string idValue)
         {
             XmlElement result = null;
-            foreach (var s in new[] { "Id", "ID", "id" })
+            foreach (var s in new[] {"Id", "ID", "id"})
             {
                 result = node.SelectSingleNode(string.Format("//*[@*[local-name() = '{0}'] = '{1}']", s, idValue)) as XmlElement;
                 if (result != null)
@@ -146,7 +146,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
                 GetPublicKeysAndSetEnumerator();
             }
 
-            while ((_publicKeyListEnumerator != null) && _publicKeyListEnumerator.MoveNext())
+            while (_publicKeyListEnumerator != null && _publicKeyListEnumerator.MoveNext())
             {
                 publicKey = _publicKeyListEnumerator.Current;
             }
@@ -192,7 +192,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             X509Certificate2 publicCertificate = null;
 
             var keyElement = FindIdElement(_xmlDokument, securityTokenReferenceUri);
-            if ((keyElement != null) && !string.IsNullOrEmpty(keyElement.InnerText))
+            if (keyElement != null && !string.IsNullOrEmpty(keyElement.InnerText))
             {
                 publicCertificate = new X509Certificate2(Convert.FromBase64String(keyElement.InnerText));
             }

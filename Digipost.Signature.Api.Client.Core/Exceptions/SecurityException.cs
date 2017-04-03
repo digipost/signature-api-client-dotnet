@@ -10,9 +10,8 @@ namespace Digipost.Signature.Api.Client.Core.Exceptions
         }
 
         public SecurityException(string message)
-        : base(message)
+            : base(message)
         {
         }
-
     }
 }

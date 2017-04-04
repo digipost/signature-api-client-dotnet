@@ -82,7 +82,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
                 }
                 catch (Exception e)
                 {
-                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe eller -csp parameter i openssl).", e);
+                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe or -csp parameter i openssl).", e);
                 }
             }
         }

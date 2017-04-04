@@ -63,8 +63,9 @@
       <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Digipost.Api.Client.Shared.Resources">
-      <HintPath>..\packages\api-client-shared.3.0.0.151-beta\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
+    <Reference Include="Digipost.Api.Client.Shared.Resources, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -168,7 +169,9 @@
     <None Include="C:\Keys\signingkey.snk">
       <Link>signingkey.snk</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Internal\Xsd\Thirdparty\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>

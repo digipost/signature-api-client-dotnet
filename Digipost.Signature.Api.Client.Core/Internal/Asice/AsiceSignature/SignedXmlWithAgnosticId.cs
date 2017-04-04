@@ -18,12 +18,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
     /// </remarks>
     public sealed class SignedXmlWithAgnosticId : SignedXml
     {
-        private const int PROV_RSA_AES = 24; // CryptoApi provider type for an RSA provider supporting sha-256 digital signatures
-
+        private const int RsaSha256DigitalSignaturesCryptoApiProvider = 24;
+        private const string CanocalizationMethod = "http://www.w3.org/2001/10/xml-exc-c14n#";
+        private new const string SignatureMethod = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
         private readonly List<AsymmetricAlgorithm> _publicKeys = new List<AsymmetricAlgorithm>();
 
         private readonly XmlDocument _xmlDokument;
-
         private IEnumerator<AsymmetricAlgorithm> _publicKeyListEnumerator;
 
         public SignedXmlWithAgnosticId(XmlDocument xmlDocument)
@@ -44,21 +44,34 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         public SignedXmlWithAgnosticId(XmlDocument xmlDocument, X509Certificate2 certificate, string inclusiveNamespacesPrefixList = null)
             : base(xmlDocument)
         {
-            const string signatureMethod = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
+            AddSignatureMethodToCryptoApi(SignatureMethod);
+            AssertHasPrivateKeyOrThrow(certificate);
 
-            // Adds signature method to crypto api
+            SetSigningKey(certificate);
+            SetSignedInfo(inclusiveNamespacesPrefixList);
+
+            _xmlDokument = xmlDocument;
+        }
+
+        public AsymmetricAlgorithm PublicKey { get; private set; }
+
+        private static void AddSignatureMethodToCryptoApi(string signatureMethod)
+        {
             if (CryptoConfig.CreateFromName(signatureMethod) == null)
                 CryptoConfig.AddAlgorithm(typeof(RsaPkCs1Sha256SignatureDescription), signatureMethod);
+        }
 
-            // Makes sure the signingkey is using Microsoft Enhanced RSA and AES Cryptographic Provider which enables SHA256
+        private static void AssertHasPrivateKeyOrThrow(X509Certificate2 certificate)
+        {
             if (!certificate.HasPrivateKey)
-                throw new SecurityException(string.Format("Angitt sertifikat med fingeravtrykk {0} inneholder ikke en privatnøkkel. Dette er påkrevet for å signere xml dokumenter.", certificate.Thumbprint));
+                throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} does not contain a private key, which is mandatory when signing XML documents.");
+        }
 
-            var targetKey = certificate.PrivateKey as RSACryptoServiceProvider;
-            if (targetKey == null)
-                throw new SecurityException(string.Format("Privatnøkkelen i sertifikatet med fingeravtrykk {0} er ikke en gyldig RSA asymetrisk nøkkel.", certificate.Thumbprint));
+        private void SetSigningKey(X509Certificate2 certificate)
+        {
+            var targetKey = ExtractValidPrivateKeyOrThrow(certificate);
 
-            if (targetKey.CspKeyContainerInfo.ProviderType == PROV_RSA_AES)
+            if (targetKey.CspKeyContainerInfo.ProviderType == RsaSha256DigitalSignaturesCryptoApiProvider)
                 SigningKey = targetKey;
             else
             {
@@ -69,19 +82,28 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
                 }
                 catch (Exception e)
                 {
-                    throw new Exception(string.Format("Angitt sertifikat med fingeravtrykk {0} kan ikke eksporteres. Det er nødvendig når sertifikatet ikke er opprettet med 'Microsoft Enhanced RSA and AES Cryptographic Provider' som CryptoAPI provider name (-sp parameter i makecert.exe eller -csp parameter i openssl).", certificate.Thumbprint), e);
+                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe eller -csp parameter i openssl).", e);
                 }
             }
-
-            SignedInfo.SignatureMethod = signatureMethod;
-            SignedInfo.CanonicalizationMethod = "http://www.w3.org/2001/10/xml-exc-c14n#";
-            if (inclusiveNamespacesPrefixList != null)
-                ((XmlDsigExcC14NTransform) SignedInfo.CanonicalizationMethodObject).InclusiveNamespacesPrefixList = inclusiveNamespacesPrefixList;
-
-            _xmlDokument = xmlDocument;
         }
 
-        public AsymmetricAlgorithm PublicKey { get; private set; }
+        private static RSACryptoServiceProvider ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
+        {
+            var targetKey = certificate.PrivateKey as RSACryptoServiceProvider;
+            if (targetKey == null)
+
+                throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} is not a valid RSA asymetric key.");
+
+            return targetKey;
+        }
+
+        private void SetSignedInfo(string inclusiveNamespacesPrefixList)
+        {
+            SignedInfo.SignatureMethod = SignatureMethod;
+            SignedInfo.CanonicalizationMethod = CanocalizationMethod;
+            if (inclusiveNamespacesPrefixList != null)
+                ((XmlDsigExcC14NTransform) SignedInfo.CanonicalizationMethodObject).InclusiveNamespacesPrefixList = inclusiveNamespacesPrefixList;
+        }
 
         public override XmlElement GetIdElement(XmlDocument doc, string id)
         {
@@ -89,21 +111,18 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             var idElem = base.GetIdElement(doc, id) ?? FindIdElement(doc, id);
 
             // Check to se if id element is within the signatures object node. This is used by ESIs Xml Advanced Electronic Signatures (Xades)
-            if (idElem == null)
+            if (idElem == null && Signature?.ObjectList != null)
             {
-                if (Signature != null && Signature.ObjectList != null)
+                foreach (DataObject dataObject in Signature.ObjectList)
                 {
-                    foreach (DataObject dataObject in Signature.ObjectList)
+                    if (dataObject.Data?.Count > 0)
                     {
-                        if (dataObject.Data != null && dataObject.Data.Count > 0)
+                        foreach (XmlNode dataNode in dataObject.Data)
                         {
-                            foreach (XmlNode dataNode in dataObject.Data)
+                            idElem = FindIdElement(dataNode, id);
+                            if (idElem != null)
                             {
-                                idElem = FindIdElement(dataNode, id);
-                                if (idElem != null)
-                                {
-                                    return idElem;
-                                }
+                                return idElem;
                             }
                         }
                     }
@@ -119,12 +138,13 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             return PublicKey = publicKey;
         }
 
-        private XmlElement FindIdElement(XmlNode node, string idValue)
+        private static XmlElement FindIdElement(XmlNode node, string idValue)
         {
             XmlElement result = null;
             foreach (var s in new[] {"Id", "ID", "id"})
             {
-                result = node.SelectSingleNode(string.Format("//*[@*[local-name() = '{0}'] = '{1}']", s, idValue)) as XmlElement;
+                result = node.SelectSingleNode($"//*[@*[local-name() = '{s}'] = '{idValue}']") as XmlElement;
+
                 if (result != null)
                     break;
             }
@@ -138,7 +158,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 
             if (KeyInfo == null)
             {
-                throw new CryptographicException("Kryptografi_Xml_Keyinfo nødvendig");
+                throw new CryptographicException("Cryptography Xml Keyinfo is necessary to retrieve the public key.");
             }
 
             if (_publicKeyListEnumerator == null)
@@ -181,7 +201,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             return mgr;
         }
 
-        private static XmlNode SecurityTokenReference(XmlElement keyInfoXml, XmlNamespaceManager keyInfoNamespaceMananger)
+        private static XmlNode SecurityTokenReference(XmlNode keyInfoXml, XmlNamespaceManager keyInfoNamespaceMananger)
         {
             return keyInfoXml.SelectSingleNode("./wsse:SecurityTokenReference/wsse:Reference", keyInfoNamespaceMananger);
         }
@@ -192,7 +212,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             X509Certificate2 publicCertificate = null;
 
             var keyElement = FindIdElement(_xmlDokument, securityTokenReferenceUri);
-            if (keyElement != null && !string.IsNullOrEmpty(keyElement.InnerText))
+            if (!string.IsNullOrEmpty(keyElement?.InnerText))
             {
                 publicCertificate = new X509Certificate2(Convert.FromBase64String(keyElement.InnerText));
             }
@@ -200,16 +220,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             return publicCertificate;
         }
 
-        private string GetSecurityTokenReferenceUri(XmlNode reference)
+        private static string GetSecurityTokenReferenceUri(XmlNode reference)
         {
-            var uriRefereanseAttributt = reference.Attributes["URI"];
+            var uriReferenceAttribute = reference.Attributes?["URI"];
 
-            if (uriRefereanseAttributt == null)
+            if (uriReferenceAttribute == null)
             {
                 throw new SecurityException("Klarte ikke finne SecurityTokenReferenceUri.");
             }
 
-            var referenceUriValue = uriRefereanseAttributt.Value;
+            var referenceUriValue = uriReferenceAttribute.Value;
             if (referenceUriValue.StartsWith("#"))
             {
                 referenceUriValue = referenceUriValue.Substring(1);

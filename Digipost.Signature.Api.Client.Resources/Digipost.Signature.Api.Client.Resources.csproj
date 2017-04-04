@@ -68,10 +68,12 @@
     <EmbeddedResource Include="Xsd\Data\xmldsig-core-schema.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="C:\Keys\signingkey.snk">
+      <Link>signingkey.snk</Link>
+    </None>
     <None Include="Document\Data\Dokument.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="signingkey.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Xml\Data\Request\PortalManifest.xml" />

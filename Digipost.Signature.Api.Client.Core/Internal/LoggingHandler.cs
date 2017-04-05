@@ -77,7 +77,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         private static async Task<IEnumerable<KeyValuePair<string, string>>> GetRequestContentHeadersDescriptionAndData(HttpRequestMessage request)
         {
             var contentDescriptionAndData = new List<KeyValuePair<string, string>>();
-            var hasContent = (request.Content != null) && request.Content.IsMimeMultipartContent();
+            var hasContent = request.Content != null && request.Content.IsMimeMultipartContent();
 
             if (!hasContent)
             {
@@ -102,7 +102,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private static async Task<KeyValuePair<string, string>> GetResponseDataIfAny(HttpResponseMessage response, List<KeyValuePair<string, string>> keyValuePairs)
         {
-            var hasContent = (response.Content != null) && (response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml);
+            var hasContent = response.Content != null && response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml;
 
             if (!hasContent) return new KeyValuePair<string, string>();
 

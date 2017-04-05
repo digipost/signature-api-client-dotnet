@@ -1,6 +1,6 @@
 ﻿namespace Digipost.Signature.Api.Client.Core.Internal.Utilities
 {
-    namespace Difi.Felles.Utility.Utilities
+    namespace Digipost.Signature.Api.Client.Core.Internal.Utilities
     {
         internal static class NamespaceUtility
         {

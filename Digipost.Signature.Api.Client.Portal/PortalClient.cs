@@ -15,6 +15,7 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Portal
 {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Xml;
-using ApiClientShared;
-using Difi.Felles.Utility;
+using Digipost.Api.Client.Shared.Resources.Resource;
+using Digipost.Api.Client.Shared.Xml;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {

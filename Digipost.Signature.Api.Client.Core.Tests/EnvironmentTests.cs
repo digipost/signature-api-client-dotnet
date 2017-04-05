@@ -1,5 +1,5 @@
 ﻿using System;
-using Difi.Felles.Utility.Utilities;
+using Digipost.Api.Client.Shared.Certificate;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests

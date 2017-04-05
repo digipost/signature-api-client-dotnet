@@ -5,6 +5,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {

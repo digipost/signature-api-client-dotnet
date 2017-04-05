@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Digipost.Signature.Api.Client.Core</RootNamespace>
     <AssemblyName>Digipost.Signature.Api.Client.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -47,10 +47,6 @@
     <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ApiClientShared, Version=2.0.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.2.0.0\lib\net45\ApiClientShared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -59,17 +55,17 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Difi.Felles.Utility, Version=1.1.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
-      <HintPath>..\packages\difi-felles-utility-dotnet.1.1.0\lib\net45\Difi.Felles.Utility.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Difi.Felles.Utility.Resources, Version=1.1.0.0, Culture=neutral, PublicKeyToken=6e6972f540d5419a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\difi-felles-utility-dotnet.1.1.0\lib\net45\Difi.Felles.Utility.Resources.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
+      <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Digipost.Api.Client.Shared.Resources, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -99,6 +95,8 @@
     <Compile Include="Exceptions\SecurityException.cs" />
     <Compile Include="Exceptions\TooEagerPollingException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Internal\Asice\AsiceSignature\RsaPkCs1Sha256SignatureDescription.cs" />
+    <Compile Include="Internal\Asice\AsiceSignature\SignedXmlWithAgnosticId.cs" />
     <Compile Include="SignerIdentifier.cs" />
     <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Internal\Asice\AsiceGenerator.cs" />
@@ -165,11 +163,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="C:\Keys\signingkey.snk">
       <Link>signingkey.snk</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="Internal\Xsd\Thirdparty\ts_102918v010201.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>

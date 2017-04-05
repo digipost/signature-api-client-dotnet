@@ -3,9 +3,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
-using Difi.Felles.Utility.Security;
 using Digipost.Signature.Api.Client.Core.Exceptions;
-using Digipost.Signature.Api.Client.Core.Internal.Utilities.Difi.Felles.Utility.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities.Digipost.Signature.Api.Client.Core.Internal.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {

@@ -6,7 +6,7 @@ using System.Security.Cryptography.Xml;
 using System.Xml;
 using Digipost.Signature.Api.Client.Core.Internal.Extensions;
 using Digipost.Signature.Api.Client.Core.Internal.Utilities;
-using Digipost.Signature.Api.Client.Core.Internal.Utilities.Difi.Felles.Utility.Utilities;
+using Digipost.Signature.Api.Client.Core.Internal.Utilities.Digipost.Signature.Api.Client.Core.Internal.Utilities;
 
 namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {

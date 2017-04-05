@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using ApiClientShared;
-using ApiClientShared.Enums;
+using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -19,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core
         ///     a <see cref="Sender" />.
         /// </param>
         public ClientConfiguration(Environment environment, string certificateThumbprint, Sender globalSender = null)
-            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint, Language.English), globalSender)
+            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), globalSender)
         {
         }
 

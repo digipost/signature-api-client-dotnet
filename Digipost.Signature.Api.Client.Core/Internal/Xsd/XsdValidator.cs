@@ -1,4 +1,4 @@
-﻿using Difi.Felles.Utility;
+﻿using Digipost.Api.Client.Shared.Xml;
 using Digipost.Signature.Api.Client.Resources.Xsd;
 using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 

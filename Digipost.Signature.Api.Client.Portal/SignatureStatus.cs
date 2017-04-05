@@ -45,14 +45,14 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             var that = obj as SignatureStatus;
 
-            return (that != null) && Identifier.Equals(that.Identifier);
+            return that != null && Identifier.Equals(that.Identifier);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return 17*23 + Identifier.GetHashCode();
+                return 17 * 23 + Identifier.GetHashCode();
             }
         }
     }

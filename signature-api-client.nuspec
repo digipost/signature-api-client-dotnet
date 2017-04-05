@@ -16,8 +16,7 @@
                 <dependency id="Common.Logging.Core" version="[3.3.1,4)" />
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="[5.2.3,6)" />
                 <dependency id="Newtonsoft.Json" version="[6.0.4,11)" />
-                <dependency id="difi-felles-utility-dotnet" version="[1.1.0,2.0.0)" />
-                <dependency id="api-client-shared" version="[2.0.0,3.0.0)" />
+                <dependency id="api-client-shared" version="[3.0.0,4.0.0)" />
             </group>
         </dependencies>
     </metadata>

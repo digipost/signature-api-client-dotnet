@@ -90,6 +90,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CertificateValidationPreferences.cs" />
+    <Compile Include="CustomIdentifier.cs" />
     <Compile Include="Enums\AuthenticationLevel.cs" />
     <Compile Include="Exceptions\CertificateException.cs" />
     <Compile Include="Exceptions\SecurityException.cs" />

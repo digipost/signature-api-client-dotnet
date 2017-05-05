@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void InitializesWithNotifications()
             {
                 //Arrange
-                var notifications = new Notifications(new Email("email@address.no"));
+                var notifications = new Notifications(new Email("email@example.com"));
 
                 //Act
                 var portalSigner = new Signer(new PersonalIdentificationNumber("99999999999"), notifications);
@@ -31,6 +31,19 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Assert
                 Assert.Equal(notificationsUsingLookup, portalSigner.NotificationsUsingLookup);
+            }
+
+            [Fact]
+            public void InitializesWithSignerIdentifier()
+            {
+                //Arrange
+                
+                //Act
+                var identifier = "email@example.com";
+                var portalSigner = new Signer(new SignerIdentifier(identifier));
+
+                //Assert
+                Assert.Equal(identifier, portalSigner.Identifier.Value);
             }
         }
     }

@@ -25,7 +25,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
 
         public static Job GetPortalJob()
         {
-            return new Job(GetPortalDocument(), GetSigner(), "PortalJobReference");
+            return new Job(GetPortalDocument(), GetSignerWithPersonalIdentificationNumber(), "PortalJobReference");
+        }
+
+        public static Job GetPortalJobWithSignerIdentifier()
+        {
+            return new Job(GetPortalDocument(), GetSignerWithSignerIdentifer(), "PortalJobWithSignerIdentifierReferennce");
         }
 
         internal static Manifest GetPortalManifest()
@@ -42,13 +47,22 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new Document("TheTitle", "Some cool portal document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static List<Signer> GetSigner()
+        public static List<Signer> GetSignerWithPersonalIdentificationNumber()
         {
             return new List<Signer>
             {
                 new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com")))
             };
         }
+
+        public static List<Signer> GetSignerWithSignerIdentifer()
+        {
+            return new List<Signer>
+            {
+                new Signer(new SignerIdentifier("email@signeridentifier.com"))
+            };
+        }
+
 
         public static List<Signer> GetSigners(int count)
         {

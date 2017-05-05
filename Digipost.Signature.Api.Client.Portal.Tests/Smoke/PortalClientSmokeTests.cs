@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 var portalClient = GetPortalClient();
                 Log.Debug($"Sending in PortalClient Class Initialize. {portalClient.ClientConfiguration}");
-                var portalJob = DomainUtility.GetPortalJob();
+                var portalJob = DomainUtility.GetPortalJobWithSignerIdentifier();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
                 Log.Debug($"Result of Create was: {portalJobResponse}");
@@ -161,7 +161,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             public async Task Cancels_successfully()
             {
                 //Arrange
-                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigner(), "aReference");
+                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSignerWithPersonalIdentificationNumber(), "aReference");
                 var portalClient = fixture.GetPortalClient();
 
                 var portalJobResponse = await portalClient.Create(portalJob).ConfigureAwait(false);

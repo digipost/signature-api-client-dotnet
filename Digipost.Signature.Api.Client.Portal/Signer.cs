@@ -16,6 +16,11 @@ namespace Digipost.Signature.Api.Client.Portal
             NotificationsUsingLookup = notificationsUsingLookup;
         }
 
+        public Signer(SignerIdentifier signerIdentifier)
+            : base(signerIdentifier)
+        {
+        }
+
         public NotificationsUsingLookup NotificationsUsingLookup { get; }
 
         public Notifications Notifications { get; }

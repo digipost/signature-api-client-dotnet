@@ -66,19 +66,27 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         internal static portalsigner ToDataTransferObject(Signer signer)
         {
-            var dataTransferObject = new portalsigner
-            {
-                personalidentificationnumber = signer.Identifier.Value
-            };
+            var dataTransferObject = new portalsigner();
 
-            if (signer.Notifications != null)
+            var isSignerWithSignerIdentifier = signer.Identifier.GetType() == typeof(SignerIdentifier);
+
+            if (isSignerWithSignerIdentifier)
             {
-                dataTransferObject.Item = ToDataTransferObject(signer.Notifications);
+                dataTransferObject.Item = ToDataTransferObject(signer.Identifier);
             }
             else
             {
-                dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
-            }
+                dataTransferObject.personalidentificationnumber = signer.Identifier.Value;
+
+                if (signer.Notifications != null)
+                {
+                    dataTransferObject.Item = ToDataTransferObject(signer.Notifications);
+                }
+                else
+                {
+                    dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
+                }
+            };
 
             if (signer.Order != null)
             {
@@ -112,6 +120,11 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             {
                 Items = notificationsDto.ToArray()
             };
+        }
+
+        private static linknotification ToDataTransferObject(SignerIdentifier signerIdentifier)
+        {
+            return new linknotification { Item = new email { address = signerIdentifier.Value }};
         }
 
         internal static notificationsusinglookup ToDataTransferObject(NotificationsUsingLookup notificationsUsingLookup)

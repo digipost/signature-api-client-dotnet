@@ -530,7 +530,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 //Arrange
                 var source = new Signer(
                     new PersonalIdentificationNumber("11111111111"),
-                    new Notifications(new Email("test@mail.no"))
+                    new Notifications(new Email("email@example.com"))
                 );
                 var expected = new portalsigner
                 {
@@ -552,6 +552,29 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
                 Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_signer_with_signer_identifier()
+            {
+                //Arrange
+                var source = new Signer(new SignerIdentifier("test@mail.no"));
+                
+                var expected = new portalsigner
+                {
+                    personalidentificationnumber = source.Identifier.Value,
+                    Item = new linknotification { Item = new email { address = source.Identifier.Value }}
+                };
+
+                //Act
+                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, actual, out differences);
+                Assert.Equal(0, differences.Count());
+
             }
 
             [Fact]

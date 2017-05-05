@@ -32,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
         public class GetStatusChangeMethod : PortalClientTests
         {
             [Fact]
-            public async Task Called_with_both_senders_uses_input()
+            public async Task Called_with_both_senders_uses_parameter_sender()
             {
                 //Arrange
                 var parameterSender = new Sender(PostenOrganizationNumber);

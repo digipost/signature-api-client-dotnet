@@ -1,13 +1,11 @@
-# Posten Signering – .NET Klientbibliotek
+# Posten signering – .NET client library
 
-Dette repoet inneholder klientbibliotek implementert i .NET som kan benyttes for å integrere mot Posten Signering. 
+This repository contains a client library implemented in .NET for communicating with [Posten signering](https://signering.posten.no/)'s API.
 
-Nærmere dokumentasjon av APIet og detaljer rundt bruk kan finnes i repoet [Signature-API-Specification](https://github.com/digipost/signature-api-specification)
+Further documentation of the API and details on how to use it can be found in the [API specification](https://github.com/digipost/signature-api-specification) (norwegian).
 
 ---
 
-# Hvordan komme i gang med klientbiblioteket
+# Getting started
 
-[Dokumentasjon finner du her](http://digipost.github.io/signature-api-client-dotnet/).
-
-[Nugetpakken finner du her](https://www.nuget.org/packages/digipost-signature-api-client/).
+Get started by [reading the documentation](http://digipost.github.io/signature-api-client-dotnet/) or [find the nuget package](https://www.nuget.org/packages/digipost-signature-api-client/).

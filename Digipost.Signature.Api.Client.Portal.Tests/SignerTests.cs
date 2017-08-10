@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core;
+﻿using System;
+using Digipost.Signature.Api.Client.Core;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -45,6 +46,25 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Assert
                 Assert.Equal(identifier, portalSigner.Identifier.Value);
             }
+
+            [Fact]
+            public void Issue99()
+            {
+                Job job = new Job(
+                  null, null, null
+                  );
+                //Bare for test-formål
+                TimeSpan ts = new TimeSpan(14, 0, 0, 0);
+
+                Availability jobAvailable = new Availability();
+                jobAvailable.AvailableFor = ts;
+
+                job.Availability = jobAvailable;
+
+                //Har ikke mulighet til å kjøre awaitable task
+                //JobResponse x = portalClient.Create(job).Result;
+            }
+
         }
     }
 }

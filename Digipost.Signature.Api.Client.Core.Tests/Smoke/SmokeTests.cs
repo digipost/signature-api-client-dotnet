@@ -4,7 +4,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
     public class SmokeTests
     {
-        internal static Client ClientType => Client.Qa;
+        internal static Client ClientType => Client.Localhost;
 
         internal static Uri GetUriFromRelativePath(string relativeUri)
         {

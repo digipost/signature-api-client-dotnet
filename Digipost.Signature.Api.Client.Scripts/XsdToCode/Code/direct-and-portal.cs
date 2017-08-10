@@ -109,7 +109,9 @@ public partial class signature {
     
     private signaturestatus statusField;
     
-    private string personalidentificationnumberField;
+    private string itemField;
+    
+    private ItemChoiceType1 itemElementNameField;
     
     private string xadesurlField;
     
@@ -124,13 +126,26 @@ public partial class signature {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
-    public string personalidentificationnumber {
+    [System.Xml.Serialization.XmlElementAttribute("identifier", typeof(string))]
+    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number", typeof(string))]
+    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
+    public string Item {
         get {
-            return this.personalidentificationnumberField;
+            return this.itemField;
         }
         set {
-            this.personalidentificationnumberField = value;
+            this.itemField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public ItemChoiceType1 ItemElementName {
+        get {
+            return this.itemElementNameField;
+        }
+        set {
+            this.itemElementNameField = value;
         }
     }
     
@@ -144,6 +159,20 @@ public partial class signature {
             this.xadesurlField = value;
         }
     }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1", IncludeInSchema=false)]
+public enum ItemChoiceType1 {
+    
+    /// <remarks/>
+    identifier,
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlEnumAttribute("personal-identification-number")]
+    personalidentificationnumber,
 }
 
 /// <remarks/>
@@ -319,20 +348,19 @@ public partial class portaldocument {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(TypeName="link-notification", Namespace="http://signering.posten.no/schema/v1")]
-public partial class linknotification {
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class sms {
     
-    private object itemField;
+    private string numberField;
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("email", typeof(email))]
-    [System.Xml.Serialization.XmlElementAttribute("sms", typeof(sms))]
-    public object Item {
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string number {
         get {
-            return this.itemField;
+            return this.numberField;
         }
         set {
-            this.itemField = value;
+            this.numberField = value;
         }
     }
 }
@@ -365,28 +393,6 @@ public partial class email {
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
-public partial class sms {
-    
-    private string numberField;
-    
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string number {
-        get {
-            return this.numberField;
-        }
-        set {
-            this.numberField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
 public partial class notifications {
     
     private object[] itemsField;
@@ -402,15 +408,6 @@ public partial class notifications {
             this.itemsField = value;
         }
     }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
-public partial class enabled {
 }
 
 /// <remarks/>
@@ -451,16 +448,25 @@ public partial class notificationsusinglookup {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(Namespace="http://signering.posten.no/schema/v1")]
+public partial class enabled {
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(TypeName="portal-signer", Namespace="http://signering.posten.no/schema/v1")]
 public partial class portalsigner {
     
-    private string personalidentificationnumberField;
+    private object itemField;
     
     private signaturetype signaturetypeField;
     
     private bool signaturetypeFieldSpecified;
     
-    private object itemField;
+    private object item1Field;
     
     private signingonbehalfof onbehalfofField;
     
@@ -471,13 +477,14 @@ public partial class portalsigner {
     private bool orderFieldSpecified;
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number")]
-    public string personalidentificationnumber {
+    [System.Xml.Serialization.XmlElementAttribute("identified-by-contact-information", typeof(enabled))]
+    [System.Xml.Serialization.XmlElementAttribute("personal-identification-number", typeof(string))]
+    public object Item {
         get {
-            return this.personalidentificationnumberField;
+            return this.itemField;
         }
         set {
-            this.personalidentificationnumberField = value;
+            this.itemField = value;
         }
     }
     
@@ -504,15 +511,14 @@ public partial class portalsigner {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("link-notification", typeof(linknotification))]
     [System.Xml.Serialization.XmlElementAttribute("notifications", typeof(notifications))]
     [System.Xml.Serialization.XmlElementAttribute("notifications-using-lookup", typeof(notificationsusinglookup))]
-    public object Item {
+    public object Item1 {
         get {
-            return this.itemField;
+            return this.item1Field;
         }
         set {
-            this.itemField = value;
+            this.item1Field = value;
         }
     }
     

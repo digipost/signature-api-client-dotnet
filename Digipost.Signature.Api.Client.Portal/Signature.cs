@@ -7,7 +7,9 @@ namespace Digipost.Signature.Api.Client.Portal
     {
         public SignatureStatus SignatureStatus { get; set; }
 
-        public PersonalIdentificationNumber Signer { get; set; }
+        public IdentifierType IdentifierType { get; set; }       
+
+        public string Identifier { get; set; }
 
         public XadesReference XadesReference { get; set; }
 
@@ -15,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public override string ToString()
         {
-            return $"SignatureStatus: {SignatureStatus} (since {DateTimeForStatus}), Signer: {Signer}, XadesReference: {XadesReference}";
+            return $"SignatureStatus: {SignatureStatus} (since {DateTimeForStatus}), Identifier: {Identifier}, XadesReference: {XadesReference}";
         }
     }
 }

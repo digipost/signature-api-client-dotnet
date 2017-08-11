@@ -18,9 +18,28 @@
 
         public Email Email { get; internal set; }
 
+        public bool ShouldSendSms => Sms != null;
+
+        public bool ShouldSendEmail => Email != null;
+
         public override string ToString()
         {
-            return $"Sms: {Sms}, Email: {Email}";
+            if (ShouldSendEmail && ShouldSendSms)
+            {
+                return "Notifications to " + Email + " and " + Sms;
+            }
+
+            if (ShouldSendEmail)
+            {
+                return "Notification to " + Email;
+            }
+
+            if (ShouldSendSms)
+            {
+                return "Notification to " + Sms;
+            }
+
+            return "No notifications";
         }
     }
 }

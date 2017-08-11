@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 sender = ToDataTransferObject(manifest.Sender),
                 document = ToDataTransferObject((Document) manifest.Document),
-                signer = ToDataTransferObject(manifest.Signer).ToArray()
+                signer = ToDataTransferObject((List<Signer>)manifest.Signers).ToArray()
             };
 
             if (manifest.AuthenticationLevel != null)
@@ -102,12 +102,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        private static IEnumerable<directsigner> ToDataTransferObject(IEnumerable<AbstractSigner> signers)
+        private static IEnumerable<directsigner> ToDataTransferObject(IEnumerable<Signer> signers)
         {
             return signers.Select(ToDataTransferObject);
         }
 
-        public static directsigner ToDataTransferObject(AbstractSigner signer)
+        public static directsigner ToDataTransferObject(Signer signer)
         {
             var dataTransferObject = new directsigner
             {

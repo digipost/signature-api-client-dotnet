@@ -90,7 +90,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CertificateValidationPreferences.cs" />
-    <Compile Include="CustomIdentifier.cs" />
     <Compile Include="Enums\AuthenticationLevel.cs" />
     <Compile Include="Exceptions\CertificateException.cs" />
     <Compile Include="Exceptions\SecurityException.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Internal\Asice\AsiceSignature\RsaPkCs1Sha256SignatureDescription.cs" />
     <Compile Include="Internal\Asice\AsiceSignature\SignedXmlWithAgnosticId.cs" />
-    <Compile Include="SignerIdentifier.cs" />
     <Compile Include="Internal\Asice\AsiceAttachableProcessor.cs" />
     <Compile Include="Internal\Asice\AsiceGenerator.cs" />
     <Compile Include="Internal\Asice\DocumentBundleToDiskProcessor.cs" />

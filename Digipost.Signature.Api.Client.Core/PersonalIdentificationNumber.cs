@@ -2,9 +2,11 @@
 {
     public class PersonalIdentificationNumber : SignerIdentifier
     {
+        public string Value { get; }
+
         public PersonalIdentificationNumber(string value)
-            : base(value)
         {
+            Value = value;
         }
 
         private string MaskedValue => Value.Substring(0, 6) + "*****";

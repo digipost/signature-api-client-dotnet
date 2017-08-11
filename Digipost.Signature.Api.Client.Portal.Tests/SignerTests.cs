@@ -38,13 +38,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void InitializesWithSignerIdentifier()
             {
                 //Arrange
-                
+                var identifier = new Email("email@example.com");
+
                 //Act
-                var identifier = "email@example.com";
                 var portalSigner = new Signer(new SignerIdentifier(identifier));
 
                 //Assert
-                Assert.Equal(identifier, portalSigner.Identifier.Value);
+                Assert.Equal(identifier.Address, portalSigner.Identifier);
             }
 
             [Fact]

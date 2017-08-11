@@ -4,13 +4,6 @@ namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class AbstractSigner
     {
-        protected AbstractSigner(SignerIdentifier signerIdentifier)
-        {
-            Identifier = signerIdentifier;
-        }
-
-        public SignerIdentifier Identifier { get; }
-
         public int? Order { get; set; } = null;
 
         public OnBehalfOf OnBehalfOf { get; set; } = OnBehalfOf.Self;
@@ -19,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         public override string ToString()
         {
-            return $"{Identifier.GetType().Name}: {Identifier}, {nameof(Order)}: {Order}, {nameof(SignatureType)}: {SignatureType}";
+            return $"{nameof(Order)}: {Order}, {nameof(SignatureType)}: {SignatureType}";
         }
     }
 }

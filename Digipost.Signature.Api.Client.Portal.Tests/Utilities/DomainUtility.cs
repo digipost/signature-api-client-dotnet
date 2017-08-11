@@ -59,7 +59,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         {
             return new List<Signer>
             {
-                new Signer(new SignerIdentifier($"signeringtest{DateTime.Now.Hour + ':' + DateTime.Now.Minute}@sjafjell.no"))
+                new Signer(new SignerIdentifier(new Email($"signeringtest{DateTime.Now.Hour + ':' + DateTime.Now.Minute}@sjafjell.no")))
             };
         }
 

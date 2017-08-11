@@ -6,6 +6,8 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
+using static Digipost.Signature.Api.Client.Portal.IdentifierType;
+using static ItemChoiceType1;
 
 namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
@@ -67,26 +69,29 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         internal static portalsigner ToDataTransferObject(Signer signer)
         {
             var dataTransferObject = new portalsigner();
+            var notifications = signer.Notifications;
 
-            var isSignerWithSignerIdentifier = signer.Identifier.GetType() == typeof(SignerIdentifier);
-
-            if (isSignerWithSignerIdentifier)
+            if (signer.IdentifierType == IdentifierType.PersonalIdentificationNumber)
             {
-                dataTransferObject.Item = ToDataTransferObject(signer.Identifier);
-            }
-            else
-            {
-                dataTransferObject.personalidentificationnumber = signer.Identifier.Value;
+                dataTransferObject.Item = signer.Identifier;
 
-                if (signer.Notifications != null)
+                if (notifications != null)
                 {
-                    dataTransferObject.Item = ToDataTransferObject(signer.Notifications);
+                    dataTransferObject.Item = ToDataTransferObject(notifications);
                 }
                 else
                 {
                     dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
                 }
-            };
+            }
+            else
+            {
+                if (notifications.ShouldSendEmail || notifications.ShouldSendSms)
+                {
+                    dataTransferObject.Item = new enabled();
+                    dataTransferObject.Item1 = ToDataTransferObject(notifications);
+                }
+            }
 
             if (signer.Order != null)
             {
@@ -106,12 +111,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var notificationsDto = new List<object>();
 
-            if (notifications.Email != null)
+            if (notifications.ShouldSendEmail)
             {
                 notificationsDto.Add(new email {address = notifications.Email.Address});
             }
 
-            if (notifications.Sms != null)
+            if (notifications.ShouldSendSms)
             {
                 notificationsDto.Add(new sms {number = notifications.Sms.Number});
             }
@@ -120,11 +125,6 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             {
                 Items = notificationsDto.ToArray()
             };
-        }
-
-        private static linknotification ToDataTransferObject(SignerIdentifier signerIdentifier)
-        {
-            return new linknotification { Item = new email { address = signerIdentifier.Value }};
         }
 
         internal static notificationsusinglookup ToDataTransferObject(NotificationsUsingLookup notificationsUsingLookup)
@@ -196,8 +196,11 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var result = new Signature
             {
+                Identifier = signature.Item,
+                IdentifierType = signature.ItemElementName == personalidentificationnumber
+                    ? IdentifierType.PersonalIdentificationNumber
+                    : EmailAndSms, //Todo: Hvoran skal jeg sette IdentifierType korrekt?
                 SignatureStatus = new SignatureStatus(signature.status.Value),
-                Signer = new PersonalIdentificationNumber(signature.personalidentificationnumber),
                 DateTimeForStatus = signature.status.since
             };
 

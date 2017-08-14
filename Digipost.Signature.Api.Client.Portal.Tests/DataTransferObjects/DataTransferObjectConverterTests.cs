@@ -27,8 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
                         new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
-                    });
-                source.AuthenticationLevel = AuthenticationLevel.Four;
+                    }) {AuthenticationLevel = AuthenticationLevel.Four};
 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -44,12 +43,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     },
@@ -97,12 +96,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     },
@@ -157,12 +156,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     },
@@ -215,12 +214,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     },
@@ -263,12 +262,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier, order = 1,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value, order = 1,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier, order = 2,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value, order = 2,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     }
@@ -316,14 +315,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             signaturetype = signaturetype.ADVANCED_ELECTRONIC_SIGNATURE,
                             signaturetypeSpecified = true
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             signaturetype = signaturetype.AUTHENTICATED_ELECTRONIC_SIGNATURE,
                             signaturetypeSpecified = true
@@ -367,12 +366,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(0).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         },
                         new portalsigner
                         {
-                            Item = source.Signers.ElementAt(1).Identifier,
+                            Item = ((PersonalIdentificationNumber)source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()}
                         }
                     }
@@ -534,7 +533,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 );
                 var expected = new portalsigner
                 {
-                    Item = source.Identifier,
+                    Item = ((PersonalIdentificationNumber)source.Identifier).Value,
                     Item1 = new notifications
                     {
                         Items = new object[]
@@ -659,8 +658,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsigner
                 {
-                    Item = source.Identifier,
-                    Item1 = new notifications { Items = new object[] { new email { address = ((ContactInformation) source.Identifier).Email.Address } } }
+                    Item = new enabled(),
+                    Item1 = new notifications
+                    {
+                        Items = new object[] { new email { address = ((ContactInformation) source.Identifier).Email.Address } }
+                    }
                 };
 
                 //Act
@@ -685,7 +687,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new portalsigner
                 {
 
-                    Item = source.Identifier,
+                    Item = ((PersonalIdentificationNumber) source.Identifier).Value,
                     Item1 = new notificationsusinglookup { email = new enabled() }
                 };
 

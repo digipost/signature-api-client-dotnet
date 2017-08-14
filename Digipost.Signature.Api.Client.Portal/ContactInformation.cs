@@ -37,7 +37,6 @@ namespace Digipost.Signature.Api.Client.Portal
             }
         }
 
-
         public override bool Equals(object obj)
         {
             var other = obj as ContactInformation;
@@ -51,7 +50,9 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             unchecked
             {
-                return 17 * 23 + Sms.GetHashCode() + Email.GetHashCode();
+                return
+                    (Email?.GetHashCode() ?? 0) ^
+                    (Sms?.GetHashCode() ?? 0);
             }
         }
     }

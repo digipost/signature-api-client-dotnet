@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 jobId,
                 jobStatus,
                 statusResponseUrls,
-                new List<Signature> {new Signature(new CustomIdentifier("12345678910"), null, SignatureStatus.Failed, DateTime.Now)}
+                new List<Signature> {new Signature("12345678910", null, SignatureStatus.Failed, DateTime.Now)}
             );
         }
 
@@ -115,7 +115,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             const string basePersonalIdentificationNumber = "0101330000";
             for (var i = 1; i <= count; i++)
             {
-                signatures.Add(new Signature(new PersonalIdentificationNumber(basePersonalIdentificationNumber + i), new XadesReference(new Uri("https://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, DateTime.Now));
+                signatures.Add(new Signature(basePersonalIdentificationNumber + i, new XadesReference(new Uri("https://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, DateTime.Now));
             }
 
             return signatures;

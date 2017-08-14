@@ -73,15 +73,15 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
             if (signer.Identifier is PersonalIdentificationNumber)
             {
-                dataTransferObject.Item = signer.Identifier;
+                dataTransferObject.Item = ((PersonalIdentificationNumber) signer.Identifier).Value;
 
                 if (notifications != null)
                 {
-                    dataTransferObject.Item = ToDataTransferObject(notifications);
+                    dataTransferObject.Item1 = ToDataTransferObject(notifications);
                 }
                 else
                 {
-                    dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
+                    dataTransferObject.Item1 = ToDataTransferObject(signer.NotificationsUsingLookup);
                 }
             }
             else
@@ -169,8 +169,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return new JobResponse(portalsignaturejobresponse.signaturejobid, new Uri(portalsignaturejobresponse.cancellationurl));
         }
 
-        public static JobStatusChanged FromDataTransferObject(
-            portalsignaturejobstatuschangeresponse changeResponse)
+        public static JobStatusChanged FromDataTransferObject(portalsignaturejobstatuschangeresponse changeResponse)
         {
             var jobStatus = changeResponse.status.ToJobStatus();
             var confirmationReference = new ConfirmationReference(new Uri(changeResponse.confirmationurl));

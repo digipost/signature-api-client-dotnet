@@ -745,6 +745,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 Item = "01013300001",
+                                ItemElementName = ItemChoiceType1.personalidentificationnumber,
                                 status = new signaturestatus
                                 {
                                     Value = SignatureStatus.Signed.Identifier,
@@ -755,6 +756,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new signature
                             {
                                 Item = "01013300002",
+                                ItemElementName = ItemChoiceType1.personalidentificationnumber,
                                 status = new signaturestatus
                                 {
                                     Value = SignatureStatus.Waiting.Identifier,
@@ -785,7 +787,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         SignatureStatus = new SignatureStatus(signature2.status.Value),
                         IdentifierType = IdentifierType.PersonalIdentificationNumber,
-                        Identifier = signature1.Item,
+                        Identifier = signature2.Item,
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl)),
                         DateTimeForStatus = now
                     }

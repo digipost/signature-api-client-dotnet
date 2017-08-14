@@ -87,7 +87,6 @@
     <Compile Include="Job.cs" />
     <Compile Include="Internal\AsicE\Manifest.cs" />
     <Compile Include="RedirectReference.cs" />
-    <Compile Include="SignerIdentifier.cs" />
     <Compile Include="StatusReference.cs" />
     <Compile Include="JobResponse.cs" />
     <Compile Include="ExitUrls.cs" />

@@ -1,6 +1,8 @@
-﻿namespace Digipost.Signature.Api.Client.Portal
+﻿using Digipost.Signature.Api.Client.Core;
+
+namespace Digipost.Signature.Api.Client.Portal
 {
-    public class SignerIdentifier
+    public class ContactInformation : SignerIdentifier
     {
         public Email Email { get; }
 
@@ -10,13 +12,13 @@
 
         public bool IsSmsSpecified => Sms != null;
 
-        internal SignerIdentifier(Email email, Sms sms = null)
+        internal ContactInformation(Email email, Sms sms = null)
         {
             Email = email;
             Sms = sms;
         }
 
-        internal SignerIdentifier(Sms sms, Email email = null)
+        internal ContactInformation(Sms sms, Email email = null)
         {
             Sms = sms;
             Email = email;
@@ -38,7 +40,7 @@
 
         public override bool Equals(object obj)
         {
-            var other = obj as SignerIdentifier;
+            var other = obj as ContactInformation;
 
             return other != null &&
                    other.Sms == Sms &&

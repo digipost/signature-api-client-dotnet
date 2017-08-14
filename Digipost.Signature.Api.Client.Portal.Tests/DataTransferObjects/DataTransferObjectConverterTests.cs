@@ -559,7 +559,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var source = new Signer(
-                    new SignerIdentifier(
+                    new ContactInformation(
                         new Email("test@example.com"),
                         new Sms("11111111"))
                         );
@@ -592,7 +592,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var source = new Signer(
-                    new SignerIdentifier(
+                    new ContactInformation(
                         new Email("test@example.com")
                     )
                 );
@@ -624,7 +624,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var source = new Signer(
-                    new SignerIdentifier(
+                    new ContactInformation(
                         new Sms("11111111"))
                         );
 
@@ -652,15 +652,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [Fact]
-            public void Converts_signer_with_signer_identifier()
+            public void Converts_signer_with_contact_information_identifier()
             {
                 //Arrange
-                var source = new Signer(new SignerIdentifier(new Email("test@mail.no")));
+                var source = new Signer(new ContactInformation(new Email("test@mail.no")));
 
                 var expected = new portalsigner
                 {
                     Item = source.Identifier,
-                    Item1 = new notifications { Items = new object[] { new email { address = source.Identifier } } }
+                    Item1 = new notifications { Items = new object[] { new email { address = ((ContactInformation) source.Identifier).Email.Address } } }
                 };
 
                 //Act

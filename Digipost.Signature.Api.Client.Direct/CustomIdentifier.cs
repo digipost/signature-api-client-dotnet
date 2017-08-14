@@ -1,12 +1,13 @@
-﻿using Digipost.Signature.Api.Client.Direct;
-
-namespace Digipost.Signature.Api.Client.Core
+﻿namespace Digipost.Signature.Api.Client.Direct
 {
-    public class CustomIdentifier : SignerIdentifier
+    public class CustomIdentifier : Core.SignerIdentifier
     {
-        public CustomIdentifier(string identifier)
-            : base(identifier)
+        public string Value { get; }
+
+        public CustomIdentifier(string value)
+
         {
+            Value = value;
         }
 
         public override string ToString()

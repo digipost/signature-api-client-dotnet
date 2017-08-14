@@ -4,27 +4,23 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Signer : AbstractSigner
     {
-        public string Identifier { get; } //Todo: Gjor om til type: signeridentifier
-
-        public IdentifierType IdentifierType { get; internal set; }
+        public SignerIdentifier Identifier { get; } 
 
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
         {
-            IdentifierType = IdentifierType.PersonalIdentificationNumber;
-            Identifier = personalIdentificationNumber.Value;
+            Identifier = personalIdentificationNumber;
             Notifications = notifications;
         }
 
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
         {
-            IdentifierType = IdentifierType.PersonalIdentificationNumber;
-            Identifier = personalIdentificationNumber.Value;
+            Identifier = personalIdentificationNumber;
             NotificationsUsingLookup = notificationsUsingLookup;
         }
 
         public Signer(ContactInformation contactInformation)
         {
-            IdentifierType = contactInformation.Type;
+            Identifier = contactInformation;
             Notifications = new Notifications(contactInformation.Email, contactInformation.Sms);
         }
 

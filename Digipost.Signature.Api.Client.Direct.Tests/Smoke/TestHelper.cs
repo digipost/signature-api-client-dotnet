@@ -39,11 +39,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Sign_job(SignerIdentifier signer)
+        public TestHelper Sign_job(SignerIdentifier signerIdentifier)
         {
             Assert_state(_jobResponse);
 
-            var statusUrl = _directClient.AutoSign(_jobResponse.JobId, signer.Value).Result;
+            var identifierValue = signerIdentifier.GetType() == typeof(PersonalIdentificationNumber)
+                ? ((PersonalIdentificationNumber) signerIdentifier).Value
+                : ((CustomIdentifier) signerIdentifier).Value;
+            
+            var statusUrl = _directClient.AutoSign(_jobResponse.JobId, identifierValue).Result;
             try
             {
                 var queryParams = new Uri(statusUrl).Query;

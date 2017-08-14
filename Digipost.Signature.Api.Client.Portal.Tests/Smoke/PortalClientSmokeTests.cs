@@ -26,14 +26,20 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 var portalClient = GetPortalClient();
                 Log.Debug($"Sending in PortalClient Class Initialize. {portalClient.ClientConfiguration}");
-               var portalJob = DomainUtility.GetPortalJobWithSignerIdentifier();
+                var portalJob = DomainUtility.GetPortalJobWithSignerIdentifier();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 
                 Log.Debug($"Result of Create was: {portalJobResponse}");
 
                 var signer = portalJob.Signers.ElementAt(0);
-                var httpResponseMessage = portalClient.AutoSign((int) portalJobResponse.JobId, signer.Identifier).Result;
+
+                if (signer.Identifier is ContactInformation)
+                {
+                    throw new Exception("Unable to sign a contact identified by contact information, because this is not implemented.");
+                }
+
+                var httpResponseMessage = portalClient.AutoSign((int) portalJobResponse.JobId, ((PersonalIdentificationNumber) signer.Identifier).Value).Result;
                 Log.Debug($"Trying to autosign. Status code: {httpResponseMessage.StatusCode}");
 
                 var jobStatusChangeResponse = GetCurrentReceipt(portalJobResponse.JobId, portalClient);

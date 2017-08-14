@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             var dataTransferObject = new portalsigner();
             var notifications = signer.Notifications;
 
-            if (signer.IdentifierType == IdentifierType.PersonalIdentificationNumber)
+            if (signer.Identifier is PersonalIdentificationNumber)
             {
                 dataTransferObject.Item = signer.Identifier;
 

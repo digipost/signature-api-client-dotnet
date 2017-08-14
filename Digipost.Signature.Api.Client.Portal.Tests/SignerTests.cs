@@ -35,36 +35,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             }
 
             [Fact]
-            public void InitializesWithSignerIdentifier()
+            public void InitializesWithContactInformation()
             {
                 //Arrange
-                var identifier = new Email("email@example.com");
+                var contactInformation = new ContactInformation(new Email("email@example.com"), new Sms("11111111"));
 
                 //Act
-                var portalSigner = new Signer(new SignerIdentifier(identifier));
+                var portalSigner = new Signer(contactInformation);
 
                 //Assert
-                Assert.Equal(identifier.Address, portalSigner.Identifier);
+                Assert.Equal(contactInformation, portalSigner.Identifier);
             }
-
-            [Fact]
-            public void Issue99()
-            {
-                Job job = new Job(
-                  null, null, null
-                  );
-                //Bare for test-formål
-                TimeSpan ts = new TimeSpan(14, 0, 0, 0);
-
-                Availability jobAvailable = new Availability();
-                jobAvailable.AvailableFor = ts;
-
-                job.Availability = jobAvailable;
-
-                //Har ikke mulighet til å kjøre awaitable task
-                //JobResponse x = portalClient.Create(job).Result;
-            }
-
         }
     }
 }

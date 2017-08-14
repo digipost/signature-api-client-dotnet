@@ -1,7 +1,6 @@
-﻿namespace Digipost.Signature.Api.Client.Portal
+﻿namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class SignerIdentifier
     {
-
     }
 }

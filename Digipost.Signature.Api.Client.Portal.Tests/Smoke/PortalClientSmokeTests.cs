@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             {
                 var portalClient = GetPortalClient();
                 Log.Debug($"Sending in PortalClient Class Initialize. {portalClient.ClientConfiguration}");
-                var portalJob = DomainUtility.GetPortalJobWithSignerIdentifier();
+                var portalJob = DomainUtility.GetPortalJob();
 
                 var portalJobResponse = portalClient.Create(portalJob).Result;
 

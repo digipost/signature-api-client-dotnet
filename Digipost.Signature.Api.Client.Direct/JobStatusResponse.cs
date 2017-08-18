@@ -47,13 +47,23 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <seealso cref="Signatures" />
         public Signature GetSignatureFrom(SignerIdentifier signer)
         {
-            //Todo: Comparison magic. Sjekk at det stemmer.
-            var signature = Signatures.SingleOrDefault(s => s.Signer.Equals(signer));
-            if (signature == null)
+            Signature foundSignature = null;
+            if (signer is PersonalIdentificationNumber)
+            {
+                foundSignature = Signatures.SingleOrDefault(s => s.Signer == ((PersonalIdentificationNumber) signer).Value);
+            }
+
+            if (signer is CustomIdentifier)
+            {
+                foundSignature = Signatures.SingleOrDefault(s => s.Signer == ((CustomIdentifier) signer).Value);
+            }
+
+            if (foundSignature == null)
             {
                 throw new InvalidOperationException($"Unable to find signature from Signer '{signer}'");
             }
-            return signature;
+
+            return foundSignature;
         }
 
         public override string ToString()

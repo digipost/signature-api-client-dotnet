@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
@@ -46,6 +47,7 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <seealso cref="Signatures" />
         public Signature GetSignatureFrom(SignerIdentifier signer)
         {
+            //Todo: Comparison magic. Sjekk at det stemmer.
             var signature = Signatures.SingleOrDefault(s => s.Signer.Equals(signer));
             if (signature == null)
             {

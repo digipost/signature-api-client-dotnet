@@ -71,7 +71,6 @@
     <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="CustomIdentifier.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="Enums\StatusRetrievalMethod.cs" />
     <Compile Include="RedirectUrls.cs" />

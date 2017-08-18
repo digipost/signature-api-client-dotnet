@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects

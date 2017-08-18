@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;

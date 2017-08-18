@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Enums;
@@ -222,6 +223,20 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
                 //Assert
             }
-        }
+
+            [Fact]
+            public void SimpleInheritance()
+            {
+                //ContactInformation contactInformation = new ContactInformation(new Email("email@example.com"));
+                //ContactInformation contactInformation2 = new ContactInformation(new Email("email@example.com"));
+
+                SignerIdentifier identifier = new PersonalIdentificationNumber("1234");
+                SignerIdentifier identifier2 = new PersonalIdentificationNumber("1234");
+
+
+                bool areEqual = identifier.Equals(identifier2);
+            }
+
     }
+}
 }

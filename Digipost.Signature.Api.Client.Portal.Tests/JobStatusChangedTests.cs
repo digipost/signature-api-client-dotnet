@@ -22,15 +22,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Signed,
-                        IdentifierType = IdentifierType.PersonalIdentificationNumber,
-                        Identifier = "123456789",
+                        Identifier = new PersonalIdentificationNumber("123456789"),
                         XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Waiting,
-                        IdentifierType = IdentifierType.PersonalIdentificationNumber,
-                        Identifier = "123456789",
+                        Identifier = new PersonalIdentificationNumber("123456789"),
                         XadesReference = null
                     }
                 };

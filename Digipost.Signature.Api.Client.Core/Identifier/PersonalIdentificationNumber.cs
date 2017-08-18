@@ -1,4 +1,6 @@
-﻿namespace Digipost.Signature.Api.Client.Core
+﻿using Digipost.Signature.Api.Client.Core.Identifier;
+
+namespace Digipost.Signature.Api.Client.Core
 {
     public class PersonalIdentificationNumber : SignerIdentifier
     {

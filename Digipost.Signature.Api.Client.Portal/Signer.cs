@@ -1,4 +1,5 @@
 ﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -32,13 +33,5 @@ namespace Digipost.Signature.Api.Client.Portal
         {
             return $"{base.ToString()}, NotificationsUsingLookup: {NotificationsUsingLookup}, Notifications: {Notifications}";
         }
-    }
-
-    public enum IdentifierType
-    {
-        PersonalIdentificationNumber,
-        Email,
-        Sms,
-        EmailAndSms //Todo: Ikke helt komfortabel med at det heter Sms. Hvor mye brekker vi om vi gjor om til mobile number?
     }
 }

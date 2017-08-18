@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Extensions;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
     public static class DataTransferObjectConverter
-
     {
         public static directsignaturejobrequest ToDataTransferObject(Job job)
         {
@@ -52,9 +51,8 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             foreach (var signerstatus in directsignaturejobstatusresponse.status)
             {
                 var xadesurl = directsignaturejobstatusresponse.xadesurl?.SingleOrDefault(xades => xades.signer.Equals(signerstatus.signer));
-                var xadesReference = xadesurl == null ? null : new XadesReference(new Uri(xadesurl.Value));
-                var signature = new Signature(signerstatus.signer, xadesReference, new SignatureStatus(signerstatus.Value), signerstatus.since);
-                signatures.Add(signature);
+                signatures.Add(new Signature(signerstatus, xadesurl));
+
             }
 
             var jobReferences = new JobReferences(

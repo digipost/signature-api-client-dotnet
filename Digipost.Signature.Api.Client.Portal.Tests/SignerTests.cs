@@ -1,5 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -38,7 +39,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void InitializesWithContactInformation()
             {
                 //Arrange
-                var contactInformation = new ContactInformation(new Email("email@example.com"), new Sms("11111111"));
+                var contactInformation = new ContactInformation()
+                {
+                    Email = new Email("email@example.com"),
+                    Sms = new Sms("11111111")
+                };
 
                 //Act
                 var portalSigner = new Signer(contactInformation);

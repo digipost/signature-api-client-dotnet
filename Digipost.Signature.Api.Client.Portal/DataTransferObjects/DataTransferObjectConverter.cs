@@ -5,9 +5,6 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
-using static Digipost.Signature.Api.Client.Portal.IdentifierType;
-using static ItemChoiceType1;
 
 namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
@@ -186,30 +183,14 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return result;
         }
 
-        private static List<Signature> FromDataTransferObject(signature[] signatures)
+        private static List<Signature> FromDataTransferObject(IEnumerable<signature> signatures)
         {
             return signatures.Select(FromDataTransferObject).ToList();
         }
 
         private static Signature FromDataTransferObject(signature signature)
         {
-            var result = new Signature
-            {
-                Identifier = signature.Item,
-                IdentifierType = signature.ItemElementName == personalidentificationnumber
-                    ? IdentifierType.PersonalIdentificationNumber
-                    : EmailAndSms, //Todo: Hvoran skal jeg sette IdentifierType korrekt?
-                SignatureStatus = new SignatureStatus(signature.status.Value),
-                DateTimeForStatus = signature.status.since
-            };
-
-            var xadesUrl = signature.xadesurl;
-            if (!string.IsNullOrEmpty(xadesUrl))
-            {
-                result.XadesReference = new XadesReference(new Uri(xadesUrl));
-            }
-
-            return result;
+            return new Signature(signature);
         }
     }
 }

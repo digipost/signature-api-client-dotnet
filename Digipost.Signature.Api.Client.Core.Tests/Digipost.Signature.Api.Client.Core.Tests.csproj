@@ -129,6 +129,7 @@
     <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
     <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
     <Compile Include="Identification\ContactInformationTests.cs" />
+    <Compile Include="Identifier\SignerIdentifierTests.cs" />
     <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
     <Compile Include="PersonalIdentificationNumberTests.cs" />
     <Compile Include="Stubs\ClientStub.cs" />

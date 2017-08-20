@@ -7,6 +7,16 @@ namespace Digipost.Signature.Api.Client.Portal
             Address = address;
         }
 
-        public string Address { get; set; }
+        public string Address { get; }
+
+        public override bool Equals(object other)
+        {
+            return other is Email otherEmail && Address == otherEmail.Address;
+        }
+
+        public override int GetHashCode()
+        {
+            return Address.GetHashCode();
+        }
     }
 }

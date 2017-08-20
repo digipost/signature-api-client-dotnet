@@ -54,8 +54,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Identifier
                 Assert.False(Sms.IsSameAs(DifferentSms));
                 Assert.False(PersonalId.IsSameAs(DifferentPersonalId));
                 Assert.False(CustomIdentifier.IsSameAs(DifferentCustomIdentifier));
-
             }
-    }
+        }
     }
 }

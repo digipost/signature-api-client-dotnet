@@ -27,16 +27,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Identifier
             private static readonly CustomIdentifier DifferentCustomIdentifier = new CustomIdentifier("666666666");
 
             [Fact]
-            public void DifferentImplementationsOrDataStructureAreConsideredUnequal()
-            {
-                Assert.False(EmailAndSms.IsSameAs(SimilarSms));
-                Assert.False(EmailAndSms.IsSameAs(SimilarEmail));
-                Assert.False(EmailAndSms.IsSameAs(SimilarPersonalId));
-                Assert.False(EmailAndSms.IsSameAs(CustomIdentifier));
-                Assert.False(CustomIdentifier.IsSameAs(EmailAndSms));
-            }
-
-            [Fact]
             public void SimilarOjectsAreConsideredEqual()
             {
                 Assert.True(EmailAndSms.IsSameAs(SimilarEmailAndSms));
@@ -44,6 +34,16 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Identifier
                 Assert.True(Sms.IsSameAs(SimilarSms));
                 Assert.True(PersonalId.IsSameAs(SimilarPersonalId));
                 Assert.True(CustomIdentifier.IsSameAs(SimilarCustomIdentifier));
+            }
+
+            [Fact]
+            public void DifferentImplementationsOrDataStructureAreConsideredUnequal()
+            {
+                Assert.False(EmailAndSms.IsSameAs(SimilarSms));
+                Assert.False(EmailAndSms.IsSameAs(SimilarEmail));
+                Assert.False(EmailAndSms.IsSameAs(SimilarPersonalId));
+                Assert.False(EmailAndSms.IsSameAs(SimilarCustomIdentifier));
+                Assert.False(CustomIdentifier.IsSameAs(SimilarEmailAndSms));
             }
 
             [Fact]

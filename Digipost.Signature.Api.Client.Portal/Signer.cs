@@ -6,24 +6,22 @@ namespace Digipost.Signature.Api.Client.Portal
     public class Signer : AbstractSigner
     {
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
+            :base(personalIdentificationNumber)
         {
-            Identifier = personalIdentificationNumber;
             Notifications = notifications;
         }
 
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, NotificationsUsingLookup notificationsUsingLookup)
+            : base(personalIdentificationNumber)
         {
-            Identifier = personalIdentificationNumber;
             NotificationsUsingLookup = notificationsUsingLookup;
         }
 
         public Signer(ContactInformation contactInformation)
+            : base(contactInformation)
         {
-            Identifier = contactInformation;
             Notifications = new Notifications(contactInformation.Email, contactInformation.Sms);
         }
-
-        public SignerIdentifier Identifier { get; }
 
         public NotificationsUsingLookup NotificationsUsingLookup { get; }
 

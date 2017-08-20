@@ -6,10 +6,8 @@ namespace Digipost.Signature.Api.Client.Direct
     public class Signer : AbstractSigner
     {
         public Signer(SignerIdentifier identifier)
+            : base(identifier)
         {
-            Identifier = identifier;
         }
-
-        public SignerIdentifier Identifier { get; }
     }
 }

@@ -17,5 +17,15 @@ namespace Digipost.Signature.Api.Client.Core
         {
             return $"personal identification number of {MaskedValue}";
         }
+
+        public override bool IsSameAs(SignerIdentifier other)
+        {
+            if (other is PersonalIdentificationNumber otherPersonalIdentificationNumber)
+            {
+                return IsEqual(Value, otherPersonalIdentificationNumber.Value);
+            }
+
+            return false;
+        }
     }
 }

@@ -1,9 +1,14 @@
-﻿using Digipost.Signature.Api.Client.Portal;
-
-namespace Digipost.Signature.Api.Client.Core.Identifier
+﻿namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public abstract class SignerIdentifier
     {
+        public abstract bool IsSameAs(SignerIdentifier signer);
+
+        protected static bool IsEqual(object a, object b)
+        {
+            return a == null && b == null || a != null && a.Equals(b);
+        }
+
         public bool IsContactInformation()
         {
             return this is ContactInformation;

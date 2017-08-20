@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             Assert.Equal(expectedJobStatus, _status.Status);
             foreach (var expectedSignatureStatus in expectedSignatureStatuses)
             {
-                Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFrom(expectedSignatureStatus.Key).SignatureStatus);
+                Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFor(expectedSignatureStatus.Key).SignatureStatus);
             }
             return this;
         }
@@ -99,7 +99,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_status);
 
-            var xades = _directClient.GetXades(_status.GetSignatureFrom(signer).XadesReference).Result;
+            var xades = _directClient.GetXades(_status.GetSignatureFor(signer).XadesReference).Result;
             Assert.True(xades.CanRead);
             return this;
         }

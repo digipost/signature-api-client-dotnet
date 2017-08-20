@@ -2,12 +2,12 @@
 {
     public class CustomIdentifier : SignerIdentifier
     {
-        public string Value { get; }
-
         public CustomIdentifier(string value)
         {
             Value = value;
         }
+
+        public string Value { get; }
 
         public override string ToString()
         {
@@ -25,6 +25,14 @@
         public override int GetHashCode()
         {
             return Value.GetHashCode();
+        }
+
+        public override bool IsSameAs(SignerIdentifier other)
+        {
+            var otherCustomIdentifier = other as CustomIdentifier;
+
+            return otherCustomIdentifier != null
+                   && IsEqual(Value, otherCustomIdentifier.Value);
         }
     }
 }

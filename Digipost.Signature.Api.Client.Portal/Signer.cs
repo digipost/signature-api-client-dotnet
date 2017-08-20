@@ -5,8 +5,6 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Signer : AbstractSigner
     {
-        public SignerIdentifier Identifier { get; } 
-
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
         {
             Identifier = personalIdentificationNumber;
@@ -24,6 +22,8 @@ namespace Digipost.Signature.Api.Client.Portal
             Identifier = contactInformation;
             Notifications = new Notifications(contactInformation.Email, contactInformation.Sms);
         }
+
+        public SignerIdentifier Identifier { get; }
 
         public NotificationsUsingLookup NotificationsUsingLookup { get; }
 

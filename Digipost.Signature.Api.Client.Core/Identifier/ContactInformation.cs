@@ -53,5 +53,16 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
                     (Sms?.GetHashCode() ?? 0);
             }
         }
+
+        public override bool IsSameAs(SignerIdentifier other)
+        {
+            if (other is ContactInformation otherContactInformation)
+            {
+                return IsEqual(Sms, otherContactInformation.Sms)
+                       && IsEqual(Email, otherContactInformation.Email);
+            }
+
+            return false;
+        }
     }
 }

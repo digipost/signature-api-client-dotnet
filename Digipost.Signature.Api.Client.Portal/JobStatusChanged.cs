@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Portal.Enums;
 
 namespace Digipost.Signature.Api.Client.Portal
@@ -25,6 +26,11 @@ namespace Digipost.Signature.Api.Client.Portal
         public PadesReference PadesReference { get; internal set; }
 
         public List<Signature> Signatures { get; internal set; }
+
+        public Signature GetSignatureFor(SignerIdentifier signer)
+        {
+            return Signatures.Find(elem => signer.IsSameAs(elem.Identifier));
+        }
 
         public override string ToString()
         {

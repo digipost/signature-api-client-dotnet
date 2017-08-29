@@ -1,0 +1,187 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
+using Common.Logging;
+using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Core.Tests.Smoke;
+using Digipost.Signature.Api.Client.Portal.Enums;
+using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
+
+namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
+{
+    public class TestHelper
+    {
+        private readonly PortalClient _client;
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+
+        //Gradually built state
+
+        private JobResponse _jobResponse;
+        private JobStatusChanged _jobStatusChanged;
+        private Job _job;
+        private XadesReference _xadesReference;
+        private PadesReference _padesReference;
+        private ConfirmationReference _confirmationReference;
+        private CancellationReference _cancellationReference;
+
+        public TestHelper(PortalClient client)
+        {
+            _client = client;
+            Log.Debug($"Sending in PortalClient Class Initialize. {_client.ClientConfiguration}");
+        }
+
+        public TestHelper Create_portal_job(params SignerIdentifier[] signers)
+        {
+            _job = DomainUtility.GetPortalJob();
+            _jobResponse = _client.Create(_job).Result;
+            _cancellationReference = new CancellationReference(GetUriFromRelativePath(_jobResponse.CancellationReference.Url.AbsolutePath));
+
+            Log.Debug($"Result of Create was: {_jobResponse}");
+
+            return this;
+        }
+
+        public TestHelper Sign_job()
+        {
+            var signer = _job.Signers.First();
+
+            if (signer.Identifier is ContactInformation)
+            {
+                throw new Exception("Unable to sign a contact identified by contact information, because this is not implemented.");
+            }
+
+            var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber)signer.Identifier).Value).Result;
+            Assert.True(httpResponseMessage.IsSuccessStatusCode);
+
+            return this;
+        }
+
+        public TestHelper GetJobStatusChanged()
+        {
+            Assert_state(_jobResponse);
+
+            _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client);
+            _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(_jobStatusChanged.ConfirmationReference.Url.AbsolutePath));
+
+            return this;
+        }
+
+        public TestHelper GetSignatureForSigner()
+        {
+            var signature = _jobStatusChanged.GetSignatureFor(_job.Signers.FirstOrDefault());
+
+            Assert.NotNull(signature);
+
+            return this;
+        }
+
+        public TestHelper GetXades()
+        {
+            Assert_state(_xadesReference);
+            
+            _xadesReference = new XadesReference(GetUriFromRelativePath(_jobStatusChanged.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
+            _client.GetXades(_xadesReference).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return this;
+        }
+
+        public TestHelper GetPades()
+        {
+            Assert_state(_padesReference);
+
+            _padesReference = new PadesReference(GetUriFromRelativePath(_jobStatusChanged.PadesReference.Url.AbsolutePath));
+            _client.GetPades(_padesReference).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return this;
+        }
+
+        public TestHelper Persist_xades_to_file()
+        {
+            Assert_state(_xadesReference);
+
+            using (var xadesStream = _client.GetXades(_xadesReference).ConfigureAwait(false).GetAwaiter().GetResult())
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    xadesStream.CopyTo(memoryStream);
+                    File.WriteAllBytes(@"C:\Users\<User>\Downloads\xades.xml", memoryStream.ToArray());
+                }
+            }
+
+            return this;
+        }
+
+        public TestHelper Persist_pades_to_file()
+        {
+            Assert_state(_padesReference);
+
+            using (var padesStream = _client.GetPades(_padesReference).ConfigureAwait(false).GetAwaiter().GetResult())
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    padesStream.CopyTo(memoryStream);
+                    File.WriteAllBytes(@"C:\Users\<User>\Downloads\pades.pdf", memoryStream.ToArray());
+                }
+            }
+
+            return this;
+        }
+
+        public TestHelper Confirm_job()
+        {
+            Assert_state(_confirmationReference);
+
+            _client.Confirm(_confirmationReference).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return this;
+        }
+
+        public TestHelper Cancel_job()
+        {
+            _client.Cancel(_cancellationReference).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return this;
+        }
+
+        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
+        {
+            JobStatusChanged jobStatusChanged = null;
+            while (jobStatusChanged == null)
+            {
+                var statusChange = portalClient.GetStatusChange().Result;
+                if (statusChange.JobId == jobId)
+                {
+                    jobStatusChanged = statusChange;
+                }
+                else if (statusChange.Status == JobStatus.NoChanges)
+                {
+                    throw new Exception("Expected receipt, got emtpy queue.");
+                }
+                else
+                {
+                    var uri = GetUriFromRelativePath(statusChange.ConfirmationReference.Url.AbsolutePath);
+                    portalClient.Confirm(new ConfirmationReference(uri)).Wait();
+                }
+            }
+
+            return jobStatusChanged;
+        }
+
+        private static void Assert_state(object obj)
+        {
+            if (obj == null)
+            {
+                throw new InvalidOperationException("Requires gradually built state. Make sure you use functions in the correct order");
+            }
+        }
+
+    }
+}

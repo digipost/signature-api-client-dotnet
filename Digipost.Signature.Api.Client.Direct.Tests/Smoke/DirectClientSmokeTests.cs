@@ -35,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             DirectClient directClient;
 
-            switch (ClientType)
+            switch (Endpoint)
             {
                 case Client.Localhost:
                     directClient = DirectClient(Environment.Localhost);

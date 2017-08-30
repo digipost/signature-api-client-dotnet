@@ -12,7 +12,7 @@ using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
-    public class TestHelper
+    public class TestHelper : TestHelperBase
     {
         private readonly DirectClient _directClient;
 
@@ -73,13 +73,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_statusReference);
 
-            _status = MorphJobStatusResponseIfMayBe(_directClient.GetStatus(_statusReference).Result);
+            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(_directClient.GetStatus(_statusReference).Result);
             return this;
         }
 
         public TestHelper Get_status_by_polling()
         {
-            _status = MorphJobStatusResponseIfMayBe(_directClient.GetStatusChange().Result);
+            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(_directClient.GetStatusChange().Result);
             return this;
         }
 
@@ -124,22 +124,24 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
         {
-            var statusReferenceUri = GetUriFromRelativePath(statusReference.Url().AbsolutePath);
-            return new StatusReference(statusReferenceUri, statusReference.StatusQueryToken);
+            var statusReferenceUri = TransformReferenceToCorrectEnvironment(statusReference.Url());
+
+
+            return new StatusReference(new Uri(statusReferenceUri.GetLeftPart(UriPartial.Path)), statusReference.StatusQueryToken);
         }
 
-        private static JobStatusResponse MorphJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
+        private static JobStatusResponse TransformJobUrlsToCorrectEnvironmentIfNeeded(JobStatusResponse jobStatusResponse)
         {
-            if (ClientType == SmokeTests.Client.Localhost)
+            if (Endpoint == SmokeTests.Client.Localhost)
             {
-                //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
                 jobStatusResponse.Signatures = jobStatusResponse.Signatures.Select(signature =>
                 {
-                    var xadesReference = signature.XadesReference == null ? null : new XadesReference(GetUriFromRelativePath(signature.XadesReference.Url.AbsolutePath));
+                    var xadesReference = signature.XadesReference == null ? null : new XadesReference(TransformReferenceToCorrectEnvironment(signature.XadesReference.Url));
                     return new Signature(signature.Signer, xadesReference, signature.SignatureStatus, signature.DateTimeForStatus);
                 }).ToList();
-                jobStatusResponse.References.Pades = new PadesReference(GetUriFromRelativePath(jobStatusResponse.References.Pades.Url.AbsolutePath));
-                jobStatusResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(jobStatusResponse.References.Confirmation.Url.AbsolutePath));
+
+                jobStatusResponse.References.Pades = new PadesReference(TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Pades.Url));
+                jobStatusResponse.References.Confirmation = new ConfirmationReference(TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Confirmation.Url));
             }
 
             return jobStatusResponse;

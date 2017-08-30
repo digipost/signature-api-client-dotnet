@@ -64,5 +64,11 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 
             return false;
         }
+
+        public override string ToString()
+        {
+            //Todo: Lag skikkelig toSTring;
+            throw new NotImplementedException();
+        }
     }
 }

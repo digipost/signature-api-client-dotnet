@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Threading.Tasks;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
@@ -11,11 +9,10 @@ using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Xunit;
-using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
-    public class TestHelper
+    public class TestHelper : TestHelperBase
     {
         private readonly PortalClient _client;
 
@@ -42,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             _job = DomainUtility.GetPortalJob();
             _jobResponse = _client.Create(_job).Result;
-            _cancellationReference = new CancellationReference(GetUriFromRelativePath(_jobResponse.CancellationReference.Url.AbsolutePath));
+            _cancellationReference = new CancellationReference(TransformReferenceToCorrectEnvironment(_jobResponse.CancellationReference.Url));
 
             Log.Debug($"Result of Create was: {_jobResponse}");
 
@@ -69,7 +66,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             Assert_state(_jobResponse);
 
             _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client);
-            _confirmationReference = new ConfirmationReference(GetUriFromRelativePath(_jobStatusChanged.ConfirmationReference.Url.AbsolutePath));
+            _confirmationReference = new ConfirmationReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.ConfirmationReference.Url));
+
+            if (_jobStatusChanged.Status == JobStatus.CompletedSuccessfully)
+            {
+                _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.First().XadesReference.Url));
+                _padesReference = new PadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.PadesReference.Url));
+            }
 
             return this;
         }
@@ -87,17 +90,18 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             Assert_state(_xadesReference);
             
-            _xadesReference = new XadesReference(GetUriFromRelativePath(_jobStatusChanged.Signatures.ElementAt(0).XadesReference.Url.AbsolutePath));
+            _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.ElementAt(0).XadesReference.Url));
             _client.GetXades(_xadesReference).ConfigureAwait(false).GetAwaiter().GetResult();
 
             return this;
+
         }
 
         public TestHelper GetPades()
         {
             Assert_state(_padesReference);
 
-            _padesReference = new PadesReference(GetUriFromRelativePath(_jobStatusChanged.PadesReference.Url.AbsolutePath));
+            _padesReference = new PadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.PadesReference.Url));
             _client.GetPades(_padesReference).ConfigureAwait(false).GetAwaiter().GetResult();
 
             return this;
@@ -167,7 +171,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 }
                 else
                 {
-                    var uri = GetUriFromRelativePath(statusChange.ConfirmationReference.Url.AbsolutePath);
+                    var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
                     portalClient.Confirm(new ConfirmationReference(uri)).Wait();
                 }
             }

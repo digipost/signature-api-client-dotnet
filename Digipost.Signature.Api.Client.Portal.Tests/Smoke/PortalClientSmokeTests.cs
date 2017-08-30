@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             //Todo: Fjern duplisering fra SmokeTests. Isj og isj, dette er rotete.
-            switch (ClientType)
+            switch (Endpoint)
             {
                 case Client.Localhost:
                     _portalClient = GetPortalClient(Environment.Localhost);
@@ -83,7 +83,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             var signer = new PersonalIdentificationNumber("12345678910");
 
-            _fixture.TestHelper.Create_portal_job(signer)
+            _fixture.TestHelper
+                .Create_portal_job(signer)
                 .Cancel_job()
                 .GetJobStatusChanged()
                 .Confirm_job();
@@ -94,7 +95,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             var signer = new PersonalIdentificationNumber("12345678910");
 
-            _fixture.TestHelper.Create_portal_job(signer)
+            _fixture.TestHelper
+                .Create_portal_job(signer)
                 .Sign_job()
                 .GetJobStatusChanged()
                 .GetSignatureForSigner()

@@ -1,6 +1,6 @@
 ﻿using System;
+using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
-using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests.Client;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
 {
@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
         internal static Uri TransformReferenceToCorrectEnvironment(Uri fullUri)
         {
             return Endpoint == Localhost
-                ? new Uri(Environment.Localhost.Url, fullUri.AbsolutePath) 
+                ? new Uri(Localhost.Url, fullUri.AbsolutePath) 
                 : fullUri;
         }
     }

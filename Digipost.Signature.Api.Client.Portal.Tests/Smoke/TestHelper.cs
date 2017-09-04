@@ -18,9 +18,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-
         //Gradually built state
-
         private JobResponse _jobResponse;
         private JobStatusChanged _jobStatusChanged;
         private Job _job;

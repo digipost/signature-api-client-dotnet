@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
@@ -132,7 +133,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private static JobStatusResponse TransformJobUrlsToCorrectEnvironmentIfNeeded(JobStatusResponse jobStatusResponse)
         {
-            if (Endpoint == SmokeTests.Client.Localhost)
+            if (Endpoint == Localhost)
             {
                 jobStatusResponse.Signatures = jobStatusResponse.Signatures.Select(signature =>
                 {

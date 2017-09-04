@@ -2,6 +2,7 @@
 using System.Reflection;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;
@@ -11,8 +12,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     public class PortalSmokeTestsFixture : SmokeTests
     {
-        private static PortalClient _portalClient;
-
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public PortalSmokeTestsFixture()
@@ -22,42 +21,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
         public TestHelper TestHelper { get; set; }
 
-        private PortalClient GetPortalClient()
+        private static PortalClient GetPortalClient()
         {
-            if (_portalClient != null)
-            {
-                return _portalClient;
-            }
+            var client = GetPortalClient(Endpoint);
+            client.ClientConfiguration.LogRequestAndResponse = true;
 
-            //Todo: Fjern duplisering fra SmokeTests. Isj og isj, dette er rotete.
-            switch (Endpoint)
-            {
-                case Client.Localhost:
-                    _portalClient = GetPortalClient(Environment.Localhost);
-                    break;
-                case Client.DifiTest:
-                    _portalClient = GetPortalClient(Environment.DifiTest);
-                    break;
-                case Client.DifiQa:
-                    _portalClient = GetPortalClient(Environment.DifiQa);
-                    break;
-                case Client.Test:
-                    var testEnvironment = Environment.DifiTest;
-                    testEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
-                    _portalClient = GetPortalClient(testEnvironment);
-                    break;
-                case Client.Qa:
-                    var qaTestEnvironment = Environment.DifiTest;
-                    qaTestEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "qa"));
-                    _portalClient = GetPortalClient(qaTestEnvironment);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            _portalClient.ClientConfiguration.LogRequestAndResponse = true;
-
-            return _portalClient;
+            return client;
         }
 
         private static PortalClient GetPortalClient(Environment environment)

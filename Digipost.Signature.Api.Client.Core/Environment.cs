@@ -21,6 +21,16 @@ namespace Digipost.Signature.Api.Client.Core
             new Uri("https://172.16.91.1:8443")
         );
 
+        internal static Environment Qa => new Environment(
+            CertificateChainUtility.FunksjoneltTestmiljøSertifikater(),
+            new Uri("https://api.qa.signering.posten.no")
+        );
+
+        internal static Environment Test => new Environment(
+            CertificateChainUtility.FunksjoneltTestmiljøSertifikater(),
+            new Uri("https://api.test.signering.posten.no")
+        );
+
         public static Environment DifiTest => new Environment(
             CertificateChainUtility.FunksjoneltTestmiljøSertifikater(),
             new Uri("https://api.difitest.signering.posten.no")

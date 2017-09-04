@@ -1,4 +1,4 @@
-namespace Digipost.Signature.Api.Client.Portal
+namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public class Email
     {
@@ -11,12 +11,19 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public override bool Equals(object other)
         {
-            return other is Email otherEmail && Address == otherEmail.Address;
+            var otherEmail = other as Email ;
+
+            return otherEmail != null && Address == otherEmail.Address;
         }
 
         public override int GetHashCode()
         {
             return Address.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Address;
         }
     }
 }

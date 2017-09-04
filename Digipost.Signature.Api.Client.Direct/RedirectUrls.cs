@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 
 namespace Digipost.Signature.Api.Client.Direct
 {

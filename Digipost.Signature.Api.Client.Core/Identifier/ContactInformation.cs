@@ -1,19 +1,12 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Portal;
 
 namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public class ContactInformation : SignerIdentifier
     {
-        public Email Email { get; internal set; }
-
-        public Sms Sms { get; internal set; }
-
-        public bool IsEmailSpecified => Email != null;
-
-        public bool IsSmsSpecified => Sms != null;
-
-        internal ContactInformation() { }
+        internal ContactInformation()
+        {
+        }
 
         internal ContactInformation(notifications notifications)
         {
@@ -21,19 +14,27 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
             {
                 if (item is email && !IsEmailSpecified)
                 {
-                    Email = new Email(((email)item).address);
+                    Email = new Email(((email) item).address);
                 }
                 else if (item is sms && !IsSmsSpecified)
                 {
-                    Sms = new Sms(((sms) item).number);
+                    var number = ((sms) item).number;
+                    Sms = new Sms(number);
                 }
                 else
                 {
-                    throw new ArgumentException("Unable to create ContactInformation from notification elements. Only one of each is allowed.");
+                    throw new ArgumentException($"Unable to create {nameof(ContactInformation)} from notification elements. Only one of each is allowed.");
                 }
             }
-
         }
+
+        public Email Email { get; internal set; }
+
+        public Sms Sms { get; internal set; }
+
+        public bool IsEmailSpecified => Email != null;
+
+        public bool IsSmsSpecified => Sms != null;
 
         public override bool Equals(object obj)
         {
@@ -56,8 +57,9 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 
         public override bool IsSameAs(SignerIdentifier other)
         {
-            if (other is ContactInformation otherContactInformation)
+            if (other is ContactInformation)
             {
+                var otherContactInformation = (ContactInformation) other;
                 return IsEqual(Sms, otherContactInformation.Sms)
                        && IsEqual(Email, otherContactInformation.Email);
             }
@@ -67,8 +69,14 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 
         public override string ToString()
         {
-            //Todo: Lag skikkelig toSTring;
-            throw new NotImplementedException();
+            if (IsEmailSpecified && IsSmsSpecified)
+            {
+                return $"{nameof(ContactInformation)} with {nameof(Sms).ToLower()} {Sms} and {nameof(Email).ToLower()} {Email}";
+            }
+
+            return IsEmailSpecified
+                ? $"{nameof(ContactInformation)} with {nameof(Email).ToLower()} {Email}"
+                : $"{nameof(ContactInformation)} with {nameof(Sms).ToLower()} {Sms}";
         }
     }
 }

@@ -2,15 +2,7 @@
 {
     public class SmokeTests
     {
-        public static Client Endpoint => Client.Test;
+        public static Environment Endpoint => Environment.Test;
 
-        public enum Client
-        {
-            Localhost,
-            DifiTest,
-            DifiQa,
-            Test,
-            Qa
-        }
     }
 }

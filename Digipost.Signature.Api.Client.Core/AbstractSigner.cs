@@ -20,7 +20,10 @@ namespace Digipost.Signature.Api.Client.Core
 
         public override string ToString()
         {
-            return $"{nameof(Order)}: {Order}, {nameof(SignatureType)}: {SignatureType}";
+            var order = Order != null ? $"with {nameof(Order).ToLower()} {Order}" : string.Empty;
+            var signatureType = SignatureType != null ? $"and {nameof(SignatureType).ToLower()} {SignatureType}" : string.Empty;
+
+            return $"Signer with {nameof(Identifier).ToLower()} '{Identifier}' {order} {signatureType}";
         }
     }
 }

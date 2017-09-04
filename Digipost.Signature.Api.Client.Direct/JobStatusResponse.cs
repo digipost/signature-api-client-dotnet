@@ -43,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <summary>
         ///     Gets the signature from a given signer.
         /// </summary>
-        /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature from this signer</exception>
+        /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature for this signer</exception>
         /// <seealso cref="Signatures" />
         public Signature GetSignatureFor(SignerIdentifier signer)
         {

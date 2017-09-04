@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace Difi.Felles.Utility.Exceptions
+namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 {
     /// <remarks>
     ///     From:

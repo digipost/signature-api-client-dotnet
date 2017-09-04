@@ -1,4 +1,6 @@
-﻿namespace Digipost.Signature.Api.Client.Portal
+﻿using Digipost.Signature.Api.Client.Core.Identifier;
+
+namespace Digipost.Signature.Api.Client.Portal
 {
     public class Notifications
     {

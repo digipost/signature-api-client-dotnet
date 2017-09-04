@@ -1,4 +1,5 @@
 ﻿using System;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -31,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
             Assert.True(signer.Identifier.IsContactInformation());
             Assert.Equal(dateTime, signer.DateTimeForStatus);
-            Assert.Equal(source.status.Value, signer.SignatureStatus.Identifier); //Todo: Er denne rett?
+            Assert.Equal(source.status.Value, signer.SignatureStatus.Identifier);
             Assert.Equal(source.xadesurl, signer.XadesReference.Url.OriginalString);
         }
 
@@ -55,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
             Assert.True(signer.Identifier.IsPersonalIdentificationNumber());
             Assert.Equal(dateTime, signer.DateTimeForStatus);
-            Assert.Equal(source.status.Value, signer.SignatureStatus.Identifier); //Todo: Er denne rett?
+            Assert.Equal(source.status.Value, signer.SignatureStatus.Identifier);
             Assert.Equal(source.xadesurl, signer.XadesReference.Url.OriginalString);
 
         }

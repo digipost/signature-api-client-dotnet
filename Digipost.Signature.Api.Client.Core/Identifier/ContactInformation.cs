@@ -1,5 +1,5 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Portal;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Core.Identifier
 {
@@ -29,10 +29,9 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
                 }
                 else
                 {
-                    throw new ArgumentException("Unable to create ContactInformation from notification elements. Only one of each is allowed.");
+                    throw new ArgumentException($"Unable to create {nameof(ContactInformation)} from notification elements. Only one of each is allowed.");
                 }
             }
-
         }
 
         public override bool Equals(object obj)
@@ -67,8 +66,14 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 
         public override string ToString()
         {
-            //Todo: Lag skikkelig toSTring;
-            throw new NotImplementedException();
+            if (IsEmailSpecified && IsSmsSpecified)
+            {
+                return $"{nameof(ContactInformation)} with {nameof(Sms).ToLower()} {Sms} and {nameof(Email).ToLower()} {Email}";
+            }
+
+            return IsEmailSpecified
+                ? $"{nameof(ContactInformation)} with {nameof(Email).ToLower()} {Email}" 
+                : $"{nameof(ContactInformation)} with {nameof(Sms).ToLower()} {Sms}";
         }
     }
 }

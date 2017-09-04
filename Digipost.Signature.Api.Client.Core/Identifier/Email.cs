@@ -1,4 +1,4 @@
-namespace Digipost.Signature.Api.Client.Portal
+namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public class Email
     {
@@ -17,6 +17,11 @@ namespace Digipost.Signature.Api.Client.Portal
         public override int GetHashCode()
         {
             return Address.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Address;
         }
     }
 }

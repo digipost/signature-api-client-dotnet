@@ -9,6 +9,7 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
@@ -528,7 +529,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var source = new Signer(
-                    new ContactInformation {Email = new Email("test@example.com")}
+                    new ContactInformation {Email = new Email("email@example.com")}
                 );
 
                 var expected = new portalsigner
@@ -538,7 +539,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         Items = new object[]
                         {
-                            new email {address = "test@example.com"}
+                            new email {address = "email@example.com"}
                         }
                     }
                 };
@@ -560,7 +561,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var source = new Signer(
                     new ContactInformation
                     {
-                        Email = new Email("test@example.com"),
+                        Email = new Email("email@example.com"),
                         Sms = new Sms("11111111")
                     }
                 );
@@ -572,7 +573,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         Items = new object[]
                         {
-                            new email {address = "test@example.com"},
+                            new email {address = "email@example.com"},
                             new sms {number = "11111111"}
                         }
                     }
@@ -622,7 +623,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_signer_with_contact_information_identifier()
             {
                 //Arrange
-                var source = new Signer(new ContactInformation {Email = new Email("test@mail.no")});
+                var source = new Signer(new ContactInformation {Email = new Email("email@example.com")});
 
                 var expected = new portalsigner
                 {

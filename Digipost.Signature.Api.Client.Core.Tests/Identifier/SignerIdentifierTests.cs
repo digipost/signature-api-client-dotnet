@@ -1,5 +1,4 @@
 ﻿using Digipost.Signature.Api.Client.Core.Identifier;
-using Digipost.Signature.Api.Client.Portal;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Identifier

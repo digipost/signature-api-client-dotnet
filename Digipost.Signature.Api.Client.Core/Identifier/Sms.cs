@@ -1,4 +1,4 @@
-﻿namespace Digipost.Signature.Api.Client.Portal
+﻿namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public class Sms
     {
@@ -7,11 +7,11 @@
             Number = number;
         }
 
-        public string Number { get; set; }
+        public string Number { get; }
 
         public override string ToString()
         {
-            return $"Number: {Number}";
+            return Number;
         }
 
         public override bool Equals(object other)

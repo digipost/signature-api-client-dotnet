@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Identification

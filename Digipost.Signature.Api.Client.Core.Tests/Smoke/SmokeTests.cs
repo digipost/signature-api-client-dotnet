@@ -3,6 +3,5 @@
     public class SmokeTests
     {
         public static Environment Endpoint => Environment.Test;
-
     }
 }

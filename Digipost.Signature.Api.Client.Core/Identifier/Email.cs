@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 
         public override bool Equals(object other)
         {
-            var otherEmail = other as Email ;
+            var otherEmail = other as Email;
 
             return otherEmail != null && Address == otherEmail.Address;
         }

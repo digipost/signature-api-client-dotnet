@@ -6,7 +6,7 @@ namespace Digipost.Signature.Api.Client.Portal
     public class Signer : AbstractSigner
     {
         public Signer(PersonalIdentificationNumber personalIdentificationNumber, Notifications notifications)
-            :base(personalIdentificationNumber)
+            : base(personalIdentificationNumber)
         {
             Notifications = notifications;
         }

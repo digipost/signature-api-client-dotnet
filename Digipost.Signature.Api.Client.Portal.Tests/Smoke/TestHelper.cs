@@ -14,18 +14,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     public class TestHelper : TestHelperBase
     {
-        private readonly PortalClient _client;
-
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        //Gradually built state
+        private readonly PortalClient _client;
+        private CancellationReference _cancellationReference;
+        private ConfirmationReference _confirmationReference;
+        private Job _job;
         private JobResponse _jobResponse;
         private JobStatusChanged _jobStatusChanged;
-        private Job _job;
-        private XadesReference _xadesReference;
         private PadesReference _padesReference;
-        private ConfirmationReference _confirmationReference;
-        private CancellationReference _cancellationReference;
+        private XadesReference _xadesReference;
 
         public TestHelper(PortalClient client)
         {
@@ -53,7 +51,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 throw new Exception("Unable to sign a contact identified by contact information, because this is not implemented.");
             }
 
-            var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber)signer.Identifier).Value).Result;
+            var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber) signer.Identifier).Value).Result;
             Assert.True(httpResponseMessage.IsSuccessStatusCode);
 
             return this;
@@ -87,12 +85,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public TestHelper GetXades()
         {
             Assert_state(_xadesReference);
-            
+
             _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.ElementAt(0).XadesReference.Url));
             _client.GetXades(_xadesReference).ConfigureAwait(false).GetAwaiter().GetResult();
 
             return this;
-
         }
 
         public TestHelper GetPades()
@@ -184,6 +181,5 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 throw new InvalidOperationException("Requires gradually built state. Make sure you use functions in the correct order");
             }
         }
-
     }
 }

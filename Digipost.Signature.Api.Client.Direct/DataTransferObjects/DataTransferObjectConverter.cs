@@ -6,7 +6,6 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
@@ -112,11 +111,9 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 Item = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber)
                     ? ((PersonalIdentificationNumber) signer.Identifier).Value
                     : ((CustomIdentifier) signer.Identifier).Value,
-
                 ItemElementName = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber)
                     ? ItemChoiceType.personalidentificationnumber
                     : ItemChoiceType.signeridentifier,
-
                 onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof(),
                 onbehalfofSpecified = true
             };

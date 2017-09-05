@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Portal.Enums;
 
 namespace Digipost.Signature.Api.Client.Portal

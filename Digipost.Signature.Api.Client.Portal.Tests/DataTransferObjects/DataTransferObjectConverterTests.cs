@@ -9,7 +9,6 @@ using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
@@ -775,14 +774,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature1.status.Value),
-                        Identifier = new PersonalIdentificationNumber((string)signature1.Item),
+                        Identifier = new PersonalIdentificationNumber((string) signature1.Item),
                         XadesReference = new XadesReference(new Uri(signature1.xadesurl)),
                         DateTimeForStatus = now
                     },
                     new Signature
                     {
                         SignatureStatus = new SignatureStatus(signature2.status.Value),
-                        Identifier = new PersonalIdentificationNumber((string)signature2.Item),
+                        Identifier = new PersonalIdentificationNumber((string) signature2.Item),
                         XadesReference = new XadesReference(new Uri(signature2.xadesurl)),
                         DateTimeForStatus = now
                     }

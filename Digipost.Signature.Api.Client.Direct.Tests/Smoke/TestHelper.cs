@@ -48,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             var identifierValue = signerIdentifier.GetType() == typeof(PersonalIdentificationNumber)
                 ? ((PersonalIdentificationNumber) signerIdentifier).Value
                 : ((CustomIdentifier) signerIdentifier).Value;
-            
+
             var statusUrl = _directClient.AutoSign(_jobResponse.JobId, identifierValue).Result;
             try
             {
@@ -126,7 +126,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         private static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
         {
             var statusReferenceUri = TransformReferenceToCorrectEnvironment(statusReference.Url());
-
 
             return new StatusReference(new Uri(statusReferenceUri.GetLeftPart(UriPartial.Path)), statusReference.StatusQueryToken);
         }

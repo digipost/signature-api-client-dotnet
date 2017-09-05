@@ -1,12 +1,10 @@
-﻿using System;
-using Digipost.Signature.Api.Client.Core;
+﻿using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Xunit;
 using static Digipost.Signature.Api.Client.Direct.Tests.Smoke.TestHelper;
-using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {

@@ -1,5 +1,4 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests
@@ -20,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                         new email {address = "email@example.com"}
                     }
                 },
-                status = new signaturestatus()
+                status = new signaturestatus
                 {
                     since = dateTime,
                     Value = "REJECTED"
@@ -44,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 Item = "01013300001"
                 ,
-                status = new signaturestatus()
+                status = new signaturestatus
                 {
                     since = dateTime,
                     Value = "REJECTED"
@@ -58,7 +57,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             Assert.Equal(dateTime, signer.DateTimeForStatus);
             Assert.Equal(source.status.Value, signer.SignatureStatus.Identifier);
             Assert.Equal(source.xadesurl, signer.XadesReference.Url.OriginalString);
-
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Xunit;
 

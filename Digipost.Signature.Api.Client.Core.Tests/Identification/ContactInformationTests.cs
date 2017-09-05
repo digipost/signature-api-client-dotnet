@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Linq;
 using Digipost.Signature.Api.Client.Core.Identifier;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Identification
 {
     public class ContactInformationTests
     {
-
         [Fact]
         public void FromXmlObject()
         {
@@ -45,6 +42,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Identification
             var argumentException = Assert.Throws<ArgumentException>(() => new ContactInformation(source));
             Assert.True(argumentException.Message.Contains("Unable to create ContactInformation"));
         }
-
     }
 }

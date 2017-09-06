@@ -108,10 +108,10 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             var dataTransferObject = new directsigner
             {
-                Item = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber)
+                Item = signer.Identifier.IsPersonalIdentificationNumber()
                     ? ((PersonalIdentificationNumber) signer.Identifier).Value
                     : ((CustomIdentifier) signer.Identifier).Value,
-                ItemElementName = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber)
+                ItemElementName = signer.Identifier.IsPersonalIdentificationNumber()
                     ? ItemChoiceType.personalidentificationnumber
                     : ItemChoiceType.signeridentifier,
                 onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof(),

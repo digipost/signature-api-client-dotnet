@@ -41,8 +41,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             var dateTime = DateTime.Now;
             var source = new signature
             {
-                Item = "01013300001"
-                ,
+                Item = "01013300001",
                 status = new signaturestatus
                 {
                     since = dateTime,

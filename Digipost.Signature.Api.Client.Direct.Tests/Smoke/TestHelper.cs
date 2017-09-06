@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_jobResponse);
 
-            var identifierValue = signerIdentifier.GetType() == typeof(PersonalIdentificationNumber)
+            var identifierValue = signerIdentifier.IsPersonalIdentificationNumber()
                 ? ((PersonalIdentificationNumber) signerIdentifier).Value
                 : ((CustomIdentifier) signerIdentifier).Value;
 

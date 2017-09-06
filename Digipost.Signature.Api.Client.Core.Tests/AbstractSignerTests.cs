@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var signer = new SignerStub(personalIdentificationNumber);
 
                 //Assert
-                Assert.True(personalIdentificationNumber.IsSameAs(signer.Identifier));
+                Assert.True(personalIdentificationNumber.IsSameAs(signer.Identifier), $"Actual {nameof(PersonalIdentificationNumber)}  was not same as initialized value.");
             }
         }
     }

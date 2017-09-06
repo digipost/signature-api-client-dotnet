@@ -11,7 +11,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
     {
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Resources");
 
-        public static string BringOrganizationNumber => "988015814";
+        public static string BringPublicOrganizationNumber => "988015814";
+
+        public static string BringPrivateOrganizationNumber => "088015814";
 
         public static string PostenOrganizationNumber => "984661185";
 
@@ -27,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static Sender GetSender()
         {
-            var organizationNumberQaOrganization = BringOrganizationNumber;
+            var organizationNumberQaOrganization = BringPublicOrganizationNumber;
             return new Sender(organizationNumberQaOrganization);
         }
 

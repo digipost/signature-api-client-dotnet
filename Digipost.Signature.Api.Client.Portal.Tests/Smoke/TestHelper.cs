@@ -7,8 +7,8 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Portal.Enums;
-using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Portal.Tests.Utilities.DomainUtility;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
@@ -31,9 +31,24 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             Log.Debug($"Sending in PortalClient Class Initialize. {_client.ClientConfiguration}");
         }
 
-        public TestHelper Create_portal_job(params SignerIdentifier[] signers)
+        public TestHelper Create_job(Sender sender, params Signer[] signers)
         {
-            _job = DomainUtility.GetPortalJob();
+            return Create(GetPortalJob(signers), sender);
+        }
+
+        public TestHelper Create_job(params Signer[] signers)
+        {
+            return Create(GetPortalJob(signers));
+        }
+
+        private TestHelper Create(Job job, Sender optionalSender = null)
+        {
+            if (optionalSender != null)
+            {
+                job.Sender = optionalSender;
+            }
+
+            _job = job;
             _jobResponse = _client.Create(_job).Result;
             _cancellationReference = new CancellationReference(TransformReferenceToCorrectEnvironment(_jobResponse.CancellationReference.Url));
 
@@ -52,7 +67,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber) signer.Identifier).Value).Result;
-            Assert.True(httpResponseMessage.IsSuccessStatusCode);
+            Assert.True(httpResponseMessage.IsSuccessStatusCode, "Signing through API failed. Are you trying to sign a job type " +
+                                                                 "that we do not offer API signing for? Remember that this is not " +
+                                                                 "possible in production!");
 
             return this;
         }

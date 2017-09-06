@@ -3,8 +3,8 @@ using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
@@ -29,8 +29,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
         private static PortalClient GetPortalClient(Environment environment)
         {
-            var sender = new Sender("988015814");
-            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000};
+            var sender = new Sender(BringPublicOrganizationNumber);
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000};
             var client = new PortalClient(clientConfig);
             return client;
         }
@@ -48,10 +48,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_cancel()
         {
-            var signer = new PersonalIdentificationNumber("12345678910");
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com")));
 
             _fixture.TestHelper
-                .Create_portal_job(signer)
+                .Create_job(signer)
                 .Cancel_job()
                 .GetJobStatusChanged()
                 .Confirm_job();
@@ -60,16 +60,25 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_confirm()
         {
-            var signer = new PersonalIdentificationNumber("12345678910");
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com")));
 
             _fixture.TestHelper
-                .Create_portal_job(signer)
+                .Create_job(signer)
                 .Sign_job()
                 .GetJobStatusChanged()
                 .GetSignatureForSigner()
                 .GetXades()
                 .GetPades()
                 .Confirm_job();
+        }
+
+        [Fact]
+        public void Can_create_open_portal_job()
+        {
+            var signer = new Signer(new ContactInformation {Email = new Email("email@example.com"), Sms = new Sms("11111111")});
+
+            _fixture.TestHelper
+                .Create_job(new Sender(BringPrivateOrganizationNumber), signer);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var parameterSender = new Sender(PostenOrganizationNumber);
-                var clientConfigurationSender = new Sender(BringOrganizationNumber);
+                var clientConfigurationSender = new Sender(BringPublicOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), clientConfigurationSender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Can_be_called_without_sender_uses_sender_in_client_configuration()
             {
                 //Arrange
-                var sender = new Sender(BringOrganizationNumber);
+                var sender = new Sender(BringPublicOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), sender);
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)

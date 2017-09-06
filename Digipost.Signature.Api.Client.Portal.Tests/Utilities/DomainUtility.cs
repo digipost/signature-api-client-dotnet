@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
@@ -24,14 +25,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        public static Job GetPortalJob()
+        public static Job GetPortalJob(params Signer[] signers)
         {
-            return new Job(GetPortalDocument(), GetSignerWithPersonalIdentificationNumber(), "PortalJobReference");
-        }
-
-        public static Job GetPortalJobWithSignerIdentifier()
-        {
-            return new Job(GetPortalDocument(), GetSignerWithSignerIdentifer(), "PortalJobWithSignerIdentifierReferennce");
+            return new Job(
+                GetPortalDocument(),
+                signers.Length == 0 ? GetSignerWithPersonalIdentificationNumber() : signers.ToList(),
+                "PortalJobReference"
+            );
         }
 
         internal static Manifest GetPortalManifest()
@@ -53,17 +53,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new List<Signer>
             {
                 new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com")))
-            };
-        }
-
-        public static List<Signer> GetSignerWithSignerIdentifer()
-        {
-            return new List<Signer>
-            {
-                new Signer(new ContactInformation
-                {
-                    Email = new Email($"signeringtest{DateTime.Now.Hour + ':' + DateTime.Now.Minute}@sjafjell.no")
-                })
             };
         }
 

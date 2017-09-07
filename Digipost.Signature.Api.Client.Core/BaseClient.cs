@@ -58,16 +58,14 @@ namespace Digipost.Signature.Api.Client.Core
                 return sender;
             }
 
-            ValidateSenderCertificateThrowIfInvalid(ClientConfiguration.GlobalSender ?? jobSender);
+            ValidateSenderCertificateThrowIfInvalid();
 
             return sender;
         }
 
-        private void ValidateSenderCertificateThrowIfInvalid(Sender sender)
+        private void ValidateSenderCertificateThrowIfInvalid()
         {
-            var x509Certificate2 = new X509Certificate2(ClientConfiguration.Certificate);
-
-            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, sender.OrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
 
             if (validationResult.Type != CertificateValidationType.Valid)
             {

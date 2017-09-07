@@ -98,20 +98,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public void Throws_exception_on_invalid_certificate()
-            {
-                //Arrange
-                var sender = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
-                var client = new ClientStub(clientConfiguration);
-
-                //Act
-
-                //Assert
-                Assert.Throws<CertificateException>(() => client.GetCurrentSender(sender));
-            }
-
-            [Fact]
             public void Throws_exception_on_no_sender()
             {
                 //Arrange

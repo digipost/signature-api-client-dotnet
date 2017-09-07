@@ -58,7 +58,7 @@ namespace Digipost.Signature.Api.Client.Core
                 return sender;
             }
 
-            ValidateSenderCertificateThrowIfInvalid(sender);
+            ValidateSenderCertificateThrowIfInvalid(ClientConfiguration.GlobalSender ?? jobSender);
 
             return sender;
         }

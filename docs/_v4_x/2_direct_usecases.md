@@ -111,7 +111,7 @@ var directClient = new DirectClient(clientConfiguration);
 Document documentToSign = null; // As initialized earlier
 ExitUrls exitUrls = null; // As initialized earlier
 
-var signer = new PersonalIdentificationNumber("12345678910");
+var signer = new PersonalIdentificationNumber("00000000000");
 
 var job = new Job(
     documentToSign,
@@ -139,13 +139,14 @@ if (changedJob.Status == JobStatus.CompletedSuccessfully)
     // Get PAdES
 }
 
-if (changedJob.GetSignatureFrom(signer).SignatureStatus.Equals(SignatureStatus.Signed))
+if (changedJob.GetSignatureFor(signer).SignatureStatus.Equals(SignatureStatus.Signed))
 {
     // Get XAdES
 }
 
 // Confirm status change to avoid receiving it again
 await directClient.Confirm(changedJob.References.Confirmation);
+
 
 {% endhighlight %}
 
@@ -164,7 +165,7 @@ if (jobStatusResponse.Status == JobStatus.CompletedSuccessfully)
     var padesByteStream = await directClient.GetPades(jobStatusResponse.References.Pades);
 }
 
-var signature = jobStatusResponse.GetSignatureFrom(new PersonalIdentificationNumber("12345678910"));
+var signature = jobStatusResponse.GetSignatureFor(new PersonalIdentificationNumber("00000000000"));
 
 if (signature.Equals(SignatureStatus.Signed))
 {

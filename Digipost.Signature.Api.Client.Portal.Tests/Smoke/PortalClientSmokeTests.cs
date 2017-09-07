@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private static PortalClient GetPortalClient(Environment environment)
         {
             var sender = new Sender(BringPublicOrganizationNumber);
-            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000};
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000, LogRequestAndResponse = true};
             var client = new PortalClient(clientConfig);
             return client;
         }

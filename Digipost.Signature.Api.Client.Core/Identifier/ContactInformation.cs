@@ -4,7 +4,7 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
 {
     public class ContactInformation : SignerIdentifier
     {
-        internal ContactInformation()
+        public ContactInformation()
         {
         }
 

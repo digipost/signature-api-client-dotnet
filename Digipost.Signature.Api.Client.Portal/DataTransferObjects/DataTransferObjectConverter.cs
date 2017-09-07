@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Extensions;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
@@ -66,18 +66,29 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         internal static portalsigner ToDataTransferObject(Signer signer)
         {
-            var dataTransferObject = new portalsigner
-            {
-                personalidentificationnumber = signer.Identifier.Value
-            };
+            var dataTransferObject = new portalsigner();
+            var notifications = signer.Notifications;
 
-            if (signer.Notifications != null)
+            if (signer.Identifier is PersonalIdentificationNumber)
             {
-                dataTransferObject.Item = ToDataTransferObject(signer.Notifications);
+                dataTransferObject.Item = ((PersonalIdentificationNumber) signer.Identifier).Value;
+
+                if (notifications != null)
+                {
+                    dataTransferObject.Item1 = ToDataTransferObject(notifications);
+                }
+                else
+                {
+                    dataTransferObject.Item1 = ToDataTransferObject(signer.NotificationsUsingLookup);
+                }
             }
             else
             {
-                dataTransferObject.Item = ToDataTransferObject(signer.NotificationsUsingLookup);
+                if (notifications.ShouldSendEmail || notifications.ShouldSendSms)
+                {
+                    dataTransferObject.Item = new enabled();
+                    dataTransferObject.Item1 = ToDataTransferObject(notifications);
+                }
             }
 
             if (signer.Order != null)
@@ -98,12 +109,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
         {
             var notificationsDto = new List<object>();
 
-            if (notifications.Email != null)
+            if (notifications.ShouldSendEmail)
             {
                 notificationsDto.Add(new email {address = notifications.Email.Address});
             }
 
-            if (notifications.Sms != null)
+            if (notifications.ShouldSendSms)
             {
                 notificationsDto.Add(new sms {number = notifications.Sms.Number});
             }
@@ -156,8 +167,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return new JobResponse(portalsignaturejobresponse.signaturejobid, new Uri(portalsignaturejobresponse.cancellationurl));
         }
 
-        public static JobStatusChanged FromDataTransferObject(
-            portalsignaturejobstatuschangeresponse changeResponse)
+        public static JobStatusChanged FromDataTransferObject(portalsignaturejobstatuschangeresponse changeResponse)
         {
             var jobStatus = changeResponse.status.ToJobStatus();
             var confirmationReference = new ConfirmationReference(new Uri(changeResponse.confirmationurl));
@@ -174,27 +184,14 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             return result;
         }
 
-        private static List<Signature> FromDataTransferObject(signature[] signatures)
+        private static List<Signature> FromDataTransferObject(IEnumerable<signature> signatures)
         {
             return signatures.Select(FromDataTransferObject).ToList();
         }
 
         private static Signature FromDataTransferObject(signature signature)
         {
-            var result = new Signature
-            {
-                SignatureStatus = new SignatureStatus(signature.status.Value),
-                Signer = new PersonalIdentificationNumber(signature.personalidentificationnumber),
-                DateTimeForStatus = signature.status.since
-            };
-
-            var xadesUrl = signature.xadesurl;
-            if (!string.IsNullOrEmpty(xadesUrl))
-            {
-                result.XadesReference = new XadesReference(new Uri(xadesUrl));
-            }
-
-            return result;
+            return new Signature(signature);
         }
     }
 }

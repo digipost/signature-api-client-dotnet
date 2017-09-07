@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests

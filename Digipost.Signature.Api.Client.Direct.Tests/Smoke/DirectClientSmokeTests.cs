@@ -1,11 +1,10 @@
-﻿using System;
-using Digipost.Signature.Api.Client.Core;
+﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Xunit;
 using static Digipost.Signature.Api.Client.Direct.Tests.Smoke.TestHelper;
-using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
@@ -13,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
     {
         public DirectSmokeTestsFixture()
         {
-            TestHelper = new TestHelper(GetDirectClient());
+            TestHelper = new TestHelper(DirectClient(Endpoint));
         }
 
         public TestHelper TestHelper { get; set; }
@@ -29,38 +28,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             var client = new DirectClient(clientConfig);
 
             return client;
-        }
-
-        private static DirectClient GetDirectClient()
-        {
-            DirectClient directClient;
-
-            switch (ClientType)
-            {
-                case Client.Localhost:
-                    directClient = DirectClient(Environment.Localhost);
-                    break;
-                case Client.DifiTest:
-                    directClient = DirectClient(Environment.DifiTest);
-                    break;
-                case Client.DifiQa:
-                    directClient = DirectClient(Environment.DifiQa);
-                    break;
-                case Client.Test:
-                    var testEnvironment = Environment.DifiTest;
-                    testEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "test"));
-                    directClient = DirectClient(testEnvironment);
-                    break;
-                case Client.Qa:
-                    var qaTestEnvironment = Environment.DifiTest;
-                    qaTestEnvironment.Url = new Uri(Environment.DifiQa.Url.AbsoluteUri.Replace("difiqa", "qa"));
-                    directClient = DirectClient(qaTestEnvironment);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return directClient;
         }
     }
 

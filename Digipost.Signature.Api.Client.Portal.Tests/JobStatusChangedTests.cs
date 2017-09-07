@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Xunit;
 
@@ -22,13 +23,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Signed,
-                        Signer = new PersonalIdentificationNumber("123456789"),
+                        Identifier = new PersonalIdentificationNumber("123456789"),
                         XadesReference = new XadesReference(new Uri("http://xadesuri1.no"))
                     },
                     new Signature
                     {
                         SignatureStatus = SignatureStatus.Waiting,
-                        Signer = new PersonalIdentificationNumber("123456789"),
+                        Identifier = new PersonalIdentificationNumber("123456789"),
                         XadesReference = null
                     }
                 };

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
-    public class TestHelper
+    public class TestHelper : TestHelperBase
     {
         private readonly DirectClient _directClient;
 
@@ -39,11 +41,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Sign_job(SignerIdentifier signer)
+        public TestHelper Sign_job(SignerIdentifier signerIdentifier)
         {
             Assert_state(_jobResponse);
 
-            var statusUrl = _directClient.AutoSign(_jobResponse.JobId, signer.Value).Result;
+            var identifierValue = signerIdentifier.IsPersonalIdentificationNumber()
+                ? ((PersonalIdentificationNumber) signerIdentifier).Value
+                : ((CustomIdentifier) signerIdentifier).Value;
+
+            var statusUrl = _directClient.AutoSign(_jobResponse.JobId, identifierValue).Result;
             try
             {
                 var queryParams = new Uri(statusUrl).Query;
@@ -68,13 +74,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_statusReference);
 
-            _status = MorphJobStatusResponseIfMayBe(_directClient.GetStatus(_statusReference).Result);
+            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(_directClient.GetStatus(_statusReference).Result);
             return this;
         }
 
         public TestHelper Get_status_by_polling()
         {
-            _status = MorphJobStatusResponseIfMayBe(_directClient.GetStatusChange().Result);
+            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(_directClient.GetStatusChange().Result);
             return this;
         }
 
@@ -85,7 +91,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             Assert.Equal(expectedJobStatus, _status.Status);
             foreach (var expectedSignatureStatus in expectedSignatureStatuses)
             {
-                Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFrom(expectedSignatureStatus.Key).SignatureStatus);
+                Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFor(expectedSignatureStatus.Key).SignatureStatus);
             }
             return this;
         }
@@ -94,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_status);
 
-            var xades = _directClient.GetXades(_status.GetSignatureFrom(signer).XadesReference).Result;
+            var xades = _directClient.GetXades(_status.GetSignatureFor(signer).XadesReference).Result;
             Assert.True(xades.CanRead);
             return this;
         }
@@ -119,22 +125,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private static StatusReference MorphStatusReferenceIfMayBe(StatusReference statusReference)
         {
-            var statusReferenceUri = GetUriFromRelativePath(statusReference.Url().AbsolutePath);
-            return new StatusReference(statusReferenceUri, statusReference.StatusQueryToken);
+            var statusReferenceUri = TransformReferenceToCorrectEnvironment(statusReference.Url());
+
+            return new StatusReference(new Uri(statusReferenceUri.GetLeftPart(UriPartial.Path)), statusReference.StatusQueryToken);
         }
 
-        private static JobStatusResponse MorphJobStatusResponseIfMayBe(JobStatusResponse jobStatusResponse)
+        private static JobStatusResponse TransformJobUrlsToCorrectEnvironmentIfNeeded(JobStatusResponse jobStatusResponse)
         {
-            if (ClientType == SmokeTests.Client.Localhost)
+            if (Endpoint == Localhost)
             {
-                //Server returns 'localhost' as server address, while the server is running on vmWare hos address. We swap it here to avoid configuring server
                 jobStatusResponse.Signatures = jobStatusResponse.Signatures.Select(signature =>
                 {
-                    var xadesReference = signature.XadesReference == null ? null : new XadesReference(GetUriFromRelativePath(signature.XadesReference.Url.AbsolutePath));
+                    var xadesReference = signature.XadesReference == null ? null : new XadesReference(TransformReferenceToCorrectEnvironment(signature.XadesReference.Url));
                     return new Signature(signature.Signer, xadesReference, signature.SignatureStatus, signature.DateTimeForStatus);
                 }).ToList();
-                jobStatusResponse.References.Pades = new PadesReference(GetUriFromRelativePath(jobStatusResponse.References.Pades.Url.AbsolutePath));
-                jobStatusResponse.References.Confirmation = new ConfirmationReference(GetUriFromRelativePath(jobStatusResponse.References.Confirmation.Url.AbsolutePath));
+
+                jobStatusResponse.References.Pades = new PadesReference(TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Pades.Url));
+                jobStatusResponse.References.Confirmation = new ConfirmationReference(TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Confirmation.Url));
             }
 
             return jobStatusResponse;

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
@@ -109,8 +109,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     new JobReferences(new Uri("https://example.com/confirmation-url"), null),
                     new List<Signature>
                     {
-                        new Signature(new SignerIdentifier("12345678910"), null, SignatureStatus.Rejected, now),
-                        new Signature(new SignerIdentifier("10987654321"), new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
+                        new Signature("12345678910", null, SignatureStatus.Rejected, now),
+                        new Signature("10987654321", new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
                     }
                 );
 
@@ -429,7 +429,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     source.signaturejobid,
                     JobStatus.CompletedSuccessfully,
                     new JobReferences(new Uri(source.confirmationurl), new Uri(source.padesurl)),
-                    new List<Signature> {new Signature(new SignerIdentifier("12345678910"), new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, now)}
+                    new List<Signature> {new Signature("12345678910", new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, now)}
                 );
 
                 //Act
@@ -510,7 +510,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     source.signaturejobid,
                     JobStatus.Failed,
                     new JobReferences(new Uri("https://example.com/confirmation-url"), null),
-                    new List<Signature> {new Signature(new SignerIdentifier("12345678910"), null, SignatureStatus.Rejected, now)}
+                    new List<Signature> {new Signature("12345678910", null, SignatureStatus.Rejected, now)}
                 );
 
                 //Act

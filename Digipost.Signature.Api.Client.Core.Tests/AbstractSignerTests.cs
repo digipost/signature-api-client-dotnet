@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Tests.Stubs;
+﻿using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
@@ -17,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var signer = new SignerStub(personalIdentificationNumber);
 
                 //Assert
-                Assert.Equal(personalIdentificationNumber, signer.Identifier);
+                Assert.True(personalIdentificationNumber.IsSameAs(signer.Identifier), $"Actual {nameof(PersonalIdentificationNumber)}  was not same as initialized value.");
             }
         }
     }

@@ -1,12 +1,13 @@
 ﻿using Digipost.Signature.Api.Client.Core.Enums;
+using Digipost.Signature.Api.Client.Core.Identifier;
 
 namespace Digipost.Signature.Api.Client.Core
 {
     public abstract class AbstractSigner
     {
-        protected AbstractSigner(SignerIdentifier signerIdentifier)
+        protected AbstractSigner(SignerIdentifier identifier)
         {
-            Identifier = signerIdentifier;
+            Identifier = identifier;
         }
 
         public SignerIdentifier Identifier { get; }
@@ -19,7 +20,10 @@ namespace Digipost.Signature.Api.Client.Core
 
         public override string ToString()
         {
-            return $"{Identifier.GetType().Name}: {Identifier}, {nameof(Order)}: {Order}, {nameof(SignatureType)}: {SignatureType}";
+            var order = Order != null ? $"with {nameof(Order).ToLower()} {Order}" : string.Empty;
+            var signatureType = SignatureType != null ? $"and {nameof(SignatureType).ToLower()} {SignatureType}" : string.Empty;
+
+            return $"Signer with {nameof(Identifier).ToLower()} '{Identifier}' {order} {signatureType}";
         }
     }
 }

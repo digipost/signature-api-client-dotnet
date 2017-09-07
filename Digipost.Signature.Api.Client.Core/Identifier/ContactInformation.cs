@@ -28,9 +28,9 @@ namespace Digipost.Signature.Api.Client.Core.Identifier
             }
         }
 
-        public Email Email { get; internal set; }
+        public Email Email { get; set; }
 
-        public Sms Sms { get; internal set; }
+        public Sms Sms { get; set; }
 
         public bool IsEmailSpecified => Email != null;
 

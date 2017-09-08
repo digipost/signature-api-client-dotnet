@@ -2,11 +2,10 @@
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class Job : IRequestContent, ISignatureJob
+    public class Job : IRequestContent, ISignatureJob, IJobCustomizations
     {
         public Job(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {

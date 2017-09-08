@@ -3,11 +3,10 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.Enums;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class Job : IRequestContent, ISignatureJob
+    public class Job : IRequestContent, ISignatureJob, IJobCustomizations
     {
         public Job(Document document, IEnumerable<Signer> signers, string reference, ExitUrls exitUrls, Sender sender = null, StatusRetrievalMethod statusRetrievalMethod = StatusRetrievalMethod.WaitForCallback)
         {

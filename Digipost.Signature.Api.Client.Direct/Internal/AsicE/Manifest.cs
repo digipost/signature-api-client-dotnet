@@ -4,7 +4,6 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core.Enums;
-using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Core.Extensions
 {

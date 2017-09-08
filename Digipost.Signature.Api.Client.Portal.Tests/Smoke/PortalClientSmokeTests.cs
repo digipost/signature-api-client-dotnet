@@ -60,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_confirm()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com")));
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com")));
 
             _fixture.TestHelper
                 .Create_job(signer)

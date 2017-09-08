@@ -34,7 +34,7 @@ var documentToSign = new Document(
     "This is the content",
     FileType.Pdf,
     @"C:\Path\ToDocument\File.pdf"
-    );
+);
 
 var signers = new List<Signer>
 {
@@ -42,9 +42,13 @@ var signers = new List<Signer>
     new Signer(new PersonalIdentificationNumber("11111111111"), new Notifications(
         new Email("email1@example.com"),
         new Sms("999999999"))),
-    new Signer(new ContactInformation{ Email = new Email("email2@example.com")}),
-    new Signer(new ContactInformation{ Sms = new Sms("88888888")}),
-    new Signer(new ContactInformation{ Email = new Email("email3@example.com"), Sms = new Sms("77777777")}),
+    new Signer(new ContactInformation {Email = new Email("email2@example.com")}),
+    new Signer(new ContactInformation {Sms = new Sms("88888888")}),
+    new Signer(new ContactInformation
+    {
+        Email = new Email("email3@example.com"),
+        Sms = new Sms("77777777")
+    })
 };
 
 var portalJob = new Job(documentToSign, signers, "myReferenceToJob");

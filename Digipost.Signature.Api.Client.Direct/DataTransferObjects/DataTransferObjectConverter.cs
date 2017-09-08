@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Extensions;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using Digipost.Signature.Api.Client.Scripts.XsdToCode.Code;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
     public static class DataTransferObjectConverter
-
     {
         public static directsignaturejobrequest ToDataTransferObject(Job job)
         {
@@ -52,9 +51,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             foreach (var signerstatus in directsignaturejobstatusresponse.status)
             {
                 var xadesurl = directsignaturejobstatusresponse.xadesurl?.SingleOrDefault(xades => xades.signer.Equals(signerstatus.signer));
-                var xadesReference = xadesurl == null ? null : new XadesReference(new Uri(xadesurl.Value));
-                var signature = new Signature(new SignerIdentifier(signerstatus.signer), xadesReference, new SignatureStatus(signerstatus.Value), signerstatus.since);
-                signatures.Add(signature);
+                signatures.Add(new Signature(signerstatus, xadesurl));
             }
 
             var jobReferences = new JobReferences(
@@ -71,7 +68,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             {
                 sender = ToDataTransferObject(manifest.Sender),
                 document = ToDataTransferObject((Document) manifest.Document),
-                signer = ToDataTransferObject(manifest.Signer).ToArray()
+                signer = ToDataTransferObject(manifest.Signers.Cast<Signer>().ToArray())
             };
 
             if (manifest.AuthenticationLevel != null)
@@ -102,17 +99,21 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        private static IEnumerable<directsigner> ToDataTransferObject(IEnumerable<AbstractSigner> signers)
+        private static directsigner[] ToDataTransferObject(IEnumerable<Signer> signers)
         {
-            return signers.Select(ToDataTransferObject);
+            return signers.Select(ToDataTransferObject).ToArray();
         }
 
-        public static directsigner ToDataTransferObject(AbstractSigner signer)
+        public static directsigner ToDataTransferObject(Signer signer)
         {
             var dataTransferObject = new directsigner
             {
-                Item = signer.Identifier.Value,
-                ItemElementName = signer.Identifier.GetType() == typeof(PersonalIdentificationNumber) ? ItemChoiceType.personalidentificationnumber : ItemChoiceType.signeridentifier,
+                Item = signer.Identifier.IsPersonalIdentificationNumber()
+                    ? ((PersonalIdentificationNumber) signer.Identifier).Value
+                    : ((CustomIdentifier) signer.Identifier).Value,
+                ItemElementName = signer.Identifier.IsPersonalIdentificationNumber()
+                    ? ItemChoiceType.personalidentificationnumber
+                    : ItemChoiceType.signeridentifier,
                 onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof(),
                 onbehalfofSpecified = true
             };

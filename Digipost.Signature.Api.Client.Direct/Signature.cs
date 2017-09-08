@@ -5,7 +5,16 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class Signature
     {
-        public Signature(SignerIdentifier signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
+        internal Signature(signerstatus status, signerspecificurl xadesUrl)
+        {
+            Signer = status.signer;
+            SignatureStatus = new SignatureStatus(status.signer);
+            XadesReference = xadesUrl == null ? null : new XadesReference(new Uri(xadesUrl.Value));
+            SignatureStatus = new SignatureStatus(status.Value);
+            DateTimeForStatus = status.since;
+        }
+
+        public Signature(string signer, XadesReference xadesReference, SignatureStatus signatureStatus, DateTime dateTimeForStatus)
         {
             Signer = signer;
             XadesReference = xadesReference;
@@ -13,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct
             DateTimeForStatus = dateTimeForStatus;
         }
 
-        public SignerIdentifier Signer { get; set; }
+        public string Signer { get; set; }
 
         public XadesReference XadesReference { get; set; }
 

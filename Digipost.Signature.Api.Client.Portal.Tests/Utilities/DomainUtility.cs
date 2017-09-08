@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
@@ -23,9 +25,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             };
         }
 
-        public static Job GetPortalJob()
+        public static Job GetPortalJob(params Signer[] signers)
         {
-            return new Job(GetPortalDocument(), GetSigner(), "PortalJobReference");
+            return new Job(
+                GetPortalDocument(),
+                signers.Length == 0 ? GetSignerWithPersonalIdentificationNumber() : signers.ToList(),
+                "PortalJobReference"
+            );
         }
 
         internal static Manifest GetPortalManifest()
@@ -42,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
             return new Document("TheTitle", "Some cool portal document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
         }
 
-        public static List<Signer> GetSigner()
+        public static List<Signer> GetSignerWithPersonalIdentificationNumber()
         {
             return new List<Signer>
             {

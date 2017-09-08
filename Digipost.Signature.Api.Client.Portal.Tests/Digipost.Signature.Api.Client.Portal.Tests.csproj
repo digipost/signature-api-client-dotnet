@@ -112,10 +112,12 @@
     <Compile Include="JobResponseTests.cs" />
     <Compile Include="JobStatusChangedTests.cs" />
     <Compile Include="JobTests.cs" />
+    <Compile Include="SignatureTests.cs" />
     <Compile Include="SignerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignatureStatusTests.cs" />
     <Compile Include="Smoke\PortalClientSmokeTests.cs" />
+    <Compile Include="Smoke\TestHelper.cs" />
     <Compile Include="Utilities\DomainUtility.cs" />
     <Compile Include="Utilities\ResponseUtility.cs" />
   </ItemGroup>

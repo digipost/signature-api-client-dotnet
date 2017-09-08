@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Can_disable_sender_certificate_validation()
             {
                 //Arrange
-                var sender = new Sender(BringOrganizationNumber);
+                var sender = new Sender(BringPublicOrganizationNumber);
                 var incorrectSenderCertificate = GetPostenTestCertificate();
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate)
                 {
@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_client_client_configuration_sender_if_only_set()
             {
                 //Arrange
-                var expected = new Sender(BringOrganizationNumber);
+                var expected = new Sender(BringPublicOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), expected);
                 var client = new ClientStub(clientConfiguration);
 
@@ -70,7 +70,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_job_sender_if_both_set()
             {
                 //Arrange
-                var expected = new Sender(BringOrganizationNumber);
+                var expected = new Sender(BringPublicOrganizationNumber);
                 var clientConfigurationSender = new Sender(PostenOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), clientConfigurationSender);
                 var client = new ClientStub(clientConfiguration);
@@ -86,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Returns_job_sender_if_only_set()
             {
                 //Arrange
-                var expected = new Sender(BringOrganizationNumber);
+                var expected = new Sender(BringPublicOrganizationNumber);
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate());
                 var client = new ClientStub(clientConfiguration);
 
@@ -95,20 +95,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.Equal(expected, actual);
-            }
-
-            [Fact]
-            public void Throws_exception_on_invalid_certificate()
-            {
-                //Arrange
-                var sender = new Sender(BringOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
-                var client = new ClientStub(clientConfiguration);
-
-                //Act
-
-                //Assert
-                Assert.Throws<CertificateException>(() => client.GetCurrentSender(sender));
             }
 
             [Fact]

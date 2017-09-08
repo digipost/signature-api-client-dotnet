@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Direct", "Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj", "{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Scripts", "Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj", "{24D1D03D-4F19-488E-8F3F-30DC6C5B7BEE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Resources", "Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj", "{1F5941D7-0AE5-40C4-B1DE-9ADBB6926420}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Docs", "Digipost.Signature.Api.Client.Docs\Digipost.Signature.Api.Client.Docs.csproj", "{191DE69E-9D1F-4C22-8272-CAA0B560E4D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,8 +72,15 @@ Global
 		{1F5941D7-0AE5-40C4-B1DE-9ADBB6926420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F5941D7-0AE5-40C4-B1DE-9ADBB6926420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F5941D7-0AE5-40C4-B1DE-9ADBB6926420}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191DE69E-9D1F-4C22-8272-CAA0B560E4D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191DE69E-9D1F-4C22-8272-CAA0B560E4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191DE69E-9D1F-4C22-8272-CAA0B560E4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191DE69E-9D1F-4C22-8272-CAA0B560E4D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ADB5D290-8187-44D2-BF34-75BD916C95AB}
 	EndGlobalSection
 EndGlobal

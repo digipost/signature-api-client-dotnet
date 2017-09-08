@@ -26,6 +26,11 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public List<Signature> Signatures { get; internal set; }
 
+        public Signature GetSignatureFor(Signer signer)
+        {
+            return Signatures.Find(elem => signer.Identifier.IsSameAs(elem.Identifier));
+        }
+
         public override string ToString()
         {
             return $"JobId: {JobId}, Status: {Status}, ConfirmationReference: {ConfirmationReference}, PadesReference: {PadesReference}, Signatures: {Signatures}";

@@ -1,4 +1,5 @@
 ﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -14,6 +15,12 @@ namespace Digipost.Signature.Api.Client.Portal
             : base(personalIdentificationNumber)
         {
             NotificationsUsingLookup = notificationsUsingLookup;
+        }
+
+        public Signer(ContactInformation contactInformation)
+            : base(contactInformation)
+        {
+            Notifications = new Notifications(contactInformation.Email, contactInformation.Sms);
         }
 
         public NotificationsUsingLookup NotificationsUsingLookup { get; }

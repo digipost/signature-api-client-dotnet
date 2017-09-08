@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
@@ -42,16 +42,27 @@ namespace Digipost.Signature.Api.Client.Direct
         /// <summary>
         ///     Gets the signature from a given signer.
         /// </summary>
-        /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature from this signer</exception>
+        /// <exception cref="InvalidOperationException">if the job response doesn't contain a signature for this signer</exception>
         /// <seealso cref="Signatures" />
-        public Signature GetSignatureFrom(SignerIdentifier signer)
+        public Signature GetSignatureFor(SignerIdentifier signer)
         {
-            var signature = Signatures.SingleOrDefault(s => s.Signer.Equals(signer));
-            if (signature == null)
+            Signature foundSignature = null;
+            if (signer is PersonalIdentificationNumber)
             {
-                throw new InvalidOperationException($"Unable to find signature from Signer '{signer}'");
+                foundSignature = Signatures.SingleOrDefault(s => s.Signer == ((PersonalIdentificationNumber) signer).Value);
             }
-            return signature;
+
+            if (signer is CustomIdentifier)
+            {
+                foundSignature = Signatures.SingleOrDefault(s => s.Signer == ((CustomIdentifier) signer).Value);
+            }
+
+            if (foundSignature == null)
+            {
+                throw new InvalidOperationException($"Unable to find signature for Signer '{signer}'");
+            }
+
+            return foundSignature;
         }
 
         public override string ToString()

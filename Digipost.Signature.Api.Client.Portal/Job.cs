@@ -2,6 +2,7 @@
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -20,6 +21,8 @@ namespace Digipost.Signature.Api.Client.Portal
         public Availability Availability { get; set; }
 
         public AuthenticationLevel? AuthenticationLevel { get; set; }
+
+        public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
 
         public AbstractDocument Document { get; }
 

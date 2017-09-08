@@ -4,6 +4,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 {
@@ -23,6 +24,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
         public IEnumerable<AbstractSigner> Signers { get; internal set; }
 
         public AuthenticationLevel? AuthenticationLevel { get; internal set; }
+
+        public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
 
         public byte[] Bytes
         {

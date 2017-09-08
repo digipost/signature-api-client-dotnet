@@ -3,6 +3,7 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Direct.Enums;
+using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -25,6 +26,8 @@ namespace Digipost.Signature.Api.Client.Direct
         public StatusRetrievalMethod StatusRetrievalMethod { get; }
 
         public AuthenticationLevel? AuthenticationLevel { get; set; }
+
+        public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
 
         public string Reference { get; }
 

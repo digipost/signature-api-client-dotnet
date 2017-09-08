@@ -5,7 +5,7 @@ using Digipost.Signature.Api.Client.Core.Internal;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
-    public class Job : IRequestContent, ISignatureJob, IJobCustomizations
+    public class Job : IRequestContent, ISignatureJob
     {
         public Job(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {

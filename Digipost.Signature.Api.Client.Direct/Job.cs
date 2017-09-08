@@ -6,7 +6,7 @@ using Digipost.Signature.Api.Client.Direct.Enums;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class Job : IRequestContent, ISignatureJob, IJobCustomizations
+    public class Job : IRequestContent, ISignatureJob
     {
         public Job(Document document, IEnumerable<Signer> signers, string reference, ExitUrls exitUrls, Sender sender = null, StatusRetrievalMethod statusRetrievalMethod = StatusRetrievalMethod.WaitForCallback)
         {

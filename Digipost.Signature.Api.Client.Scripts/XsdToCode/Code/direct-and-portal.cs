@@ -974,6 +974,10 @@ public partial class directsignaturejobmanifest {
     
     private bool requiredauthenticationFieldSpecified;
     
+    private identifierinsigneddocuments identifierinsigneddocumentsField;
+    
+    private bool identifierinsigneddocumentsFieldSpecified;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlElementAttribute("signer")]
     public directsigner[] signer {
@@ -1026,6 +1030,28 @@ public partial class directsignaturejobmanifest {
             this.requiredauthenticationFieldSpecified = value;
         }
     }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("identifier-in-signed-documents")]
+    public identifierinsigneddocuments identifierinsigneddocuments {
+        get {
+            return this.identifierinsigneddocumentsField;
+        }
+        set {
+            this.identifierinsigneddocumentsField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool identifierinsigneddocumentsSpecified {
+        get {
+            return this.identifierinsigneddocumentsFieldSpecified;
+        }
+        set {
+            this.identifierinsigneddocumentsFieldSpecified = value;
+        }
+    }
 }
 
 /// <remarks/>
@@ -1041,6 +1067,22 @@ public enum authenticationlevel {
     /// <remarks/>
     [System.Xml.Serialization.XmlEnumAttribute("4")]
     Item4,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(TypeName="identifier-in-signed-documents", Namespace="http://signering.posten.no/schema/v1")]
+public enum identifierinsigneddocuments {
+    
+    /// <remarks/>
+    PERSONAL_IDENTIFICATION_NUMBER_AND_NAME,
+    
+    /// <remarks/>
+    DATE_OF_BIRTH_AND_NAME,
+    
+    /// <remarks/>
+    NAME,
 }
 
 /// <remarks/>
@@ -1239,6 +1281,10 @@ public partial class portalsignaturejobmanifest {
     
     private availability availabilityField;
     
+    private identifierinsigneddocuments identifierinsigneddocumentsField;
+    
+    private bool identifierinsigneddocumentsFieldSpecified;
+    
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayItemAttribute("signer", IsNullable=false)]
     public portalsigner[] signers {
@@ -1299,6 +1345,28 @@ public partial class portalsignaturejobmanifest {
         }
         set {
             this.availabilityField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("identifier-in-signed-documents")]
+    public identifierinsigneddocuments identifierinsigneddocuments {
+        get {
+            return this.identifierinsigneddocumentsField;
+        }
+        set {
+            this.identifierinsigneddocumentsField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public bool identifierinsigneddocumentsSpecified {
+        get {
+            return this.identifierinsigneddocumentsFieldSpecified;
+        }
+        set {
+            this.identifierinsigneddocumentsFieldSpecified = value;
         }
     }
 }

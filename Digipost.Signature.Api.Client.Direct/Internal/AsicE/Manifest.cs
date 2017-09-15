@@ -24,6 +24,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
 
         public AuthenticationLevel? AuthenticationLevel { get; internal set; }
 
+        public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
+
         public byte[] Bytes
         {
             get

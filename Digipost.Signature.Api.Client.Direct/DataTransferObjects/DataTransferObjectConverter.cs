@@ -77,6 +77,12 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 dataTransferObject.requiredauthenticationSpecified = true;
             }
 
+            if (manifest.IdentifierInSignedDocuments != null)
+            {
+                dataTransferObject.identifierinsigneddocuments = manifest.IdentifierInSignedDocuments.Value.ToIdentifierInSignedDocuments();
+                dataTransferObject.identifierinsigneddocumentsSpecified = true;
+            }
+
             return dataTransferObject;
         }
 

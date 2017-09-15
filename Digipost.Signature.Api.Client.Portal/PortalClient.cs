@@ -47,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Portal
         ///     on the status change. If the returned object has status <see cref="JobStatus.NoChanges" />, there is no changes.
         ///     When
         ///     processing of the status change is complete, (e.g. retrieving  <see cref="GetPades(PadesReference)">Pades</see>
-        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.Completed" /> job
+        ///     and/or <see cref="GetXades(XadesReference)">Xades</see> documents for a <see cref="JobStatus.CompletedSuccessfully"/> job
         ///     where
         ///     all signers have <see cref="SignatureStatus">signed</see> their documents), the returned status must be
         ///     <see cref="Confirm(ConfirmationReference)">confirmed</see>.

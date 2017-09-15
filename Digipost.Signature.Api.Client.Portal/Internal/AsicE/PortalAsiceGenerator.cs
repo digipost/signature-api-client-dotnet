@@ -12,10 +12,11 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
             var manifest = new Manifest(job.Sender, (Document) job.Document, job.Signers)
             {
                 Availability = job.Availability,
-                AuthenticationLevel = job.AuthenticationLevel
+                AuthenticationLevel = job.AuthenticationLevel,
+                IdentifierInSignedDocuments = job.IdentifierInSignedDocuments
             };
-            var signature = new SignatureGenerator(certificate, job.Document, manifest);
 
+            var signature = new SignatureGenerator(certificate, job.Document, manifest);
             var asiceArchive = GetAsiceArchive(job, asiceConfiguration, job.Document, manifest, signature);
 
             return new DocumentBundle(asiceArchive.GetBytes());

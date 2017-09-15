@@ -43,5 +43,20 @@ namespace Digipost.Signature.Api.Client.Core.Extensions
                     throw new ArgumentOutOfRangeException(nameof(onBehalfOf), onBehalfOf, null);
             }
         }
+
+        public static identifierinsigneddocuments ToIdentifierInSignedDocuments(this IdentifierInSignedDocuments identifierInSignedDocuments)
+        {
+            switch (identifierInSignedDocuments)
+            {
+                case IdentifierInSignedDocuments.PersonalIdentificationNumberAndName:
+                    return identifierinsigneddocuments.PERSONAL_IDENTIFICATION_NUMBER_AND_NAME;
+                case IdentifierInSignedDocuments.DateOfBirthAndName:
+                    return identifierinsigneddocuments.DATE_OF_BIRTH_AND_NAME;
+                case IdentifierInSignedDocuments.Name:
+                    return identifierinsigneddocuments.NAME;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(identifierInSignedDocuments), identifierInSignedDocuments, null);
+            }
+        }
     }
 }

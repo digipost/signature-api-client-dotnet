@@ -89,6 +89,7 @@
     <Compile Include="Exceptions\SecurityException.cs" />
     <Compile Include="Exceptions\TooEagerPollingException.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
+    <Compile Include="Enums\IdentifierInSignedDocuments.cs" />
     <Compile Include="Identifier\ContactInformation.cs" />
     <Compile Include="Identifier\CustomIdentifier.cs" />
     <Compile Include="Identifier\Email.cs" />

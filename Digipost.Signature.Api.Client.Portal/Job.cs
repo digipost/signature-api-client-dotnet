@@ -21,6 +21,8 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public AuthenticationLevel? AuthenticationLevel { get; set; }
 
+        public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
+
         public AbstractDocument Document { get; }
 
         public string Reference { get; }

@@ -56,6 +56,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 }
             }
 
+            if (manifest.IdentifierInSignedDocuments != null)
+            {
+                dataTransferObject.identifierinsigneddocuments = manifest.IdentifierInSignedDocuments.Value.ToIdentifierInSignedDocuments();
+                dataTransferObject.identifierinsigneddocumentsSpecified = true;
+            }
+
             return dataTransferObject;
         }
 

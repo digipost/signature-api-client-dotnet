@@ -1,10 +1,22 @@
 
-##Kjøre dokumentasjon første gang
-* [Sjekk guide på help.github](https://help.github.com/articles/using-jekyll-with-pages/)
-* Her står det hvordan du kjører oppdatering av pakker osv. når det er lenge siden sist.
+## Sette opp maskin for kjøring av dokumentasjon
+```
+brew install ruby
+sudo gem install jekyll bundler
+
+```
+
+## Kjøre dokumentasjon
+
+```
+bundle install 	#Bør kjores så ofte som mulig for at visning på Github skal bli korrekt
+bundle exec jekyll serve
+```
+
+> Får du problemer med skriverettigheter til _/Library/Ruby/*_ så kan det fikses med å ta rettighetene til den mappa: `sudo chown -R $(whoami) /usr/local/`
 
 
-##For å legge til ny versjon:
+## For å legge til ny versjon:
 * kopier mappen med siste gjeldene versjon og lim det inn som en ny versjon (f.eks. `_v1_0` i root (`cp -r _v1_0 _v1_1`)
 * gå inn i index.html, i den nye mappen du lagde, og endre '{% for dok in site.v1_0 %}' til '{% for dok in site.v1_1 %}'
 * gå inn i _config.yml og sett riktig versjon i `currentCollecion`, `currentVersion` og `versions`. Legg deretter til den nye versjonen i `collections`.

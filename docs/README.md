@@ -9,7 +9,8 @@ sudo gem install jekyll bundler
 ## Kjøre dokumentasjon
 
 ```
-bundle install 	#Bør kjores så ofte som mulig for at visning på Github skal bli korrekt
+bundle install 	
+bundle update #Bør kjores så ofte som mulig for at visning på Github skal bli korrekt
 bundle exec jekyll serve
 ```
 

@@ -29,6 +29,10 @@ To communicate over HTTPS you need to sign your request with a business certific
 1.  Accept the certificate if prompted.
 1.  When prompted that the import was successful, click _Ok_
 
+> If you for some reason are not allowed to store the business certificate with the _exportable_ flag, it can be added to the store using the following script: `certutil -p <password> -csp "Microsoft Enhanced RSA and AES Cryptographic Provider"` 
+`-importpfx <filename> NoExport,AT_SIGNATURE`. 
+
+
 ### Use business certificate thumbprint
 
 1. Start mmc.exe (Click windowsbutton and type mmc.exe)

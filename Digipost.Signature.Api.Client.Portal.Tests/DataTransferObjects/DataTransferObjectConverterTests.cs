@@ -583,7 +583,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             }
 
             [Fact]
-            public void Converts_on_behalf_on()
+            public void Converts_on_behalf_of()
             {
                 //Arrange
                 var source = new Signer(

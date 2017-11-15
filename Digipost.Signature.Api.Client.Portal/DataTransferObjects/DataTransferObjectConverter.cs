@@ -97,6 +97,9 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 }
             }
 
+            dataTransferObject.onbehalfof = signer.OnBehalfOf.ToSigningonbehalfof();
+            dataTransferObject.onbehalfofSpecified = true;
+
             if (signer.Order != null)
             {
                 dataTransferObject.order = signer.Order.Value;

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
@@ -48,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_cancel()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com")));
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
 
             _fixture.TestHelper
                 .Create_job(signer)
@@ -60,7 +61,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_confirm()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com")));
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
 
             _fixture.TestHelper
                 .Create_job(signer)

@@ -3,10 +3,18 @@
     public class Sender
     {
         public Sender(string organizationNumber)
+            : this(organizationNumber, PollingQueue.Default)
         {
-            OrganizationNumber = organizationNumber;
         }
 
-        public string OrganizationNumber { get; }
+        public Sender(string organizationNumber, PollingQueue pollingQueue)
+        {
+            OrganizationNumber = organizationNumber;
+            PollingQueue = pollingQueue;
+        }
+
+        public string OrganizationNumber { get; set; }
+
+        public PollingQueue PollingQueue { get; set; }
     }
 }

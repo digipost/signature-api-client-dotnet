@@ -18,6 +18,12 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 reference = job.Reference
             };
 
+            var senderPollingQueue = job.Sender.PollingQueue.Name;
+            if (!string.IsNullOrEmpty(senderPollingQueue))
+            {
+                portalsignaturejobrequest.pollingqueue = senderPollingQueue;
+            }
+
             return portalsignaturejobrequest;
         }
 

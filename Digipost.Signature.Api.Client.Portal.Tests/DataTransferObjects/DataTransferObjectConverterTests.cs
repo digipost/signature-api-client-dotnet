@@ -4,12 +4,14 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 {
@@ -534,11 +536,38 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var document = DomainUtility.GetPortalDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
-                var source = new Job(document, signers, reference);
+                var source = new Job(document, signers, reference, new Sender(BringPublicOrganizationNumber));
 
                 var expected = new portalsignaturejobrequest
                 {
                     reference = reference
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_portal_job_with_polling_queue_successfully()
+            {
+                //Arrange
+                var document = DomainUtility.GetPortalDocument();
+                var signers = DomainUtility.GetSigners(2);
+                var reference = "reference";
+                var custompollingqueue = "CustomPollingQueue";
+                var sender = new Sender(BringPublicOrganizationNumber, new PollingQueue(custompollingqueue));
+                var source = new Job(document, signers, reference, sender);
+
+                var expected = new portalsignaturejobrequest
+                {
+                    reference = reference,
+                    pollingqueue = custompollingqueue
                 };
 
                 //Act

@@ -81,5 +81,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             _fixture.TestHelper
                 .Create_job(new Sender(BringPrivateOrganizationNumber), signer);
         }
+
+        [Fact]
+        public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
+        {
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
+            var sender = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPollingQueue"));
+            _fixture.TestHelper
+                .Create_job(sender, signer)
+                .Sign_job()
+                .GetJobStatusChanged(sender);
+        }
     }
 }

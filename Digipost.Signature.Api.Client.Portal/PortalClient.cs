@@ -10,11 +10,13 @@ using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Enums;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using static Digipost.Signature.Api.Client.Core.Internal.Enums.JobType;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
@@ -30,7 +32,7 @@ namespace Digipost.Signature.Api.Client.Portal
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
-            var relativeUrl = RelativeUrl(job.Sender);
+            var relativeUrl = RelativeUrl(job.Sender, JobType.Portal);
 
             var documentBundle = PortalAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var portalCreateAction = new CreateAction(job, documentBundle);
@@ -63,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
             var request = new HttpRequestMessage
             {
-                RequestUri = RelativeUrl(CurrentSender(sender)),
+                RequestUri = RelativeUrl(CurrentSender(sender), JobType.Portal),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
@@ -97,10 +99,6 @@ namespace Digipost.Signature.Api.Client.Portal
             return jobStatusChanged;
         }
 
-        private static Uri RelativeUrl(Sender sender)
-        {
-            return new Uri($"/api/{sender.OrganizationNumber}/portal/signature-jobs", UriKind.Relative);
-        }
 
         private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {

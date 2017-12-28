@@ -10,10 +10,12 @@ using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
+using Digipost.Signature.Api.Client.Core.Internal.Enums;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using static Digipost.Signature.Api.Client.Core.Internal.Enums.JobType;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
@@ -29,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
-            var relativeUrl = RelativeUrl(job.Sender);
+            var relativeUrl = RelativeUrl(job.Sender, JobType.Direct);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var createAction = new CreateAction(job, documentBundle);
@@ -38,11 +40,6 @@ namespace Digipost.Signature.Api.Client.Direct
             Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
             return directJobResponse;
-        }
-
-        private static Uri RelativeUrl(Sender sender)
-        {
-            return new Uri($"/api/{sender.OrganizationNumber}/direct/signature-jobs", UriKind.Relative);
         }
 
         /// <summary>
@@ -100,7 +97,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = RelativeUrl(CurrentSender(sender)),
+                RequestUri = RelativeUrl(CurrentSender(sender), JobType.Direct),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));

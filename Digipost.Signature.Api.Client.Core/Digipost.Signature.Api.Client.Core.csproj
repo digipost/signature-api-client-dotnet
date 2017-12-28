@@ -106,6 +106,7 @@
     <Compile Include="BaseClient.cs" />
     <Compile Include="CancellationReference.cs" />
     <Compile Include="ConfirmationReference.cs" />
+    <Compile Include="Internal\Enums\JobType.cs" />
     <Compile Include="Internal\MediaType.cs" />
     <Compile Include="Internal\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Environment.cs" />

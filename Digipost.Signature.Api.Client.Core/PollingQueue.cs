@@ -2,6 +2,8 @@
 {
     public class PollingQueue
     {
+        internal static string QueryParameterName = "polling_queue";
+
         public static PollingQueue Default = new PollingQueue(); 
 
         public PollingQueue(string name = null)

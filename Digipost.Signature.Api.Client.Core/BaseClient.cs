@@ -9,6 +9,7 @@ using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Api.Client.Shared.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
+using Digipost.Signature.Api.Client.Core.Internal.Enums;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -122,5 +123,18 @@ namespace Digipost.Signature.Api.Client.Core
         {
             LanguageResource.CurrentLanguage = Language.English;
         }
+
+        internal static Uri RelativeUrl(Sender sender, JobType jobType)
+        {
+            var relativeUri = $"/api/{sender.OrganizationNumber}/{jobType.ToString().ToLower()}/signature-jobs";
+
+            if (!string.IsNullOrEmpty(sender.PollingQueue.Name))
+            {
+                relativeUri += $"?{PollingQueue.QueryParameterName}={sender.PollingQueue.Name}";
+            }
+
+            return new Uri(relativeUri, UriKind.Relative);
+        }
+
     }
 }

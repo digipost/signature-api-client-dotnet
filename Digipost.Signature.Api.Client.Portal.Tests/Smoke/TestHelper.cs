@@ -74,11 +74,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return this;
         }
 
-        public TestHelper GetJobStatusChanged()
+        public TestHelper GetJobStatusChanged(Sender sender = null)
         {
             Assert_state(_jobResponse);
 
-            _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client);
+            _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client, sender);
             _confirmationReference = new ConfirmationReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.ConfirmationReference.Url));
 
             if (_jobStatusChanged.Status == JobStatus.CompletedSuccessfully)
@@ -167,12 +167,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return this;
         }
 
-        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
+        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient, Sender sender = null)
         {
             JobStatusChanged jobStatusChanged = null;
             while (jobStatusChanged == null)
             {
-                var statusChange = portalClient.GetStatusChange().Result;
+                var statusChange = portalClient.GetStatusChange(sender).Result;
                 if (statusChange.JobId == jobId)
                 {
                     jobStatusChanged = statusChange;

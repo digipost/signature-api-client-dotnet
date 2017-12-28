@@ -6,6 +6,7 @@ using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
+using static Digipost.Signature.Api.Client.Portal.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
@@ -54,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             _fixture.TestHelper
                 .Create_job(signer)
                 .Cancel_job()
-                .GetJobStatusChanged()
+                .ExpectJobStatusForSenderIs(Failed)
                 .Confirm_job();
         }
 
@@ -66,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             _fixture.TestHelper
                 .Create_job(signer)
                 .Sign_job()
-                .GetJobStatusChanged()
+                .ExpectJobStatusForSenderIs(CompletedSuccessfully)
                 .GetSignatureForSigner()
                 .GetXades()
                 .GetPades()
@@ -86,11 +87,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
-            var sender = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPollingQueue"));
+            var senderWithQueue = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPollingQueue"));
+            var senderWithoutQueue = new Sender(BringPrivateOrganizationNumber);
+
             _fixture.TestHelper
-                .Create_job(sender, signer)
+                .Create_job(senderWithQueue, signer)
                 .Sign_job()
-                .GetJobStatusChanged(sender);
+                .ExpectJobStatusForSenderIs(NoChanges, senderWithoutQueue)
+                .ExpectJobStatusForSenderIs(CompletedSuccessfully, senderWithQueue)
+                .ExpectJobStatusForSenderIs(NoChanges, senderWithQueue);
+
         }
     }
 }

@@ -16,7 +16,6 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
-using static Digipost.Signature.Api.Client.Core.Internal.Enums.JobType;
 
 namespace Digipost.Signature.Api.Client.Portal
 {

@@ -87,7 +87,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
-            var senderWithQueue = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPollingQueue"));
+            var senderWithQueue = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPortalPollingQueue"));
             var senderWithoutQueue = new Sender(BringPrivateOrganizationNumber);
 
             _fixture.TestHelper

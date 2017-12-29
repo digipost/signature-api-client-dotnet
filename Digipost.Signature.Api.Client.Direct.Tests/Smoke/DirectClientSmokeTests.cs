@@ -106,17 +106,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         }
 
         [Fact]
-        public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
+        public void create_job_with_queue()
         {
             var signer = new PersonalIdentificationNumber("12345678910");
-            var senderWithQueue = new Sender(BringPublicOrganizationNumber, new PollingQueue("CustomPollingQueue"));
-            var senderWithoutQueue = _fixture.Sender;
-
+            var senderWithQueue = new Sender(BringPublicOrganizationNumber, new PollingQueue("CustomDirectPollingQueue"));
+          
             _fixture.TestHelper
                 .Create_pollable_direct_job(senderWithQueue, signer)
                 .Sign_job(signer)
-                .Get_status_by_polling(senderWithoutQueue)
-                .Expect_job_to_have_status(JobStatus.NoChanges)
                 .Get_status_by_polling(senderWithQueue)
                 .Expect_job_to_have_status(JobStatus.CompletedSuccessfully)
                 .Get_status_by_polling(senderWithQueue)

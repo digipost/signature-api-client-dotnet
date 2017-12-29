@@ -62,7 +62,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_confirm()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
 
             _fixture.TestHelper
                 .Create_job(signer)
@@ -86,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
+            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
             var senderWithQueue = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPollingQueue"));
             var senderWithoutQueue = new Sender(BringPrivateOrganizationNumber);
 
@@ -96,7 +96,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 .ExpectJobStatusForSenderIs(NoChanges, senderWithoutQueue)
                 .ExpectJobStatusForSenderIs(CompletedSuccessfully, senderWithQueue)
                 .ExpectJobStatusForSenderIs(NoChanges, senderWithQueue);
-
         }
     }
 }

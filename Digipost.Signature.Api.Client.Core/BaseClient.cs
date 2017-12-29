@@ -124,11 +124,14 @@ namespace Digipost.Signature.Api.Client.Core
             LanguageResource.CurrentLanguage = Language.English;
         }
 
-        internal static Uri RelativeUrl(Sender sender, JobType jobType)
+        internal static Uri RelativeUrl(Sender sender, JobType jobType, HttpMethod httpMethod)
         {
             var relativeUri = $"/api/{sender.OrganizationNumber}/{jobType.ToString().ToLower()}/signature-jobs";
 
-            if (!string.IsNullOrEmpty(sender.PollingQueue.Name))
+            var shouldAppendQueryParameter = httpMethod == HttpMethod.Get;
+            var pollingQueueDefinded = !string.IsNullOrEmpty(sender.PollingQueue.Name);
+
+            if (shouldAppendQueryParameter && pollingQueueDefinded)
             {
                 relativeUri += $"?{PollingQueue.QueryParameterName}={sender.PollingQueue.Name}";
             }

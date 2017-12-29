@@ -28,10 +28,10 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public async Task<JobResponse> Create(Job job)
+        public async Task<JobResponse> Create(Job job) //TODO: Vi skal ikke appende queryparam for create.
         {
             job.Sender = CurrentSender(job.Sender);
-            var relativeUrl = RelativeUrl(job.Sender, JobType.Direct);
+            var relativeUrl = RelativeUrl(job.Sender, JobType.Direct, HttpMethod.Post);
 
             var documentBundle = DirectAsiceGenerator.CreateAsice(job, ClientConfiguration.Certificate, ClientConfiguration);
             var createAction = new CreateAction(job, documentBundle);
@@ -97,7 +97,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = RelativeUrl(CurrentSender(sender), JobType.Direct),
+                RequestUri = RelativeUrl(CurrentSender(sender), JobType.Direct, HttpMethod.Get),
                 Method = HttpMethod.Get
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));

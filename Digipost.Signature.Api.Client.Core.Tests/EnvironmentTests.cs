@@ -12,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Gets_initialize_localhost_environment()
             {
                 //Arrange
-                var url = new Uri("https://172.16.91.1:8443");
+                var url = new Uri("https://192.168.1.106:8443");
                 var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
 
                 //Act

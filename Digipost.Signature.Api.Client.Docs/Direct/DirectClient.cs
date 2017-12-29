@@ -137,6 +137,33 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             await directClient.Confirm(jobStatusResponse.References.Confirmation);
         }
 
+        public async Task SpecifyingQueues()
+        {
+            ClientConfiguration clientConfiguration = null; // As initialized earlier
+            var directClient = new DirectClient(clientConfiguration);
+
+            String organizationNumber = "123456789";
+            var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
+
+            Document documentToSign = null; // As initialized earlier
+            ExitUrls exitUrls = null; // As initialized earlier
+
+            var signer = new PersonalIdentificationNumber("00000000000");
+
+            var job = new Job(
+                documentToSign,
+                new List<Signer> { new Signer(signer) },
+                "SendersReferenceToSignatureJob",
+                exitUrls,
+                sender,
+                StatusRetrievalMethod.Polling
+            );
+
+            await directClient.Create(job);
+
+            var changedJob = await directClient.GetStatusChange(sender);
+        }
+
         public async Task ErrorHandling()
         {
             /**

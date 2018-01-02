@@ -188,7 +188,7 @@ await directClient.Confirm(jobStatusResponse.References.Confirmation);
 
 ### Specifying queues
 
-Specifies the queue that jobs and status changes for a signature job will occur in for signature jobs where `StatusRetrievalMethod = Polling` This is a feature aimed at organizations where it makes sense to retrieve status changes from several queues. This may be if the organization has more than one division, and each division has an application that create signature jobs through the API and want to retrieve status changes independent of the other division's actions.
+Specifies the queue that jobs and status changes for a signature job will occur in for signature jobs where `StatusRetrievalMethod == Polling` This is a feature aimed at organizations where it makes sense to retrieve status changes from several queues. This may be if the organization has more than one division, and each division has an application that create signature jobs through the API and want to retrieve status changes independent of the other division's actions.
 
 To specify a queue, set `Sender.PollingQueue` through the constructor `Sender(string, PollingQueue)`. Please note that the same sender must be specified when polling to retrieve status changes. The `Sender` can be set globally in `ClientConfiguration` or on every `Job`.
 

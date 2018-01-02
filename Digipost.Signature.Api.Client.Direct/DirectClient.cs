@@ -28,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public async Task<JobResponse> Create(Job job) //TODO: Vi skal ikke appende queryparam for create.
+        public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);
             var relativeUrl = RelativeUrl(job.Sender, JobType.Direct, HttpMethod.Post);

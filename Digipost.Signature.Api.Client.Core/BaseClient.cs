@@ -129,9 +129,9 @@ namespace Digipost.Signature.Api.Client.Core
             var relativeUri = $"/api/{sender.OrganizationNumber}/{jobType.ToString().ToLower()}/signature-jobs";
 
             var shouldAppendQueryParameter = httpMethod == HttpMethod.Get;
-            var pollingQueueDefinded = !string.IsNullOrEmpty(sender.PollingQueue.Name);
+            var pollingQueueDefined = !string.IsNullOrEmpty(sender.PollingQueue.Name);
 
-            if (shouldAppendQueryParameter && pollingQueueDefinded)
+            if (shouldAppendQueryParameter && pollingQueueDefined)
             {
                 relativeUri += $"?{PollingQueue.QueryParameterName}={sender.PollingQueue.Name}";
             }

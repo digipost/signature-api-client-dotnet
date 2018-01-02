@@ -142,7 +142,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             ClientConfiguration clientConfiguration = null; // As initialized earlier
             var directClient = new DirectClient(clientConfiguration);
 
-            String organizationNumber = "123456789";
+            var organizationNumber = "123456789";
             var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
 
             Document documentToSign = null; // As initialized earlier

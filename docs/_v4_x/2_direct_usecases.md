@@ -186,7 +186,10 @@ await directClient.Confirm(jobStatusResponse.References.Confirmation);
 
 ```
 
-### Specifying queues
+
+[comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
+
+<h3 id="specifying-portal-queue">Specifying queues</h3>
 
 Specifies the queue that jobs and status changes for a signature job will occur in for signature jobs where `StatusRetrievalMethod == Polling` This is a feature aimed at organizations where it makes sense to retrieve status changes from several queues. This may be if the organization has more than one division, and each division has an application that create signature jobs through the API and want to retrieve status changes independent of the other division's actions.
 

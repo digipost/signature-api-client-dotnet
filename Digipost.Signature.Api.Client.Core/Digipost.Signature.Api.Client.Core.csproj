@@ -106,6 +106,7 @@
     <Compile Include="BaseClient.cs" />
     <Compile Include="CancellationReference.cs" />
     <Compile Include="ConfirmationReference.cs" />
+    <Compile Include="Internal\Enums\JobType.cs" />
     <Compile Include="Internal\MediaType.cs" />
     <Compile Include="Internal\DataTransferObjects\DataTransferObjectConverter.cs" />
     <Compile Include="Environment.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Internal\Extensions\XmlElementExtensions.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="PadesReference.cs" />
+    <Compile Include="PollingQueue.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="Internal\Utilities\DateUtility.cs" />
     <Compile Include="Internal\Extensions\FileTypeExtensions.cs" />

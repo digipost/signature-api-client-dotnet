@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using static Digipost.Signature.Api.Client.Direct.Enums.StatusRetrievalMethod;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 {
@@ -28,9 +29,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
-        public static Job GetPollableDirectJob(params SignerIdentifier[] signers)
+        public static Job GetPollableDirectJob(Sender sender, params SignerIdentifier[] signers)
         {
-            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), statusRetrievalMethod: StatusRetrievalMethod.Polling);
+            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), sender, Polling);
         }
 
         internal static Manifest GetDirectManifest()

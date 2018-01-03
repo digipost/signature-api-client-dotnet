@@ -898,6 +898,8 @@ public partial class directsignaturejobrequest {
     
     private bool statusretrievalmethodFieldSpecified;
     
+    private string pollingqueueField;
+    
     /// <remarks/>
     public string reference {
         get {
@@ -938,6 +940,17 @@ public partial class directsignaturejobrequest {
         }
         set {
             this.statusretrievalmethodFieldSpecified = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("polling-queue")]
+    public string pollingqueue {
+        get {
+            return this.pollingqueueField;
+        }
+        set {
+            this.pollingqueueField = value;
         }
     }
 }
@@ -1249,6 +1262,8 @@ public partial class portalsignaturejobrequest {
     
     private string referenceField;
     
+    private string pollingqueueField;
+    
     /// <remarks/>
     public string reference {
         get {
@@ -1256,6 +1271,17 @@ public partial class portalsignaturejobrequest {
         }
         set {
             this.referenceField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("polling-queue")]
+    public string pollingqueue {
+        get {
+            return this.pollingqueueField;
+        }
+        set {
+            this.pollingqueueField = value;
         }
     }
 }

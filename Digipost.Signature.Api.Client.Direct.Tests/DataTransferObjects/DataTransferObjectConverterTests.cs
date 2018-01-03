@@ -4,13 +4,13 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 {
@@ -26,12 +26,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();
                 var statusretrieval = statusretrievalmethod.WAIT_FOR_CALLBACK;
+                var sender = new Sender(BringPublicOrganizationNumber);
 
                 var source = new Job(
                     document,
                     signer,
                     reference,
-                    exitUrls);
+                    exitUrls,
+                    sender);
 
                 var expected = new directsignaturejobrequest
                 {
@@ -55,6 +57,49 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 comparator.AreEqual(expected, result, out differences);
                 Assert.Equal(0, differences.Count());
             }
+
+            [Fact]
+            public void Converts_direct_job_successfully_with_polling_queue_successfully()
+            {
+                var document = DomainUtility.GetDirectDocument();
+                var signer = DomainUtility.GetSigner();
+                var reference = "reference";
+                var exitUrls = DomainUtility.GetExitUrls();
+                var statusretrieval = statusretrievalmethod.WAIT_FOR_CALLBACK;
+                var pollingQueue = new PollingQueue("CustomPollingQueue");
+                var sender = new Sender(BringPublicOrganizationNumber, pollingQueue);
+
+                var source = new Job(
+                    document,
+                    signer,
+                    reference,
+                    exitUrls,
+                    sender);
+
+                var expected = new directsignaturejobrequest
+                {
+                    reference = reference,
+                    exiturls = new exiturls
+                    {
+                        completionurl = source.ExitUrls.CompletionUrl.AbsoluteUri,
+                        rejectionurl = source.ExitUrls.RejectionUrl.AbsoluteUri,
+                        errorurl = source.ExitUrls.ErrorUrl.AbsoluteUri
+                    },
+                    statusretrievalmethod = statusretrieval,
+                    statusretrievalmethodSpecified = true,
+                    pollingqueue = pollingQueue.Name
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
 
             [Fact]
             public void Converts_exit_urls_successfully()
@@ -234,7 +279,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string documentSubject = "Subject";
                 const string documentMessage = "Message";
-                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
+                var pdfDocumentBytes = GetPdfDocumentBytes();
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
@@ -283,7 +328,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string documentSubject = "Subject";
                 const string documentMessage = "Message";
-                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
+                var pdfDocumentBytes = GetPdfDocumentBytes();
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 
@@ -337,7 +382,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string documentSubject = "Subject";
                 const string documentMessage = "Message";
-                var pdfDocumentBytes = CoreDomainUtility.GetPdfDocumentBytes();
+                var pdfDocumentBytes = GetPdfDocumentBytes();
                 var personalIdentificationNumber = "12345678901";
                 var expectedMimeType = "application/pdf";
 

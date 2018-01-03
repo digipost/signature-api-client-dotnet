@@ -13,13 +13,21 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
     {
         public static directsignaturejobrequest ToDataTransferObject(Job job)
         {
-            return new directsignaturejobrequest
+            var directsignaturejobrequest = new directsignaturejobrequest
             {
                 reference = job.Reference,
                 exiturls = ToDataTransferObject(job.ExitUrls),
                 statusretrievalmethod = job.StatusRetrievalMethod.ToStatusretrievalmethod(),
                 statusretrievalmethodSpecified = true
             };
+
+            var senderPollingQueue = job.Sender.PollingQueue.Name;
+            if (!string.IsNullOrEmpty(senderPollingQueue))
+            {
+                directsignaturejobrequest.pollingqueue = senderPollingQueue;
+            }
+
+            return directsignaturejobrequest;
         }
 
         public static exiturls ToDataTransferObject(ExitUrls exitUrls)

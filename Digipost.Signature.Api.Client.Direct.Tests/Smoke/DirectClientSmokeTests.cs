@@ -1,15 +1,19 @@
 ﻿using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Xunit;
+using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using static Digipost.Signature.Api.Client.Direct.Tests.Smoke.TestHelper;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
     public class DirectSmokeTestsFixture : SmokeTests
     {
+        public Sender Sender = new Sender(BringPublicOrganizationNumber);
+
         public DirectSmokeTestsFixture()
         {
             TestHelper = new TestHelper(DirectClient(Endpoint));
@@ -19,9 +23,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private static DirectClient DirectClient(Environment environment)
         {
-            var sender = new Sender("988015814");
-
-            var clientConfig = new ClientConfiguration(environment, CoreDomainUtility.GetBringCertificate(), sender)
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), new Sender(BringPublicOrganizationNumber))
             {
                 LogRequestAndResponse = true
             };
@@ -46,7 +48,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             var signer1 = new PersonalIdentificationNumber("12345678910");
             var signer2 = new PersonalIdentificationNumber("10987654321");
 
-            _fixture.TestHelper.Create_direct_job(signer1, signer2)
+            _fixture.TestHelper
+                .Create_direct_job(signer1, signer2)
                 .Sign_job(signer1)
                 .Get_status()
                 .Expect_job_to_have_status(
@@ -71,7 +74,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             var signer = new PersonalIdentificationNumber("12345678910");
 
-            _fixture.TestHelper.Create_direct_job(signer)
+            _fixture.TestHelper
+                .Create_direct_job(signer)
                 .Sign_job(signer)
                 .Get_status()
                 .Expect_job_to_have_status(
@@ -88,9 +92,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             var signer = new PersonalIdentificationNumber("12345678910");
 
-            _fixture.TestHelper.Create_pollable_direct_job(signer)
+            _fixture.TestHelper
+                .Create_pollable_direct_job(_fixture.Sender, signer)
                 .Sign_job(signer)
-                .Get_status_by_polling()
+                .Get_status_by_polling(_fixture.Sender)
                 .Expect_job_to_have_status(
                     JobStatus.CompletedSuccessfully,
                     ExpectedSignerStatus(signer, SignatureStatus.Signed)
@@ -98,6 +103,21 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Get_XAdES(signer)
                 .Get_PAdES()
                 .Confirm_status();
+        }
+
+        [Fact]
+        public void create_job_with_queue()
+        {
+            var signer = new PersonalIdentificationNumber("12345678910");
+            var senderWithQueue = new Sender(BringPublicOrganizationNumber, new PollingQueue("CustomDirectPollingQueue"));
+          
+            _fixture.TestHelper
+                .Create_pollable_direct_job(senderWithQueue, signer)
+                .Sign_job(signer)
+                .Get_status_by_polling(senderWithQueue)
+                .Expect_job_to_have_status(JobStatus.CompletedSuccessfully)
+                .Get_status_by_polling(senderWithQueue)
+                .Expect_job_to_have_status(JobStatus.NoChanges);
         }
     }
 }

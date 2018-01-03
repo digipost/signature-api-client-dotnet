@@ -9,7 +9,7 @@ layout: default
 
 <h3 id="crete-client-configuration-direct">Create Client Configuration</h3>
 
-{% highlight csharp %}
+``` csharp
 
 const string organizationNumber = "123456789";
 const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
@@ -19,7 +19,7 @@ var clientConfiguration = new ClientConfiguration(
     certificateThumbprint,
     new Sender(organizationNumber));
 
-{% endhighlight %}
+```
 
 <blockquote>
 Note: If the sender changes per signature job created, the sender can be set on the job itself. The sender of the job will always take precedence over the sender in <code>ClientConfiguration</code>. This means that a default sender can be set in <code>ClientConfiguration</code> and, when required, on a specific job.   
@@ -27,7 +27,7 @@ Note: If the sender changes per signature job created, the sender can be set on 
 
 ### Create signature job
 
-{% highlight csharp %}
+``` csharp
 
 ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
@@ -54,11 +54,11 @@ var job = new Job(documentToSign, signers, "SendersReferenceToSignatureJob", exi
 
 var directJobResponse = await directClient.Create(job);
 
-{% endhighlight %}
+```
 
 #### Specify signature type and required authentication level
 
-{% highlight csharp %}
+``` csharp
 
 Document documentToSign = null; //As initialized earlier
 ExitUrls exitUrls = null; //As initialized earlier
@@ -75,7 +75,7 @@ var job = new Job(documentToSign, signers, "SendersReferenceToSignatureJob", exi
     AuthenticationLevel = AuthenticationLevel.Four
 };
 
-{% endhighlight %}
+```
 
 If signature type or required authentication level is omitted, default values as specified by [the functional documentation](http://digipost.github.io/signature-api-specification/v1.0/#signaturtype) will apply.
 
@@ -83,7 +83,7 @@ If signature type or required authentication level is omitted, default values as
 
 The signing process is a synchrounous operation in the direct use case. There is no need to poll for changes to a signature job, as the status is well known to the sender of the job. As soon as the signer cancels, completes or an error occurs, the user is redirected to the respective Urls set in `ExitUrls`. A `status_query_token` parameter has been added to the url. Use this when requesting a status change.
 
-{% highlight csharp %}
+``` csharp
 
 ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
@@ -95,7 +95,7 @@ var jobStatusResponse =
 
 var jobStatus = jobStatusResponse.Status;
 
-{% endhighlight %}
+```
 
 ### Get direct job status by polling
 
@@ -103,7 +103,7 @@ If you, for any reason, are unable to retrieve status by using the status query 
 
 <blockquote>Note: For the job to be available in the polling queue, make sure to specify the job's <code>statusRetrievalMethod</code> as illustrated below.</blockquote>
 
-{% highlight csharp %}
+``` csharp
 
 ClientConfiguration clientConfiguration = null; // As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
@@ -148,13 +148,13 @@ if (changedJob.GetSignatureFor(signer).SignatureStatus.Equals(SignatureStatus.Si
 await directClient.Confirm(changedJob.References.Confirmation);
 
 
-{% endhighlight %}
+```
 
 [comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
 
 <h3 id="get-xades-and-pades-direct"> Get XAdES And PAdES</h3>   
 
-{% highlight csharp %}
+``` csharp
 
 ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
@@ -172,11 +172,11 @@ if (signature.Equals(SignatureStatus.Signed))
     var xadesByteStream = await directClient.GetXades(signature.XadesReference);
 }
 
-{% endhighlight %}
+```
 
 ### Confirm received signature job
 
-{% highlight csharp %}
+``` csharp
 
 ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
@@ -184,4 +184,42 @@ JobStatusResponse jobStatusResponse = null; // Result of requesting job status
 
 await directClient.Confirm(jobStatusResponse.References.Confirmation);
 
-{% endhighlight %}
+```
+
+
+[comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
+
+<h3 id="specifying-portal-queue">Specifying queues</h3>
+
+Specifies the queue that jobs and status changes for a signature job will occur in for signature jobs where `StatusRetrievalMethod == Polling` This is a feature aimed at organizations where it makes sense to retrieve status changes from several queues. This may be if the organization has more than one division, and each division has an application that create signature jobs through the API and want to retrieve status changes independent of the other division's actions.
+
+To specify a queue, set `Sender.PollingQueue` through the constructor `Sender(string, PollingQueue)`. Please note that the same sender must be specified when polling to retrieve status changes. The `Sender` can be set globally in `ClientConfiguration` or on every `Job`.
+
+``` csharp
+
+ClientConfiguration clientConfiguration = null; // As initialized earlier
+var directClient = new DirectClient(clientConfiguration);
+
+String organizationNumber = "123456789";
+var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
+
+Document documentToSign = null; // As initialized earlier
+ExitUrls exitUrls = null; // As initialized earlier
+
+var signer = new PersonalIdentificationNumber("00000000000");
+
+var job = new Job(
+    documentToSign,
+    new List<Signer> { new Signer(signer) },
+    "SendersReferenceToSignatureJob",
+    exitUrls,
+    sender,
+    StatusRetrievalMethod.Polling
+);
+
+await directClient.Create(job);
+
+var changedJob = await directClient.GetStatusChange(sender);
+
+```
+

@@ -10,6 +10,7 @@ using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
+using static Digipost.Signature.Api.Client.Direct.Enums.JobStatus;
 
 namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
@@ -34,9 +35,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Create_pollable_direct_job(params SignerIdentifier[] signers)
+        public TestHelper Create_pollable_direct_job(Sender sender, params SignerIdentifier[] signers)
         {
-            var job = DomainUtility.GetPollableDirectJob(signers);
+            var job = DomainUtility.GetPollableDirectJob(sender, signers);
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
@@ -78,11 +79,35 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             return this;
         }
 
-        public TestHelper Get_status_by_polling()
+        public TestHelper Get_status_by_polling(Sender sender)
         {
-            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(_directClient.GetStatusChange().Result);
+            JobStatusResponse jobStatusResponse = GetCurrentReceipt(_jobResponse.JobId, sender);
+            _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(jobStatusResponse);
             return this;
         }
+
+        private JobStatusResponse GetCurrentReceipt(long jobId, Sender sender = null)
+        {
+            while (true)
+            {
+                var jobStatusResponse = _directClient.GetStatusChange(sender).Result;
+
+                if (jobStatusResponse.Status == NoChanges)
+                {
+                    return jobStatusResponse;
+                }
+
+                var isCurrentReceipt = jobStatusResponse.JobId == jobId;
+                if (isCurrentReceipt)
+                {
+                    return jobStatusResponse;
+                }
+
+                var uri = TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Confirmation.Url);
+                _directClient.Confirm(new ConfirmationReference(uri)).Wait();
+            }
+        }
+
 
         public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<SignerIdentifier, SignatureStatus>[] expectedSignatureStatuses)
         {

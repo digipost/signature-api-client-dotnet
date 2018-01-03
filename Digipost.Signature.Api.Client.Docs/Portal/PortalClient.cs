@@ -101,5 +101,31 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
 
             await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
         }
+
+        public static async Task SpecifyingQueues()
+        {
+            PortalClient portalClient = null; //As initialized earlier
+
+            var organizationNumber = "123456789";
+            var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
+
+            var documentToSign = new Document(
+                "Subject of Message",
+                "This is the content",
+                FileType.Pdf,
+                @"C:\Path\ToDocument\File.pdf"
+            );
+
+            var signers = new List<Signer>
+            {
+                new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup())
+            };
+
+            var portalJob = new Job(documentToSign, signers, "myReferenceToJob", sender);
+
+            var portalJobResponse = await portalClient.Create(portalJob);
+
+            var changedJob = await portalClient.GetStatusChange(sender);
+        }
     }
 }

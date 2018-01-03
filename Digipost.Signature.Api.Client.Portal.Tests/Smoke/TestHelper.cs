@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Portal.Enums;
 using Xunit;
+using static Digipost.Signature.Api.Client.Portal.Enums.JobStatus;
 using static Digipost.Signature.Api.Client.Portal.Tests.Utilities.DomainUtility;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
@@ -74,18 +75,24 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return this;
         }
 
-        public TestHelper GetJobStatusChanged()
+        public TestHelper ExpectJobStatusForSenderIs(JobStatus expectedStatus, Sender sender = null)
         {
             Assert_state(_jobResponse);
 
-            _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client);
+            _jobStatusChanged = GetCurrentReceipt(_jobResponse.JobId, _client, sender);
+            Assert.Equal(expectedStatus, _jobStatusChanged.Status);
+
+            if (_jobStatusChanged.Status == NoChanges)
+            {
+                return this;
+            }
+
             _confirmationReference = new ConfirmationReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.ConfirmationReference.Url));
 
-            if (_jobStatusChanged.Status == JobStatus.CompletedSuccessfully)
-            {
-                _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.First().XadesReference.Url));
-                _padesReference = new PadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.PadesReference.Url));
-            }
+            if (_jobStatusChanged.Status != CompletedSuccessfully) return this;
+
+            _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.First().XadesReference.Url));
+            _padesReference = new PadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.PadesReference.Url));
 
             return this;
         }
@@ -167,28 +174,21 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return this;
         }
 
-        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient)
+        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient, Sender sender = null)
         {
-            JobStatusChanged jobStatusChanged = null;
-            while (jobStatusChanged == null)
+            while (true)
             {
-                var statusChange = portalClient.GetStatusChange().Result;
-                if (statusChange.JobId == jobId)
-                {
-                    jobStatusChanged = statusChange;
-                }
-                else if (statusChange.Status == JobStatus.NoChanges)
-                {
-                    throw new Exception("Expected receipt, got emtpy queue.");
-                }
-                else
-                {
-                    var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
-                    portalClient.Confirm(new ConfirmationReference(uri)).Wait();
-                }
-            }
+                var statusChange = portalClient.GetStatusChange(sender).Result;
+                var isCurrentReceipt = statusChange.JobId == jobId;
 
-            return jobStatusChanged;
+                if (isCurrentReceipt || statusChange.Status == NoChanges)
+                {
+                    return statusChange;
+                }
+
+                var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
+                portalClient.Confirm(new ConfirmationReference(uri)).Wait();
+            }
         }
 
         private static void Assert_state(object obj)

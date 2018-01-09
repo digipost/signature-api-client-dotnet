@@ -33,9 +33,7 @@
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
       <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
@@ -64,9 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="C:\Keys\signingkey.snk">
-      <Link>signingkey.snk</Link>
-    </None>
+
     <None Include="packages.config" />
     <None Include="XsdToCode\GenerateClassesFromXsd.ps1" />
     <EmbeddedResource Include="XsdToCode\Xsd\common.xsd">

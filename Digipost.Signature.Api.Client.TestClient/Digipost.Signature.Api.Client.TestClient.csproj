@@ -34,11 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>C:\Keys\signingkey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
@@ -55,18 +53,6 @@
     <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
       <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Digipost.Signature.Api.Client.Core, Version=4.1.1.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\digipost-signature-api-client.4.1.1\lib\net45\Digipost.Signature.Api.Client.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Digipost.Signature.Api.Client.Direct, Version=4.1.1.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\digipost-signature-api-client.4.1.1\lib\net45\Digipost.Signature.Api.Client.Direct.dll</HintPath>
-    </Reference>
-    <Reference Include="Digipost.Signature.Api.Client.Portal, Version=4.1.1.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\digipost-signature-api-client.4.1.1\lib\net45\Digipost.Signature.Api.Client.Portal.dll</HintPath>
-    </Reference>
-    <Reference Include="Digipost.Signature.Api.Client.Scripts, Version=4.1.1.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\digipost-signature-api-client.4.1.1\lib\net45\Digipost.Signature.Api.Client.Scripts.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
@@ -96,9 +82,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="C:\Keys\signingkey.snk">
-      <Link>signingkey.snk</Link>
-    </None>
+
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

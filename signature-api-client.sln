@@ -1,14 +1,10 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
-MinimumVisualStudioVersion = 10.0.40219.1
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.0.0
+MinimumVisualStudioVersion = 10.0.0.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Direct", "Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj", "{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09346DFD-5DA1-42E4-B3E3-79720846FB60}"
-	ProjectSection(SolutionItems) = preProject
-		SolutionItems\App.config = SolutionItems\App.config
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.TestClient", "Digipost.Signature.Api.Client.TestClient\Digipost.Signature.Api.Client.TestClient.csproj", "{469E8C38-800F-4107-8779-CC918AE0DA23}"
 EndProject

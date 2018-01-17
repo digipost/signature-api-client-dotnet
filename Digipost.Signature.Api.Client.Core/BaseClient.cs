@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Security;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using Common.Logging;
 using Digipost.Api.Client.Shared.Certificate;
@@ -27,7 +28,6 @@ namespace Digipost.Signature.Api.Client.Core
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient);
-            SetMessageLanguageForDigipostApiClientShared();
         }
 
         public ClientConfiguration ClientConfiguration { get; }
@@ -89,17 +89,17 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private WebRequestHandler MutualTlsHandler()
+        private HttpClientHandler MutualTlsHandler()
         {
-            var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
-            var mutualTlsHandler = new WebRequestHandler();
-            mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateThrowIfInvalid;
+            HttpClientHandler handler = new HttpClientHandler();
+            var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
+            handler.ClientCertificates.AddRange(clientCertificates);
+            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
-            return mutualTlsHandler;
+            return handler;
         }
 
-        private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool ValidateServerCertificateThrowIfInvalid(HttpRequestMessage message, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
@@ -117,11 +117,6 @@ namespace Digipost.Signature.Api.Client.Core
             }
 
             return true;
-        }
-
-        private static void SetMessageLanguageForDigipostApiClientShared()
-        {
-            LanguageResource.CurrentLanguage = Language.English;
         }
 
         internal static Uri RelativeUrl(Sender sender, JobType jobType, HttpMethod httpMethod)

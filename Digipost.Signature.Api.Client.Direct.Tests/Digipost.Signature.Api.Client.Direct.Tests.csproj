@@ -14,6 +14,15 @@
     <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
     <PackageReference Include="Common.Logging.Core" Version="3.3.1" />
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Schema/**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schema/**/*" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core.Tests\Digipost.Signature.Api.Client.Core.Tests.csproj">
       <Project>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</Project>

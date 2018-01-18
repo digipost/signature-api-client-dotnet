@@ -12,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     public class PortalSmokeTestsFixture : SmokeTests
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public PortalSmokeTestsFixture()
         {

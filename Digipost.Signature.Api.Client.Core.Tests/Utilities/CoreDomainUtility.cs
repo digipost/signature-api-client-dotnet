@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
+using Newtonsoft.Json;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -66,12 +69,22 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         private static X509Certificate2 BringTestSertifikat()
         {
-            return CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
+            var pathToSecretsWithPlaceholder = "<PATH-PLACEHOLDER>/.microsoft/usersecrets/User-Secret-ID/secrets.json";
+            var replace = pathToSecretsWithPlaceholder.Replace("<PATH-PLACEHOLDER>", System.Environment.GetEnvironmentVariable("HOME"));
+            string value = File.ReadAllText(replace);
+            var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
+
+            string certificatePath;
+            deserializeObject.TryGetValue("Certificate:Path:Absolute", out certificatePath);
+            string certificatePassword;
+            deserializeObject.TryGetValue("Certificate:Password", out certificatePassword);
+
+            return new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
         }
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {
-            return new X509Certificate2(ResourceUtility.ReadAllBytes("Certificates", "Unittests", "DigipostCert.p12"), "", X509KeyStorageFlags.Exportable);
+            return new X509Certificate2(ResourceUtility.ReadAllBytes("Certificates", "Unittests", "DigipostCert.p12"), "qwer1234", X509KeyStorageFlags.Exportable);
         }
 
         public static HttpClient GetHttpClientWithHandler(DelegatingHandler delegatingHandler)

@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core
     {
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private HttpClient _httpClient;
 
         protected BaseClient(ClientConfiguration clientConfiguration)
@@ -54,7 +54,7 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateSenderCertificate)
             {
-                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
+//                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
 
                 return sender;
             }
@@ -103,7 +103,7 @@ namespace Digipost.Signature.Api.Client.Core
         {
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
-                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+//                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
                 return true;
             }
 

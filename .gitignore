@@ -196,3 +196,9 @@ FakesAssemblies/
 *.opt
 
 .idea
+
+#######################
+# Ignore certificates #
+#######################
+*.p12
+ 

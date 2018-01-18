@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public DirectClient(ClientConfiguration clientConfiguration)
             : base(clientConfiguration)
@@ -37,7 +37,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var createAction = new CreateAction(job, documentBundle);
             var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc).ConfigureAwait(false);
 
-            Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
+            // Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
             return directJobResponse;
         }
@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 case HttpStatusCode.OK:
                     var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
-                    Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
+                    // Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
@@ -105,22 +105,22 @@ namespace Digipost.Signature.Api.Client.Direct
             var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
             var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+            // Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    Log.Debug("Received empty response. No jobs have had their status changed.");
+                    // Log.Debug("Received empty response. No jobs have had their status changed.");
                     return JobStatusResponse.NoChanges;
                 case HttpStatusCode.OK:
                     var changedJob = ParseResponseToJobStatusResponse(requestContent);
-                    Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
+                    // Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
                     return changedJob;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
 
-                    Log.Warn(tooEagerPollingException.Message);
+                    // Log.Warn(tooEagerPollingException.Message);
 
                     throw tooEagerPollingException;
                 default:
@@ -159,7 +159,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         internal async Task<string> AutoSign(long jobId, string signer)
         {
-            Log.Warn($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
+            // Log.Warn($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             var httpResponseMessage = await HttpClient.PostAsync(url, null).ConfigureAwait(false);
             return await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);

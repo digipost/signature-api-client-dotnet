@@ -70,25 +70,25 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         {
             var targetKey = ExtractValidPrivateKeyOrThrow(certificate);
 
-            if (targetKey.CspKeyContainerInfo.ProviderType == RsaSha256DigitalSignaturesCryptoApiProvider)
+//            if (targetKey.CspKeyContainerInfo.ProviderType == RsaSha256DigitalSignaturesCryptoApiProvider)
                 SigningKey = targetKey;
-            else
-            {
-                SigningKey = new RSACryptoServiceProvider();
-                try
-                {
-                    SigningKey.FromXmlString(certificate.PrivateKey.ToXmlString(true));
-                }
-                catch (Exception e)
-                {
-                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe or -csp parameter i openssl).", e);
-                }
-            }
+//            else
+//            {
+//                SigningKey = new RSACryptoServiceProvider();
+//                try
+//                {
+//                    SigningKey.FromXmlString(certificate.PrivateKey.ToXmlString(true));
+//                }
+//                catch (Exception e)
+//                {
+//                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe or -csp parameter i openssl).", e);
+//                }
+            //}
         }
 
-        private static RSACryptoServiceProvider ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
+        private static RSA ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
         {
-            var targetKey = certificate.PrivateKey as RSACryptoServiceProvider;
+            var targetKey = certificate.GetRSAPrivateKey();
             if (targetKey == null)
 
                 throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} is not a valid RSA asymetric key.");

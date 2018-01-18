@@ -7,11 +7,19 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
-    <PackageReference Include="Common.Logging" Version="3.3.1" />
     <PackageReference Include="Common.Logging.Core" Version="3.3.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4-preview1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="4.4.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Internal/Xsd/**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Internal/Xsd/**/*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">

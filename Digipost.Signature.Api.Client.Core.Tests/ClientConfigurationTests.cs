@@ -30,25 +30,25 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.Equal(x509Certificate, clientConfiguration.Certificate);
             }
 
-            [Fact]
-            public void Constructor_with_certificate_thumbprint()
-            {
-                //Arrange
-                var environment = Environment.DifiQa;
-                var sender = CoreDomainUtility.GetSender();
-
-                var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
-
-                //Act
-                var clientConfiguration = new ClientConfiguration(
-                    environment,
-                    certificate.Thumbprint, sender);
-
-                //Assert
-                Assert.Equal(environment, clientConfiguration.Environment);
-                Assert.Equal(sender, clientConfiguration.GlobalSender);
-                Assert.Equal(certificate, clientConfiguration.Certificate);
-            }
+//            [Fact]
+//            public void Constructor_with_certificate_thumbprint()
+//            {
+//                //Arrange
+//                var environment = Environment.DifiQa;
+//                var sender = CoreDomainUtility.GetSender();
+//
+//                var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
+//
+//                //Act
+//                var clientConfiguration = new ClientConfiguration(
+//                    environment,
+//                    certificate.Thumbprint, sender);
+//
+//                //Assert
+//                Assert.Equal(environment, clientConfiguration.Environment);
+//                Assert.Equal(sender, clientConfiguration.GlobalSender);
+//                Assert.Equal(certificate, clientConfiguration.Certificate);
+//            }
 
             [Fact]
             public void Constructor_with_no_sender_and_certificate_exists()

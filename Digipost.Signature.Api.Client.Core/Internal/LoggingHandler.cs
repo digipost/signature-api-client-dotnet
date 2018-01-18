@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class LoggingHandler : DelegatingHandler
     {
-        private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestResponse");
+//        private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestResponse");
 
         public LoggingHandler(ClientConfiguration clientClientConfiguration)
         {
@@ -21,17 +21,17 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
-            {
-                await LogRequest(request).ConfigureAwait(false);
-            }
+//            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
+//            {
+//                await LogRequest(request).ConfigureAwait(false);
+//            }
 
             var httpResponseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
-            {
-                await LogResponse(httpResponseMessage).ConfigureAwait(false);
-            }
+//            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
+//            {
+//                await LogResponse(httpResponseMessage).ConfigureAwait(false);
+//            }
 
             return httpResponseMessage;
         }
@@ -39,13 +39,13 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         private static async Task LogRequest(HttpRequestMessage request)
         {
             var requestData = await GetRequestData(request).ConfigureAwait(false);
-            Log.Debug($"Outgoing: {requestData}");
+//            Log.Debug($"Outgoing: {requestData}");
         }
 
         private static async Task LogResponse(HttpResponseMessage response)
         {
             var responseData = await GetResponseData(response).ConfigureAwait(false);
-            Log.Debug($"Incoming: {responseData}");
+//            Log.Debug($"Incoming: {responseData}");
         }
 
         private static async Task<string> GetRequestData(HttpRequestMessage request)

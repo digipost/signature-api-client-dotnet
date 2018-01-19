@@ -1,0 +1,24 @@
+sudo: required
+language: csharp
+solution: api-client-shared.sln
+mono: none
+git:
+  submodules: false
+dotnet: 2.0.0
+before_install:
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+  
+  - ./travis-deploy/apt-get-add-keys-and-update.sh
+  - ./travis-deploy/mono-install.sh
+  - ./travis-deploy/nuget-install.sh
+  - ./travis-deploy/version-patcher-install.sh
+  - ./travis-deploy/nuspec-version-patcher.sh
+install:
+  - dotnet restore
+script:
+  - dotnet build -c Release
+  - dotnet test Digipost.Api.Client.Shared.Tests/Digipost.Api.Client.Shared.Tests.csproj
+  - mono nuget.exe pack api-client-shared.nuspec -Verbosity detailed
+  - ./travis-deploy/nuget-push.sh
+

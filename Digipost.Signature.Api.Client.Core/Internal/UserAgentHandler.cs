@@ -19,11 +19,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var netVersion = Assembly
                 .GetExecutingAssembly()
-                .GetReferencedAssemblies().First(x => x.Name == "System.Core").Version.ToString();
+                .GetReferencedAssemblies().First(x => x.Name == "netstandard").Version.ToString();
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-            return $"digipost-signature-api-client-dotnet/{assemblyVersion} (.NET/{netVersion})";
+            return $"digipost-signature-api-client-dotnet/{assemblyVersion} (netstandard/{netVersion})";
         }
     }
 }

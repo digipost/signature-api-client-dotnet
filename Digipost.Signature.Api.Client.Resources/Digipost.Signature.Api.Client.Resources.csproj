@@ -25,4 +25,9 @@
       <HintPath>..\..\..\..\.nuget\packages\api-client-shared\4.2.0.143-beta\lib\netstandard2\Digipost.Api.Client.Shared.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
+      <Link>Properties/AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

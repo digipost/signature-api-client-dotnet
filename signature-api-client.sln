@@ -4,8 +4,6 @@ VisualStudioVersion = 12.0.0.0
 MinimumVisualStudioVersion = 10.0.0.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Direct", "Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj", "{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09346DFD-5DA1-42E4-B3E3-79720846FB60}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.TestClient", "Digipost.Signature.Api.Client.TestClient\Digipost.Signature.Api.Client.TestClient.csproj", "{469E8C38-800F-4107-8779-CC918AE0DA23}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Digipost.Signature.Api.Client.Core", "Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj", "{2D13F732-6A85-4165-AE2F-A87C09750398}"

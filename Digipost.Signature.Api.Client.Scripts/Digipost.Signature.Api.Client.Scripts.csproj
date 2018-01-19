@@ -17,4 +17,9 @@
   <ItemGroup>
     <EmbeddedResource Include="XsdToCode\Xsd\**\*" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
+      <Link>Properties/AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

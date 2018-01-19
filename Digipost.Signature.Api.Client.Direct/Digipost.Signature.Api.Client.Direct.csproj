@@ -12,4 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
+      <Link>Properties/AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

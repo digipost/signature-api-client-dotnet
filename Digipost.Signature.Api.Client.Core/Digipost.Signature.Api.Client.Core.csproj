@@ -28,4 +28,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
+      <Link>Properties/AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ before_install:
   - ./travis-deploy/mono-install.sh
   - ./travis-deploy/nuget-install.sh
   - ./travis-deploy/version-patcher-install.sh
-  - ./travis-deploy/nuspec-version-patcher.sh
+  - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec
 install:
   - dotnet restore
 script:

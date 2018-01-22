@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;

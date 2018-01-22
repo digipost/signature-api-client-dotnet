@@ -2,12 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
-using Common.Logging;
 using Digipost.Api.Client.Shared.Certificate;
-using Digipost.Api.Client.Shared.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Internal.Enums;

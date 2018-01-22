@@ -6,8 +6,14 @@ git:
   submodules: false
 dotnet: 2.0.0
 before_install:
+  # Change github url to https for submodules
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
+
+  # Decrypt private key used for tests
+  - openssl aes-256-cbc -K $encrypted_339f4e3d2b35_key -iv $encrypted_339f4e3d2b35_iv
+    -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+    -d
   
   - ./travis-deploy/apt-get-add-keys-and-update.sh
   - ./travis-deploy/mono-install.sh

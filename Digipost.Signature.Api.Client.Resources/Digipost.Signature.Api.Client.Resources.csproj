@@ -11,6 +11,9 @@
     <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Xml\Data\**\*" />
     <None Remove="Xsd\Data\**\*" />
     <None Remove="Document\Data\**\*" />
@@ -21,13 +24,8 @@
     <EmbeddedResource Include="Document\Data\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Digipost.Api.Client.Shared, Version=4.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\.nuget\packages\api-client-shared\4.2.0.143-beta\lib\netstandard2\Digipost.Api.Client.Shared.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\SolutionItems\AssemblyInfo.cs">
       <Link>Properties/AssemblyInfo.cs</Link>
     </Compile>
-  </ItemGroup>
+  </ItemGroup>  
 </Project>

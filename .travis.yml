@@ -17,6 +17,7 @@ before_install:
 install:
   - dotnet restore
 script:
+  - set -e #Makes sure we get a fail fast if some of the scripts fails
   - dotnet build -c Release
   - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj

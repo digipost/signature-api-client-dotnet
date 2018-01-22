@@ -15,7 +15,7 @@ before_install:
     -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
 
-  - ./travis-deploy/add-secrets.yml
+  - ./travis-deploy/add-secrets.sh
 
   - ./travis-deploy/apt-get-add-keys-and-update.sh
   - ./travis-deploy/mono-install.sh

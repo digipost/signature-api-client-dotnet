@@ -14,10 +14,8 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
     -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
-  
-  # Add certificate info to user-secrets
-  - cd Digipost.Signature.Api.Client.Core && dotnet user-secrets set Certificate:Path:Absolute "${PWD}/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12"
-  - cd Digipost.Signature.Api.Client.Core && dotnet user-secrets set Certificate:Password $BRING_CERTIFICATE_PASSWORD >/dev/null 2>&1
+
+  - ./travis-deploy/add-secrets.yml
 
   - ./travis-deploy/apt-get-add-keys-and-update.sh
   - ./travis-deploy/mono-install.sh

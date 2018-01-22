@@ -4,12 +4,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <UserSecretsId>User-Secret-ID</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4-preview1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="4.4.1" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest" />

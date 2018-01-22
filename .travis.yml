@@ -18,7 +18,9 @@ install:
   - dotnet restore
 script:
   - dotnet build -c Release
-  - dotnet test Digipost.Api.Client.Shared.Tests/Digipost.Api.Client.Shared.Tests.csproj
-  - mono nuget.exe pack api-client-shared.nuspec -Verbosity detailed
+  - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
+  - mono nuget.exe signature-api-client.nuspec -Verbosity detailed
   - ./travis-deploy/nuget-push.sh 
 

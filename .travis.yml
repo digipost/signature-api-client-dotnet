@@ -20,5 +20,5 @@ script:
   - dotnet build -c Release
   - dotnet test Digipost.Api.Client.Shared.Tests/Digipost.Api.Client.Shared.Tests.csproj
   - mono nuget.exe pack api-client-shared.nuspec -Verbosity detailed
-  - ./travis-deploy/nuget-push.sh
+  - ./travis-deploy/nuget-push.sh 
 

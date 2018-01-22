@@ -71,6 +71,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         {
             var pathToSecretsWithPlaceholder = "<PATH-PLACEHOLDER>/.microsoft/usersecrets/User-Secret-ID/secrets.json";
             var replace = pathToSecretsWithPlaceholder.Replace("<PATH-PLACEHOLDER>", System.Environment.GetEnvironmentVariable("HOME"));
+            Console.WriteLine("AAS Reading test certificate from secrets file: " + replace);
             string value = File.ReadAllText(replace);
             var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
 
@@ -78,6 +79,9 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             deserializeObject.TryGetValue("Certificate:Path:Absolute", out certificatePath);
             string certificatePassword;
             deserializeObject.TryGetValue("Certificate:Password", out certificatePassword);
+            
+            Console.WriteLine("AAS Reading test certificate from path found in secrets file: " + certificatePath);
+
 
             return new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
         }

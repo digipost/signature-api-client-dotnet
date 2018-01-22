@@ -11,7 +11,7 @@ before_install:
   - git submodule update --init --recursive
 
   # Decrypt private key used for tests
-  - openssl aes-256-cbc -K $encrypted_339f4e3d2b35_key -iv $encrypted_339f4e3d2b35_iv
+  - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
     -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
   
@@ -20,6 +20,9 @@ before_install:
   - ./travis-deploy/nuget-install.sh
   - ./travis-deploy/version-patcher-install.sh
   - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec
+  - $CERT_PATH="$PWD/Bring_Test_Certificate.p12"
+  - dotnet user-secrets set Certificate:Path:Absolute 123455
+  - dotnet user-secrets set Certificate:Password $CERTIFICATE_PASSWORD
 install:
   - dotnet restore
 script:

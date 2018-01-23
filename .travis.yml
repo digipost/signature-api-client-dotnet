@@ -12,7 +12,7 @@ before_install:
 
   # Decrypt private key used for tests
   - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
-    -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+    -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
 
   - ./travis-deploy/apt-get-add-keys-and-update.sh
@@ -20,6 +20,8 @@ before_install:
   - ./travis-deploy/nuget-install.sh
   - ./travis-deploy/version-patcher-install.sh
   - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec
+  - ls -la
+  - ls -la Digipost.Signature.Api.Client.Core
 
 install:
   - dotnet restore

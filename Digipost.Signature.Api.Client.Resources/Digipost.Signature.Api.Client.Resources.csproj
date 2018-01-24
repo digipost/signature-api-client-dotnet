@@ -11,9 +11,6 @@
     <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
-  </ItemGroup>
-  <ItemGroup>
     <None Remove="Xml\Data\**\*" />
     <None Remove="Xsd\Data\**\*" />
     <None Remove="Document\Data\**\*" />
@@ -27,5 +24,8 @@
     <Compile Include="..\SolutionItems\AssemblyInfo.cs">
       <Link>Properties/AssemblyInfo.cs</Link>
     </Compile>
-  </ItemGroup>  
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+  </ItemGroup>
 </Project>

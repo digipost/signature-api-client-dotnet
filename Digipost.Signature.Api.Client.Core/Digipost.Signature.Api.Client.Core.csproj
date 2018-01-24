@@ -7,7 +7,7 @@
     <UserSecretsId>User-Secret-ID</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4-preview1" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="4.4.1" />

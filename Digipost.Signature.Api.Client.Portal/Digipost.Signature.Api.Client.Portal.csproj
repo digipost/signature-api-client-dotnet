@@ -6,14 +6,14 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\AssemblyInfo.cs">
       <Link>Properties/AssemblyInfo.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
   </ItemGroup>
 </Project>

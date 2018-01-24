@@ -1,0 +1,34 @@
+sudo: required
+language: csharp
+solution: api-client-shared.sln
+mono: none
+git:
+  submodules: false
+dotnet: 2.0.0
+before_install:
+  # Change github url to https for submodules
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+
+  # Decrypt private key used for tests
+  - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
+    -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+    -d
+
+  - ./travis-deploy/apt-get-add-keys-and-update.sh
+  - ./travis-deploy/mono-install.sh
+  - ./travis-deploy/nuget-install.sh
+  - ./travis-deploy/version-patcher-install.sh
+  - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec
+
+install:
+  - dotnet restore
+script:
+  - set -e #Makes sure we get a fail fast if some of the scripts fails
+  - dotnet build -c Release
+  - ./travis-deploy/add-secrets.sh
+  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
+  - ./travis-deploy/nuget-pack-and-push.sh signature-api-client.nuspec
+

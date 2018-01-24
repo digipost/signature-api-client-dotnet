@@ -2,11 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
-using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using Common.Logging;
 using Digipost.Api.Client.Shared.Certificate;
-using Digipost.Api.Client.Shared.Resources.Language;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Internal.Enums;
@@ -17,7 +14,17 @@ namespace Digipost.Signature.Api.Client.Core
     {
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        
+        /*
+         Todo: 
+         Common.Logging is not yet supported by netstandard2.0. This may be supported in Common.Logging4,
+         but this may be a while to, as seen here https://github.com/net-commons/common-logging/issues/148
+         and with other issues in the repo. Maybe it is time to shift to another logging framework. All 
+         logging has been commented out for the sake of simplicity, because we cannot release this library
+         without logging. Period.
+        
+         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        */  
         private HttpClient _httpClient;
 
         protected BaseClient(ClientConfiguration clientConfiguration)
@@ -27,14 +34,13 @@ namespace Digipost.Signature.Api.Client.Core
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient);
-            SetMessageLanguageForDigipostApiClientShared();
         }
 
         public ClientConfiguration ClientConfiguration { get; }
 
         internal HttpClient HttpClient
         {
-            get { return _httpClient; }
+            get => _httpClient;
             set
             {
                 _httpClient = value;
@@ -54,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateSenderCertificate)
             {
-                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
+//                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
 
                 return sender;
             }
@@ -89,21 +95,21 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private WebRequestHandler MutualTlsHandler()
+        private HttpClientHandler MutualTlsHandler()
         {
-            var certificateCollection = new X509Certificate2Collection {ClientConfiguration.Certificate};
-            var mutualTlsHandler = new WebRequestHandler();
-            mutualTlsHandler.ClientCertificates.AddRange(certificateCollection);
-            mutualTlsHandler.ServerCertificateValidationCallback = ValidateServerCertificateThrowIfInvalid;
+            HttpClientHandler handler = new HttpClientHandler();
+            var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
+            handler.ClientCertificates.AddRange(clientCertificates);
+            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
-            return mutualTlsHandler;
+            return handler;
         }
 
-        private bool ValidateServerCertificateThrowIfInvalid(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        private bool ValidateServerCertificateThrowIfInvalid(HttpRequestMessage message, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
-                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+//                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
                 return true;
             }
 
@@ -117,11 +123,6 @@ namespace Digipost.Signature.Api.Client.Core
             }
 
             return true;
-        }
-
-        private static void SetMessageLanguageForDigipostApiClientShared()
-        {
-            LanguageResource.CurrentLanguage = Language.English;
         }
 
         internal static Uri RelativeUrl(Sender sender, JobType jobType, HttpMethod httpMethod)

@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Common.Logging;
-using Digipost.Signature.Api.Client.Core;
+﻿using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
@@ -12,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     public class PortalSmokeTestsFixture : SmokeTests
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public PortalSmokeTestsFixture()
         {

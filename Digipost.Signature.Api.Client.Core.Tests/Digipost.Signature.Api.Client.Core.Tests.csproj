@@ -1,224 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Digipost.Signature.Api.Client.Core.Tests</RootNamespace>
-    <AssemblyName>Digipost.Signature.Api.Client.Core.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>User-Secret-ID</UserSecretsId>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Digipost.Api.Client.Shared, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Digipost.Api.Client.Shared.Resources, Version=3.0.0.0, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\api-client-shared.3.0.0\lib\net46\Digipost.Api.Client.Shared.Resources.dll</HintPath>
-    </Reference>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=3.6.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <HintPath>..\packages\CompareNETObjects.3.06.0.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.XML" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.1.0\lib\dotnet\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.1.0\lib\dotnet\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.1.0.3179, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.1.0\lib\net45\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-  </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <Compile Include="..\SolutionItems\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="Asice\AsiceSignature\Sha256ReferenceTests.cs" />
-    <Compile Include="Asice\DocumentBundleTests.cs" />
-    <Compile Include="Asice\DocumentBundleToDiskProcessorTests.cs" />
-    <Compile Include="Asice\SimpleDocumentBundleProcessor.cs" />
-    <Compile Include="BaseClientTests.cs" />
-    <Compile Include="CancellationReferenceTests.cs" />
-    <Compile Include="ClientConfigurationTests.cs" />
-    <Compile Include="ConfirmationReferenceTests.cs" />
-    <Compile Include="DataTransferObjects\DataTransferObjectConverterTests.cs" />
-    <Compile Include="AbstractDocumentTests.cs" />
-    <Compile Include="EnvironmentTests.cs" />
-    <Compile Include="Exceptions\TooEagerPollingExceptionTests.cs" />
-    <Compile Include="Extensions\FileTypeExtensionsTests.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForEmptyQueueResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForMultipartXml.cs" />
-    <Compile Include="Fakes\FakeHttpClientForDataResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientForPadesResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForBrokerNotAuthorizedErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForDirectCreateResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForInternalServerErrorResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerForTooManyRequestsResponse.cs" />
-    <Compile Include="Fakes\FakeHttpClientHandlerResponse.cs" />
-    <Compile Include="Identification\ContactInformationTests.cs" />
-    <Compile Include="Identifier\SignerIdentifierTests.cs" />
-    <Compile Include="Internal\XsdRequestValidationHandlerTests.cs" />
-    <Compile Include="PersonalIdentificationNumberTests.cs" />
-    <Compile Include="Smoke\TestHelperBase.cs" />
-    <Compile Include="Stubs\ClientStub.cs" />
-    <Compile Include="RequestHelperTests.cs" />
-    <Compile Include="SenderTests.cs" />
-    <Compile Include="Smoke\SmokeTests.cs" />
-    <Compile Include="Stubs\DocumentStub.cs" />
-    <Compile Include="Stubs\SignatureJobStub.cs" />
-    <Compile Include="Stubs\SignerStub.cs" />
-    <Compile Include="Utilities\CompareObjects\Comparator.cs" />
-    <Compile Include="Utilities\CompareObjects\Difference.cs" />
-    <Compile Include="Utilities\CompareObjects\IComparator.cs" />
-    <Compile Include="Utilities\CompareObjects\IDifference.cs" />
-    <Compile Include="Utilities\CoreDomainUtility.cs" />
-    <Compile Include="PadesReferenceTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AbstractSignerTests.cs" />
-    <Compile Include="Utilities\CoreResponseUtility.cs" />
-    <Compile Include="Utilities\ContentUtility.cs" />
-    <Compile Include="XadesReferenceTests.cs" />
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+    <PackageReference Include="CompareNETObjects" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\SolutionItems\App.config">
-      <Link>App.config</Link>
-      <SubType>Designer</SubType>
-    </None>
-
-    <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.cer" />
-    <EmbeddedResource Include="Resources\Certificates\Unittests\DigipostCert.p12" />
-    <EmbeddedResource Include="Resources\Certificates\Unittests\ExpiredTestCertificate.cer" />
-    <EmbeddedResource Include="Resources\Certificates\Unittests\NotActivatedTestCertificate.cer" />
-    <EmbeddedResource Include="Resources\Certificates\Unittests\PostenNorgeAs.cer" />
-    <EmbeddedResource Include="Schema\Examples\Response\Pades.pdf" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Documents\Dokument.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
       <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
       <Name>Digipost.Signature.Api.Client.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
-      <Project>{1f5941d7-0ae5-40c4-b1de-9adbb6926420}</Project>
-      <Name>Digipost.Signature.Api.Client.Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj">
-      <Project>{24d1d03d-4f19-488e-8f3f-30dc6c5b7bee}</Project>
-      <Name>Digipost.Signature.Api.Client.Scripts</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="Resources/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Schema\Examples\Response\TooManyRequestsResponse.txt" />
-    <EmbeddedResource Include="Schema\Examples\Response\EmptyQueueResponse.txt" />
-    <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequest.xml" />
-    <EmbeddedResource Include="Resources\Body\CreateResponse.xml" />
-    <EmbeddedResource Include="Resources\Body\DirectSignatureJobRequestInvalid.xml" />
-    <Content Include="Resources\Certificates\Unittests\CreateCertificates.txt" />
-    <EmbeddedResource Include="Schema\Examples\Response\ErrorResponse.xml" />
-    <EmbeddedResource Include="Schema\Examples\Response\BrokerNotAuthorizedErrorResponse.xml" />
+    <None Remove="Resources\**\*" />
+    <None Remove="Schema\**\*" />
   </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**\*" />
+    <EmbeddedResource Include="Schema\**\*" />
+  </ItemGroup>
 </Project>

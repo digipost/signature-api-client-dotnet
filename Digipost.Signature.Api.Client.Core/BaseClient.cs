@@ -14,7 +14,17 @@ namespace Digipost.Signature.Api.Client.Core
     {
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        
+        /*
+         Todo: 
+         Common.Logging is not yet supported by netstandard2.0. This may be supported in Common.Logging4,
+         but this may be a while to, as seen here https://github.com/net-commons/common-logging/issues/148
+         and with other issues in the repo. Maybe it is time to shift to another logging framework. All 
+         logging has been commented out for the sake of simplicity, because we cannot release this library
+         without logging. Period.
+        
+         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        */  
         private HttpClient _httpClient;
 
         protected BaseClient(ClientConfiguration clientConfiguration)
@@ -30,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         internal HttpClient HttpClient
         {
-            get { return _httpClient; }
+            get => _httpClient;
             set
             {
                 _httpClient = value;

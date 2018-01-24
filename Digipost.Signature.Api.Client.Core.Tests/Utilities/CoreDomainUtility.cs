@@ -67,6 +67,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return new X509Certificate2(ResourceUtility.ReadAllBytes("Certificates", "Unittests", "PostenNorgeAs.cer"), "", X509KeyStorageFlags.Exportable);
         }
 
+        //Todo: Should not manipulate certificate store like this.
         private static X509Certificate2 BringTestSertifikat()
         {
             var pathToSecretsWithPlaceholder = "<PATH-PLACEHOLDER>/.microsoft/usersecrets/User-Secret-ID/secrets.json";

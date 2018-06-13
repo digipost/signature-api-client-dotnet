@@ -143,6 +143,19 @@ await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
 
 ```
 
+### Cancel portal job
+
+``` csharp
+
+PortalClient portalClient = null;   //As initialized earlier
+Job portalJob = null;               //As initialized earlier
+
+var portalJobResponse = await portalClient.Create(portalJob);
+
+await portalClient.Cancel(portalJobResponse.CancellationReference);
+
+```
+
 ### Specifying queues
 
 Specifies the queue that jobs and status changes for a signature job will occur in. This is a feature aimed at organizations where it makes sense to retrieve status changes from several queues. This may be if the organization has more than one division, and each division has an application that create signature jobs through the API and want to retrieve status changes independent of the other division's actions.

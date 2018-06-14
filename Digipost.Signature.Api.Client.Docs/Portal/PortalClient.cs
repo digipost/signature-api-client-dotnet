@@ -102,6 +102,16 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
             await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
         }
 
+        public static async void Cancel()
+        {
+            PortalClient portalClient = null; //As initialized earlier
+            Job portalJob = null; //As initialized earlier
+
+            var portalJobResponse = await portalClient.Create(portalJob);
+
+            await portalClient.Cancel(portalJobResponse.CancellationReference);
+        }
+
         public static async Task SpecifyingQueues()
         {
             PortalClient portalClient = null; //As initialized earlier

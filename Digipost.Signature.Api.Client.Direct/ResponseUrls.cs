@@ -24,6 +24,7 @@ namespace Digipost.Signature.Api.Client.Direct
                     throw new InvalidOperationException("The status base URL is not available. This is most likely because status for this job is retrieved by polling. " +
                                                         "Use DirectClient.GetStatusChange() to check for updated statuses for this job.");
                 }
+
                 return _statusBaseUrl;
             }
         }

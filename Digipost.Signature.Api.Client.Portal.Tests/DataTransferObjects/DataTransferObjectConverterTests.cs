@@ -4,7 +4,6 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
@@ -48,14 +47,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     },
                     requiredauthentication = authenticationlevel.Item4,
@@ -105,14 +104,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     },
                     availability = new availability
@@ -169,14 +168,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     },
                     availability = new availability
@@ -231,14 +230,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     },
                     availability = new availability
@@ -280,14 +279,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     {
                         new portalsigner
                         {
-                            Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value, order = 1,
+                            Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
+                            order = 1,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
                             onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
-                            Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value, order = 2,
+                            Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
+                            order = 2,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
                             onbehalfofSpecified = true
@@ -351,7 +352,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             signaturetype = signaturetype.AUTHENTICATED_ELECTRONIC_SIGNATURE,
                             signaturetypeSpecified = true,
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     }
                 };
@@ -395,14 +396,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true,
+                            onbehalfofSpecified = true
                         }
                     }
                 };
@@ -493,6 +494,39 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var expected = new notifications
                 {
                     Items = new object[] {new sms {number = sms.Number}}
+                };
+
+                //Act
+                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, actual, out differences);
+                Assert.Equal(0, differences.Count());
+            }
+
+            [Fact]
+            public void Converts_on_behalf_of()
+            {
+                //Arrange
+                var source = new Signer(
+                        new ContactInformation {Email = new Email("email@example.com")}
+                    )
+                    {OnBehalfOf = OnBehalfOf.Other};
+
+                var expected = new portalsigner
+                {
+                    Item = new enabled(),
+                    Item1 = new notifications
+                    {
+                        Items = new object[]
+                        {
+                            new email {address = "email@example.com"}
+                        }
+                    },
+                    onbehalfofSpecified = true,
+                    onbehalfof = signingonbehalfof.OTHER
                 };
 
                 //Act
@@ -598,40 +632,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             new email {address = "email@example.com"}
                         }
                     },
-                    onbehalfofSpecified = true,
-                };
-
-                //Act
-                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
-            }
-
-            [Fact]
-            public void Converts_on_behalf_of()
-            {
-                //Arrange
-                var source = new Signer(
-                        new ContactInformation {Email = new Email("email@example.com")}
-                    )
-                    {OnBehalfOf = OnBehalfOf.Other};
-
-                var expected = new portalsigner
-                {
-                    Item = new enabled(),
-                    Item1 = new notifications
-                    {
-                        Items = new object[]
-                        {
-                            new email {address = "email@example.com"}
-                        }
-                    },
-                    onbehalfofSpecified = true,
-                    onbehalfof = signingonbehalfof.OTHER
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -664,11 +665,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         Items = new object[]
                         {
                             new email {address = "email@example.com"},
-                            new sms {number = "11111111"},
+                            new sms {number = "11111111"}
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true,
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -700,7 +701,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true,
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -727,7 +728,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         Items = new object[] {new email {address = ((ContactInformation) source.Identifier).Email.Address}}
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true,
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -753,7 +754,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     Item = ((PersonalIdentificationNumber) source.Identifier).Value,
                     Item1 = new notificationsusinglookup {email = new enabled()},
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true,
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -785,7 +786,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true,
+                    onbehalfofSpecified = true
                 };
 
                 //Act
@@ -901,7 +902,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var padesUrl = source.signatures.padesurl;
                 if (padesUrl != null)
+                {
                     expected.PadesReference = new PadesReference(new Uri(padesUrl));
+                }
 
                 //Act
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);

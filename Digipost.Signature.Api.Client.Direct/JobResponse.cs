@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Digipost.Signature.Api.Client.Direct
+﻿namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobResponse
     {

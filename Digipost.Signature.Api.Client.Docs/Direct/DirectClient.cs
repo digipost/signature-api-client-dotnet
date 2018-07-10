@@ -152,7 +152,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
 
             var job = new Job(
                 documentToSign,
-                new List<Signer> { new Signer(signer) },
+                new List<Signer> {new Signer(signer)},
                 "SendersReferenceToSignatureJob",
                 exitUrls,
                 sender,

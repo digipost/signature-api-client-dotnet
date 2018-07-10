@@ -100,7 +100,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 Assert.Equal(0, differences.Count());
             }
 
-
             [Fact]
             public void Converts_exit_urls_successfully()
             {

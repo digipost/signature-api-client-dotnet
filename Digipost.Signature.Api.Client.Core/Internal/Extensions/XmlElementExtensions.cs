@@ -23,7 +23,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Extensions
             var newElement = element.OwnerDocument.CreateElement(null, localName, namespaceUri);
             element.AppendChild(newElement);
             if (value != null)
+            {
                 newElement.InnerText = value;
+            }
 
             return newElement;
         }

@@ -57,13 +57,17 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         private static void AddSignatureMethodToCryptoApi(string signatureMethod)
         {
             if (CryptoConfig.CreateFromName(signatureMethod) == null)
+            {
                 CryptoConfig.AddAlgorithm(typeof(RsaPkCs1Sha256SignatureDescription), signatureMethod);
+            }
         }
 
         private static void AssertHasPrivateKeyOrThrow(X509Certificate2 certificate)
         {
             if (!certificate.HasPrivateKey)
+            {
                 throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} does not contain a private key, which is mandatory when signing XML documents.");
+            }
         }
 
         private void SetSigningKey(X509Certificate2 certificate)
@@ -71,7 +75,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             var targetKey = ExtractValidPrivateKeyOrThrow(certificate);
 
             if (targetKey.CspKeyContainerInfo.ProviderType == RsaSha256DigitalSignaturesCryptoApiProvider)
+            {
                 SigningKey = targetKey;
+            }
             else
             {
                 SigningKey = new RSACryptoServiceProvider();
@@ -91,7 +97,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             var targetKey = certificate.PrivateKey as RSACryptoServiceProvider;
             if (targetKey == null)
 
+            {
                 throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} is not a valid RSA asymetric key.");
+            }
 
             return targetKey;
         }
@@ -101,7 +109,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
             SignedInfo.SignatureMethod = SignatureMethod;
             SignedInfo.CanonicalizationMethod = CanocalizationMethod;
             if (inclusiveNamespacesPrefixList != null)
+            {
                 ((XmlDsigExcC14NTransform) SignedInfo.CanonicalizationMethodObject).InclusiveNamespacesPrefixList = inclusiveNamespacesPrefixList;
+            }
         }
 
         public override XmlElement GetIdElement(XmlDocument doc, string id)
@@ -145,7 +155,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
                 result = node.SelectSingleNode($"//*[@*[local-name() = '{s}'] = '{idValue}']") as XmlElement;
 
                 if (result != null)
+                {
                     break;
+                }
             }
 
             return result;

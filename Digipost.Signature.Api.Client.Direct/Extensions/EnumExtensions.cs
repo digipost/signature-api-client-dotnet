@@ -40,6 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.Extensions
                 default:
                     throw new ArgumentOutOfRangeException(nameof(status), status, null);
             }
+
             return result;
         }
     }

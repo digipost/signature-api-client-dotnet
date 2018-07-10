@@ -37,16 +37,14 @@ namespace Digipost.Signature.Api.Client.TestClient
                 ) {LogRequestAndResponse = true}
             );
 
-            var signer = new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
+            var signer = new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
 
             var created = client.Create(new Job(
                 new Document("Et signeringsoppdrag", "Her kommer en melding", FileType.Pdf, @"\\vmware-host\Shared Folders\Downloads\00370726201232902222.pdf"),
-                new List<Signer>() {signer},
+                new List<Signer> {signer},
                 "Avsenders referance", new Sender(stringPrivateOrganizationNumber))).Result;
 
             var status = client.GetStatusChange(new Sender(stringPrivateOrganizationNumber)).Result;
-            
-
 
             Console.WriteLine("Finished with loggah ...");
             Console.ReadLine();

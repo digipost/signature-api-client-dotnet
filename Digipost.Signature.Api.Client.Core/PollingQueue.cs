@@ -4,7 +4,7 @@
     {
         internal static string QueryParameterName = "polling_queue";
 
-        public static PollingQueue Default = new PollingQueue(); 
+        public static PollingQueue Default = new PollingQueue();
 
         public PollingQueue(string name = null)
         {
@@ -20,6 +20,9 @@
             return that != null && Name.Equals(that.Name);
         }
 
-        public override int GetHashCode() => Name.GetHashCode();
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
     }
 }

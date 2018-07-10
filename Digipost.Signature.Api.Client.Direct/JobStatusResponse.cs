@@ -30,6 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct
                     throw new InvalidOperationException("There were no direct jobs with updated status, and querying the job ID is a programming error. " +
                                                         "Use the Status-property to check if there were any status change before attempting to get any further information.");
                 }
+
                 return _jobId.Value;
             }
         }

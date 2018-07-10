@@ -32,7 +32,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice
                 using (_zipArchive)
                 {
                     foreach (var attachable in _attachables)
+                    {
                         AddToArchive(attachable.Key, attachable.Value);
+                    }
                 }
 
                 var bundleArray = stream.ToArray();

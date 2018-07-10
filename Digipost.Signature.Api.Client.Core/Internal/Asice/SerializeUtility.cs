@@ -32,6 +32,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice
                 {
                     serializer.Serialize(xmlWriter, value);
                 }
+
                 return textWriter.ToString();
             }
         }

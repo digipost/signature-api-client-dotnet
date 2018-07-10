@@ -104,7 +104,10 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var hasContent = response.Content != null && response.Content.Headers.ContentType?.MediaType == MediaType.ApplicationXml;
 
-            if (!hasContent) return new KeyValuePair<string, string>();
+            if (!hasContent)
+            {
+                return new KeyValuePair<string, string>();
+            }
 
             return new KeyValuePair<string, string>(null, $"{await GetContentData(response.Content).ConfigureAwait(false)}");
         }

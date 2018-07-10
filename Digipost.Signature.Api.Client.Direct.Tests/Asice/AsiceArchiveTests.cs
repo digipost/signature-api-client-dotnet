@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
             {
                 //Arrange
                 var document = DomainUtility.GetDirectDocument();
-                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {}, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), document);
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] { }, DomainUtility.GetDirectManifest(), DomainUtility.GetSignature(), document);
 
                 //Act
                 var archiveBytes = asiceArchive.GetBytes();
@@ -44,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
             public void AddsAttachableToZip()
             {
                 //Arrange
-                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] {});
+                var asiceArchive = new AsiceArchive(new AsiceAttachableProcessor[] { });
 
                 //Act
                 var attachment = DomainUtility.GetDirectDocument();

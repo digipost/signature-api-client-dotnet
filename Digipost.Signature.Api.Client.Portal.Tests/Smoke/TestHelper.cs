@@ -89,7 +89,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
             _confirmationReference = new ConfirmationReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.ConfirmationReference.Url));
 
-            if (_jobStatusChanged.Status != CompletedSuccessfully) return this;
+            if (_jobStatusChanged.Status != CompletedSuccessfully)
+            {
+                return this;
+            }
 
             _xadesReference = new XadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.Signatures.First().XadesReference.Url));
             _padesReference = new PadesReference(TransformReferenceToCorrectEnvironment(_jobStatusChanged.PadesReference.Url));

@@ -138,6 +138,5 @@ namespace Digipost.Signature.Api.Client.Core
 
             return new Uri(relativeUri, UriKind.Relative);
         }
-
     }
 }

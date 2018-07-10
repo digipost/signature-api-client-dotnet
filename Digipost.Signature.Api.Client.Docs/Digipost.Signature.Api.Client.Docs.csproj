@@ -51,9 +51,6 @@
     <Reference Include="Digipost.Signature.Api.Client.Scripts, Version=4.2.0.140, Culture=neutral, PublicKeyToken=13a04c7692843c1c, processorArchitecture=MSIL">
       <HintPath>..\packages\digipost-signature-api-client.4.2.0.140-beta\lib\net45\Digipost.Signature.Api.Client.Scripts.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">

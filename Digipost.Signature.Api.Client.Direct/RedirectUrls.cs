@@ -26,6 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 throw new InvalidOperationException("Unable to find redirect URL for this signer");
             }
+
             return redirectReference;
         }
 
@@ -35,6 +36,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 throw new InvalidOperationException("Calls to this method should only be done when there are no more than one (1) redirect URL.");
             }
+
             return Urls.Single();
         }
     }

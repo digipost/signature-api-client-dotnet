@@ -1,8 +1,6 @@
 ﻿using Digipost.Signature.Api.Client.Core;
-using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
-using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
@@ -110,7 +108,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             var signer = new PersonalIdentificationNumber("12345678910");
             var senderWithQueue = new Sender(BringPublicOrganizationNumber, new PollingQueue("CustomDirectPollingQueue"));
-          
+
             _fixture.TestHelper
                 .Create_pollable_direct_job(senderWithQueue, signer)
                 .Sign_job(signer)

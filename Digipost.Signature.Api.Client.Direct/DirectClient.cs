@@ -15,7 +15,6 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
-using static Digipost.Signature.Api.Client.Core.Internal.Enums.JobType;
 
 namespace Digipost.Signature.Api.Client.Direct
 {

@@ -81,7 +81,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         public TestHelper Get_status_by_polling(Sender sender)
         {
-            JobStatusResponse jobStatusResponse = GetCurrentReceipt(_jobResponse.JobId, sender);
+            var jobStatusResponse = GetCurrentReceipt(_jobResponse.JobId, sender);
             _status = TransformJobUrlsToCorrectEnvironmentIfNeeded(jobStatusResponse);
             return this;
         }
@@ -108,7 +108,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
-
         public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<SignerIdentifier, SignatureStatus>[] expectedSignatureStatuses)
         {
             Assert_state(_status);
@@ -118,6 +117,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 Assert.Equal(expectedSignatureStatus.Value, _status.GetSignatureFor(expectedSignatureStatus.Key).SignatureStatus);
             }
+
             return this;
         }
 

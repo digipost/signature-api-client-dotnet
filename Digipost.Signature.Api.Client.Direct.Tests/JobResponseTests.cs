@@ -8,20 +8,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         public class ConstructorMethod : JobResponseTests
         {
             [Fact]
-            public void SSimple_constructor()
+            public void Simple_constructor()
             {
                 //Arrange
                 var jobId = 123456789;
+                var jobReference = "senders-reference";
                 var responseUrls = DomainUtility.GetResponseUrls();
 
                 //Act
                 var directJobResponse = new JobResponse(
                     jobId,
+                    jobReference,
                     responseUrls
                 );
 
                 //Assert
                 Assert.Equal(jobId, directJobResponse.JobId);
+                Assert.Equal(jobReference, directJobResponse.JobReference);
                 Assert.Equal(responseUrls, directJobResponse.ResponseUrls);
             }
         }

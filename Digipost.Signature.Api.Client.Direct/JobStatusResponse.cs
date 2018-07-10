@@ -8,13 +8,14 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobStatusResponse
     {
-        public static JobStatusResponse NoChanges = new JobStatusResponse(null, JobStatus.NoChanges, null, null);
+        public static JobStatusResponse NoChanges = new JobStatusResponse(null, null, JobStatus.NoChanges, null, null);
 
         private long? _jobId;
 
-        public JobStatusResponse(long? jobId, JobStatus status, JobReferences references, List<Signature> signatures)
+        public JobStatusResponse(long? jobId, string jobReference, JobStatus status, JobReferences references, List<Signature> signatures)
         {
             _jobId = jobId;
+            JobReference = jobReference;
             Status = status;
             References = references;
             Signatures = signatures;
@@ -32,6 +33,11 @@ namespace Digipost.Signature.Api.Client.Direct
                 return _jobId.Value;
             }
         }
+
+        /// <summary>
+        ///     Returns the signature job's custom reference as specified upon creation. May be <code>null</code>.
+        /// </summary>
+        public string JobReference { get; }
 
         public JobStatus Status { get; }
 

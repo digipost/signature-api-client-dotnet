@@ -16,6 +16,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var jobId = 123456789;
+                var jobReference = "senders-reference";
                 var jobStatus = JobStatus.InProgress;
                 var confirmationReference = new ConfirmationReference(new Uri("http://confirmationreference.no"));
                 var signatures = new List<Signature>
@@ -37,12 +38,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
                 var portalJobStatusChangeResponse = new JobStatusChanged(
                     jobId,
+                    jobReference,
                     jobStatus,
                     confirmationReference,
                     signatures);
 
                 //Assert
                 Assert.Equal(jobId, portalJobStatusChangeResponse.JobId);
+                Assert.Equal(jobReference, portalJobStatusChangeResponse.JobReference);
                 Assert.Equal(jobStatus, portalJobStatusChangeResponse.Status);
                 Assert.Equal(confirmationReference, portalJobStatusChangeResponse.ConfirmationReference);
                 Assert.Equal(signatures, portalJobStatusChangeResponse.Signatures);

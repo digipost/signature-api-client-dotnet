@@ -179,7 +179,11 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 
         public static JobResponse FromDataTransferObject(portalsignaturejobresponse portalsignaturejobresponse)
         {
-            return new JobResponse(portalsignaturejobresponse.signaturejobid, new Uri(portalsignaturejobresponse.cancellationurl));
+            return new JobResponse(
+                portalsignaturejobresponse.signaturejobid,
+                portalsignaturejobresponse.reference,
+                new Uri(portalsignaturejobresponse.cancellationurl)
+            );
         }
 
         public static JobStatusChanged FromDataTransferObject(portalsignaturejobstatuschangeresponse changeResponse)
@@ -188,7 +192,13 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             var confirmationReference = new ConfirmationReference(new Uri(changeResponse.confirmationurl));
             var signatures = FromDataTransferObject(changeResponse.signatures.signature);
 
-            var result = new JobStatusChanged(changeResponse.signaturejobid, jobStatus, confirmationReference, signatures);
+            var result = new JobStatusChanged(
+                changeResponse.signaturejobid,
+                changeResponse.reference,
+                jobStatus,
+                confirmationReference,
+                signatures
+            );
 
             var padesUrl = changeResponse.signatures.padesurl;
             if (padesUrl != null)

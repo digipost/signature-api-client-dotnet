@@ -13,6 +13,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             {
                 //Arrange
                 var jobId = 22;
+                var jobReference = "senders-reference";
                 var jobStatus = JobStatus.Failed;
                 var jobReferences = DomainUtility.GetJobReferences();
                 var signatures = DomainUtility.GetSignatures(1);
@@ -20,6 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Act
                 var jobStatusResponse = new JobStatusResponse(
                     jobId,
+                    jobReference,
                     jobStatus,
                     jobReferences,
                     signatures
@@ -27,6 +29,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 Assert.Equal(jobId, jobStatusResponse.JobId);
+                Assert.Equal(jobReference, jobStatusResponse.JobReference);
                 Assert.Equal(jobStatus, jobStatusResponse.Status);
                 Assert.Equal(jobReferences, jobStatusResponse.References);
                 Assert.Equal(signatures, jobStatusResponse.Signatures);

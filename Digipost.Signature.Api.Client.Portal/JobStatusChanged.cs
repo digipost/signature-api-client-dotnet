@@ -6,17 +6,23 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class JobStatusChanged
     {
-        public static JobStatusChanged NoChangesJobStatusChanged = new JobStatusChanged(0, JobStatus.NoChanges, null, null);
+        public static JobStatusChanged NoChangesJobStatusChanged = new JobStatusChanged(0, null, JobStatus.NoChanges, null, null);
 
-        public JobStatusChanged(long jobId, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
+        public JobStatusChanged(long jobId, string jobReference, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
         {
             JobId = jobId;
+            JobReference = jobReference;
             Status = status;
             ConfirmationReference = confirmationReference;
             Signatures = signatures;
         }
 
         public long JobId { get; internal set; }
+
+        /// <summary>
+        ///     Returns the signature job's custom reference as specified upon creation. May be <code>null</code>.
+        /// </summary>
+        public string JobReference { get; }
 
         public JobStatus Status { get; set; }
 

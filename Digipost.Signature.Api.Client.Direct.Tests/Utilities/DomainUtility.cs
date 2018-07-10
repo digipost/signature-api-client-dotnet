@@ -51,11 +51,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         public static JobStatusResponse GetJobStatusResponse()
         {
             var jobId = 22;
+            var jobReference = "senders-reference";
             var jobStatus = JobStatus.Failed;
             var statusResponseUrls = GetJobReferences();
 
             return new JobStatusResponse(
                 jobId,
+                jobReference,
                 jobStatus,
                 statusResponseUrls,
                 new List<Signature> {new Signature("12345678910", null, SignatureStatus.Failed, DateTime.Now)}
@@ -90,10 +92,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         public static JobResponse GetDirectJobResponse()
         {
             var jobId = 123456789;
+            var jobReference = "senders-reference";
             var responseUrls = GetResponseUrls();
 
             return new JobResponse(
                 jobId,
+                jobReference,
                 responseUrls
             );
         }

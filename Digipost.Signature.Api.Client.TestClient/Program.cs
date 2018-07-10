@@ -30,8 +30,11 @@ namespace Digipost.Signature.Api.Client.TestClient
             testEnvironment.Url = new Uri("https://api.test.signering.posten.no");
 
             var client = new PortalClient(
-                new ClientConfiguration(testEnvironment, "‎2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed", 
-                new Sender(stringPublicOrganizationNumber))
+                new ClientConfiguration(
+                    testEnvironment,
+                    "2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed",
+                    new Sender(stringPublicOrganizationNumber)
+                ) {LogRequestAndResponse = true}
             );
 
             var signer = new Signer(new PersonalIdentificationNumber("01043100358"), new Notifications(new Email("email@example.com"))) { OnBehalfOf = OnBehalfOf.Other };
@@ -46,7 +49,7 @@ namespace Digipost.Signature.Api.Client.TestClient
 
 
             Console.WriteLine("Finished with loggah ...");
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

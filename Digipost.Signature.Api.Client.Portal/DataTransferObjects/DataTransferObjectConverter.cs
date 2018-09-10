@@ -109,6 +109,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             if (signer.Order != null)
             {
                 dataTransferObject.order = signer.Order.Value;
+                dataTransferObject.orderSpecified = true;
             }
 
             if (signer.SignatureType != null)

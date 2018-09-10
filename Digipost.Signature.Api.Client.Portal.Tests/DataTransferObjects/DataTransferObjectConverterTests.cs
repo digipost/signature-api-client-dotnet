@@ -281,6 +281,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             order = 1,
+                            orderSpecified = true,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
                             onbehalfofSpecified = true
@@ -289,6 +290,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             order = 2,
+                            orderSpecified = true,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
                             onbehalfofSpecified = true

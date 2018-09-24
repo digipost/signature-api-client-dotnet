@@ -100,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Core
             HttpClientHandler handler = new HttpClientHandler();
             var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
             handler.ClientCertificates.AddRange(clientCertificates);
-            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
+//            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
             return handler;
         }

@@ -47,7 +47,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             var signer2 = new PersonalIdentificationNumber("10987654321");
 
             _fixture.TestHelper
-                .Create_direct_job(signer1, signer2)
+                .Create_direct_job(signer1, signer2);
+            _fixture.TestHelper
                 .Sign_job(signer1)
                 .Get_status()
                 .Expect_job_to_have_status(
@@ -79,7 +80,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Expect_job_to_have_status(
                     JobStatus.CompletedSuccessfully,
                     ExpectedSignerStatus(signer, SignatureStatus.Signed)
-                )
+                )/**/
                 .Get_XAdES(signer)
                 .Get_PAdES()
                 .Confirm_status();

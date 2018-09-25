@@ -106,8 +106,17 @@ namespace Digipost.Signature.Api.Client.Portal
             };
             //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
-            var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            try
+            {
+                var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
+                var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
 
             // Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
         }

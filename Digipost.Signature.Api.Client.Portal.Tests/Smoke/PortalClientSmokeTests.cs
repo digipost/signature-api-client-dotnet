@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         [Fact]
         public void Can_create_job_and_cancel()
         {
-            var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
+            var signer = new Signer(new PersonalIdentificationNumber("01048200229"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
 
             _fixture.TestHelper
                 .Create_job(signer)

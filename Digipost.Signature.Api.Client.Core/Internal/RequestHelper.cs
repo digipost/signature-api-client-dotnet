@@ -32,16 +32,28 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             };
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-            var responseMessage = await _httpClient.SendAsync(request).ConfigureAwait(false);
-            var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            if (!responseMessage.IsSuccessStatusCode)
+            try
             {
+                var responseMessage = await _httpClient.SendAsync(request).ConfigureAwait(false);
+                var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                
+                
+                if (!responseMessage.IsSuccessStatusCode)
+                {
 //                Log.Error($"Create request sent, but failed: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
-                throw HandleGeneralException(responseContent, responseMessage.StatusCode);
+                    throw HandleGeneralException(responseContent, responseMessage.StatusCode);
+                }
+
+                return deserializeFunc(responseContent);
+            }
+            catch (Exception e)
+            {
+                int p = 0;
+                
+                
             }
 
-            return deserializeFunc(responseContent);
+            return default(T);
         }
 
         public async Task<Stream> GetStream(Uri uri)

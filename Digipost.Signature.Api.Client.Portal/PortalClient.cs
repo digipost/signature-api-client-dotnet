@@ -96,6 +96,22 @@ namespace Digipost.Signature.Api.Client.Portal
             return jobStatusChanged;
         }
 
+        
+        public async Task GetRootResource(Sender sender)
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri($"/api/{sender.OrganizationNumber}", UriKind.Relative),
+                Method = HttpMethod.Get
+            };
+            //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+
+            var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
+            var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            // Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+        }
+
 
         private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {

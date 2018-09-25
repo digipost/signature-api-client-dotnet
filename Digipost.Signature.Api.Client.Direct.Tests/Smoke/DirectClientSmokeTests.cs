@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         [Fact]
         public void Can_create_job_with_one_signer()
         {
-            var signer = new PersonalIdentificationNumber("12345678910");
+            var signer = new PersonalIdentificationNumber("01048200229"); //Preben
 
             _fixture.TestHelper
                 .Create_direct_job(signer)

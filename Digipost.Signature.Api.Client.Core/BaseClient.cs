@@ -72,21 +72,22 @@ namespace Digipost.Signature.Api.Client.Core
 
         private void ValidateSenderCertificateThrowIfInvalid()
         {
-            var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
-
-            if (validationResult.Type != CertificateValidationType.Valid)
-            {
-                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
-            }
+//            var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
+//
+//            if (validationResult.Type != CertificateValidationType.Valid)
+//            {
+//                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+//            }
+            
         }
 
         private HttpClient MutualTlsClient()
         {
             var client = HttpClientFactory.Create(
                 MutualTlsHandler(),
-                new XsdRequestValidationHandler(),
-                new UserAgentHandler(),
-                new LoggingHandler(ClientConfiguration)
+//                new XsdRequestValidationHandler(),
+                new UserAgentHandler()
+//                new LoggingHandler(ClientConfiguration)
             );
 
             client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);
@@ -100,27 +101,27 @@ namespace Digipost.Signature.Api.Client.Core
             HttpClientHandler handler = new HttpClientHandler();
             var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
             handler.ClientCertificates.AddRange(clientCertificates);
-//            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
+            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
             return handler;
         }
 
         private bool ValidateServerCertificateThrowIfInvalid(HttpRequestMessage message, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
-            {
-//                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
-                return true;
-            }
-
-            var x509Certificate2 = new X509Certificate2(certificate);
-
-            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
-
-            if (validationResult.Type != CertificateValidationType.Valid)
-            {
-                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
-            }
+//            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
+//            {
+////                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+//                return true;
+//            }
+//
+//            var x509Certificate2 = new X509Certificate2(certificate);
+//
+//            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
+//
+//            if (validationResult.Type != CertificateValidationType.Valid)
+//            {
+//                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+//            }
 
             return true;
         }

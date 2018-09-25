@@ -46,6 +46,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private readonly PortalSmokeTestsFixture _fixture;
 
         [Fact]
+        public void Verify_tls_setup()
+        {
+            _fixture.TestHelper
+                .Verify_tls_setup(new Sender(BringPublicOrganizationNumber));
+        }
+
+        [Fact]
         public void Can_create_job_and_cancel()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};

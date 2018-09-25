@@ -199,5 +199,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 throw new InvalidOperationException("Requires gradually built state. Make sure you use functions in the correct order");
             }
         }
+
+        public void Verify_tls_setup(Sender sender)
+        {
+            _client.GetRootResource(sender).Wait();
+        }
     }
 }

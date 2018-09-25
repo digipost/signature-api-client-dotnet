@@ -1,5 +1,6 @@
 # name of the software
 name: .NET client library for Digipost signature Api
+title: .NET client library for Digipost signature Api
 
 # url of the download button
 downloadUrl: https://www.nuget.org/packages/digipost-signature-api-client/
@@ -83,7 +84,9 @@ analytics:
 # DON'T MODIFY
 highlight: rouge
 
-gems:
+github: [metadata]
+
+plugins:
   - jekyll-redirect-from
 
 exclude: ['README.md', 'Gemfile.lock', 'Gemfile']

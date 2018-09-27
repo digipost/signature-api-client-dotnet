@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;

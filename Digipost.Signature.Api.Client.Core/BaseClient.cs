@@ -76,7 +76,7 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (validationResult.Type != CertificateValidationType.Valid)
             {
-                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+                throw new CertificateException($"Certificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
             }
             
         }

@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Program
 {
@@ -9,9 +10,16 @@ namespace Digipost.Signature.Api.Client.Program
 
     public class TestService : ITestService
     {
+        private readonly ILogger<ITestService> _logger;
+
+        public TestService(ILogger<TestService> logger)
+        {
+            _logger = logger;
+        }
+        
         public void Run()
         {
-            Console.WriteLine("Did run test service");
+            _logger.LogWarning("Dis is inzane! We are in the test service");
         }
     }
 }

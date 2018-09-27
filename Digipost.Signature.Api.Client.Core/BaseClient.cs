@@ -72,12 +72,12 @@ namespace Digipost.Signature.Api.Client.Core
 
         private void ValidateSenderCertificateThrowIfInvalid()
         {
-//            var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
-//
-//            if (validationResult.Type != CertificateValidationType.Valid)
-//            {
-//                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
-//            }
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new CertificateException($"Sertificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
             
         }
 

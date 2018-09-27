@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
     {
         private static readonly ResourceUtility ResourceUtility = new ResourceUtility(Assembly.GetExecutingAssembly(), "Digipost.Signature.Api.Client.Core.Tests.Resources");
 
-        public static string BringPublicOrganizationNumber => "984661185";
+        public static string BringPublicOrganizationNumber => "988015814";
 
         public static string BringPrivateOrganizationNumber => "088015814";
 
@@ -49,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static X509Certificate2 GetBringCertificate()
         {
-            return DIGIPOSTPRODSERTIFIKAT();
+            return BringTestSertifikat();
         }
 
         public static X509Certificate2 GetExpiredSelfSignedCertificate()
@@ -86,27 +86,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             var bringTestSertifikat = new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
             return bringTestSertifikat;
         }
-        
-        //Todo: Should not manipulate certificate store like this.
-        private static X509Certificate2 DIGIPOSTPRODSERTIFIKAT()
-        {
-            var pathToSecretsWithPlaceholder = "<PATH-PLACEHOLDER>/.microsoft/usersecrets/User-Secret-ID/secrets.json";
-            var replace = pathToSecretsWithPlaceholder.Replace("<PATH-PLACEHOLDER>", System.Environment.GetEnvironmentVariable("HOME"));
-            Console.WriteLine("AAS Reading test certificate from secrets file: " + replace);
-            string value = File.ReadAllText(replace);
-            var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
-
-            string certificatePath;
-            deserializeObject.TryGetValue("Certificate:Path:Absolute", out certificatePath);
-            string certificatePassword;
-            deserializeObject.TryGetValue("Certificate:Password", out certificatePassword);
-            
-            Console.WriteLine("AAS Reading test certificate from path found in secrets file: " + certificatePath);
-
-            var x509Certificate2 = new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
-            return x509Certificate2;
-        }
-        
+       
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {

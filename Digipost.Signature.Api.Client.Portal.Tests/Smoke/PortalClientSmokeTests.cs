@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core;
+﻿using System.Reflection;
+using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;

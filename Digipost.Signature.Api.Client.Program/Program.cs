@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Program
 {
@@ -10,40 +12,33 @@ namespace Digipost.Signature.Api.Client.Program
     {
         static void Main(string[] args)
         {
-            // create service collection
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
             // create service provider
-            ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
-            
-            //entry to run app
-            serviceProvider.GetService<PortalClient>().SendJob();
+            var serviceProvider = CreateServiceProvider();
+
+            SetUpNLog(serviceProvider);
+
+            var testService = serviceProvider.GetService<ITestService>();
+            testService.Run();
         }
 
-        private static void ConfigureServices(ServiceCollection serviceCollection)
+        private static void SetUpNLog(IServiceProvider serviceProvider)
         {
-            // add configured instance of logging
-            serviceCollection.AddSingleton(new LoggerFactory()
-                .AddConsole()
-                .AddDebug());
-            
-            // add logging
-            serviceCollection.AddLogging();
-            
-            // build configuration
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("app-settings.json", false)
-                .Build();
-            serviceCollection.AddOptions();
-            serviceCollection.Configure<AppSettings>(configuration.GetSection("Configuration"));
-            
-            // add services
-            serviceCollection.AddTransient<ITestService, TestService>();
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
-            // add app
-            serviceCollection.AddTransient<PortalClient>();
+            loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
+            NLog.LogManager.LoadConfiguration("/Users/aas/projects/digipost/signature-api-client-dotnet/Digipost.Signature.Api.Client.Program/nlog.config");
+        }
+
+        private static IServiceProvider CreateServiceProvider()
+        {
+            var services = new ServiceCollection();
+            
+            services.AddSingleton<ILoggerFactory, LoggerFactory>();
+            services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
+            services.AddTransient<ITestService, TestService>();
+
+            return services.BuildServiceProvider();
         }
     }
 }

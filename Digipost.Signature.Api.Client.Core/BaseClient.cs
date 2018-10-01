@@ -7,6 +7,7 @@ using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Internal.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -15,25 +16,20 @@ namespace Digipost.Signature.Api.Client.Core
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
         
-        /*
-         Todo: 
-         Common.Logging is not yet supported by netstandard2.0. This may be supported in Common.Logging4,
-         but this may be a while to, as seen here https://github.com/net-commons/common-logging/issues/148
-         and with other issues in the repo. Maybe it is time to shift to another logging framework. All 
-         logging has been commented out for the sake of simplicity, because we cannot release this library
-         without logging. Period.
-        
-         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        */  
         private HttpClient _httpClient;
+        private readonly ILogger<BaseClient> _logger;
+        private readonly ILoggerFactory _loggerFactory;
 
-        protected BaseClient(ClientConfiguration clientConfiguration)
+        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
         {
+            _logger = loggerFactory.CreateLogger<BaseClient>();
+            _loggerFactory = loggerFactory;
+            
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
-            RequestHelper = new RequestHelper(HttpClient);
+            RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
         public ClientConfiguration ClientConfiguration { get; }
@@ -44,11 +40,11 @@ namespace Digipost.Signature.Api.Client.Core
             set
             {
                 _httpClient = value;
-                RequestHelper = new RequestHelper(value);
+                RequestHelper = new RequestHelper(value, _loggerFactory);
             }
         }
 
-        internal RequestHelper RequestHelper { get; set; }
+        internal RequestHelper RequestHelper { get; private set; }
 
         protected Sender CurrentSender(Sender jobSender)
         {
@@ -60,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core
 
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateSenderCertificate)
             {
-//                Log.Warn($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
+                _logger.LogWarning($"Validation of {nameof(Sender)} certificate is disabled and should only be disabled under special circumstances. This validation is in place to give a better descriptions in case of an invalid sender certificate.");
 
                 return sender;
             }

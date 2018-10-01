@@ -17,4 +17,9 @@
       <PackageReference Include="NLog.Extensions.Logging" Version="1.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj" />
+      <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj" />
+    </ItemGroup>
+
 </Project>

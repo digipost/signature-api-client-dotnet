@@ -14,16 +14,24 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Internal;
 using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Digipost.Signature.Api.Client.Portal
 {
     public class PortalClient : BaseClient
     {
-//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILogger<PortalClient> _logger;
 
         public PortalClient(ClientConfiguration clientConfiguration)
-            : base(clientConfiguration)
+            : this(clientConfiguration, new NullLoggerFactory())
         {
+        }
+        
+        public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+            : base(clientConfiguration, loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<PortalClient>();
         }
 
         public async Task<JobResponse> Create(Job job)
@@ -35,7 +43,7 @@ namespace Digipost.Signature.Api.Client.Portal
             var portalCreateAction = new CreateAction(job, documentBundle);
             var portalJobResponse = await RequestHelper.Create(relativeUrl, portalCreateAction.Content(), CreateAction.DeserializeFunc).ConfigureAwait(false);
 
-            // Log.Debug($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
+            _logger.LogDebug($"Successfully created Portal Job with JobId: {portalJobResponse.JobId}.");
 
             return portalJobResponse;
         }
@@ -70,17 +78,17 @@ namespace Digipost.Signature.Api.Client.Portal
             var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
             var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            // Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+            _logger.LogDebug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    // Log.Debug("No content response received.");
+                    _logger.LogDebug("No content response received.");
                     jobStatusChanged = JobStatusChanged.NoChangesJobStatusChanged;
                     break;
                 case HttpStatusCode.OK:
                     jobStatusChanged = ParseResponseToPortalJobStatusChangeResponse(requestContent);
-                    // Log.Debug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
+                    _logger.LogDebug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
                     break;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
@@ -96,9 +104,9 @@ namespace Digipost.Signature.Api.Client.Portal
             return jobStatusChanged;
         }
 
-        
         public async Task GetRootResource(Sender sender)
         {
+            _logger.LogInformation("Heia! Vi prøver å hente rot-ressursen!");
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri($"/api/{sender.OrganizationNumber}", UriKind.Relative),
@@ -106,21 +114,19 @@ namespace Digipost.Signature.Api.Client.Portal
             };
             //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
 
-
             try
             {
                 var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+                _logger.LogDebug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.Message, e);
                 throw;
             }
 
-            // Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
         }
-
 
         private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
         {
@@ -161,10 +167,10 @@ namespace Digipost.Signature.Api.Client.Portal
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    // Log.Debug($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
+                    _logger.LogDebug($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
                     break;
                 case HttpStatusCode.Conflict:
-                    // Log.Debug($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
+                    _logger.LogDebug($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
                     throw new JobCompletedException();
                 default:
                     throw RequestHelper.HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
@@ -173,7 +179,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         internal async Task<HttpResponseMessage> AutoSign(int jobId, string signer)
         {
-           //  Log.Warn($"Autosigning PortalJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
+            _logger.LogWarning($"Autosigning PortalJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/portal/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             var httpResponseMessage = await HttpClient.PostAsync(url, null).ConfigureAwait(false);
             return httpResponseMessage;

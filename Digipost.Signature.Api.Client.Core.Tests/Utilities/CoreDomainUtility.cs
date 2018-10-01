@@ -49,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static X509Certificate2 GetBringCertificate()
         {
-            return BringTestSertifikat();
+            return CertificateReader.ReadCertificate();
         }
 
         public static X509Certificate2 GetExpiredSelfSignedCertificate()
@@ -65,28 +65,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         public static X509Certificate2 GetPostenTestCertificate()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes("Certificates", "Unittests", "PostenNorgeAs.cer"), "", X509KeyStorageFlags.Exportable);
-        }
-
-        //Todo: Should not manipulate certificate store like this.
-        private static X509Certificate2 BringTestSertifikat()
-        {
-            var pathToSecretsWithPlaceholder = "<PATH-PLACEHOLDER>/.microsoft/usersecrets/User-Secret-ID/secrets.json";
-            var replace = pathToSecretsWithPlaceholder.Replace("<PATH-PLACEHOLDER>", System.Environment.GetEnvironmentVariable("HOME"));
-            Console.WriteLine("AAS Reading test certificate from secrets file: " + replace);
-            string value = File.ReadAllText(replace);
-            var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(value);
-
-            string certificatePath;
-            deserializeObject.TryGetValue("Certificate:Path:Absolute", out certificatePath);
-            string certificatePassword;
-            deserializeObject.TryGetValue("Certificate:Password", out certificatePassword);
-            
-            Console.WriteLine("AAS Reading test certificate from path found in secrets file: " + certificatePath);
-
-            var bringTestSertifikat = new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
-            return bringTestSertifikat;
-        }
-       
+        }       
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {

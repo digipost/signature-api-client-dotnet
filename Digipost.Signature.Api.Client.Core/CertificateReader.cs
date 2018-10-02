@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Core
     {
         public static X509Certificate2 ReadCertificate()
         {
-            var pathToSecrets = $"{System.Environment.GetEnvironmentVariable("HOME")}/.microsoft/usersecrets/User-Secret-ID/secrets.json";
+            var pathToSecrets = $"{System.Environment.GetEnvironmentVariable("HOME")}/.microsoft/usersecrets/organization-certificate/secrets.json";
             Console.WriteLine($"Reading certificate details from secrets file: {pathToSecrets}" );
             var certificateConfig = File.ReadAllText(pathToSecrets);
             var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(certificateConfig);

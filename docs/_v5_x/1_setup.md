@@ -29,7 +29,7 @@ Add the following `UserSecretsId` element to your `.csproj` file
 ```xml
 <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>organization-certificate-secrets</UserSecretsId>
+    <UserSecretsId>organization-certificate</UserSecretsId>
 </PropertyGroup>
 ```
 

@@ -4,31 +4,9 @@ title: Direct use cases
 layout: default
 ---
 
-
-[comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
-
-<h3 id="crete-client-configuration-direct">Create Client Configuration</h3>
-
-``` csharp
-
-const string organizationNumber = "123456789";
-const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
-
-var clientConfiguration = new ClientConfiguration(
-    Environment.DifiTest,
-    certificateThumbprint,
-    new Sender(organizationNumber));
-
-```
-
-<blockquote>
-Note: If the sender changes per signature job created, the sender can be set on the job itself. The sender of the job will always take precedence over the sender in <code>ClientConfiguration</code>. This means that a default sender can be set in <code>ClientConfiguration</code> and, when required, on a specific job.   
-</blockquote>
-
 ### Create signature job
 
 ``` csharp
-
 ClientConfiguration clientConfiguration = null; //As initialized earlier
 var directClient = new DirectClient(clientConfiguration);
 

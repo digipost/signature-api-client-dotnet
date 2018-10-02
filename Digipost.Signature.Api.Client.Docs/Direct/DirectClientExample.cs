@@ -10,19 +10,8 @@ using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Docs.Direct
 {
-    public class CreateSignatureJob
+    public class DirectClientExample
     {
-        public void CreateClientConfiguration()
-        {
-            const string organizationNumber = "123456789";
-            const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
-
-            var clientConfiguration = new ClientConfiguration(
-                Environment.DifiTest,
-                certificateThumbprint,
-                new Sender(organizationNumber));
-        }
-
         public async Task CreateAndSendSignatureJob()
         {
             ClientConfiguration clientConfiguration = null; //As initialized earlier

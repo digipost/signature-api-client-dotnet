@@ -9,22 +9,12 @@ using Digipost.Signature.Api.Client.Portal.Enums;
 
 namespace Digipost.Signature.Api.Client.Docs.Portal
 {
-    public class Class1
+    public class PortalClientExample
     {
-        public static void CreateClientConfiguration()
-        {
-            const string organizationNumber = "123456789";
-            const string certificateThumbprint = "3k 7f 30 dd 05 d3 b7 fc...";
-
-            var clientConfiguration = new ClientConfiguration(
-                Environment.DifiTest,
-                certificateThumbprint,
-                new Sender(organizationNumber));
-        }
-
         public static async Task CreateAndSend()
         {
-            PortalClient portalClient = null; //As initialized earlier
+            ClientConfiguration clientConfiguration = null; //As initialized earlier
+            var portalClient = new PortalClient(clientConfiguration);
 
             var documentToSign = new Document(
                 "Subject of Message",

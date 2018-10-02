@@ -14,7 +14,39 @@ To install the nuget package, follow these steps in Visual Studio:
 * If you would like pre-releases of this package, make sure _Include Prerelease_ is enabled. Please refer to documentation for your version of Visual Studio for detailed instructions.
 1. Select _digipost-signature-api-client_ and click _Install_.
 
-### Install business certificate in certificate store
+## Install business certificate
+
+Choose one of the options below
+- [With dotnet user-secrets (All platforms)](#with-dotnet-user-secrets-all-platforms)
+- [In certificate store (Windows only)](#in-certificate-store-windows-only)
+
+### With dotnet user-secrets (All platforms)
+
+Put the certificate in a safe place on the host machine.
+
+Add the following `UserSecretsId` element to your `.csproj` file
+
+```xml
+<PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>organization-certificate-secrets</UserSecretsId>
+</PropertyGroup>
+```
+
+From the command line, navigate to the directory where the current `.csproj` file is located and run the following commands with your own certificate values.
+
+```sh
+dotnet user-secrets set "Certificate:Path:Absolute" "<your-certificate.p12>"
+dotnet user-secrets set "Certificate:Password" "<your-certificate-password>"
+```
+
+> For more information how to handle and use user secrets, see [microsoft.com](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.1)
+
+#### Loading the certificate
+
+<TODO>
+
+### In certificate store (Windows only)
 
 <blockquote>SSL Certificates are small data files that digitally bind a cryptographic key to an organization's details. When installed on a web server, it activates the padlock and the https protocol (over port 443) and allows secure connections from a web server to a browser.</blockquote>
 
@@ -33,7 +65,7 @@ To communicate over HTTPS you need to sign your request with a business certific
 `-importpfx <filename> NoExport,AT_SIGNATURE`. 
 
 
-### Use business certificate thumbprint
+#### Use business certificate thumbprint
 
 1. Start mmc.exe (Click windowsbutton and type mmc.exe)
 1. _Choose File_ -> _Add/Remove Snap-in…_ (Ctrl + M)

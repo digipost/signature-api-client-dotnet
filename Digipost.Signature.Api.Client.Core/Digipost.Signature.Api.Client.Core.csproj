@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>User-Secret-ID</UserSecretsId>
+    <UserSecretsId>organization-certificate-secrets</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.0.0" />

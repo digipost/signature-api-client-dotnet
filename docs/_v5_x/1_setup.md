@@ -4,6 +4,8 @@ title: Initial setup
 layout: default
 ---
 
+## Nuget package
+
 The client library is available as a nuget package. The client library (and associated nuget package) is updated regularly as new functionality is added.
 
 
@@ -42,7 +44,7 @@ dotnet user-secrets set "Certificate:Password" "<your-certificate-password>"
 
 > For more information how to handle and use user secrets, see [microsoft.com](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.1)
 
-All done? Go to [next steps](#next-steps).
+You can now proceed to [Client configuration based on user secrets](#based-on-user-secrets).
 
 ### In certificate store (Windows only)
 
@@ -75,6 +77,4 @@ To communicate over HTTPS you need to sign your request with a business certific
 1. Scroll down to _Thumbprint_
 1. Copy the thumbprint
 
-## Next steps
-
-Proceed to [Direct use cases](#directusecases) or [Portal use cases](#portalusecases).
+You can now proceed to [Client configuration based on certificate-thumbprint](#based-on-certificate-thumbprint).

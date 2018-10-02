@@ -4,7 +4,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>organization-certificate-secrets</UserSecretsId>
+    <UserSecretsId>organization-certificate</UserSecretsId>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

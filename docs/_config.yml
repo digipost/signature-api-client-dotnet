@@ -1,5 +1,4 @@
-# name of the software
-name: .NET client library for Digipost signature Api
+# title of the software
 title: .NET client library for Digipost signature Api
 
 # url of the download button
@@ -11,8 +10,8 @@ licenseUrl: http://opensource.org/licenses/MIT
 
 baseurl: "/signature-api-client-dotnet"
 
-currentVersion: "4.x"
-versions: ["4.x", "3.x", "2.x","1.7", "1.6", "1.5", "1.4"]
+currentVersion: "5.x"
+versions: ["5.x", "4.x", "3.x", "2.x","1.7", "1.6", "1.5", "1.4"]
 
 collections:
   v1_4:
@@ -36,6 +35,9 @@ collections:
   v4_x:
     output: true
     permalink: /v4.x/
+  v5_x:
+    output: true
+    permalink: /v5.x/
 
 # list of additional links on the right of the top menu
 headerLinks:
@@ -89,4 +91,4 @@ github: [metadata]
 plugins:
   - jekyll-redirect-from
 
-exclude: ['README.md', 'Gemfile.lock', 'Gemfile']
+exclude: ['README.md', 'Gemfile.lock', 'Gemfile', 'vendor']

@@ -11,9 +11,9 @@ before_install:
   - git submodule update --init --recursive
 
   # Decrypt private key used for tests
-  # - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
-  #   -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
-  #   -d
+  - openssl aes-256-cbc -K $encrypted_3afad0b3f334_key -iv $encrypted_3afad0b3f334_iv
+    -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+    -d
 
   # - ./travis-deploy/apt-get-add-keys-and-update.sh
   # - ./travis-deploy/mono-install.sh

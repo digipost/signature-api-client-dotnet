@@ -86,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");
 
                 //Assert
-                Assert.True(clientConfiguration.DocumentBundleProcessors.Any(p => p.GetType() == typeof(DocumentBundleToDiskProcessor)));
+                Assert.Contains(clientConfiguration.DocumentBundleProcessors, p => p.GetType() == typeof(DocumentBundleToDiskProcessor));
             }
         }
     }

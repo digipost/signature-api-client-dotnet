@@ -19,8 +19,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var toString = personalIdentificationNumber.ToString();
 
                 //Assert
-                Assert.True(toString.Contains(maskedPersonalIdentificationNumber));
-                Assert.False(toString.Contains(pin));
+                Assert.Contains(maskedPersonalIdentificationNumber, toString);
+                Assert.DoesNotContain(pin, toString);
             }
         }
     }

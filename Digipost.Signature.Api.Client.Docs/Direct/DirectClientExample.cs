@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;

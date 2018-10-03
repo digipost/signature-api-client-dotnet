@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -97,7 +97,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
         }
 
@@ -167,7 +167,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -199,7 +199,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -240,7 +240,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -274,7 +274,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -323,7 +323,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -377,7 +377,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -434,7 +434,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -456,7 +456,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -491,7 +491,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -516,7 +516,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -541,7 +541,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -574,7 +574,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
         }
     }

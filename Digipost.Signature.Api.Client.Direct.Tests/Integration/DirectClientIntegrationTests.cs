@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var result = await directClient.Create(directJob).ConfigureAwait(false);
 
                 //Assert
-                Assert.NotNull(result.JobId);
+                Assert.NotNull(result);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Integration
                 var result = await directClient.GetStatus(directJobResponse.ResponseUrls.Status("StatusQueryToken")).ConfigureAwait(false);
 
                 //Assert
-                Assert.NotNull(result.JobId);
+                Assert.NotNull(result);
             }
         }
     }

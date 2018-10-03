@@ -30,9 +30,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 {
                     using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                     {
-                        Assert.True(archive.Entries.Any(entry => entry.FullName == "manifest.xml"));
-                        Assert.True(archive.Entries.Any(entry => entry.FullName == "META-INF/signatures.xml"));
-                        Assert.True(archive.Entries.Any(entry => entry.FullName == document.FileName));
+                        Assert.Contains(archive.Entries, entry => entry.FullName == "manifest.xml");
+                        Assert.Contains(archive.Entries, entry => entry.FullName == "META-INF/signatures.xml");
+                        Assert.Contains(archive.Entries, entry => entry.FullName == document.FileName);
                     }
                 }
             }
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
                 {
                     using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                     {
-                        Assert.True(archive.Entries.Any(entry => entry.FullName == attachment.FileName));
+                        Assert.Contains(archive.Entries, entry => entry.FullName == attachment.FileName);
                     }
                 }
             }

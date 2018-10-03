@@ -7,14 +7,14 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="api-client-shared" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0"/>
-        <PackageReference Include="xunit" Version="2.3.1"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1"/>
-        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1"/>
+        <PackageReference Include="api-client-shared" Version="4.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+        <PackageReference Include="xunit" Version="2.3.1" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Digipost.Signature.Api.Client.Core.Tests\Digipost.Signature.Api.Client.Core.Tests.csproj">
@@ -23,7 +23,7 @@
         </ProjectReference>
         <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
             <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
-            <Name>Digipost.Signature.Api.Client.Core</Name>
+            <Name>Digipost.Signature.Api.Client.Core</Name> 
         </ProjectReference>
         <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj">
             <Project>{D03BE351-CA1F-4AAC-968A-D3A0D8CD5197}</Project>
@@ -32,5 +32,10 @@
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <EmbeddedResource Include="Schema/**/*" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="xunit.core, Version=2.3.1.3858, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c">
+        <HintPath>..\..\..\..\.nuget\packages\xunit.extensibility.core\2.3.1\lib\netstandard1.1\xunit.core.dll</HintPath>
+      </Reference>
     </ItemGroup>
 </Project>

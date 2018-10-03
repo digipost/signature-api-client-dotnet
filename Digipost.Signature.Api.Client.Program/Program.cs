@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Program
     {
         static void Main(string[] args)
         {
-            ClientConfiguration clientConfiguration = new ClientConfiguration(Environment.Test,  CertificateReader.ReadCertificate());
+            ClientConfiguration clientConfiguration = new ClientConfiguration(Environment.Test,  CertificateReader.GetCertificate());
 //            PortalClient portalClient = new PortalClient(clientConfiguration);
             var serviceProvider = CreateServiceProvider(clientConfiguration);
 

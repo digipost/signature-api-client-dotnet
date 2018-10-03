@@ -49,7 +49,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static X509Certificate2 GetBringCertificate()
         {
-            return CertificateReader.ReadCertificate();
+            return CertificateReader.GetCertificate();
         }
 
         public static X509Certificate2 GetExpiredSelfSignedCertificate()

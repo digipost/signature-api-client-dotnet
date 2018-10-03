@@ -6,6 +6,6 @@ Further documentation of the API and details on how to use it can be found in th
 
 ---
 
-# Getting started
+## Getting started
 
 Get started by [reading the documentation](http://digipost.github.io/signature-api-client-dotnet/) or [find the nuget package](https://www.nuget.org/packages/digipost-signature-api-client/).

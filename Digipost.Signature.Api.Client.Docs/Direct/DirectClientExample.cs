@@ -6,12 +6,15 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Enums;
-using Environment = Digipost.Signature.Api.Client.Core.Environment;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Digipost.Signature.Api.Client.Docs.Direct
 {
     public class DirectClientExample
     {
+        private ILogger<DirectClientExample> _logger = new NullLogger<DirectClientExample>();
+
         public async Task CreateAndSendSignatureJob()
         {
             ClientConfiguration clientConfiguration = null; //As initialized earlier
@@ -156,17 +159,18 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
         public async Task ErrorHandling()
         {
             /**
-            There are differet forms of exceptions that can occur. Some are more specific than others.
+            There are different forms of exceptions that can occur. Some are more specific than others.
             All exceptions related to client behavior inherits from `SignatureException`. 
             **/
 
             try
             {
                 //Some signature action
+                await SomeSignatureAction();
             }
             catch (BrokerNotAuthorizedException notAuthorizedException)
             {
-                //Not authorized to perform action. The correct access rights for organization are not set.
+                _logger.LogError(notAuthorizedException, "Not authorized to perform action. The correct access rights for organization are not set.");
             }
             catch (UnexpectedResponseException unexpectedResponseException)
             {
@@ -183,7 +187,14 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             }
             catch (SignatureException exception)
             {
+                _logger.LogError(exception, "Something went wrong");
             }
+        }
+
+#pragma warning disable 1998
+        private static async Task SomeSignatureAction()
+#pragma warning restore 1998
+        {
         }
     }
 }

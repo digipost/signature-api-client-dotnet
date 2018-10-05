@@ -25,8 +25,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 LogRequestAndResponse = true
             };
-            clientConfig.CertificateValidationPreferences.ValidateSenderCertificate = false;
-            clientConfig.CertificateValidationPreferences.ValidateResponseCertificate = false;
             var client = new DirectClient(clientConfig);
 
             return client;

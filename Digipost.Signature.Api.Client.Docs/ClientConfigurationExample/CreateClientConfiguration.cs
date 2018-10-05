@@ -10,7 +10,7 @@ namespace Digipost.Signature.Api.Client.Docs.ClientConfigurationExample
 
             var clientConfiguration = new ClientConfiguration(
                 Environment.DifiTest,
-                CertificateReader.GetCertificate(),
+                CertificateReader.ReadCertificate(),
                 new Sender(organizationNumber));
         }
 

@@ -42,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private readonly DirectSmokeTestsFixture _fixture;
 
-        [Fact]
+        [Fact(Skip="Doesn't run on CI yet due to incomplete TLS/certificate setup")]
         public void Can_create_job_with_multiple_signers()
         {
             var signer1 = new PersonalIdentificationNumber("12345678910");
@@ -70,7 +70,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Confirm_status();
         }
 
-        [Fact]
+        [Fact(Skip="Doesn't run on CI yet due to incomplete TLS/certificate setup")]
         public void Can_create_job_with_one_signer()
         {
             var signer = new PersonalIdentificationNumber("01048200229"); //Preben
@@ -88,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Confirm_status();
         }
 
-        [Fact]
+        [Fact(Skip="Doesn't run on CI yet due to incomplete TLS/certificate setup")]
         public void Can_retrieve_status_by_polling()
         {
             var signer = new PersonalIdentificationNumber("12345678910");
@@ -106,7 +106,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Confirm_status();
         }
 
-        [Fact]
+        [Fact(Skip="Doesn't run on CI yet due to incomplete TLS/certificate setup")]
         public void create_job_with_queue()
         {
             var signer = new PersonalIdentificationNumber("12345678910");

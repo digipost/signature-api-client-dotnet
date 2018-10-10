@@ -6,6 +6,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>organization-certificate</UserSecretsId>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.4-preview1" />

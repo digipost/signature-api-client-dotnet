@@ -6,7 +6,7 @@
     <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">

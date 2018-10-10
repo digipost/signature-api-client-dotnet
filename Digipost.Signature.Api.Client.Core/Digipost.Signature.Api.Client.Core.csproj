@@ -8,6 +8,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
+    <noWarn>1591</noWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.0.0" />

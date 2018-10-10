@@ -2,32 +2,35 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>digipost-signature-api-client</id>
-        <version>$version$</version>
+        <version>5.0.0.0-alpha</version>
         <authors>Digipost AS</authors>
         <owners>Posten Norge AS</owners>
         <projectUrl>https://github.com/digipost/signature-api-client-dotnet/</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Klientbibliotek for å administrere elektronisk signering av dokumenter av borgere for en virksomhet. Sentrale funksjoner er opprettelse av signeringsoppdrag, sjekke status på signeringsoppdrag og laste ned dokumenter som er signerte.</description>
-        <copyright>Copyright 2016</copyright>
+        <copyright>Copyright 2018</copyright>
         <tags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</tags>
         <dependencies>
-            <group targetFramework=".NETFramework4.6">
-                <dependency id="Common.Logging" version="[3.3.1,4)" />
-                <dependency id="Common.Logging.Core" version="[3.3.1,4)" />
+            <group targetFramework="netcoreapp2.1">
+                <dependency id="Microsoft.Extensions.Configuration.UserSecrets" version="[2.0.0,3.0.0)" />
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="[5.2.3,6)" />
-                <dependency id="Newtonsoft.Json" version="[6.0.4,11)" />
-                <dependency id="api-client-shared" version="[3.0.0,4.0.0)" />
+                <dependency id="Microsoft.Extensions.Logging" version="[2.1.1,3.0.0)" />
+                <dependency id="Microsoft.Extensions.Console" version="[2.1.1,3.0.0)" />
+                <dependency id="Microsoft.Extensions.Debug" version="[2.1.1,3.0.0)" />
+                <dependency id="System.Net.Requests" version="[4.3.0,5.0.0)" />
+                <dependency id="System.Security.Cryptography.Xml" version="[4.5.0,5.0.0)" />
+                <dependency id="api-client-shared" version="[4.0.0,5.0.0)" />
             </group>
         </dependencies>
     </metadata>
     <files>
-        <file src="Digipost.Signature.Api.Client.Direct\bin\Release\Digipost.Signature.Api.Client.Core.dll" target="lib\net45\Digipost.Signature.Api.Client.Core.dll" />
-        <file src="Digipost.Signature.Api.Client.Direct\bin\Release\Digipost.Signature.Api.Client.Core.xml" target="lib\net45\Digipost.Signature.Api.Client.Core.xml" />
-        <file src="Digipost.Signature.Api.Client.Direct\bin\Release\Digipost.Signature.Api.Client.Direct.dll" target="lib\net45\Digipost.Signature.Api.Client.Direct.dll" />
-        <file src="Digipost.Signature.Api.Client.Direct\bin\Release\Digipost.Signature.Api.Client.Direct.xml" target="lib\net45\Digipost.Signature.Api.Client.Direct.xml" />
-        <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Portal.dll" target="lib\net45\Digipost.Signature.Api.Client.Portal.dll" />
-        <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Portal.xml" target="lib\net45\Digipost.Signature.Api.Client.Portal.xml" />
-        <file src="Digipost.Signature.Api.Client.Portal\bin\Release\Digipost.Signature.Api.Client.Resources.dll" target="lib\net45\Digipost.Signature.Api.Client.Resources.dll" />
-        <file src="Digipost.Signature.Api.Client.Core\bin\Release\Digipost.Signature.Api.Client.Scripts.dll" target="lib\net45\Digipost.Signature.Api.Client.Scripts.dll" />
+        <file src="Digipost.Signature.Api.Client.Direct/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Core.dll" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Direct/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Core.xml" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Direct/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Direct.dll" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Direct/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Direct.xml" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Portal/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Portal.dll" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Portal/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Portal.xml" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Portal/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Resources.dll" target="lib/netcoreapp2.1" />
+        <file src="Digipost.Signature.Api.Client.Core/bin/Release/netcoreapp2.1/Digipost.Signature.Api.Client.Scripts.dll" target="lib/netcoreapp2.1" />
     </files>
 </package>

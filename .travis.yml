@@ -15,7 +15,7 @@ before_install:
     -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
 
-  - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec
+  - ./travis-deploy/nuspec-version-patcher.sh signature-api-client.nuspec ${TRAVIS_BRANCH} ${TRAVIS_BUILD_NUMBER}
 
 install:
   - dotnet restore
@@ -26,5 +26,5 @@ script:
   - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
-  - ./travis-deploy/nuget-pack-and-push.sh signature-api-client.nuspec
+  - ./travis-deploy/nuget-pack-and-push.sh signature-api-client.nuspec ${TRAVIS_BRANCH} ${NUGET_API_KEY}
 

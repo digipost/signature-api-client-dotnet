@@ -5,6 +5,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Portal.xml</DocumentationFile>
+    <noWarn>1591</noWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />

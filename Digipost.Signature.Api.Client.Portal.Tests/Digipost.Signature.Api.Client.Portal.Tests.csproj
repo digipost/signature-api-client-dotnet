@@ -31,6 +31,12 @@
         </ProjectReference>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Schema/**/*" />
+    </ItemGroup>
+    <ItemGroup>
         <EmbeddedResource Include="Schema/**/*" />
     </ItemGroup>
 </Project>

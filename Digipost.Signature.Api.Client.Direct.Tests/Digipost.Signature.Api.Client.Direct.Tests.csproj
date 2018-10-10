@@ -17,8 +17,14 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <EmbeddedResource Include="Schema/**/*" />
+    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Schema/**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schema/**/*" />
+  </ItemGroup>  
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core.Tests\Digipost.Signature.Api.Client.Core.Tests.csproj">
       <Project>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</Project>

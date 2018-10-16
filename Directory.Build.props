@@ -1,0 +1,23 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <UserSecretsId>organization-certificate</UserSecretsId>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <Title>Digipost Signature Api Client</Title>
+        <UserSecretsId>organization-certificate</UserSecretsId>
+        <Version>5.0.0-beta</Version>
+        <Authors>Digipost AS</Authors>
+        <Company>Digipost AS</Company>
+        <PackageProjectUrl>https://github.com/digipost/signature-api-client-dotnet/</PackageProjectUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Description>Klientbibliotek for å administrere elektronisk signering av dokumenter av borgere for en virksomhet. Sentrale funksjoner er opprettelse av signeringsoppdrag, sjekke status på signeringsoppdrag og laste ned dokumenter som er signerte.</Description>
+        <Copyright>Copyright 2018</Copyright>
+        <PackageTags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</PackageTags>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+</Project>

@@ -1,44 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>organization-certificate</UserSecretsId>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
-    <noWarn>1591</noWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.0.0" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6" />
-    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="4.5.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Internal/Xsd/**/*" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Internal/Xsd/**/*" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj">
-      <Project>{1F5941D7-0AE5-40C4-B1DE-9ADBB6926420}</Project>
-      <Name>Digipost.Signature.Api.Client.Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
-      <Link>Properties/AssemblyInfo.cs</Link>
-    </Compile>
-  </ItemGroup>
+
+    <PropertyGroup>
+        <Title>Digipost Signature Api Client Core</Title>
+        <PackageId>Digipost.Signature.Api.Client.Core</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="api-client-shared" Version="4.0.0"/>
+        <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6"/>
+        <PackageReference Include="System.Net.Requests" Version="4.3.0"/>
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="4.5.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1"/>
+
+        <PackageReference Include="Digipost.Signature.Api.Client.Resources" Version="5.*"/>
+        <PackageReference Include="Digipost.Signature.Api.Client.Scripts" Version="5.*"/>        
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj"/>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj"/>
+    </ItemGroup>
+    
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
+        <noWarn>1591</noWarn>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Internal/Xsd/**/*"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Internal/Xsd/**/*"/>
+    </ItemGroup>
+
 </Project>

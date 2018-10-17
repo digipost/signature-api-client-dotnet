@@ -810,13 +810,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 var signaturejobid = 12345678910;
+                var jobReference = "senders-reference";
                 var httpCancellationurl = "http://cancellationurl.no";
                 var source = new portalsignaturejobresponse
                 {
                     signaturejobid = signaturejobid,
+                    reference = jobReference,
                     cancellationurl = httpCancellationurl
                 };
-                var expected = new JobResponse(signaturejobid, new Uri(httpCancellationurl));
+                var expected = new JobResponse(signaturejobid, jobReference, new Uri(httpCancellationurl));
 
                 //Act
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);
@@ -840,6 +842,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 {
                     confirmationurl = "http://confirmationurl.no",
                     signaturejobid = 12345678901011,
+                    reference = "senders-reference",
                     signatures = new signatures
                     {
                         padesurl = "http://padesurl.no",
@@ -894,6 +897,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new JobStatusChanged(
                     source.signaturejobid,
+                    source.reference,
                     jobStatus,
                     confirmationReference,
                     signatures
@@ -901,7 +905,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var padesUrl = source.signatures.padesurl;
                 if (padesUrl != null)
+                {
                     expected.PadesReference = new PadesReference(new Uri(padesUrl));
+                }
 
                 //Act
                 var actual = DataTransferObjectConverter.FromDataTransferObject(source);

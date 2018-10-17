@@ -9,7 +9,7 @@
         <TargetFramework>netcoreapp2.1</TargetFramework>
         <Title>Digipost Signature Api Client</Title>
         <UserSecretsId>organization-certificate</UserSecretsId>
-        <Version>5.0.0-beta</Version>
+        <Version>5.0.0.0</Version>
         <Authors>Digipost AS</Authors>
         <Company>Digipost AS</Company>
         <PackageProjectUrl>https://github.com/digipost/signature-api-client-dotnet/</PackageProjectUrl>

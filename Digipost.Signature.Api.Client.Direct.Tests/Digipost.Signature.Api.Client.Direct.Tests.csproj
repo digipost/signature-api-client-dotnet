@@ -1,33 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <ItemGroup>
-        <PackageReference Include="api-client-shared" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0"/>
-        <PackageReference Include="xunit" Version="2.3.1"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1"/>
-        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core.Tests\Digipost.Signature.Api.Client.Core.Tests.csproj"/>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj"/>
-    </ItemGroup>
-
-    <PropertyGroup>
-        <IsPackable>false</IsPackable>
-    </PropertyGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Remove="Schema/**/*"/>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Schema/**/*"/>
-    </ItemGroup>
-
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Schema/**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Schema/**/*" />
+  </ItemGroup>  
+  <ItemGroup>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core.Tests\Digipost.Signature.Api.Client.Core.Tests.csproj">
+      <Project>{BF8CAAE2-F9D9-47C3-8745-A6D98A21E41F}</Project>
+      <Name>Digipost.Signature.Api.Client.Core.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj">
+      <Project>{2D13F732-6A85-4165-AE2F-A87C09750398}</Project>
+      <Name>Digipost.Signature.Api.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj">
+      <Project>{FC8FC326-4BC7-43B8-A56E-1BBDCCC820D5}</Project>
+      <Name>Digipost.Signature.Api.Client.Direct</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -1,20 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <Title>Digipost Signature Api Client Scripts</Title>
-        <PackageId>Digipost.Signature.Api.Client.Scripts</PackageId>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="api-client-shared" Version="4.*"/>
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <None Update="XsdToCode/Xsd/**/*" CopyToOutputDirectory="PreserveNewest"/>
-    </ItemGroup>
-    <ItemGroup>
-        <None Remove="XsdToCode\Xsd\**\*"/>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="XsdToCode\Xsd\**\*"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="XsdToCode/Xsd/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="XsdToCode\Xsd\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="XsdToCode\Xsd\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\AssemblyInfo.cs">
+      <Link>Properties/AssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+  </ItemGroup>
 </Project>

@@ -30,7 +30,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.Equal(x509Certificate, clientConfiguration.Certificate);
             }
 
-            
             [Fact(Skip = "Skipping - does not run on Linux yet.")]
             public void Constructor_with_certificate_thumbprint()
             {

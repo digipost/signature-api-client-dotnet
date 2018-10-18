@@ -28,13 +28,12 @@ namespace Digipost.Signature.Api.Client.Direct
             : this(clientConfiguration, new NullLoggerFactory())
         {
         }
-        
+
         public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
             : base(clientConfiguration, loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<DirectClient>();
         }
-
 
         public async Task<JobResponse> Create(Job job)
         {

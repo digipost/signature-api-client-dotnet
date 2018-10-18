@@ -20,7 +20,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 return new Uri(documentPath).LocalPath;
             }
 
-
             [Fact]
             public void Initializes_all_values_with_document_bytes()
             {
@@ -74,7 +73,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.Equal(expectedMimeType, document.MimeType);
                 Assert.True(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
-            
+
             private static string DocumentFilePath()
             {
                 var executingAssembly = Assembly.GetExecutingAssembly();

@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal
             : this(clientConfiguration, new NullLoggerFactory())
         {
         }
-        
+
         public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
             : base(clientConfiguration, loggerFactory)
         {
@@ -126,7 +126,6 @@ namespace Digipost.Signature.Api.Client.Portal
                 _logger.LogError(e.Message, e);
                 throw;
             }
-
         }
 
         private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)

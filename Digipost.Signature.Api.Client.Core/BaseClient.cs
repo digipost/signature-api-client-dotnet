@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core
     {
         protected const int TooManyRequestsStatusCode = 429;
         protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
-        
+
         private HttpClient _httpClient;
         private readonly ILogger<BaseClient> _logger;
         private readonly ILoggerFactory _loggerFactory;
@@ -24,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Core
         {
             _logger = loggerFactory.CreateLogger<BaseClient>();
             _loggerFactory = loggerFactory;
-            
+
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             ClientConfiguration = clientConfiguration;
@@ -74,7 +74,6 @@ namespace Digipost.Signature.Api.Client.Core
             {
                 throw new CertificateException($"Certificate used for {nameof(sender)} is not valid. Are you trying to use a test certificate in a production environment or the other way around? The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
             }
-            
         }
 
         private HttpClient MutualTlsClient()
@@ -136,6 +135,5 @@ namespace Digipost.Signature.Api.Client.Core
 
             return new Uri(relativeUri, UriKind.Relative);
         }
-
     }
 }

@@ -11,17 +11,16 @@ namespace Digipost.Signature.Api.Client.Core
         public static X509Certificate2 ReadCertificate()
         {
             var pathToSecrets = $"{System.Environment.GetEnvironmentVariable("HOME")}/.microsoft/usersecrets/organization-certificate/secrets.json";
-            Console.WriteLine($"Reading certificate details from secrets file: {pathToSecrets}" );
+            Console.WriteLine($"Reading certificate details from secrets file: {pathToSecrets}");
             var certificateConfig = File.ReadAllText(pathToSecrets);
             var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(certificateConfig);
 
             deserializeObject.TryGetValue("Certificate:Path:Absolute", out var certificatePath);
             deserializeObject.TryGetValue("Certificate:Password", out var certificatePassword);
-            
+
             Console.WriteLine("Reading certificate from path found in secrets file: " + certificatePath);
 
             return new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
-
         }
     }
 }

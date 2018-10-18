@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.*"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0"/>
-    <PackageReference Include="xunit" Version="2.3.1"/>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1"/>
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1"/>
-    <PackageReference Include="CompareNETObjects" Version="4.3.0"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1"/>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1"/>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+    <PackageReference Include="CompareNETObjects" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -21,16 +21,16 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <None Update="Resources/**/*" CopyToOutputDirectory="PreserveNewest"/>
-    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest"/>
+    <None Update="Resources/**/*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Schema/**/*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Resources\**\*"/>
-    <None Remove="Schema\**\*"/>
+    <None Remove="Resources\**\*" />
+    <None Remove="Schema\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\**\*"/>
-    <EmbeddedResource Include="Schema\**\*"/>
+    <EmbeddedResource Include="Resources\**\*" />
+    <EmbeddedResource Include="Schema\**\*" />
   </ItemGroup>
 
 </Project>

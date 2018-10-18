@@ -65,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         public static X509Certificate2 GetPostenTestCertificate()
         {
             return new X509Certificate2(ResourceUtility.ReadAllBytes("Certificates", "Unittests", "PostenNorgeAs.cer"), "", X509KeyStorageFlags.Exportable);
-        }       
+        }
 
         private static X509Certificate2 EternalTestCertificateWithPrivateKey()
         {

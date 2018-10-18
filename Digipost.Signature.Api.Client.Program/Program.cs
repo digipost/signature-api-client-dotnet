@@ -14,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Program
 //            var serviceProvider = CreateServiceProvider(clientConfiguration);
 
 //            SetUpNLog(serviceProvider);
-            
+
 //            new DirectClient()
 
 //            var portalClient = serviceProvider.GetService<PortalClient>();

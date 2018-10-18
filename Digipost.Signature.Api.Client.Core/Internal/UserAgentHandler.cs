@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 //            var netVersion = Assembly
 //                .GetExecutingAssembly()
 //                .GetReferencedAssemblies().First(x => x.Name == "netstandard").Version.ToString();
-            
+
             var netVersion = "2.1.0";
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;

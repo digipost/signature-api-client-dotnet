@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Program
         {
             _logger = logger;
         }
-        
+
         public void Run()
         {
             _logger.LogWarning("Dis is inzane! We are in the test service");

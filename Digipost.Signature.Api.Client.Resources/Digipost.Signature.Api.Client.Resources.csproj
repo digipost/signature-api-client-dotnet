@@ -5,22 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.*"/>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <None Update="Xml\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
-    <None Update="Xsd\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
-    <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
+    <None Update="Xml\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Xsd\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Xml\Data\**\*"/>
-    <None Remove="Xsd\Data\**\*"/>
-    <None Remove="Document\Data\**\*"/>
+    <None Remove="Xml\Data\**\*" />
+    <None Remove="Xsd\Data\**\*" />
+    <None Remove="Document\Data\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Xml\Data\**\*"/>
-    <EmbeddedResource Include="Xsd\Data\**\*"/>
-    <EmbeddedResource Include="Document\Data\**\*"/>
+    <EmbeddedResource Include="Xml\Data\**\*" />
+    <EmbeddedResource Include="Xsd\Data\**\*" />
+    <EmbeddedResource Include="Document\Data\**\*" />
   </ItemGroup>
 </Project>

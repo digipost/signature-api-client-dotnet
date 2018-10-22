@@ -15,7 +15,7 @@ before_install:
     -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Digipost.Signature.Api.Client.Core/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
     -d
 
-  - ./travis-deploy/patch-assembly-version.sh Directory.Build.props beta ${TRAVIS_BUILD_NUMBER} #Todo: TRAVIS_BRANCH til beta for å forenkle utvikling. FIks!
+  - ./travis-deploy/patch-assembly-version.sh Directory.Build.props $TRAVIS_BRANCH ${TRAVIS_BUILD_NUMBER} 
 
 install:
   - dotnet restore
@@ -27,5 +27,5 @@ script:
   - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
-  - PROJECT_DIRECTORIES="Digipost.Signature.Api.Client.Core Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts" && ./travis-deploy/pack-and-push.sh beta $NUGET_API_KEY $TRAVIS_BUILD_DIR "${PROJECT_DIRECTORIES}" #Todo: satt til beta for å forenkle utvikling. FIks!
+  - PROJECT_DIRECTORIES="Digipost.Signature.Api.Client.Core Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts" && ./travis-deploy/pack-and-push.sh $TRAVIS_BRANCH $NUGET_API_KEY $TRAVIS_BUILD_DIR "${PROJECT_DIRECTORIES}"
 

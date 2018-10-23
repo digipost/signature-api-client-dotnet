@@ -100,11 +100,6 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
 
         private void AddKeyInfo()
         {
-            /*
-             Todo: 
-             Only including EndCert and not WholeChain now. Consider changing it back
-             when integration is working.
-            */
             var keyInfoX509Data = new KeyInfoX509Data(Certificate, X509IncludeOption.EndCertOnly);
             _signatureNode.KeyInfo.AddClause(keyInfoX509Data);
         }

@@ -67,29 +67,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         private void SetSigningKey(X509Certificate2 certificate)
         {
             var targetKey = ExtractValidPrivateKeyOrThrow(certificate);
-
-            /*
-            Todo: 
-            The commented lines here are removed because they seem to not be needed when using RSA directly
-            in ExtractValidPrivateKeyOrThrow. This may be because we are not fetching a certificate that may
-            not be exportable, since we are only loading from file.
-            */
-
-//            if (targetKey.CspKeyContainerInfo.ProviderType == RsaSha256DigitalSignaturesCryptoApiProvider)
             SigningKey = targetKey;
-//            else
-//            {
-//                SigningKey = new RSACryptoServiceProvider();
-//                try
-//                {
-//                    SigningKey.FromXmlString(certificate.PrivateKey.ToXmlString(true));
-//                }
-//                catch (Exception e)
-//                {
-//                    throw new Exception($"Specified certificate with fingerprint {certificate.Thumbprint} cannot be exported. This is required when the certificate isn't created with 'Microsoft Enhanced RSA and AES Cryptographic Provider' as CryptoAPI provider name (-sp parameter i makecert.exe or -csp parameter i openssl).", e);
-//                }
-            //}
         }
+
 
         private static RSA ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
         {

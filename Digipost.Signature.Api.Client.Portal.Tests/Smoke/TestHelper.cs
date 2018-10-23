@@ -13,8 +13,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 {
     public class TestHelper : TestHelperBase
     {
-//        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private readonly PortalClient _client;
         private CancellationReference _cancellationReference;
         private ConfirmationReference _confirmationReference;
@@ -27,7 +25,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         public TestHelper(PortalClient client)
         {
             _client = client;
-            // Log.Debug($"Sending in PortalClient Class Initialize. {_client.ClientConfiguration}");
         }
 
         public TestHelper Create_job(Sender sender, params Signer[] signers)
@@ -50,8 +47,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             _job = job;
             _jobResponse = _client.Create(_job).Result;
             _cancellationReference = new CancellationReference(TransformReferenceToCorrectEnvironment(_jobResponse.CancellationReference.Url));
-
-            // Log.Debug($"Result of Create was: {_jobResponse}");
 
             return this;
         }

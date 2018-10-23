@@ -95,7 +95,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
 
-                    // Log.Warn(tooEagerPollingException.Message);
+                    _logger.LogWarning(tooEagerPollingException.Message);
 
                     throw tooEagerPollingException;
                 default:
@@ -107,14 +107,12 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public async Task GetRootResource(Sender sender)
         {
-            _logger.LogInformation("Heia! Vi prøver å hente rot-ressursen!");
             var request = new HttpRequestMessage
             {
                 RequestUri = new Uri($"/api/{sender.OrganizationNumber}", UriKind.Relative),
                 Method = HttpMethod.Get
             };
-            //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-
+           
             try
             {
                 var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);

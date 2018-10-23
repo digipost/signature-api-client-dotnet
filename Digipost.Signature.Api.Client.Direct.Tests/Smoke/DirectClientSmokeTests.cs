@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private readonly DirectSmokeTestsFixture _fixture;
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact()]
         public void Can_create_job_with_multiple_signers()
         {
             var signer1 = new PersonalIdentificationNumber("12345678910");
@@ -71,7 +71,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
         public void Can_create_job_with_one_signer()
         {
-            var signer = new PersonalIdentificationNumber("01048200229"); //Preben
+            var signer = new PersonalIdentificationNumber("01048200229");
 
             _fixture.TestHelper
                 .Create_direct_job(signer)
@@ -80,7 +80,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Expect_job_to_have_status(
                     JobStatus.CompletedSuccessfully,
                     ExpectedSignerStatus(signer, SignatureStatus.Signed)
-                ) /**/
+                )
                 .Get_XAdES(signer)
                 .Get_PAdES()
                 .Confirm_status();

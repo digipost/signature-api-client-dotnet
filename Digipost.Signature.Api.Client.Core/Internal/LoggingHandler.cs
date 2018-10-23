@@ -4,15 +4,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using static Microsoft.Extensions.Logging.LogLevel;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class LoggingHandler : DelegatingHandler
     {
-//        private static readonly ILog Log = LogManager.GetLogger("Digipost.Signature.Api.Client.RequestResponse");
+        private static ILogger<BaseClient> _logger;
 
-        public LoggingHandler(ClientConfiguration clientClientConfiguration)
+        public LoggingHandler(ClientConfiguration clientClientConfiguration, ILoggerFactory loggerFactory)
         {
+            _logger = loggerFactory.CreateLogger<BaseClient>();
             ClientConfiguration = clientClientConfiguration;
         }
 
@@ -20,17 +23,17 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-//            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
-//            {
-//                await LogRequest(request).ConfigureAwait(false);
-//            }
+            if (ClientConfiguration.LogRequestAndResponse && _logger.IsEnabled(Debug))
+            {
+                await LogRequest(request).ConfigureAwait(false);
+            }
 
             var httpResponseMessage = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-//            if (ClientConfiguration.LogRequestAndResponse && Log.IsDebugEnabled)
-//            {
-//                await LogResponse(httpResponseMessage).ConfigureAwait(false);
-//            }
+            if (ClientConfiguration.LogRequestAndResponse && _logger.IsEnabled(Debug))
+            {
+                await LogResponse(httpResponseMessage).ConfigureAwait(false);
+            }
 
             return httpResponseMessage;
         }
@@ -38,13 +41,13 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         private static async Task LogRequest(HttpRequestMessage request)
         {
             var requestData = await GetRequestData(request).ConfigureAwait(false);
-//            Log.Debug($"Outgoing: {requestData}");
+            _logger.LogDebug($"Outgoing: {requestData}");
         }
 
         private static async Task LogResponse(HttpResponseMessage response)
         {
             var responseData = await GetResponseData(response).ConfigureAwait(false);
-//            Log.Debug($"Incoming: {responseData}");
+            _logger.LogDebug($"Incoming: {responseData}");
         }
 
         private static async Task<string> GetRequestData(HttpRequestMessage request)
@@ -116,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return new KeyValuePair<string, string>("StatusCode", $"{(int) response.StatusCode}, {response.StatusCode}");
         }
 
-        private static List<KeyValuePair<string, string>> GetHeadersDescription(HttpHeaders headers)
+        private static IEnumerable<KeyValuePair<string, string>> GetHeadersDescription(HttpHeaders headers)
         {
             return SerializeHeaders(headers);
         }
@@ -137,7 +140,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return keyValuePairs;
         }
 
-        private static string FormatHttpData(List<KeyValuePair<string, string>> keyValuePairs)
+        private static string FormatHttpData(IEnumerable<KeyValuePair<string, string>> keyValuePairs)
         {
             return keyValuePairs.Aggregate(System.Environment.NewLine, (current, keyValuePair) => current + $"{GetFormattedElement(keyValuePair)} {System.Environment.NewLine}");
         }

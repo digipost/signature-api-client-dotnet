@@ -9,6 +9,7 @@ using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Document = Digipost.Signature.Api.Client.Direct.Document;
 
 namespace Digipost.Signature.Api.Client.Docs.Direct
 {

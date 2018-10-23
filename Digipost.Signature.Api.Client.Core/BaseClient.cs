@@ -80,9 +80,9 @@ namespace Digipost.Signature.Api.Client.Core
         {
             var client = HttpClientFactory.Create(
                 MutualTlsHandler(),
-//                new XsdRequestValidationHandler(),
-                new UserAgentHandler()
-//                new LoggingHandler(ClientConfiguration)
+                new XsdRequestValidationHandler(),
+                new UserAgentHandler(),
+                new LoggingHandler(ClientConfiguration)
             );
 
             client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);
@@ -103,20 +103,20 @@ namespace Digipost.Signature.Api.Client.Core
 
         private bool ValidateServerCertificateThrowIfInvalid(HttpRequestMessage message, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
-//            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
-//            {
-////                Log.Warn("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
-//                return true;
-//            }
-//
-//            var x509Certificate2 = new X509Certificate2(certificate);
-//
-//            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
-//
-//            if (validationResult.Type != CertificateValidationType.Valid)
-//            {
-//                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
-//            }
+            if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
+            {
+                _logger.LogWarning("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+                return true;
+            }
+
+            var x509Certificate2 = new X509Certificate2(certificate);
+
+            var validationResult = CertificateValidator.ValidateCertificateAndChain(x509Certificate2, ClientConfiguration.ServerCertificateOrganizationNumber, ClientConfiguration.Environment.AllowedChainCertificates);
+
+            if (validationResult.Type != CertificateValidationType.Valid)
+            {
+                throw new SecurityException($"Certificate received in the response is not valid. The reason is '{validationResult.Type}', description: '{validationResult.Message}'", null);
+            }
 
             return true;
         }

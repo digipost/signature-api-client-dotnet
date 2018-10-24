@@ -105,7 +105,7 @@ namespace Digipost.Signature.Api.Client.Portal
             return jobStatusChanged;
         }
 
-        public async Task GetRootResource(Sender sender)
+        public async Task<string> GetRootResource(Sender sender)
         {
             var request = new HttpRequestMessage
             {
@@ -117,7 +117,8 @@ namespace Digipost.Signature.Api.Client.Portal
             {
                 var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
-                _logger.LogDebug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+                _logger.LogDebug($"Requested status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+                return requestContent;
             }
             catch (Exception e)
             {

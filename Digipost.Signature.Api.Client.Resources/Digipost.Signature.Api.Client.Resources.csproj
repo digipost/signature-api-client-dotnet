@@ -1,26 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Title>Digipost Signature Api Client Resources</Title>
-    <PackageId>Digipost.Signature.Api.Client.Resources</PackageId>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.0.0" />
-  </ItemGroup>
+    <PropertyGroup>
+        <Title>Digipost Signature Api Client Resources</Title>
+        <PackageId>Digipost.Signature.Api.Client.Resources</PackageId>
+    </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <None Update="Xml\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="Xsd\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Xml\Data\**\*" />
-    <None Remove="Xsd\Data\**\*" />
-    <None Remove="Document\Data\**\*" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Xml\Data\**\*" />
-    <EmbeddedResource Include="Xsd\Data\**\*" />
-    <EmbeddedResource Include="Document\Data\**\*" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="api-client-shared" Version="4.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <None Update="Xml\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="Xsd\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="Document\Data\**\*" CopyToOutputDirectory="PreserveNewest"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Xml\Data\**\*"/>
+        <None Remove="Xsd\Data\**\*"/>
+        <None Remove="Document\Data\**\*"/>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Xml\Data\**\*"/>
+        <EmbeddedResource Include="Xsd\Data\**\*"/>
+        <EmbeddedResource Include="Document\Data\**\*"/>
+    </ItemGroup>
 </Project>

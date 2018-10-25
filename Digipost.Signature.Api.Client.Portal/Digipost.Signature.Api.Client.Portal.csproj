@@ -1,25 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Title>Digipost Signature Api Client Portal</Title>
-    <PackageId>Digipost.Signature.Api.Client.Portal</PackageId>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.*" />
+    <PropertyGroup>
+        <Title>Digipost Signature Api Client Portal</Title>
+        <PackageId>Digipost.Signature.Api.Client.Portal</PackageId>
+    </PropertyGroup>
 
-    <PackageReference Include="Digipost.Signature.Api.Client.Core" Version="5.*" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="api-client-shared" Version="4.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.*"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.*"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.*"/>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
-  </ItemGroup>
+        <PackageReference Include="Digipost.Signature.Api.Client.Core" Version="5.*"/>
+    </ItemGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Portal.xml</DocumentationFile>
-    <noWarn>1591</noWarn>
-  </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
+    </ItemGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Portal.xml</DocumentationFile>
+        <noWarn>1591</noWarn>
+    </PropertyGroup>
 
 </Project>

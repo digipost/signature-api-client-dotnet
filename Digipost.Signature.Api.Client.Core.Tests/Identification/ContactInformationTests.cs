@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Identification
             };
 
             var argumentException = Assert.Throws<ArgumentException>(() => new ContactInformation(source));
-            Assert.True(argumentException.Message.Contains("Unable to create ContactInformation"));
+            Assert.Contains("Unable to create ContactInformation", argumentException.Message);
         }
     }
 }

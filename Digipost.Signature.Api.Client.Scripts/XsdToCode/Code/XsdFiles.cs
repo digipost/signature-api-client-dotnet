@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Xml;
 using Digipost.Api.Client.Shared.Resources.Resource;
 
@@ -6,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Scripts.XsdToCode.Code
 {
     internal class XsdFiles
     {
-        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Scripts.XsdToCode.Xsd");
+        private static readonly ResourceUtility ResourceUtility = new ResourceUtility(Assembly.GetExecutingAssembly(), "Digipost.Signature.Api.Client.Scripts.XsdToCode.Xsd");
 
         internal static XmlReader GetDirect()
         {
@@ -25,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Scripts.XsdToCode.Code
 
         private static XmlReader GetResource(string path)
         {
-            var bytes = ResourceUtility.ReadAllBytes(true, path);
+            var bytes = ResourceUtility.ReadAllBytes(path);
             return XmlReader.Create(new MemoryStream(bytes));
         }
     }

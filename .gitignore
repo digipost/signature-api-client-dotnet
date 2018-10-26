@@ -194,3 +194,17 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+.idea
+
+#######################
+# Ignore certificates #
+#######################
+*.p12
+ 
+###################################################
+# Ignore files added by build and deploy scripts
+###################################################
+
+Zero29.1.0.0
+nuget.exe

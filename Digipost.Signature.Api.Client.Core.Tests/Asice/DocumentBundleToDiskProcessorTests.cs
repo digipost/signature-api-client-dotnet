@@ -45,10 +45,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Asice
                 var tempFile = Path.Combine(tmpDirectory, processedFileName);
 
                 //Assert
-                Assert.True(tempFile.Contains(tmpDirectory));
-                Assert.True(tempFile.Contains(fileEnding));
-                Assert.True(tempFile.Contains(mockSignatureJob.Reference));
-                Assert.True(tempFile.Contains(DateTime.Now.Year.ToString()));
+                Assert.Contains(tmpDirectory, tempFile);
+                Assert.Contains(fileEnding, tempFile);
+                Assert.Contains(mockSignatureJob.Reference, tempFile);
+                Assert.Contains(DateTime.Now.Year.ToString(), tempFile);
             }
 
             [Fact]

@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Internal
                 Assert.Equal(directJob, action.RequestContent);
                 Assert.Equal(serializedJob, action.RequestContentXml.InnerXml);
 
-                Assert.Equal(null, action.MultipartFormDataContent);
+                Assert.Null(action.MultipartFormDataContent);
             }
         }
     }

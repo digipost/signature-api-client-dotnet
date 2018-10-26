@@ -1,0 +1,21 @@
+<Project>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+
+        <Version>5.0.1.0</Version>
+        <AssemblyVersion>5.0.1.0</AssemblyVersion>
+
+        <Authors>Digipost AS</Authors>
+        <Company>Posten Norge AS</Company>
+        <Copyright>Copyright © 2018 Posten Norge AS</Copyright>
+
+        <PackageProjectUrl>https://github.com/digipost/signature-api-client-dotnet/</PackageProjectUrl>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageTags>Posten Digipost digital elektronisk kvalifisert signering signatur PKI offentlig dokumenter</PackageTags>
+        <Description>Klientbibliotek for å administrere elektronisk signering av dokumenter av borgere for en virksomhet. Sentrale funksjoner er opprettelse av signeringsoppdrag, sjekke status på signeringsoppdrag og laste ned dokumenter som er signerte.</Description>
+
+        <UserSecretsId>organization-certificate</UserSecretsId>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+</Project>

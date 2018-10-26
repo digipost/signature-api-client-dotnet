@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Xml;
 using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Api.Client.Shared.Xml;
@@ -7,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class SignatureValidator : XmlValidator
     {
-        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Internal.Xsd.Thirdparty");
+        private static readonly ResourceUtility ResourceUtility = new ResourceUtility(Assembly.GetExecutingAssembly(), "Digipost.Signature.Api.Client.Core.Internal.Xsd.Thirdparty");
 
         public SignatureValidator()
         {
@@ -18,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
         private XmlReader HentRessurs(string path)
         {
-            var bytes = ResourceUtility.ReadAllBytes(true, path);
+            var bytes = ResourceUtility.ReadAllBytes(path);
             return XmlReader.Create(new MemoryStream(bytes));
         }
     }

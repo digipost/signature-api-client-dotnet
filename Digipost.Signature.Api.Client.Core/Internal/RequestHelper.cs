@@ -4,24 +4,24 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
-using System.Reflection;
 using System.Threading.Tasks;
-using Common.Logging;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
+using Microsoft.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
     internal class RequestHelper
     {
         private const string BrokerNotAuthorized = "BROKER_NOT_AUTHORIZED";
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly HttpClient _httpClient;
+        private ILogger<RequestHelper> _logger;
 
-        public RequestHelper(HttpClient httpClient)
+        public RequestHelper(HttpClient httpClient, ILoggerFactory loggerFactory)
         {
             _httpClient = httpClient;
+            _logger = loggerFactory.CreateLogger<RequestHelper>();
         }
 
         public async Task<T> Create<T>(Uri uri, HttpContent content, Func<string, T> deserializeFunc)
@@ -39,7 +39,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             if (!responseMessage.IsSuccessStatusCode)
             {
-                Log.Error($"Create request sent, but failed: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
+                _logger.LogError($"Create request sent, but failed: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
                 throw HandleGeneralException(responseContent, responseMessage.StatusCode);
             }
 
@@ -59,7 +59,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             var requestResult = await _httpClient.SendAsync(request).ConfigureAwait(false);
 
-            Log.Debug($"A stream was requested from {uri}");
+            _logger.LogDebug($"A stream was requested from {uri}");
 
             if (!requestResult.IsSuccessStatusCode)
             {
@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                 throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
             }
 
-            Log.Debug($"Successfully confirmed job with confirmation reference: {confirmationReference.Url}");
+            _logger.LogDebug($"Successfully confirmed job with confirmation reference: {confirmationReference.Url}");
         }
 
         internal SignatureException HandleGeneralException(string requestContent, HttpStatusCode statusCode)
@@ -87,11 +87,11 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             try
             {
                 error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
-                Log.Warn($"Error occured: {error}");
+                _logger.LogWarning($"Error occured: {error}");
             }
             catch (Exception exception)
             {
-                Log.Warn($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}, {exception}");
+                _logger.LogWarning($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}, {exception}");
                 return new UnexpectedResponseException(requestContent, statusCode, exception);
             }
 
@@ -100,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                 return new BrokerNotAuthorizedException(error, statusCode);
             }
 
-            Log.Warn($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}");
+            _logger.LogWarning($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}");
             return new UnexpectedResponseException(error, statusCode);
         }
     }

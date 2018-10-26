@@ -4,9 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Threading.Tasks;
-using Common.Logging;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
@@ -15,16 +13,26 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class DirectClient : BaseClient
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILogger<BaseClient> _logger;
 
         public DirectClient(ClientConfiguration clientConfiguration)
-            : base(clientConfiguration)
+            : this(clientConfiguration, new NullLoggerFactory())
         {
+        }
+
+        public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+            : base(clientConfiguration, loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<DirectClient>();
         }
 
         public async Task<JobResponse> Create(Job job)
@@ -36,7 +44,7 @@ namespace Digipost.Signature.Api.Client.Direct
             var createAction = new CreateAction(job, documentBundle);
             var directJobResponse = await RequestHelper.Create(relativeUrl, createAction.Content(), CreateAction.DeserializeFunc).ConfigureAwait(false);
 
-            Log.Debug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
+            _logger.LogDebug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
             return directJobResponse;
         }
@@ -70,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 case HttpStatusCode.OK:
                     var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
-                    Log.Debug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
+                    _logger.LogDebug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
@@ -104,22 +112,22 @@ namespace Digipost.Signature.Api.Client.Direct
             var requestResult = await HttpClient.SendAsync(request).ConfigureAwait(false);
             var requestContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            Log.Debug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
+            _logger.LogDebug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    Log.Debug("Received empty response. No jobs have had their status changed.");
+                    _logger.LogDebug("Received empty response. No jobs have had their status changed.");
                     return JobStatusResponse.NoChanges;
                 case HttpStatusCode.OK:
                     var changedJob = ParseResponseToJobStatusResponse(requestContent);
-                    Log.Debug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
+                    _logger.LogDebug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
                     return changedJob;
                 case (HttpStatusCode) TooManyRequestsStatusCode:
                     var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
                     var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
 
-                    Log.Warn(tooEagerPollingException.Message);
+                    _logger.LogWarning(tooEagerPollingException.Message);
 
                     throw tooEagerPollingException;
                 default:
@@ -158,7 +166,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         internal async Task<string> AutoSign(long jobId, string signer)
         {
-            Log.Warn($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
+            _logger.LogWarning($"Autosigning DirectJob with id: `{jobId}` for signer:`{signer}`. Should only happen in tests.");
             var url = new Uri($"/web/signature-jobs/{jobId}/devmodesign?signer={signer}", UriKind.Relative);
             var httpResponseMessage = await HttpClient.PostAsync(url, null).ConfigureAwait(false);
             return await httpResponseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);

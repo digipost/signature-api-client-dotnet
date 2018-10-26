@@ -48,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange(parameterSender).ConfigureAwait(false);
 
                 //Assert
-                Assert.True(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(parameterSender.OrganizationNumber));
+                Assert.Contains(parameterSender.OrganizationNumber, fakeHttpClientHandlerChecksCorrectSender.RequestUri);
             }
 
             [Fact]
@@ -67,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 await portalClient.GetStatusChange().ConfigureAwait(false);
 
                 //Assert
-                Assert.True(fakeHttpClientHandlerChecksCorrectSender.RequestUri.Contains(sender.OrganizationNumber));
+                Assert.Contains(sender.OrganizationNumber, fakeHttpClientHandlerChecksCorrectSender.RequestUri);
             }
 
             [Fact]

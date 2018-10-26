@@ -4,6 +4,7 @@ using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Core.Tests.Utilities;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Portal.Extensions;
@@ -47,14 +48,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     },
                     requiredauthentication = authenticationlevel.Item4,
@@ -68,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -104,14 +105,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     },
                     availability = new availability
@@ -130,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -168,14 +169,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     },
                     availability = new availability
@@ -192,7 +193,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -230,14 +231,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     },
                     availability = new availability
@@ -254,7 +255,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -305,7 +306,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -354,7 +355,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             signaturetype = signaturetype.AUTHENTICATED_ELECTRONIC_SIGNATURE,
                             signaturetypeSpecified = true,
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     }
                 };
@@ -366,7 +367,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -398,14 +399,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(0).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         },
                         new portalsigner
                         {
                             Item = ((PersonalIdentificationNumber) source.Signers.ElementAt(1).Identifier).Value,
                             Item1 = new notificationsusinglookup {email = new enabled()},
                             onbehalfof = signingonbehalfof.SELF,
-                            onbehalfofSpecified = true
+                            onbehalfofSpecified = true,
                         }
                     }
                 };
@@ -417,7 +418,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -434,7 +435,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -456,7 +457,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -483,7 +484,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -505,7 +506,113 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
+            }
+
+            [Fact]
+            public void Converts_portal_document_successfully()
+            {
+                //Arrange
+                var source = new Document("subject", "message", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
+                var expected = new portaldocument
+                {
+                    title = source.Title,
+                    nonsensitivetitle = source.NonsensitiveTitle,
+                    description = source.Message,
+                    href = source.FileName,
+                    mime = source.MimeType
+                };
+
+                //Act
+                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, actual, out differences);
+                Assert.Empty(differences);
+            }
+
+            [Fact]
+            public void Converts_portal_job_successfully()
+            {
+                //Arrange
+                var document = DomainUtility.GetPortalDocument();
+                var signers = DomainUtility.GetSigners(2);
+                var reference = "reference";
+                var source = new Job(document, signers, reference, new Sender(BringPublicOrganizationNumber));
+
+                var expected = new portalsignaturejobrequest
+                {
+                    reference = reference
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Empty(differences);
+            }
+
+            [Fact]
+            public void Converts_portal_job_with_polling_queue_successfully()
+            {
+                //Arrange
+                var document = DomainUtility.GetPortalDocument();
+                var signers = DomainUtility.GetSigners(2);
+                var reference = "reference";
+                var custompollingqueue = "CustomPollingQueue";
+                var sender = new Sender(BringPublicOrganizationNumber, new PollingQueue(custompollingqueue));
+                var source = new Job(document, signers, reference, sender);
+
+                var expected = new portalsignaturejobrequest
+                {
+                    reference = reference,
+                    pollingqueue = custompollingqueue
+                };
+
+                //Act
+                var result = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, result, out differences);
+                Assert.Empty(differences);
+            }
+
+            [Fact]
+            public void Converts_signer_identified_by_email()
+            {
+                //Arrange
+                var source = new Signer(
+                    new ContactInformation {Email = new Email("email@example.com")}
+                );
+
+                var expected = new portalsigner
+                {
+                    Item = new enabled(),
+                    Item1 = new notifications
+                    {
+                        Items = new object[]
+                        {
+                            new email {address = "email@example.com"}
+                        }
+                    },
+                    onbehalfofSpecified = true,
+                };
+
+                //Act
+                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
+
+                //Assert
+                var comparator = new Comparator();
+                IEnumerable<IDifference> differences;
+                comparator.AreEqual(expected, actual, out differences);
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -538,113 +645,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
-            }
-
-            [Fact]
-            public void Converts_portal_document_successfully()
-            {
-                //Arrange
-                var source = new Document("subject", "message", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
-                var expected = new portaldocument
-                {
-                    title = source.Title,
-                    nonsensitivetitle = source.NonsensitiveTitle,
-                    description = source.Message,
-                    href = source.FileName,
-                    mime = source.MimeType
-                };
-
-                //Act
-                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
-            }
-
-            [Fact]
-            public void Converts_portal_job_successfully()
-            {
-                //Arrange
-                var document = DomainUtility.GetPortalDocument();
-                var signers = DomainUtility.GetSigners(2);
-                var reference = "reference";
-                var source = new Job(document, signers, reference, new Sender(BringPublicOrganizationNumber));
-
-                var expected = new portalsignaturejobrequest
-                {
-                    reference = reference
-                };
-
-                //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
-            }
-
-            [Fact]
-            public void Converts_portal_job_with_polling_queue_successfully()
-            {
-                //Arrange
-                var document = DomainUtility.GetPortalDocument();
-                var signers = DomainUtility.GetSigners(2);
-                var reference = "reference";
-                var custompollingqueue = "CustomPollingQueue";
-                var sender = new Sender(BringPublicOrganizationNumber, new PollingQueue(custompollingqueue));
-                var source = new Job(document, signers, reference, sender);
-
-                var expected = new portalsignaturejobrequest
-                {
-                    reference = reference,
-                    pollingqueue = custompollingqueue
-                };
-
-                //Act
-                var result = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, result, out differences);
-                Assert.Equal(0, differences.Count());
-            }
-
-            [Fact]
-            public void Converts_signer_identified_by_email()
-            {
-                //Arrange
-                var source = new Signer(
-                    new ContactInformation {Email = new Email("email@example.com")}
-                );
-
-                var expected = new portalsigner
-                {
-                    Item = new enabled(),
-                    Item1 = new notifications
-                    {
-                        Items = new object[]
-                        {
-                            new email {address = "email@example.com"}
-                        }
-                    },
-                    onbehalfofSpecified = true
-                };
-
-                //Act
-                var actual = DataTransferObjectConverter.ToDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -667,11 +668,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         Items = new object[]
                         {
                             new email {address = "email@example.com"},
-                            new sms {number = "11111111"}
+                            new sms {number = "11111111"},
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true
+                    onbehalfofSpecified = true,
                 };
 
                 //Act
@@ -681,7 +682,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -703,7 +704,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true
+                    onbehalfofSpecified = true,
                 };
 
                 //Act
@@ -713,7 +714,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -730,7 +731,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         Items = new object[] {new email {address = ((ContactInformation) source.Identifier).Email.Address}}
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true
+                    onbehalfofSpecified = true,
                 };
 
                 //Act
@@ -740,7 +741,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -756,7 +757,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     Item = ((PersonalIdentificationNumber) source.Identifier).Value,
                     Item1 = new notificationsusinglookup {email = new enabled()},
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true
+                    onbehalfofSpecified = true,
                 };
 
                 //Act
@@ -766,7 +767,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -788,7 +789,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                         }
                     },
                     onbehalfof = signingonbehalfof.SELF,
-                    onbehalfofSpecified = true
+                    onbehalfofSpecified = true,
                 };
 
                 //Act
@@ -798,7 +799,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
         }
 
@@ -826,7 +827,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
 
             [Fact]
@@ -915,7 +916,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 var comparator = new Comparator();
                 IEnumerable<IDifference> differences;
                 comparator.AreEqual(expected, actual, out differences);
-                Assert.Equal(0, differences.Count());
+                Assert.Empty(differences);
             }
         }
     }

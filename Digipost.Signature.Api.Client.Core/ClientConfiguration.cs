@@ -54,6 +54,7 @@ namespace Digipost.Signature.Api.Client.Core
         /// </summary>
         public bool LogRequestAndResponse { get; set; } = false;
 
+        /// <summary>
         /// Preferences used for enabling and disabling validation of certificates used in the client
         /// </summary>
         public CertificateValidationPreferences CertificateValidationPreferences { get; } = new CertificateValidationPreferences();

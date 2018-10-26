@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
+using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests
@@ -20,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var responseData = await fakeHandler.GetContent().ReadAsStringAsync().ConfigureAwait(false);
                 var expectedResponseData = $"Appended{responseData}";
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
-                var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
+                var requestHelper = new RequestHelper(new HttpClient(fakeHandler), new NullLoggerFactory());
 
                 //Act
                 var actualResponseData = await requestHelper.Create(new Uri("http://fakeuri.no"), new StringContent("SomePostData"), deserializeFunc).ConfigureAwait(false);
@@ -34,7 +35,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var fakeHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(fakeHandler));
+                var requestHelper = new RequestHelper(new HttpClient(fakeHandler), new NullLoggerFactory());
 
                 //Act
                 Func<string, string> deserializeFunc = data => $"Appended{data}";
@@ -49,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var internalServerErrorHandler = new FakeHttpClientForPadesResponse();
-                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
+                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler), new NullLoggerFactory());
 
                 //Act
                 var result = await requestHelper.GetStream(new Uri("http://fakeUri.no")).ConfigureAwait(false);
@@ -63,7 +64,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var internalServerErrorHandler = new FakeHttpClientHandlerForInternalServerErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler));
+                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorHandler), new NullLoggerFactory());
 
                 //Act
                 await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await requestHelper.GetStream(new Uri("http://fakeUri.no")).ConfigureAwait(false)).ConfigureAwait(false);
@@ -77,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var errorResponse = new FakeHttpClientHandlerForErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(errorResponse));
+                var requestHelper = new RequestHelper(new HttpClient(errorResponse), new NullLoggerFactory());
 
                 //Act
                 var exception = requestHelper.HandleGeneralException(await errorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), errorResponse.ResultCode.Value);
@@ -93,7 +94,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var internalServerErrorResponse = new FakeHttpClientHandlerForInternalServerErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorResponse));
+                var requestHelper = new RequestHelper(new HttpClient(internalServerErrorResponse), new NullLoggerFactory());
 
                 //Act
                 var exception = requestHelper.HandleGeneralException(await internalServerErrorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), internalServerErrorResponse.ResultCode.Value);
@@ -109,7 +110,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var brokerNotAuthorizedResponse = new FakeHttpClientHanderForBrokerNotAuthorizedErrorResponse();
-                var requestHelper = new RequestHelper(new HttpClient(brokerNotAuthorizedResponse));
+                var requestHelper = new RequestHelper(new HttpClient(brokerNotAuthorizedResponse), new NullLoggerFactory());
 
                 //Act
                 var exception = requestHelper.HandleGeneralException(await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), brokerNotAuthorizedResponse.ResultCode.Value);

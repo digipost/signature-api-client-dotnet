@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using Digipost.Api.Client.Shared.Resources.Resource;
@@ -8,7 +9,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
     public static class CoreResponseUtility
     {
-        private static readonly ResourceUtility ResourceUtility = new ResourceUtility("Digipost.Signature.Api.Client.Core.Tests.Schema.Examples.Response");
+        private static readonly ResourceUtility ResourceUtility = new ResourceUtility(Assembly.GetExecutingAssembly(), "Digipost.Signature.Api.Client.Core.Tests.Schema.Examples.Response");
 
         public static string GetBrokerNotAuthorizedError()
         {
@@ -42,12 +43,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         private static byte[] GetContentBytes(string path)
         {
-            return ResourceUtility.ReadAllBytes(true, path);
+            return ResourceUtility.ReadAllBytes(path);
         }
 
         internal static string GetContent(string path)
         {
-            return Encoding.UTF8.GetString(ResourceUtility.ReadAllBytes(true, path));
+            return Encoding.UTF8.GetString(ResourceUtility.ReadAllBytes(path));
         }
     }
 }

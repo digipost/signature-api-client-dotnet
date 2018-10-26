@@ -1,9 +1,17 @@
-﻿namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+
+namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
     internal class ClientStub : BaseClient
     {
         public ClientStub(ClientConfiguration clientConfiguration)
-            : base(clientConfiguration)
+            : this(clientConfiguration, new NullLoggerFactory())
+        {
+        }
+
+        private ClientStub(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+            : base(clientConfiguration, loggerFactory)
         {
         }
 

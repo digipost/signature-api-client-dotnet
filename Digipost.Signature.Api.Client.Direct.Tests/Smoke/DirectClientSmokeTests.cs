@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private readonly DirectSmokeTestsFixture _fixture;
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact()]
         public void Can_create_job_with_multiple_signers()
         {
             var signer1 = new PersonalIdentificationNumber("12345678910");

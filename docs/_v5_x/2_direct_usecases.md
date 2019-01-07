@@ -77,9 +77,9 @@ var jobStatus = jobStatusResponse.Status;
 
 ### Get direct job status by polling
 
-If you, for any reason, are unable to retrieve status by using the status query token specified <a href="#uc03">above</a>, you may poll the service for any changes done to your organization's jobs. If the queue is empty, additional polling will give an exception.
+If you, for any reason, are unable to retrieve status by using the status query token specified <a href="#uc03">above</a>, you may poll the service for any changes done to your organization's jobs. All changes must be confirmed after saving or handling them in your system.
 
-<blockquote>Note: For the job to be available in the polling queue, make sure to specify the job's <code>statusRetrievalMethod</code> as illustrated below.</blockquote>
+> Note: For the job to be available in the polling queue, make sure to specify the job's <code>statusRetrievalMethod</code> as illustrated below.
 
 ``` csharp
 
@@ -105,24 +105,12 @@ var changedJob = await directClient.GetStatusChange();
 
 if (changedJob.Status == JobStatus.NoChanges)
 {
-    // Queue is empty. Additional polling will result in blocking for a defined period.
+    //Queue is empty. The status change includes next earliest permitted poll time.
 }
 
-// Repeat the above until signer signs the document
-
-changedJob = await directClient.GetStatusChange();
-
-if (changedJob.Status == JobStatus.CompletedSuccessfully)
-{
-    // Get PAdES
-}
-
-if (changedJob.GetSignatureFor(signer).SignatureStatus.Equals(SignatureStatus.Signed))
-{
-    // Get XAdES
-}
-
-// Confirm status change to avoid receiving it again
+//TODO: Persist job status change in your system, to ensure you have the latest status if anything crashes beyond this point.
+    
+// Confirm that you have received and persisted the status change
 await directClient.Confirm(changedJob.References.Confirmation);
 
 
@@ -151,19 +139,6 @@ if (signature.Equals(SignatureStatus.Signed))
 }
 
 ```
-
-### Confirm received signature job
-
-``` csharp
-
-ClientConfiguration clientConfiguration = null; //As initialized earlier
-var directClient = new DirectClient(clientConfiguration);
-JobStatusResponse jobStatusResponse = null; // Result of requesting job status
-
-await directClient.Confirm(jobStatusResponse.References.Confirmation);
-
-```
-
 
 [comment]: <> (Using h3 with specific id to diff from the auto genereted one for portal use cases.)
 

@@ -66,7 +66,8 @@ If signature type or required authentication level is omitted, default values as
 
 ### Get portal job status change
 
-All changes to signature jobs will be added to a queue. You can poll for these changes. If the queue is empty, then additional polling will give an exception. The following example shows how this can be handled and examples of data to extract from a change response.
+All changes to signature jobs will be added to a queue. You can poll for these changes. All changes must be confirmed after saving or handling them in your system. The following example shows how this can be handled and examples of data to extract from a change response.
+> Note: If you retrieve a status change, it will be temporarily removed from the queue. If not confirmed it will reappear after some time. 
 
 ``` csharp
 
@@ -76,7 +77,7 @@ var jobStatusChanged = await portalClient.GetStatusChange();
 
 if (jobStatusChanged.Status == JobStatus.NoChanges)
 {
-    //Queue is empty. Additional polling will result in blocking for a defined period.
+    //Queue is empty. The status change includes next earliest permitted poll time.
 }
 else
 {
@@ -84,6 +85,12 @@ else
     var signatures = jobStatusChanged.Signatures;
     var signatureOne = signatures.ElementAt(0);
     var signatureOneStatus = signatureOne.SignatureStatus;
+
+    //TODO: Persist job status change in your system, to ensure you have the latest status if anything crashes beyond this point.
+    
+    // Confirm that you have received and persisted the status change
+    await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
+        
 }
 
 //Polling again:
@@ -112,17 +119,6 @@ var xades = await portalClient.GetXades(jobStatusChanged.Signatures.ElementAt(0)
 
 //Get PAdES:
 var pades = await portalClient.GetPades(jobStatusChanged.PadesReference);
-
-```
-
-### Confirm portal job
-
-``` csharp
-
-PortalClient portalClient = null; //As initialized earlier
-var jobStatusChangeResponse = await portalClient.GetStatusChange();
-
-await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
 
 ```
 

@@ -15,7 +15,7 @@ before_install:
   -in Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12.enc -out Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
   -d
 
-  - ./travis-deploy/patch-assembly-version.sh Directory.Build.props $TRAVIS_BRANCH ${TRAVIS_BUILD_NUMBER} 
+- ./travis-deploy/patch-assembly-version.sh Directory.Build.props $TRAVIS_BRANCH ${TRAVIS_BUILD_NUMBER}
 
 install:
 - dotnet restore

@@ -19,6 +19,13 @@ namespace Digipost.Signature.Api.Client.Core
         {
             var pathToSecrets = $"{System.Environment.GetEnvironmentVariable("HOME")}/.microsoft/usersecrets/organization-certificate/secrets.json";
             _logger.LogDebug($"Reading certificate details from secrets file: {pathToSecrets}");
+            var fileExists = File.Exists(pathToSecrets);
+
+            if (!fileExists)
+            {
+                _logger.LogDebug($"Did not find file at {pathToSecrets}");
+            }
+            
             var certificateConfig = File.ReadAllText(pathToSecrets);
             var deserializeObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(certificateConfig);
 

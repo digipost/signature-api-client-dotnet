@@ -16,6 +16,10 @@
         <PackageReference Include="packtest.main" Version="1.0.0.1"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
+    </ItemGroup>
+
     <PropertyGroup>
         <OutputType>Exe</OutputType>
     </PropertyGroup>

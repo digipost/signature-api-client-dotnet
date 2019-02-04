@@ -1,5 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Portal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,8 @@ namespace Digipost.Signature.Api.Client.Program
 
             SetUpNLog(serviceProvider);
 
-            var clientConfiguration = new ClientConfiguration(Core.Environment.Test, CertificateReader.ReadCertificate());
+            CertificateReader2 certificateReader2 = new CertificateReader2(serviceProvider.GetService<ILoggerFactory>());
+            var clientConfiguration = new ClientConfiguration(Core.Environment.Test, certificateReader2.ReadCertificate());
             var portalClient = new PortalClient(clientConfiguration, serviceProvider.GetService<ILoggerFactory>());
             
             var result = portalClient.GetRootResource(new Sender("988015814")).Result;

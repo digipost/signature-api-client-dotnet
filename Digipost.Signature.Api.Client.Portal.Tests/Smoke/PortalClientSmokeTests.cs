@@ -51,7 +51,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 .Verify_tls_setup(new Sender(BringPublicOrganizationNumber));
         }
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+//        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void Can_create_job_and_cancel()
         {
             var signer = new Signer(new PersonalIdentificationNumber("01048200229"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};

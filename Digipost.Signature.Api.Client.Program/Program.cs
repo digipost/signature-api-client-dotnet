@@ -1,24 +1,24 @@
 ﻿using System;
+using Digipost.Signature.Api.Client.Core;
+using Digipost.Signature.Api.Client.Portal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Program
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-//            ClientConfiguration clientConfiguration = new ClientConfiguration(Environment.Test,  CertificateReader.ReadCertificate());
-//            PortalClient portalClient = new PortalClient(clientConfiguration);
-//            var serviceProvider = CreateServiceProvider(clientConfiguration);
+            var serviceProvider = CreateServiceProvider();
 
-//            SetUpNLog(serviceProvider);
+            SetUpNLog(serviceProvider);
 
-//            new DirectClient()
-
-//            var portalClient = serviceProvider.GetService<PortalClient>();
-//            portalClient.GetRootResource(new Sender("988015814"));
+            var clientConfiguration = new ClientConfiguration(Core.Environment.Test, CertificateReader.ReadCertificate());
+            var portalClient = new PortalClient(clientConfiguration, serviceProvider.GetService<ILoggerFactory>());
+            
+            var result = portalClient.GetRootResource(new Sender("988015814")).Result;
         }
 
         private static void SetUpNLog(IServiceProvider serviceProvider)
@@ -29,17 +29,15 @@ namespace Digipost.Signature.Api.Client.Program
             NLog.LogManager.LoadConfiguration("/Users/aas/projects/digipost/signature-api-client-dotnet/Digipost.Signature.Api.Client.Program/nlog.config");
         }
 
-//        private static IServiceProvider CreateServiceProvider(ClientConfiguration clientConfiguration)
-//        {
-//            var services = new ServiceCollection();
-//            
-//            services.AddSingleton<ILoggerFactory, LoggerFactory>();
-//            services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
-//            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
-//            services.AddSingleton(clientConfiguration);
-//            services.AddSingleton<PortalClient>();
-//
-//            return services.BuildServiceProvider();
-//        }
+        private static IServiceProvider CreateServiceProvider()
+        {
+            var services = new ServiceCollection();
+            
+            services.AddSingleton<ILoggerFactory, LoggerFactory>();
+            services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
+
+            return services.BuildServiceProvider();
+        }
     }
 }

@@ -10,9 +10,13 @@
         <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6"/>
         <PackageReference Include="System.Net.Requests" Version="4.3.0"/>
         <PackageReference Include="System.Security.Cryptography.Xml" Version="4.5.0"/>
+
+        <PackageReference Include="NLog" Version="4.5.11"/>
+        <PackageReference Include="NLog.Extensions.Logging" Version="1.3"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1"/>
 
         <PackageReference Include="Digipost.Signature.Api.Client.Resources" Version="5.*"/>
         <PackageReference Include="Digipost.Signature.Api.Client.Scripts" Version="5.*"/>

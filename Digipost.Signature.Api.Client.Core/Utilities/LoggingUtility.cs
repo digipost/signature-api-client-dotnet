@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
             loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
-            NLog.LogManager.LoadConfiguration("./../../../../Digipost.Signature.Api.Client.Core.Tests/nlog.config");
+            NLog.LogManager.LoadConfiguration("./../../../../Digipost.Signature.Api.Client.Core/nlog.config");
         }
 
     }

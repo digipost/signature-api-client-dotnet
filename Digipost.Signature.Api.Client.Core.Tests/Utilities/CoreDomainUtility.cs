@@ -54,9 +54,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
         public static X509Certificate2 GetBringCertificate()
         {
             var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
-
-            var certificateReader2 = new CertificateReader2(serviceProvider.GetService<ILoggerFactory>());
-            return certificateReader2.ReadCertificate();
+            return CertificateReader.ReadCertificate(serviceProvider.GetService<ILoggerFactory>());
         }
 
         public static X509Certificate2 GetExpiredSelfSignedCertificate()

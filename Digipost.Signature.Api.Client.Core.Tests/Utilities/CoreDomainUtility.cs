@@ -53,8 +53,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static X509Certificate2 GetBringCertificate()
         {
-            var serviceProvider = CreateServiceProvider();
-            SetUpLoggingFortTesting(serviceProvider);
+            var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
 
             var certificateReader2 = new CertificateReader2(serviceProvider.GetService<ILoggerFactory>());
             return certificateReader2.ReadCertificate();
@@ -88,24 +87,5 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             };
         }
         
-        private static void SetUpLoggingFortTesting(IServiceProvider serviceProvider)
-        {
-            //Testing if we can get logging to works in tests on build-server
-            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-
-            loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
-            NLog.LogManager.LoadConfiguration("./../../../../Digipost.Signature.Api.Client.Program/nlog.config");
-        }
-
-        private static IServiceProvider CreateServiceProvider()
-        {
-            var services = new ServiceCollection();
-            
-            services.AddSingleton<ILoggerFactory, LoggerFactory>();
-            services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
-            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
-
-            return services.BuildServiceProvider();
-        }
     }
 }

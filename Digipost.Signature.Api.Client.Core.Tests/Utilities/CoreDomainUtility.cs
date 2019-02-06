@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
+using Digipost.Signature.Api.Client.Core.Utilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NLog.Extensions.Logging;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 {
@@ -49,7 +54,8 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static X509Certificate2 GetBringCertificate()
         {
-            return CertificateReader.ReadCertificate();
+            var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
+            return CertificateReader.ReadCertificate(serviceProvider.GetService<ILoggerFactory>());
         }
 
         public static X509Certificate2 GetExpiredSelfSignedCertificate()
@@ -79,5 +85,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
                 BaseAddress = new Uri("http://mockUrl.no")
             };
         }
+        
     }
 }

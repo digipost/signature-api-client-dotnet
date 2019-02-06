@@ -11,51 +11,76 @@ The client library has the ability to log useful information that can be used fo
 
 Enabling logging on level `DEBUG` will output positive results of requests and worse, `WARN` only failed requests or worse, while `ERROR` will only occur on failed requests to create a signature job. These loggers will be under the `Digipost.Signature.Api.Client` namespace. 
 
-### Implementing Log4Net
-1. Install Nuget-package `Common.Logging.Log4Net`. This will install the dependencies `Common.Logging.Core` and `Common.Logging`. Note that the versioning of Log4Net is a bit odd, but Nuget Gallery will reveal that Log4Net 2.0.3 has _Log4net [1.2.13] 2.0.3_ as package name. This means that `Common.Logging.Log4Net1213` is the correct logging adapter.
-2. In some cases the adapter may install the wrong version of Log4Net. If installing the adapter for 2.0.3, the version must be upped to this version too.
+### Implementing using NLog
 
-Complete App.config with the Log4Net adapter installed and a `RollingFileAppender`:
-{% highlight xml %}
+There are numerous ways to implement a logger, but the following examples will be based on [NLog](https://github.com/NLog/NLog.Extensions.Logging/wiki/Getting-started-with-.NET-Core-2---Console-application) documentation
+
+1. Install the Nuget-packages `NLog`, `NLog.Extensions.Logging` and `Microsoft.Extensions.DependencyInjection`.
+1. Create a _nlog.config_ file. The following is an example that logs to file and to console:
+```xml
+
 <?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <configSections>
-    <sectionGroup name="common">
-      <section name="logging" type="Common.Logging.ConfigurationSectionHandler, Common.Logging" />
-    </sectionGroup>
-    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
-  </configSections>
 
-  <common>
-    <logging>
-      <factoryAdapter type="Common.Logging.Log4Net.Log4NetLoggerFactoryAdapter, Common.Logging.Log4net1213">
-        <arg key="configType" value="INLINE" />
-      </factoryAdapter>
-    </logging>
-  </common>
+<!-- XSD manual extracted from package NLog.Schema: https://www.nuget.org/packages/NLog.Schema-->
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" xsi:schemaLocation="NLog NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      autoReload="true"
+      internalLogFile="c:\temp\console-example-internal.log"
+      internalLogLevel="Info">
+    <!-- the targets to write to -->
+    <targets>
+        <!-- write logs to file -->
+        <target xsi:type="File"
+                name="fileTarget"
+                fileName="/logs/signature-api-client-dotnet/signature-api-client-dotnet.log"
+                layout="${date}|${level:uppercase=true}|${message} ${exception}|${logger}|${all-event-properties}"
+                archiveEvery="Day"
+                archiveNumbering="Date"
+                archiveDateFormat="yyyy-MM-dd"/>
+        <!-- write logs to console -->
+        <target xsi:type="Console"
+                name="consoleTarget"
+                layout="${date}|${level:uppercase=true}|${message} ${exception}|${logger}|${all-event-properties}" />
+    </targets>
 
-   <log4net>
-    <appender name="RollingFileAppender" type="log4net.Appender.RollingFileAppender">
-      <lockingModel type="log4net.Appender.FileAppender+MinimalLock" />
-      <file value="${AppData}\Digipost\Signature\" />
-      <appendToFile value="true" />
-      <rollingStyle value="Date" />
-      <staticLogFileName value="false" />
-      <rollingStyle value="Composite" />
-      <param name="maxSizeRollBackups" value="10" />
-      <datePattern value="yyyy.MM.dd' signature-api-client-dotnet.log'" />
-      <maximumFileSize value="100MB" />
-      <layout type="log4net.Layout.PatternLayout">
-        <conversionPattern value="%date [%thread] %-5level %logger - %message%newline" />
-      </layout>
-    </appender>
-   <root>
-      <appender-ref ref="RollingFileAppender"/>
-    </root>
-  </log4net>
-</configuration>
+    <!-- rules to map from logger name to target -->
+    <rules>
+        <logger name="*" minlevel="Trace" writeTo="fileTarget,consoleTarget"/>
+    </rules>
+</nlog>
+```
+3. In your application, do the following to create a logger and supply it to the client:
+```c#
+private static IServiceProvider CreateServiceProviderAndSetUpLogging()
+{
+    var services = new ServiceCollection();
 
-{% endhighlight %}
+    services.AddSingleton<ILoggerFactory, LoggerFactory>();
+    services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
+    services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
+
+    var serviceProvider = services.BuildServiceProvider();
+    SetUpLoggingForTesting(serviceProvider);
+
+    return serviceProvider;
+}
+
+private static void SetUpLoggingForTesting(IServiceProvider serviceProvider)
+{
+    var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+
+    loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
+    NLog.LogManager.LoadConfiguration("./nlog.config");
+}
+
+static void Main(string[] args)
+{
+    ClientConfiguration clientConfiguration = null;
+    var serviceProvider = CreateServiceProviderAndSetUpLogging();
+    var client = new PortalClient(clientConfiguration, serviceProvider.GetService<ILoggerFactory>());
+}
+
+```
 
 ### Logging request and response with Log4Net
 

@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Api.Client.Shared.Resources.Resource;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
+using Digipost.Signature.Api.Client.Core.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

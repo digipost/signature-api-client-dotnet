@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
-namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
+namespace Digipost.Signature.Api.Client.Core.Utilities
 {
     public static class LoggingUtility
     {
@@ -16,12 +16,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
 
             var serviceProvider = services.BuildServiceProvider();
-            SetUpLoggingFortTesting(serviceProvider);
+            SetUpLoggingForTesting(serviceProvider);
 
             return serviceProvider;
         }
         
-        private static void SetUpLoggingFortTesting(IServiceProvider serviceProvider)
+        private static void SetUpLoggingForTesting(IServiceProvider serviceProvider)
         {
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 

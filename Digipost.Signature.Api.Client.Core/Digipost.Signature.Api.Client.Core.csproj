@@ -7,7 +7,7 @@
     
     <ItemGroup>
         <PackageReference Include="api-client-shared" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.6"/>
+        <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7"/>
         <PackageReference Include="System.Net.Requests" Version="4.3.0"/>
         <PackageReference Include="System.Security.Cryptography.Xml" Version="4.5.0"/>
 

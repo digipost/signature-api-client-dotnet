@@ -6,10 +6,8 @@ layout: default
 
 
 ### Logging request flow
-The client is using Common Logging API for .NET as an abstraction for logging. It is up to the user to implement the API with a logging framework.
 
-<blockquote>Common Logging API is a lightweight infrastructure logging platform that allows developers to focus on the logging requirements instead of the logging tools and required configuration. The Common Logging API abstracts the logging requirements of any project making it easy to swap logging providers.</blockquote>
-
+The client library has the ability to log useful information that can be used for debug purposes. To enable logging, supply the `Direct` or `Portal` client with an implementation of `Microsoft.Extensions.Logging.ILoggerFactory`. This is Microsoft's own logging API, and allows the user to chose their own logging framework.  
 
 Enabling logging on level `DEBUG` will output positive results of requests and worse, `WARN` only failed requests or worse, while `ERROR` will only occur on failed requests to create a signature job. These loggers will be under the `Digipost.Signature.Api.Client` namespace. 
 

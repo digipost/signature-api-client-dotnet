@@ -1,6 +1,6 @@
 
 ## Sette opp maskin for kjøring av dokumentasjon
-```
+```sh
 brew install ruby
 sudo gem install jekyll bundler
 
@@ -8,9 +8,9 @@ sudo gem install jekyll bundler
 
 ## Kjøre dokumentasjon
 
-```
-bundle install #Hvis denne feiler, kjør linja under
-bundle update #Bør kjores så ofte som mulig for at visning på Github skal bli korrekt
+```sh
+bundle install # Hvis denne feiler, kjør linja under
+bundle update # Bør kjøres så ofte som mulig for at visning på Github skal bli korrekt
 bundle exec jekyll serve
 ```
 

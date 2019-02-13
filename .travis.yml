@@ -15,6 +15,11 @@ before_install:
 
   - ./travis-deploy/patch-assembly-version.sh Directory.Build.props $TRAVIS_TAG
 
+# Add ca certificates to trust our sender certificate on the machine
+  - sudo cp Buypass_Class_3_Test4_Root_CA.pem /usr/local/share/ca-certificates/Buypass_Class_3_Test4_Root_CA.crt #Must have .crt ending for update-ca-certificates
+  - sudo cp Buypass_Class_3_Test4_CA_3.pem /usr/local/share/ca-certificates/Buypass_Class_3_Test4_CA_3.crt #Must have .crt ending for update-ca-certificates
+  - sudo update-ca-certificates
+
 install:
   - dotnet restore
 

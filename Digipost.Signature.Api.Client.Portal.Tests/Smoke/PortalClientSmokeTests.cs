@@ -44,14 +44,14 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
         private readonly PortalSmokeTestsFixture _fixture;
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void Verify_tls_setup()
         {
             _fixture.TestHelper
                 .Verify_tls_setup(new Sender(BringPublicOrganizationNumber));
         }
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void Can_create_job_and_cancel()
         {
             var signer = new Signer(new PersonalIdentificationNumber("01048200229"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
@@ -63,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 .Confirm_job();
         }
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void Can_create_job_and_confirm()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 .Confirm_job();
         }
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void Can_create_open_portal_job()
         {
             var signer = new Signer(new ContactInformation {Email = new Email("email@example.com"), Sms = new Sms("11111111")});
@@ -87,7 +87,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
                 .Create_job(new Sender(BringPrivateOrganizationNumber), signer);
         }
 
-        [Fact(Skip = "Doesn't run on CI yet due to incomplete TLS/certificate setup")]
+        [Fact]
         public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};

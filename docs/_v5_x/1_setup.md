@@ -12,4 +12,4 @@ The library has several packages with the prefix `Digipost.Signature.Api.Client`
 
 ## The documentation for sending and error handling is moved
  
- The documentation for v5 is moved to [signering docs](https://signering-docs.readthedocs.io/en/latest/index.html). All older versions can still be browsed here.
+ The documentation for v5 has moved to [signering docs](https://signering-docs.readthedocs.io/en/latest/index.html). All older versions can still be browsed here.

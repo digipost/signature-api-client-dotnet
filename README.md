@@ -1,6 +1,6 @@
 # Posten signering – .NET client library
 
-[![Build Status](https://travis-ci.org/digipost/signature-api-client-dotnet.svg?branch=net-core)](https://travis-ci.org/digipost/signature-api-client-dotnet)
+[![Build Status](https://travis-ci.org/digipost/signature-api-client-dotnet.svg?branch=master)](https://travis-ci.org/digipost/signature-api-client-dotnet)
 
 This repository contains a client library implemented in .NET for communicating with [Posten signering](https://signering.posten.no/)'s API.
 

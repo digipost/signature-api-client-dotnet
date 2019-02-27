@@ -1,7 +1,7 @@
 (Press preview 👁‍🗨 to see how the issue will be after creating it and to easier read the template.)
 
 # Preconditions
-Have you read our [brilliant documentation](https://signering-docs.readthedocs.io/) before posting the issue? We are continously improving it, so be sure to give it a try before asking for help. 
+Have you read our [brilliant documentation](https://signering-docs.readthedocs.io/) before posting the issue? We are continuously improving it, so be sure to give it a try before asking for help. 
 
 # Issue title
 

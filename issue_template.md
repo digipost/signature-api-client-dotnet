@@ -26,7 +26,7 @@ public void MyCode()
 ```
 
 3. Please provide the error message you get when performing the action.
-4. Provide us with what you have tried so far. You should have given it a fair try before asking for help.
+4. Provide us with what you have tried so far.
 
 ## Do not:
 - Use screenshots or PDF's to describe the issue.

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
@@ -84,5 +85,9 @@ namespace Digipost.Signature.Api.Client.Core
             var documentBundleToDiskProcessor = new DocumentBundleToDiskProcessor(directory);
             ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
         }
+
+        public TimeSpan DosFilterBlockingPeriod { get; set; } = TimeSpan.FromSeconds(30);
+
+        public string DosFilterHeaderBlockKey { get; set; } = "DoSFilter";
     }
 }

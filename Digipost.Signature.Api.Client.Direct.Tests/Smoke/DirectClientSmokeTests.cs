@@ -1,7 +1,10 @@
 ﻿using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
+using Digipost.Signature.Api.Client.Core.Utilities;
 using Digipost.Signature.Api.Client.Direct.Enums;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using static Digipost.Signature.Api.Client.Direct.Tests.Smoke.TestHelper;
@@ -17,15 +20,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             TestHelper = new TestHelper(DirectClient(Endpoint));
         }
 
-        public TestHelper TestHelper { get; set; }
+        public TestHelper TestHelper { get; }
 
         private static DirectClient DirectClient(Environment environment)
         {
+            var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
+
             var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), new Sender(BringPublicOrganizationNumber))
             {
                 LogRequestAndResponse = true
             };
-            var client = new DirectClient(clientConfig);
+            var client = new DirectClient(clientConfig, serviceProvider.GetService<ILoggerFactory>());
 
             return client;
         }

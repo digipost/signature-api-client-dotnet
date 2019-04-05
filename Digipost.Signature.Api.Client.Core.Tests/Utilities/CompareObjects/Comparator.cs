@@ -9,6 +9,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects
         public bool AreEqual(object expected, object actual)
         {
             var compareLogic = new CompareLogic();
+            compareLogic.Config.MaxMillisecondsDateDifference = 999;
             return compareLogic.Compare(expected, actual).AreEqual;
         }
 

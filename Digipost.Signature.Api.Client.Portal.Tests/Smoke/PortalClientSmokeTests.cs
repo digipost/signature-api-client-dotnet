@@ -1,8 +1,10 @@
-﻿using System.Reflection;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
+using Digipost.Signature.Api.Client.Core.Utilities;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 using static Digipost.Signature.Api.Client.Portal.Enums.JobStatus;
@@ -28,9 +30,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
 
         private static PortalClient GetPortalClient(Environment environment)
         {
+            var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
             var sender = new Sender(BringPublicOrganizationNumber);
             var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000, LogRequestAndResponse = true};
-            var client = new PortalClient(clientConfig);
+            var client = new PortalClient(clientConfig, serviceProvider.GetService<ILoggerFactory>());
             return client;
         }
     }

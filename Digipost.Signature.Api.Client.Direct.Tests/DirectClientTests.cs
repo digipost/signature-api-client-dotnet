@@ -95,14 +95,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             [Fact]
             public async Task Returns_empty_object_on_empty_queue()
             {
+                var fakeEmptyQueueResponse = new FakeHttpClientHandlerForEmptyQueueResponse();
                 var directClient = new DirectClient(GetClientConfiguration())
                 {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
+                    HttpClient = GetHttpClientWithHandler(fakeEmptyQueueResponse)
                 };
 
                 var actualResponse = await directClient.GetStatusChange().ConfigureAwait(false);
 
-                Assert.Equal(JobStatusResponse.NoChanges, actualResponse);
+                Assert.Equal(JobStatusResponse.NoChanges(fakeEmptyQueueResponse.NextPermittedPollTime), actualResponse);
             }
 
             [Fact]

@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             );
         }
 
-        public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse)
+        public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse, DateTime nextPermittedPollTime)
         {
             var jobStatus = directsignaturejobstatusresponse.signaturejobstatus.ToJobStatus();
 
@@ -73,7 +73,8 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 directsignaturejobstatusresponse.reference,
                 jobStatus,
                 jobReferences,
-                signatures
+                signatures,
+                nextPermittedPollTime
             );
         }
 

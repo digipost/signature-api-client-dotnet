@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -77,7 +78,8 @@ namespace Digipost.Signature.Api.Client.Direct
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.OK:
-                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent));
+                    var nextPermittedPollTime = DateTime.Now;
+                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent), nextPermittedPollTime );
                     _logger.LogDebug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
                 default:
@@ -117,28 +119,45 @@ namespace Digipost.Signature.Api.Client.Direct
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    _logger.LogDebug("Received empty response. No jobs have had their status changed.");
-                    return JobStatusResponse.NoChanges;
+                    return CreateNoContentResponse(requestResult);
                 case HttpStatusCode.OK:
-                    var changedJob = ParseResponseToJobStatusResponse(requestContent);
-                    _logger.LogDebug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
-                    return changedJob;
-                case (HttpStatusCode) TooManyRequestsStatusCode:
-                    var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
-                    var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
-
-                    _logger.LogWarning(tooEagerPollingException.Message);
-
-                    throw tooEagerPollingException;
+                    return CreateOkResponse(requestContent, requestResult);
+                case HttpStatusCode.TooManyRequests:
+                    throw CreateTooManyRequestsException(requestResult);
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
         }
 
-        private static JobStatusResponse ParseResponseToJobStatusResponse(string requestContent)
+        private TooEagerPollingException CreateTooManyRequestsException(HttpResponseMessage requestResult)
+        {
+            var nextPermittedPollTime = 
+                RequestHelper.IsBlockedByDosFilter(requestResult, ClientConfiguration.DosFilterHeaderBlockKey)
+                ? DateTime.Now.Add(ClientConfiguration.DosFilterBlockingPeriod)
+                : RequestHelper.GetNextPermittedPollTime(requestResult);
+
+            var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+            _logger.LogWarning(tooEagerPollingException.Message);
+            return tooEagerPollingException;
+        }
+
+        private JobStatusResponse CreateOkResponse(string requestContent, HttpResponseMessage requestResult)
+        {
+            var changedJob = ParseResponseToJobStatusResponse(requestContent, RequestHelper.GetNextPermittedPollTime(requestResult));
+            _logger.LogDebug($"Received updated status. Job with id {changedJob.JobId} has status {changedJob.Status}.");
+            return changedJob;
+        }
+
+        private JobStatusResponse CreateNoContentResponse(HttpResponseMessage requestResult)
+        {
+            _logger.LogDebug("Received empty response. No jobs have had their status changed.");
+            return JobStatusResponse.NoChanges(RequestHelper.GetNextPermittedPollTime(requestResult));
+        }
+
+        private static JobStatusResponse ParseResponseToJobStatusResponse(string requestContent, DateTime nextPermittedPollTime)
         {
             var deserialized = SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent);
-            return DataTransferObjectConverter.FromDataTransferObject(deserialized);
+            return DataTransferObjectConverter.FromDataTransferObject(deserialized, nextPermittedPollTime);
         }
 
         public async Task<Stream> GetXades(XadesReference xadesReference)

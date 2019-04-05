@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Direct.Enums;
+﻿using System;
+using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Xunit;
 
@@ -17,6 +18,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var jobStatus = JobStatus.Failed;
                 var jobReferences = DomainUtility.GetJobReferences();
                 var signatures = DomainUtility.GetSignatures(1);
+                var nextPermittedPollTime = DateTime.Now;
+
 
                 //Act
                 var jobStatusResponse = new JobStatusResponse(
@@ -24,7 +27,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     jobReference,
                     jobStatus,
                     jobReferences,
-                    signatures
+                    signatures,
+                    nextPermittedPollTime
+                    
                 );
 
                 //Assert
@@ -33,6 +38,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.Equal(jobStatus, jobStatusResponse.Status);
                 Assert.Equal(jobReferences, jobStatusResponse.References);
                 Assert.Equal(signatures, jobStatusResponse.Signatures);
+                Assert.Equal(nextPermittedPollTime, jobStatusResponse.NextPermittedPollTime);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
@@ -88,11 +89,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
         private JobStatusResponse GetCurrentReceipt(long jobId, Sender sender = null)
         {
+            if (_status != null)
+            {
+                SleepToAvoidTooEagerPolling(_status);
+            }
+
             while (true)
             {
                 var jobStatusResponse = _directClient.GetStatusChange(sender).Result;
 
-                if (jobStatusResponse.Status == NoChanges)
+                var isNoChanges = jobStatusResponse.Status == NoChanges;
+                if (isNoChanges)
                 {
                     return jobStatusResponse;
                 }
@@ -103,9 +110,34 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                     return jobStatusResponse;
                 }
 
-                var uri = TransformReferenceToCorrectEnvironment(jobStatusResponse.References.Confirmation.Url);
-                _directClient.Confirm(new ConfirmationReference(uri)).Wait();
+                ConfirmExcessReceipt(jobStatusResponse);
+
+                var allowedToGetNextReceipt = jobStatusResponse.NextPermittedPollTime < DateTime.Now;
+                if (allowedToGetNextReceipt)
+                {
+                    continue;
+                }
+
+                SleepToAvoidTooEagerPolling(jobStatusResponse);
             }
+        }
+
+        private static void SleepToAvoidTooEagerPolling(JobStatusResponse jobStatusResponse)
+        {
+            var canPollImmediately = jobStatusResponse.NextPermittedPollTime <= DateTime.Now;
+            if (canPollImmediately)
+            {
+                return;
+            }
+
+            var timeToSleep = jobStatusResponse.NextPermittedPollTime - DateTime.Now;
+            Thread.Sleep(timeToSleep);
+        }
+
+        private void ConfirmExcessReceipt(JobStatusResponse jobStatusResponse2)
+        {
+            var uri = TransformReferenceToCorrectEnvironment(jobStatusResponse2.References.Confirmation.Url);
+            _directClient.Confirm(new ConfirmationReference(uri)).Wait();
         }
 
         public TestHelper Expect_job_to_have_status(JobStatus expectedJobStatus, params KeyValuePair<SignerIdentifier, SignatureStatus>[] expectedSignatureStatuses)

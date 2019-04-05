@@ -14,7 +14,7 @@ namespace Digipost.Signature.Api.Client.Core
     public abstract class BaseClient
     {
         protected const int TooManyRequestsStatusCode = 429;
-        protected const string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
+        public static string NextPermittedPollTimeHeader = "X-Next-permitted-poll-time";
 
         private HttpClient _httpClient;
         private readonly ILogger<BaseClient> _logger;

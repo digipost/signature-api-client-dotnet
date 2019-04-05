@@ -148,6 +148,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     confirmationurl = "https://example.com/confirmation-url"
                 };
 
+                var nextPermittedPollTime = DateTime.Now;
+
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
                     source.reference,
@@ -157,11 +159,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     {
                         new Signature("12345678910", null, SignatureStatus.Rejected, now),
                         new Signature("10987654321", new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
-                    }
+                    },
+                    nextPermittedPollTime                    
                 );
 
                 //Act
-                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+                var result = DataTransferObjectConverter.FromDataTransferObject(source, nextPermittedPollTime);
 
                 //Assert
                 var comparator = new Comparator();
@@ -476,16 +479,20 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     padesurl = "http://signatureRoot.digipost.no/pades"
                 };
 
+                var nextPermittedPollTime = DateTime.Now;
+
+                
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
                     source.reference,
                     JobStatus.CompletedSuccessfully,
                     new JobReferences(new Uri(source.confirmationurl), new Uri(source.padesurl)),
-                    new List<Signature> {new Signature("12345678910", new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, now)}
+                    new List<Signature> {new Signature("12345678910", new XadesReference(new Uri("http://signatureRoot.digipost.no/xades")), SignatureStatus.Signed, now)},
+                    nextPermittedPollTime
                 );
 
                 //Act
-                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+                var result = DataTransferObjectConverter.FromDataTransferObject(source, nextPermittedPollTime);
 
                 //Assert
                 var comparator = new Comparator();
@@ -549,6 +556,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             {
                 //Arrange
                 var now = DateTime.Now;
+                var nextPermittedPollTime = DateTime.Now;
+
 
                 var source = new directsignaturejobstatusresponse
                 {
@@ -564,11 +573,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                     source.reference,
                     JobStatus.Failed,
                     new JobReferences(new Uri("https://example.com/confirmation-url"), null),
-                    new List<Signature> {new Signature("12345678910", null, SignatureStatus.Rejected, now)}
+                    new List<Signature> {new Signature("12345678910", null, SignatureStatus.Rejected, now)},
+                    nextPermittedPollTime
                 );
 
                 //Act
-                var result = DataTransferObjectConverter.FromDataTransferObject(source);
+                var result = DataTransferObjectConverter.FromDataTransferObject(source, nextPermittedPollTime);
 
                 //Assert
                 var comparator = new Comparator();

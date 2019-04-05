@@ -54,13 +54,15 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             var jobReference = "senders-reference";
             var jobStatus = JobStatus.Failed;
             var statusResponseUrls = GetJobReferences();
+            var nextPermittedPollTime = DateTime.Now;
 
             return new JobStatusResponse(
                 jobId,
                 jobReference,
                 jobStatus,
                 statusResponseUrls,
-                new List<Signature> {new Signature("12345678910", null, SignatureStatus.Failed, DateTime.Now)}
+                new List<Signature> {new Signature("12345678910", null, SignatureStatus.Failed, DateTime.Now)},
+                nextPermittedPollTime
             );
         }
 

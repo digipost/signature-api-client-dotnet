@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -103,5 +105,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             _logger.LogWarning($"Unexpected error occured. Content: `{requestContent}`, statusCode: {statusCode}");
             return new UnexpectedResponseException(error, statusCode);
         }
+
+        internal bool IsBlockedByDosFilter(HttpResponseMessage requestResult, string dosFilterHeaderBlockKey)
+        {
+            return requestResult.Headers.TryGetValues(dosFilterHeaderBlockKey, out _);
+        }
+
+        internal DateTime GetNextPermittedPollTime(HttpResponseMessage requestResult)
+        {
+            return DateTime.Parse(requestResult.Headers.GetValues(BaseClient.NextPermittedPollTimeHeader).FirstOrDefault());
+        }
+        
     }
 }

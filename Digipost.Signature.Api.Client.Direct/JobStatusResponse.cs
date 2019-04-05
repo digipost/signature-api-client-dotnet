@@ -8,17 +8,21 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobStatusResponse
     {
-        public static JobStatusResponse NoChanges = new JobStatusResponse(null, null, JobStatus.NoChanges, null, null);
+        public static JobStatusResponse NoChanges(DateTime nextPermittedPollTime)
+        {
+            return new JobStatusResponse(null, null, JobStatus.NoChanges, null, null, nextPermittedPollTime);
+        } 
 
         private long? _jobId;
 
-        public JobStatusResponse(long? jobId, string jobReference, JobStatus status, JobReferences references, List<Signature> signatures)
+        public JobStatusResponse(long? jobId, string jobReference, JobStatus status, JobReferences references, List<Signature> signatures, DateTime nextPermittedPollTime )
         {
             _jobId = jobId;
             JobReference = jobReference;
             Status = status;
             References = references;
             Signatures = signatures;
+            NextPermittedPollTime = NextPermittedPollTime;
         }
 
         public long JobId
@@ -45,6 +49,9 @@ namespace Digipost.Signature.Api.Client.Direct
         public JobReferences References { get; }
 
         public List<Signature> Signatures { get; internal set; }
+        
+        public DateTime NextPermittedPollTime { get; }
+
 
         /// <summary>
         ///     Gets the signature from a given signer.

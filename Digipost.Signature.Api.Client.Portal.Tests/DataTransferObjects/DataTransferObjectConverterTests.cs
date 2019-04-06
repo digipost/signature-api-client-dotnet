@@ -895,12 +895,15 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                     }
                 };
 
+                var nextPermittedPollTime = DateTime.Now;
+
                 var expected = new JobStatusChanged(
                     source.signaturejobid,
                     source.reference,
                     jobStatus,
                     confirmationReference,
-                    signatures
+                    signatures,
+                    nextPermittedPollTime
                 );
 
                 var padesUrl = source.signatures.padesurl;
@@ -910,7 +913,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 }
 
                 //Act
-                var actual = DataTransferObjectConverter.FromDataTransferObject(source);
+                var actual = DataTransferObjectConverter.FromDataTransferObject(source, nextPermittedPollTime);
 
                 //Assert
                 var comparator = new Comparator();

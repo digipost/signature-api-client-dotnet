@@ -187,7 +187,7 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
             );
         }
 
-        public static JobStatusChanged FromDataTransferObject(portalsignaturejobstatuschangeresponse changeResponse)
+        public static JobStatusChanged FromDataTransferObject(portalsignaturejobstatuschangeresponse changeResponse, DateTime nextPermittedPollTime)
         {
             var jobStatus = changeResponse.status.ToJobStatus();
             var confirmationReference = new ConfirmationReference(new Uri(changeResponse.confirmationurl));
@@ -198,7 +198,8 @@ namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
                 changeResponse.reference,
                 jobStatus,
                 confirmationReference,
-                signatures
+                signatures,
+                nextPermittedPollTime
             );
 
             var padesUrl = changeResponse.signatures.padesurl;

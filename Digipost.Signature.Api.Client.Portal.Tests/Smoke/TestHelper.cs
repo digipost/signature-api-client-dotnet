@@ -170,21 +170,45 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return this;
         }
 
-        private static JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient, Sender sender = null)
+        private JobStatusChanged GetCurrentReceipt(long jobId, PortalClient portalClient, Sender sender = null)
         {
+            if (_jobStatusChanged != null)
+            {
+                SleepToAvoidTooEagerPolling(_jobStatusChanged.NextPermittedPollTime);
+            }
+            
             while (true)
             {
-                var statusChange = portalClient.GetStatusChange(sender).Result;
-                var isCurrentReceipt = statusChange.JobId == jobId;
-
-                if (isCurrentReceipt || statusChange.Status == NoChanges)
+                var statusChangeResponse = portalClient.GetStatusChange(sender).Result;
+                
+                var isNoChanges = statusChangeResponse.Status == NoChanges;
+                if (isNoChanges)
                 {
-                    return statusChange;
+                    return statusChangeResponse;
+                }
+                
+                var isCurrentReceipt = statusChangeResponse.JobId == jobId;
+                if (isCurrentReceipt)
+                {
+                    return statusChangeResponse;
                 }
 
-                var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
-                portalClient.Confirm(new ConfirmationReference(uri)).Wait();
+                ConfirmExcessReceipt(statusChangeResponse);
+                
+                var allowedToGetNextReceipt = statusChangeResponse.NextPermittedPollTime < DateTime.Now;
+                if (allowedToGetNextReceipt)
+                {
+                    continue;
+                }
+                
+                SleepToAvoidTooEagerPolling(statusChangeResponse.NextPermittedPollTime);
             }
+        }
+
+        private void ConfirmExcessReceipt(JobStatusChanged statusChange)
+        {
+            var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
+            _client.Confirm(new ConfirmationReference(uri)).Wait();
         }
 
         private static void Assert_state(object obj)

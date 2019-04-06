@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
 
@@ -16,6 +17,18 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Smoke
             return Endpoint == Localhost
                 ? new Uri(Localhost.Url, fullUri.AbsolutePath)
                 : fullUri;
+        }
+        
+        internal static void SleepToAvoidTooEagerPolling(DateTime nextPermittedPollTime)
+        {
+            var canPollImmediately = nextPermittedPollTime <= DateTime.Now;
+            if (canPollImmediately)
+            {
+                return;
+            }
+
+            var timeToSleep = nextPermittedPollTime - DateTime.Now;
+            Thread.Sleep(timeToSleep);
         }
     }
 }

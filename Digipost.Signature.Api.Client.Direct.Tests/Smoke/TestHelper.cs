@@ -91,7 +91,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             if (_status != null)
             {
-                SleepToAvoidTooEagerPolling(_status);
+                SleepToAvoidTooEagerPolling(_status.NextPermittedPollTime);
             }
 
             while (true)
@@ -118,20 +118,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                     continue;
                 }
 
-                SleepToAvoidTooEagerPolling(jobStatusResponse);
+                SleepToAvoidTooEagerPolling(jobStatusResponse.NextPermittedPollTime);
             }
-        }
-
-        private static void SleepToAvoidTooEagerPolling(JobStatusResponse jobStatusResponse)
-        {
-            var canPollImmediately = jobStatusResponse.NextPermittedPollTime <= DateTime.Now;
-            if (canPollImmediately)
-            {
-                return;
-            }
-
-            var timeToSleep = jobStatusResponse.NextPermittedPollTime - DateTime.Now;
-            Thread.Sleep(timeToSleep);
         }
 
         private void ConfirmExcessReceipt(JobStatusResponse jobStatusResponse2)

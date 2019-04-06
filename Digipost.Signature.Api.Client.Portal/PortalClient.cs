@@ -67,8 +67,6 @@ namespace Digipost.Signature.Api.Client.Portal
         /// <returns>the changed status for a job, never null.</returns>
         public async Task<JobStatusChanged> GetStatusChange(Sender sender = null)
         {
-            JobStatusChanged jobStatusChanged;
-
             var request = new HttpRequestMessage
             {
                 RequestUri = RelativeUrl(CurrentSender(sender), JobType.Portal, HttpMethod.Get),
@@ -84,25 +82,40 @@ namespace Digipost.Signature.Api.Client.Portal
             switch (requestResult.StatusCode)
             {
                 case HttpStatusCode.NoContent:
-                    _logger.LogDebug("No content response received.");
-                    jobStatusChanged = JobStatusChanged.NoChangesJobStatusChanged;
-                    break;
+                    return CreateNoContentResponse(requestResult);
                 case HttpStatusCode.OK:
-                    jobStatusChanged = ParseResponseToPortalJobStatusChangeResponse(requestContent);
-                    _logger.LogDebug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
-                    break;
-                case (HttpStatusCode) TooManyRequestsStatusCode:
-                    var nextPermittedPollTime = requestResult.Headers.GetValues(NextPermittedPollTimeHeader).FirstOrDefault();
-                    var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
-
-                    _logger.LogWarning(tooEagerPollingException.Message);
-
-                    throw tooEagerPollingException;
+                    return CreateOkResponse(requestContent, requestResult);
+                case HttpStatusCode.TooManyRequests:
+                    throw CreateTooManyRequestsException(requestResult);
                 default:
                     throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
             }
+        }
 
+        private JobStatusChanged CreateNoContentResponse(HttpResponseMessage requestResult)
+        {
+            _logger.LogDebug("No content response received.");
+            return JobStatusChanged.NoChanges(RequestHelper.GetNextPermittedPollTime(requestResult));
+        }
+        
+        private JobStatusChanged CreateOkResponse(string requestContent, HttpResponseMessage requestResult)
+        {
+            var jobStatusChanged = ParseResponseToPortalJobStatusChangeResponse(requestContent, RequestHelper.GetNextPermittedPollTime(requestResult));
+            _logger.LogDebug($"JobStatusChangeResponse received: JobId: {jobStatusChanged.JobId}, JobStatus: {jobStatusChanged.Status}");
             return jobStatusChanged;
+        }
+
+        
+        private TooEagerPollingException CreateTooManyRequestsException(HttpResponseMessage requestResult)
+        {
+            var nextPermittedPollTime =
+                RequestHelper.IsBlockedByDosFilter(requestResult, ClientConfiguration.DosFilterHeaderBlockKey)
+                    ? DateTime.Now.Add(ClientConfiguration.DosFilterBlockingPeriod)
+                    : RequestHelper.GetNextPermittedPollTime(requestResult);
+
+            var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
+            _logger.LogWarning(tooEagerPollingException.Message);
+            return tooEagerPollingException;
         }
 
         public async Task<string> GetRootResource(Sender sender)
@@ -126,11 +139,11 @@ namespace Digipost.Signature.Api.Client.Portal
                 throw;
             }
         }
-
-        private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent)
+        
+        private static JobStatusChanged ParseResponseToPortalJobStatusChangeResponse(string requestContent, DateTime nextPermittedPollTime)
         {
             var deserialized = SerializeUtility.Deserialize<portalsignaturejobstatuschangeresponse>(requestContent);
-            var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized);
+            var portalJobStatusChangeResponse = DataTransferObjectConverter.FromDataTransferObject(deserialized,nextPermittedPollTime );
             return portalJobStatusChangeResponse;
         }
 

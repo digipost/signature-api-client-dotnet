@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Portal.Enums;
 
@@ -6,15 +7,19 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class JobStatusChanged
     {
-        public static JobStatusChanged NoChangesJobStatusChanged = new JobStatusChanged(0, null, JobStatus.NoChanges, null, null);
-
-        public JobStatusChanged(long jobId, string jobReference, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
+        public static JobStatusChanged NoChanges(DateTime nextPermittedPollTime)
+        {
+            return new JobStatusChanged(0, null, JobStatus.NoChanges, null, null, nextPermittedPollTime);
+        } 
+        
+        public JobStatusChanged(long jobId, string jobReference, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures, DateTime nextPermittedPollTime)
         {
             JobId = jobId;
             JobReference = jobReference;
             Status = status;
             ConfirmationReference = confirmationReference;
             Signatures = signatures;
+            NextPermittedPollTime = NextPermittedPollTime;
         }
 
         public long JobId { get; internal set; }
@@ -31,6 +36,8 @@ namespace Digipost.Signature.Api.Client.Portal
         public PadesReference PadesReference { get; internal set; }
 
         public List<Signature> Signatures { get; internal set; }
+
+        public DateTime NextPermittedPollTime { get; internal set; }
 
         public Signature GetSignatureFor(Signer signer)
         {

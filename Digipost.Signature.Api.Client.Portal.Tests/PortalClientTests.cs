@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
+using Digipost.Signature.Api.Client.Portal.Enums;
 using Digipost.Signature.Api.Client.Portal.Exceptions;
 using Digipost.Signature.Api.Client.Portal.Tests.Fakes;
 using Digipost.Signature.Api.Client.Portal.Tests.Utilities;
@@ -83,7 +84,8 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 var actualResponse = await portalClient.GetStatusChange().ConfigureAwait(false);
 
                 //Assert
-                Assert.Equal(JobStatusChanged.NoChangesJobStatusChanged, actualResponse);
+                Assert.Equal(JobStatus.NoChanges, actualResponse.Status);
+                AssertIsWithinTimeSpan(actualResponse.NextPermittedPollTime, TimeSpan.FromSeconds(29), TimeSpan.FromSeconds(31));
             }
 
             [Fact]
@@ -98,10 +100,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 object expectedResponseType = typeof(JobStatusChanged);
 
                 //Act
-                var actualResponseType = (await portalClient.GetStatusChange().ConfigureAwait(false)).GetType();
+                var actualResponse = (await portalClient.GetStatusChange().ConfigureAwait(false));
 
                 //Assert
-                Assert.Equal(expectedResponseType, actualResponseType);
+                Assert.Equal(expectedResponseType, actualResponse.GetType());
+                AssertIsWithinTimeSpan(actualResponse.NextPermittedPollTime, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
             }
 
             [Fact]
@@ -189,6 +192,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
                 await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await portalClient.Confirm(new ConfirmationReference(new Uri("http://cancellationuri.no"))).ConfigureAwait(false)).ConfigureAwait(false);
             }
+        }
+
+        private static void AssertIsWithinTimeSpan(DateTime actual, TimeSpan spanBeforeActual, TimeSpan spanAfterActual)
+        {
+            var actualUtc = actual.ToUniversalTime();
+            var minDateTimeValueUtc = DateTime.Now.Subtract(spanBeforeActual).ToUniversalTime();
+            var maxDateTimeValueUtc = DateTime.Now.Add(spanAfterActual).ToUniversalTime();
+
+            Assert.True(actualUtc > minDateTimeValueUtc, $"The time supplied ({actualUtc:O}) was not after {minDateTimeValueUtc:O}");
+            Assert.True(actualUtc < maxDateTimeValueUtc, $"The time supplied ({actualUtc:O}) was not before {maxDateTimeValueUtc:O}");
         }
     }
 }

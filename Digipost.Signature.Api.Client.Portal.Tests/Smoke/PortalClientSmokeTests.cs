@@ -1,4 +1,4 @@
-using Digipost.Signature.Api.Client.Core;
+﻿using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
@@ -60,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             var signer = new Signer(new PersonalIdentificationNumber("01048200229"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
 
             _fixture.TestHelper
-                .Create_job(signer)
+                .Create_job(new Sender(BringPublicOrganizationNumber), signer)
                 .Cancel_job()
                 .ExpectJobStatusForSenderIs(Failed)
                 .Confirm_job();
@@ -91,7 +91,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         }
 
         [Fact]
-        public void create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
+        public void Create_job_with_queue_and_verify_excessive_polling_is_queue_dependent()
         {
             var signer = new Signer(new PersonalIdentificationNumber("12345678910"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
             var senderWithQueue = new Sender(BringPrivateOrganizationNumber, new PollingQueue("CustomPortalPollingQueue"));

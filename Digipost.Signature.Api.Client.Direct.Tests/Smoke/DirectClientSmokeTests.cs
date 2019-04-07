@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 {
     public class DirectSmokeTestsFixture : SmokeTests
     {
-        public Sender Sender = new Sender(BringPublicOrganizationNumber);
+        public readonly Sender Sender = new Sender(BringPublicOrganizationNumber);
 
         public DirectSmokeTestsFixture()
         {

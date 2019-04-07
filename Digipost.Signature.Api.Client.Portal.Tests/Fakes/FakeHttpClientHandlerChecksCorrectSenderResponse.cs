@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
@@ -8,7 +9,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Fakes
 {
     internal class FakeHttpClientHandlerChecksCorrectSenderResponse : FakeHttpClientHandlerResponse
     {
-        public string RequestUri { get; internal set; }
+        public string RequestUri { get; private set; }
+
+        public FakeHttpClientHandlerChecksCorrectSenderResponse()
+        {
+            AddNextPermittedPollTimeHeader(DateTime.Now.AddSeconds(30));
+        }
 
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request, CancellationToken cancellationToken)

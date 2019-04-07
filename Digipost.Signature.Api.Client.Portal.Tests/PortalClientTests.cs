@@ -75,9 +75,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Returns_empty_object_on_empty_queue()
             {
                 //Arrange
+                var emptyQueueResponse = new FakeHttpClientHandlerForEmptyQueueResponse();
                 var portalClient = new PortalClient(GetClientConfiguration())
                 {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForEmptyQueueResponse())
+                    HttpClient = GetHttpClientWithHandler(emptyQueueResponse)
                 };
 
                 //Act
@@ -85,16 +86,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Assert
                 Assert.Equal(JobStatus.NoChanges, actualResponse.Status);
-                AssertIsWithinTimeSpan(actualResponse.NextPermittedPollTime, TimeSpan.FromSeconds(29), TimeSpan.FromSeconds(31));
+                Assert.Equal(emptyQueueResponse.NextPermittedPollTime, actualResponse.NextPermittedPollTime);
             }
 
             [Fact]
             public async Task Returns_portal_job_status_change_on_ok_response()
             {
                 //Arrange
+                var jobStatusChangeResponse = new FakeHttpClientHandlerForJobStatusChangeResponse();
                 var portalClient = new PortalClient(GetClientConfiguration())
                 {
-                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForJobStatusChangeResponse())
+                    HttpClient = GetHttpClientWithHandler(jobStatusChangeResponse)
                 };
 
                 object expectedResponseType = typeof(JobStatusChanged);
@@ -104,7 +106,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
 
                 //Assert
                 Assert.Equal(expectedResponseType, actualResponse.GetType());
-                AssertIsWithinTimeSpan(actualResponse.NextPermittedPollTime, TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
+                Assert.Equal(jobStatusChangeResponse.NextPermittedPollTime, actualResponse.NextPermittedPollTime);
             }
 
             [Fact]
@@ -112,10 +114,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
-                var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerForJobStatusChangeResponse();
+                var jobStatusChangeResponse = new FakeHttpClientHandlerForJobStatusChangeResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {
-                    HttpClient = GetHttpClientWithHandler(fakeHttpClientHandlerChecksCorrectSender)
+                    HttpClient = GetHttpClientWithHandler(jobStatusChangeResponse)
                 };
 
                 //Act
@@ -192,16 +194,6 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Act
                 await Assert.ThrowsAsync<UnexpectedResponseException>(async () => await portalClient.Confirm(new ConfirmationReference(new Uri("http://cancellationuri.no"))).ConfigureAwait(false)).ConfigureAwait(false);
             }
-        }
-
-        private static void AssertIsWithinTimeSpan(DateTime actual, TimeSpan spanBeforeActual, TimeSpan spanAfterActual)
-        {
-            var actualUtc = actual.ToUniversalTime();
-            var minDateTimeValueUtc = DateTime.Now.Subtract(spanBeforeActual).ToUniversalTime();
-            var maxDateTimeValueUtc = DateTime.Now.Add(spanAfterActual).ToUniversalTime();
-
-            Assert.True(actualUtc > minDateTimeValueUtc, $"The time supplied ({actualUtc:O}) was not after {minDateTimeValueUtc:O}");
-            Assert.True(actualUtc < maxDateTimeValueUtc, $"The time supplied ({actualUtc:O}) was not before {maxDateTimeValueUtc:O}");
         }
     }
 }

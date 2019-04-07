@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
+using Xunit.Sdk;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {
@@ -11,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
         public FakeHttpClientHandlerForTooManyRequestsResponse()
         {
             ResultCode = (HttpStatusCode?) 429;
-            HttpResponseHeader = new KeyValuePair<string, string>("X-Next-permitted-poll-time", DateTime.Now.ToString("O"));
+            AddNextPermittedPollTimeHeader(DateTime.Now.AddSeconds(30));
         }
 
         public override HttpContent GetContent()

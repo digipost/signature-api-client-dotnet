@@ -103,7 +103,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 var actualResponse = await directClient.GetStatusChange().ConfigureAwait(false);
 
-                Assert.Equal(JobStatusResponse.NoChanges(fakeEmptyQueueResponse.NextPermittedPollTime), actualResponse);
+                Assert.Throws<InvalidOperationException>(() => actualResponse.JobId);
+                Assert.Null(actualResponse.JobReference);
             }
 
             [Fact]

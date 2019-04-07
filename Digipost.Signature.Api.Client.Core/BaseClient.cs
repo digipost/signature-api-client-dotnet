@@ -105,7 +105,7 @@ namespace Digipost.Signature.Api.Client.Core
         {
             if (!ClientConfiguration.CertificateValidationPreferences.ValidateResponseCertificate)
             {
-                _logger.LogWarning("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are expecting.");
+                _logger.LogWarning("Validation of response certificate is disabled and should only be disabled under special circumstances. This validation is in place to ensure that the response is from the server you are  expecting.");
                 return true;
             }
 

@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Direct
             Status = status;
             References = references;
             Signatures = signatures;
-            NextPermittedPollTime = NextPermittedPollTime;
+            NextPermittedPollTime = nextPermittedPollTime;
         }
 
         public long JobId
@@ -81,7 +81,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public override string ToString()
         {
-            return $"JobId: {JobId}, Status: {Status}, References: {References}";
+            return $"JobId: {JobId}, Status: {Status}, References: {References}, Next permitted poll time: {NextPermittedPollTime}";
         }
     }
 }

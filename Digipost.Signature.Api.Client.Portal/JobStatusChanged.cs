@@ -19,7 +19,7 @@ namespace Digipost.Signature.Api.Client.Portal
             Status = status;
             ConfirmationReference = confirmationReference;
             Signatures = signatures;
-            NextPermittedPollTime = NextPermittedPollTime;
+            NextPermittedPollTime = nextPermittedPollTime;
         }
 
         public long JobId { get; internal set; }
@@ -46,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public override string ToString()
         {
-            return $"JobId: {JobId}, Status: {Status}, ConfirmationReference: {ConfirmationReference}, PadesReference: {PadesReference}, Signatures: {Signatures}";
+            return $"JobId: {JobId}, Status: {Status}, ConfirmationReference: {ConfirmationReference}, PadesReference: {PadesReference}, Signatures: {Signatures}, Next permitted poll time: {NextPermittedPollTime}";
         }
     }
 }

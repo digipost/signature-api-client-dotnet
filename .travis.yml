@@ -4,7 +4,7 @@ solution: api-client-shared.sln
 mono: none
 git:
   submodules: false
-dotnet: 2.1.502
+dotnet: 2.1.602
 before_install:
   # Change github url to https for submodules
   - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules

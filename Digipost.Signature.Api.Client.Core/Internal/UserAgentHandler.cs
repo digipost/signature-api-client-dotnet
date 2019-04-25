@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-            return $"digipost-signature-api-client-dotnet/{assemblyVersion} (netcore/{GetNetCoreVersion()})";
+            return $"posten-signature-api-client-dotnet/{assemblyVersion} (netcore/{GetNetCoreVersion()})";
         }
 
         private static string GetNetCoreVersion()

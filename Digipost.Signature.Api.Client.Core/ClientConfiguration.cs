@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 
 namespace Digipost.Signature.Api.Client.Core
@@ -86,8 +87,20 @@ namespace Digipost.Signature.Api.Client.Core
             ((List<IDocumentBundleProcessor>) DocumentBundleProcessors).Add(documentBundleToDiskProcessor);
         }
 
-        public TimeSpan DosFilterBlockingPeriod { get; set; } = TimeSpan.FromSeconds(30);
 
+        /// <summary>
+        ///     If the client receives a 429 response code and has a header given by this variable, it is blocked by the
+        ///     DoS filter. When this happens, it is used together with <see cref="DosFilterBlockingPeriod"/> to give a
+        ///     <see cref="TooEagerPollingException"/> with a Next permitted poll time. 
+        /// </summary>
         public string DosFilterHeaderBlockingKey { get; set; } = "DoSFilter";
+
+        /// <summary>
+        ///     When the client receives a 429 response code, indicating there is a <see cref="TooEagerPollingException"/>,
+        ///     the current Organization number will be blocked for a defined time span. If blocked by the DoS-filter, the
+        ///     response message does not have a body or indicate next permitted poll time. The Next permitted poll
+        ///     time is added with a predefined time, given by this blocking period.
+        /// </summary>
+        public TimeSpan DosFilterBlockingPeriod { get; set; } = TimeSpan.FromSeconds(30);
     }
 }

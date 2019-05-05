@@ -151,7 +151,7 @@ namespace Digipost.Signature.Api.Client.Direct
         private JobStatusResponse CreateNoContentResponse(HttpResponseMessage requestResult)
         {
             _logger.LogDebug("Received empty response. No jobs have had their status changed.");
-            return JobStatusResponse.NoChanges(RequestHelper.GetNextPermittedPollTime(requestResult));
+            return JobStatusResponse.NoChangesWithPollTime(RequestHelper.GetNextPermittedPollTime(requestResult));
         }
 
         private static JobStatusResponse ParseResponseToJobStatusResponse(string requestContent, DateTime nextPermittedPollTime)

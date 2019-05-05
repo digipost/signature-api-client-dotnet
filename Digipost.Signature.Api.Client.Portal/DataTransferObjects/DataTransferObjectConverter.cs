@@ -9,7 +9,7 @@ using Digipost.Signature.Api.Client.Portal.Internal.AsicE;
 
 namespace Digipost.Signature.Api.Client.Portal.DataTransferObjects
 {
-    internal class DataTransferObjectConverter
+    internal static class DataTransferObjectConverter
     {
         public static portalsignaturejobrequest ToDataTransferObject(Job job)
         {

@@ -95,7 +95,7 @@ namespace Digipost.Signature.Api.Client.Portal
         private JobStatusChanged CreateNoContentResponse(HttpResponseMessage requestResult)
         {
             _logger.LogDebug("No content response received.");
-            return JobStatusChanged.NoChanges(RequestHelper.GetNextPermittedPollTime(requestResult));
+            return JobStatusChanged.NoChangesWithPollTime(RequestHelper.GetNextPermittedPollTime(requestResult));
         }
         
         private JobStatusChanged CreateOkResponse(string requestContent, HttpResponseMessage requestResult)

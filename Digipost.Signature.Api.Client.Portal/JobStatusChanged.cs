@@ -7,11 +7,20 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class JobStatusChanged
     {
-        public static JobStatusChanged NoChanges(DateTime nextPermittedPollTime)
+        [Obsolete("Use NoChangesWithPollTime instead, as this can be removed without further notice.")]
+        public static JobStatusChanged NoChanges = new JobStatusChanged(0, null, JobStatus.NoChanges, null, null, DateTime.Now);
+
+        public static JobStatusChanged NoChangesWithPollTime(DateTime nextPermittedPollTime)
         {
             return new JobStatusChanged(0, null, JobStatus.NoChanges, null, null, nextPermittedPollTime);
-        } 
-        
+        }
+
+        [Obsolete("Use constructor with DateTime instead, as this can be removed without further notice.")]
+        public JobStatusChanged(long jobId, string jobReference, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures)
+            : this(jobId, jobReference, status, confirmationReference, signatures, DateTime.Now)
+        {
+        }
+
         public JobStatusChanged(long jobId, string jobReference, JobStatus status, ConfirmationReference confirmationReference, List<Signature> signatures, DateTime nextPermittedPollTime)
         {
             JobId = jobId;

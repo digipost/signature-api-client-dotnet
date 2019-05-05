@@ -8,13 +8,22 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobStatusResponse
     {
-        public static JobStatusResponse NoChanges(DateTime nextPermittedPollTime)
+        [Obsolete("Use NoChangesWithPollTime instead, as this can be removed without further notice.") ]
+        public static JobStatusResponse NoChanges = new JobStatusResponse(null, null, JobStatus.NoChanges, null, null, DateTime.Now);
+        
+        public static JobStatusResponse NoChangesWithPollTime(DateTime nextPermittedPollTime)
         {
             return new JobStatusResponse(null, null, JobStatus.NoChanges, null, null, nextPermittedPollTime);
         } 
 
-        private long? _jobId;
+        private readonly long? _jobId;
 
+        [Obsolete("Use constructor with DateTime instead, as this can be removed without further notice.")]
+        public JobStatusResponse(long? jobId, string jobReference, JobStatus status, JobReferences references, List<Signature> signatures)
+            : this(jobId, jobReference, status, references, signatures, DateTime.Now)
+        {
+        }
+        
         public JobStatusResponse(long? jobId, string jobReference, JobStatus status, JobReferences references, List<Signature> signatures, DateTime nextPermittedPollTime )
         {
             _jobId = jobId;

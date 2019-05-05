@@ -132,7 +132,7 @@ namespace Digipost.Signature.Api.Client.Direct
         private TooEagerPollingException CreateTooManyRequestsException(HttpResponseMessage requestResult)
         {
             var nextPermittedPollTime = 
-                RequestHelper.IsBlockedByDosFilter(requestResult, ClientConfiguration.DosFilterHeaderBlockKey)
+                RequestHelper.IsBlockedByDosFilter(requestResult, ClientConfiguration.DosFilterHeaderBlockingKey)
                 ? DateTime.Now.Add(ClientConfiguration.DosFilterBlockingPeriod)
                 : RequestHelper.GetNextPermittedPollTime(requestResult);
 

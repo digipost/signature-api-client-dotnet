@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
@@ -47,28 +48,32 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
         {
             PortalClient portalClient = null; //As initialized earlier
 
-            var jobStatusChanged = await portalClient.GetStatusChange();
+            // Repeat the polling until signer signs the document, but ensure to do this at a 
+            // reasonable interval. If you are processing the result a few times a day in your
+            // system, only poll a few times a day.
+            var change = await portalClient.GetStatusChange();
 
-            if (jobStatusChanged.Status == JobStatus.NoChanges)
+            switch (change.Status)
             {
-                //Queue is empty. Additional polling will result in blocking for a defined period.
-            }
-            else
-            {
-                var signatureJobStatus = jobStatusChanged.Status;
-                var signatures = jobStatusChanged.Signatures;
-                var signatureOne = signatures.ElementAt(0);
-                var signatureOneStatus = signatureOne.SignatureStatus;
+                case JobStatus.NoChanges:
+                    //Queue is empty. Additional polling will result in blocking for a defined period.
+                    break;
+                case JobStatus.Failed:
+                case JobStatus.InProgress:
+                case JobStatus.CompletedSuccessfully:
+                {
+                    var signatureJobStatus = change.Status;
+                    var signatures = change.Signatures;
+                    var signatureOne = signatures.ElementAt(0);
+                    var signatureOneStatus = signatureOne.SignatureStatus;
+                    break;
+                }
             }
 
-            //Polling again:
-            try
+            var pollingWillResultInBlock = change.NextPermittedPollTime > DateTime.Now;
+            if (pollingWillResultInBlock)
             {
-                var changeResponse2 = await portalClient.GetStatusChange();
-            }
-            catch (TooEagerPollingException eagerPollingException)
-            {
-                var nextAvailablePollingTime = eagerPollingException.NextPermittedPollTime;
+                //Wait until next permitted poll time has passed before polling again.
             }
         }
 

@@ -88,6 +88,6 @@ namespace Digipost.Signature.Api.Client.Core
 
         public TimeSpan DosFilterBlockingPeriod { get; set; } = TimeSpan.FromSeconds(30);
 
-        public string DosFilterHeaderBlockKey { get; set; } = "DoSFilter";
+        public string DosFilterHeaderBlockingKey { get; set; } = "DoSFilter";
     }
 }

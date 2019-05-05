@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
@@ -62,45 +61,37 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
         {
             ClientConfiguration clientConfiguration = null; // As initialized earlier
             var directClient = new DirectClient(clientConfiguration);
+            
+            // Repeat the polling until signer signs the document, but ensure to do this at a 
+            // reasonable interval. If you are processing the result a few times a day in your
+            // system, only poll a few times a day.
+            var change = await directClient.GetStatusChange();
 
-            Document documentToSign = null; // As initialized earlier
-            ExitUrls exitUrls = null; // As initialized earlier
-
-            var signer = new PersonalIdentificationNumber("00000000000");
-
-            var job = new Job(
-                documentToSign,
-                new List<Signer> {new Signer(signer)},
-                "SendersReferenceToSignatureJob",
-                exitUrls,
-                statusRetrievalMethod: StatusRetrievalMethod.Polling
-            );
-
-            await directClient.Create(job);
-
-            var changedJob = await directClient.GetStatusChange();
-
-            if (changedJob.Status == JobStatus.NoChanges)
+            switch (change.Status)
             {
-                // Queue is empty. Additional polling will result in blocking for a defined period.
+                case JobStatus.NoChanges:
+                    // Queue is empty. Additional polling will result in blocking for a defined period.
+                    break;
+                case JobStatus.CompletedSuccessfully:
+                    // Get PAdES
+                    // Get XAdES
+                    break;
+                case JobStatus.Failed:
+                    break;
+                case JobStatus.InProgress:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            // Repeat the above until signer signs the document
-
-            changedJob = await directClient.GetStatusChange();
-
-            if (changedJob.Status == JobStatus.CompletedSuccessfully)
-            {
-                // Get PAdES
-            }
-
-            if (changedJob.GetSignatureFor(signer).SignatureStatus.Equals(SignatureStatus.Signed))
-            {
-                // Get XAdES
-            }
-
+         
             // Confirm status change to avoid receiving it again
-            await directClient.Confirm(changedJob.References.Confirmation);
+            await directClient.Confirm(change.References.Confirmation);
+
+            var pollingWillResultInBlock = change.NextPermittedPollTime > DateTime.Now;
+            if (pollingWillResultInBlock)
+            {
+                //Wait until next permitted poll time has passed before polling again.
+            }
         }
 
         public async Task GetXadesAndPades()

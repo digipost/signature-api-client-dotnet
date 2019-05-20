@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -46,6 +46,15 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             }
 
             return deserializeFunc(responseContent);
+        }
+
+        public async Task<string> RequestNewRedirectUrl()
+        {
+            var postUrl = new Uri("http://www.posturl.no/");
+            var responseMessage = await _httpClient.PostAsync(postUrl, null).ConfigureAwait(false);
+            var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return responseContent;
         }
 
         public async Task<Stream> GetStream(Uri uri)

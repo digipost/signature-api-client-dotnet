@@ -131,5 +131,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 await Assert.ThrowsAsync<TooEagerPollingException>(async () => await directClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
             }
         }
+
+        public class RequestNewRedirectUrl : DirectClientTests
+        {
+            [Fact]
+            public async Task Can_request_new_redirect_url()
+            {
+                //Arrange
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForNewRedirectUrlResponse())
+                };
+
+                var newRedirectUrl = await directClient.requestNewRedirectUrl();
+
+                Assert.NotNull(newRedirectUrl.Identifier);
+                Assert.NotNull(newRedirectUrl.RedirectUrl);
+            }
+        }
     }
 }

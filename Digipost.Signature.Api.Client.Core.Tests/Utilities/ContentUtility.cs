@@ -23,7 +23,12 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
             return GetContent("CreateResponse.xml");
         }
 
-        internal static string GetContent(string path)
+        internal static string GetRequestNewRedirectUrlResponse()
+        {
+            return GetContent("RequestNewRedirectUrlResponse.xml");
+        }
+
+        private static string GetContent(string path)
         {
             return Encoding.UTF8.GetString(ResourceUtility.ReadAllBytes(path));
         }

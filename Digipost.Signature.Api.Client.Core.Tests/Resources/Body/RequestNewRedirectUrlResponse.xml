@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<direct-signer-response xmlns="http://signering.posten.no/schema/v1"
+                        href="https://api.signering.posten.no/api/123456789/direct/signature-jobs/1/signers/1">
+    <personal-identification-number>12345678910</personal-identification-number>
+    <redirect-url>
+        https://signering.posten.no#/redirect/421e7ac38da1f81150cfae8a053cef62f9e7433ffd9395e5805e820980653657
+    </redirect-url>
+</direct-signer-response>

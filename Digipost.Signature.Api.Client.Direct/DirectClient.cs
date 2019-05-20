@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -47,6 +47,14 @@ namespace Digipost.Signature.Api.Client.Direct
             _logger.LogDebug($"Successfully created Direct Job with JobId: {directJobResponse.JobId}.");
 
             return directJobResponse;
+        }
+
+        public async Task<SignerResponse> requestNewRedirectUrl()
+        {
+            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl();
+            directsignerresponse directsignerresponse = SerializeUtility.Deserialize<directsignerresponse>(newRedirectUrlResult);
+
+            return new SignerResponse(null);
         }
 
         /// <summary>

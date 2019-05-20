@@ -1,5 +1,6 @@
 ﻿using System;
 using Digipost.Signature.Api.Client.Core.Identifier;
+using Schemas;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Identification

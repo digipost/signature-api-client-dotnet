@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
@@ -9,6 +8,7 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
+using Schemas;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
@@ -160,7 +160,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         new Signature("12345678910", null, SignatureStatus.Rejected, now),
                         new Signature("10987654321", new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
                     },
-                    nextPermittedPollTime                    
+                    nextPermittedPollTime
                 );
 
                 //Act
@@ -481,7 +481,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 
                 var nextPermittedPollTime = DateTime.Now;
 
-                
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
                     source.reference,
@@ -557,7 +556,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 //Arrange
                 var now = DateTime.Now;
                 var nextPermittedPollTime = DateTime.Now;
-
 
                 var source = new directsignaturejobstatusresponse
                 {

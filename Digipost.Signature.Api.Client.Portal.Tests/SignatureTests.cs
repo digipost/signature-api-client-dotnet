@@ -1,4 +1,5 @@
 ﻿using System;
+using Schemas;
 using Xunit;
 
 namespace Digipost.Signature.Api.Client.Portal.Tests

@@ -1,4 +1,6 @@
-﻿namespace Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects
+﻿using Schemas;
+
+namespace Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects
 {
     public static class DataTransferObjectConverter
     {

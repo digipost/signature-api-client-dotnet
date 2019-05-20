@@ -6,6 +6,7 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Core.Identifier
 {

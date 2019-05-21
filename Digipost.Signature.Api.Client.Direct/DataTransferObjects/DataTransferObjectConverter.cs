@@ -41,18 +41,6 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             };
         }
 
-        public static JobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
-        {
-            return new JobResponse(
-                directsignaturejobresponse.signaturejobid,
-                directsignaturejobresponse.reference,
-                new ResponseUrls(
-                    directsignaturejobresponse.redirecturl.Select(redirecturl => new RedirectReference(new Uri(redirecturl.Value), new PersonalIdentificationNumber(redirecturl.signer))).ToList(),
-                    directsignaturejobresponse.statusurl == null ? null : new Uri(directsignaturejobresponse.statusurl)
-                )
-            );
-        }
-
         public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse, DateTime nextPermittedPollTime)
         {
             var jobStatus = directsignaturejobstatusresponse.signaturejobstatus.ToJobStatus();

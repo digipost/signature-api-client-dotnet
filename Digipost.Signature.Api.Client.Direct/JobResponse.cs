@@ -1,4 +1,9 @@
-﻿namespace Digipost.Signature.Api.Client.Direct
+﻿using System;
+using System.Linq;
+using Digipost.Signature.Api.Client.Core.Identifier;
+using Schemas;
+
+namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobResponse
     {
@@ -7,6 +12,21 @@
             JobId = jobId;
             JobReference = jobReference;
             ResponseUrls = responseUrls;
+        }
+
+        internal JobResponse(directsignaturejobresponse jobResponse)
+        {
+            JobId = jobResponse.signaturejobid;
+            JobReference = jobResponse.reference;
+            ResponseUrls = new ResponseUrls(
+                jobResponse.redirecturl
+                    .Select(redirectUrl =>
+                        new RedirectReference(
+                            new Uri(redirectUrl.Value),
+                            new PersonalIdentificationNumber(redirectUrl.signer)))
+                    .ToList(),
+                jobResponse.statusurl == null ? null : new Uri(jobResponse.statusurl)
+            );
         }
 
         public long JobId { get; }

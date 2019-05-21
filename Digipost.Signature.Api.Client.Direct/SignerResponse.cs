@@ -10,20 +10,39 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public Uri RedirectUrl { get; }
 
-        public SignerResponse(directsignerresponse directsignerresponse)
+        public SignerResponse(SignerIdentifier identifier, Uri redirectUrl)
         {
-//            if (directsignerresponse.ItemElementName == ItemChoiceType1.personalidentificationnumber)
-//            {
-//                
-//            }
-//            else
-//            {
-//                
-//            }
+            Identifier = identifier;
+            RedirectUrl = redirectUrl;
+        }
 
-//            string s = directsignerresponse.redirecturl;
+        internal SignerResponse(directsignerresponse signerResponse)
+        {
+            switch (signerResponse.ItemElementName)
+            {
+                case ItemChoiceType1.personalidentificationnumber:
+                    Identifier = new PersonalIdentificationNumber(signerResponse.Item);
+                    break;
+                case ItemChoiceType1.signeridentifier:
+                    Identifier = new CustomIdentifier(signerResponse.Item);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
-//            directsignerresponse.
+            RedirectUrl = new Uri(signerResponse.redirecturl);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is SignerResponse that
+                   && Identifier.IsSameAs(that.Identifier)
+                   && RedirectUrl.Equals(that.RedirectUrl);
+        }
+
+        public override int GetHashCode()
+        {
+            return Identifier.GetHashCode() + RedirectUrl.GetHashCode();
         }
     }
 }

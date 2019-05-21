@@ -52,9 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct
         public async Task<SignerResponse> requestNewRedirectUrl()
         {
             var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl();
-            directsignerresponse directsignerresponse = SerializeUtility.Deserialize<directsignerresponse>(newRedirectUrlResult);
-
-            return new SignerResponse(null);
+            return new SignerResponse(newRedirectUrlResult);
         }
 
         /// <summary>

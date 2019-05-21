@@ -1,32 +1,25 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Digipost.Signature.Api.Client.Core.Identifier;
 using Schemas;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobResponse
     {
-        public JobResponse(long jobId, string jobReference, ResponseUrls responseUrls)
+        public JobResponse(long jobId, string jobReference, IEnumerable<SignerResponse> signers)
         {
             JobId = jobId;
             JobReference = jobReference;
-            ResponseUrls = responseUrls;
+            Signers = signers;
         }
 
         internal JobResponse(directsignaturejobresponse jobResponse)
+            : this(
+                jobResponse.signaturejobid,
+                jobResponse.reference,
+                jobResponse.signer.Select(signer => new SignerResponse(signer))
+            )
         {
-            JobId = jobResponse.signaturejobid;
-            JobReference = jobResponse.reference;
-            ResponseUrls = new ResponseUrls(
-                jobResponse.redirecturl
-                    .Select(redirectUrl =>
-                        new RedirectReference(
-                            new Uri(redirectUrl.Value),
-                            new PersonalIdentificationNumber(redirectUrl.signer)))
-                    .ToList(),
-                jobResponse.statusurl == null ? null : new Uri(jobResponse.statusurl)
-            );
         }
 
         public long JobId { get; }
@@ -36,11 +29,27 @@ namespace Digipost.Signature.Api.Client.Direct
         /// </summary>
         public string JobReference { get; }
 
-        public ResponseUrls ResponseUrls { get; }
+        public IEnumerable<SignerResponse> Signers { get; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is JobResponse that
+                   && JobId.Equals(that.JobId)
+                   && JobReference.Equals(that.JobReference)
+                   && Signers.Equals(that.Signers);
+        }
+
+        public override int GetHashCode()
+        {
+            return JobId.GetHashCode()
+                   + JobReference.GetHashCode()
+                   + Signers.GetHashCode();
+        }
 
         public override string ToString()
         {
-            return $"JobId: {JobId}, ResponseUrls: {ResponseUrls}";
+            var signers = string.Join(",", Signers);
+            return $"A job with id '{JobId}', reference '{JobReference}' and signers '{signers}'. ";
         }
     }
 }

@@ -10,13 +10,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         [Fact]
         public void Create_from_personal_identification_number()
         {
+            var redirectUrl = "http://example.com/redirect";
+            var personalIdentificationNumber = "01013300001";
+            var signerUrl = "http://example.com/signer/1";
             var source = new directsignerresponse
             {
-                redirecturl = "http://example.com/redirect",
-                Item = "01013300001",
-                ItemElementName = ItemChoiceType1.personalidentificationnumber
+                redirecturl = redirectUrl,
+                Item = personalIdentificationNumber,
+                ItemElementName = ItemChoiceType1.personalidentificationnumber,
+                href = signerUrl
             };
-            var expected = new SignerResponse(new PersonalIdentificationNumber("01013300001"), new Uri("http://example.com/redirect"));
+            var expected = new SignerResponse(new PersonalIdentificationNumber(personalIdentificationNumber), new Uri(redirectUrl), new Uri(signerUrl));
 
             var actual = new SignerResponse(source);
 
@@ -26,13 +30,18 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
         [Fact]
         public void Create_from_identifier()
         {
+            const string redirectUrl = "http://example.com/redirect";
+            const string customIdentifier = "Some Custom Identifier";
+            const string signerUrl = "http://example.com/signer/1";
+
             var source = new directsignerresponse
             {
-                redirecturl = "http://example.com/redirect",
-                Item = "Some Custom Identifier",
-                ItemElementName = ItemChoiceType1.signeridentifier
+                redirecturl = redirectUrl,
+                Item = customIdentifier,
+                ItemElementName = ItemChoiceType1.signeridentifier,
+                href = signerUrl
             };
-            var expected = new SignerResponse(new CustomIdentifier("Some Custom Identifier"), new Uri("http://example.com/redirect"));
+            var expected = new SignerResponse(new CustomIdentifier(customIdentifier), new Uri(redirectUrl), new Uri(signerUrl));
 
             var actual = new SignerResponse(source);
 

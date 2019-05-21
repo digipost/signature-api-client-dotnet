@@ -10,10 +10,13 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public Uri RedirectUrl { get; }
 
-        public SignerResponse(SignerIdentifier identifier, Uri redirectUrl)
+        public Uri SignerUrl { get; }
+
+        public SignerResponse(SignerIdentifier identifier, Uri redirectUrl, Uri signerUrl)
         {
             Identifier = identifier;
             RedirectUrl = redirectUrl;
+            SignerUrl = signerUrl;
         }
 
         internal SignerResponse(directsignerresponse signerResponse)
@@ -31,6 +34,7 @@ namespace Digipost.Signature.Api.Client.Direct
             }
 
             RedirectUrl = new Uri(signerResponse.redirecturl);
+            SignerUrl = new Uri(signerResponse.href);
         }
 
         public override bool Equals(object obj)

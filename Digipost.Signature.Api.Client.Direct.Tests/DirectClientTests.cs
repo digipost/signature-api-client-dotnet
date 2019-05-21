@@ -137,16 +137,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             [Fact]
             public async Task Can_request_new_redirect_url()
             {
-                //Arrange
                 var directClient = new DirectClient(GetClientConfiguration())
                 {
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForNewRedirectUrlResponse())
                 };
 
-                var newRedirectUrl = await directClient.requestNewRedirectUrl();
-
-                Assert.NotNull(newRedirectUrl.Identifier);
-                Assert.NotNull(newRedirectUrl.RedirectUrl);
+                await directClient.RequestNewRedirectUrl();
             }
         }
     }

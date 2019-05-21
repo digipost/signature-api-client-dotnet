@@ -204,5 +204,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 throw new InvalidOperationException("Requires gradually built state. Make sure you use functions in the correct order");
             }
         }
+
+        public void Request_new_redirect_url()
+        {
+            var redirectUrlResponse = _directClient.RequestNewRedirectUrl().Result;
+        }
     }
 }

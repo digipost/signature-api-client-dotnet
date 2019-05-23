@@ -49,9 +49,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
-        public async Task<SignerResponse> RequestNewRedirectUrl()
+        public async Task<SignerResponse> RequestNewRedirectUrl(SignerResponse signerResponse)
         {
-            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl();
+            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl(signerResponse.SignerUrl);
             return new SignerResponse(newRedirectUrlResult);
         }
 

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
@@ -142,7 +143,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForNewRedirectUrlResponse())
                 };
 
-                await directClient.RequestNewRedirectUrl();
+                await directClient.RequestNewRedirectUrl(
+                    new SignerResponse(
+                        new PersonalIdentificationNumber("01013300001"),
+                        new Uri("http://someRedirectUrl.no"),
+                        new Uri("http://someSignerUrl.no")
+                    )
+                );
             }
         }
     }

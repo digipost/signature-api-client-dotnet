@@ -205,9 +205,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             }
         }
 
-        public void Request_new_redirect_url()
+        public TestHelper Request_new_redirect_url(PersonalIdentificationNumber signer)
         {
-            var redirectUrlResponse = _directClient.RequestNewRedirectUrl().Result;
+            var redirectUrlResponse = _directClient.RequestNewRedirectUrl(_jobResponse.Signers.First(s => s.Identifier.IsSameAs(signer))).Result;
+            return this;
         }
     }
 }

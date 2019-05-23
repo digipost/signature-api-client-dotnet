@@ -48,10 +48,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return deserializeFunc(responseContent);
         }
 
-        public async Task<directsignerresponse> RequestNewRedirectUrl()
+        public async Task<directsignerresponse> RequestNewRedirectUrl(Uri signerUrl)
         {
-            var postUrl = new Uri("http://www.posturl.no/");
-            var responseMessage = await _httpClient.PostAsync(postUrl, null).ConfigureAwait(false);
+            var responseMessage = await _httpClient.PostAsync(signerUrl, null).ConfigureAwait(false);
             var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             return SerializeUtility.Deserialize<directsignerresponse>(responseContent);

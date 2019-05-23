@@ -48,5 +48,10 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             return Identifier.GetHashCode() + RedirectUrl.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return $"Signer response with identifier '{Identifier}', redirect url '{RedirectUrl}' and signer url '{SignerUrl}'";
+        }
     }
 }

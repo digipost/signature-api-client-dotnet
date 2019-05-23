@@ -6,18 +6,20 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class JobResponse
     {
-        public JobResponse(long jobId, string jobReference, IEnumerable<SignerResponse> signers)
+        public JobResponse(long jobId, string jobReference, IEnumerable<SignerResponse> signers, StatusUrl statusUrl)
         {
             JobId = jobId;
             JobReference = jobReference;
             Signers = signers;
+            StatusUrl = statusUrl;
         }
 
         internal JobResponse(directsignaturejobresponse jobResponse)
             : this(
                 jobResponse.signaturejobid,
                 jobResponse.reference,
-                jobResponse.signer.Select(signer => new SignerResponse(signer))
+                jobResponse.signer.Select(signer => new SignerResponse(signer)),
+                new StatusUrl(jobResponse.statusurl)
             )
         {
         }
@@ -28,6 +30,8 @@ namespace Digipost.Signature.Api.Client.Direct
         ///     Returns the signature job's custom reference as specified upon creation. May be <code>null</code>.
         /// </summary>
         public string JobReference { get; }
+
+        public StatusUrl StatusUrl { get; }
 
         public IEnumerable<SignerResponse> Signers { get; }
 
@@ -49,7 +53,8 @@ namespace Digipost.Signature.Api.Client.Direct
         public override string ToString()
         {
             var signers = string.Join(",", Signers);
-            return $"A job with id '{JobId}', reference '{JobReference}' and signers '{signers}'. ";
+            return $"A job with id '{JobId}', reference '{JobReference}', signers '{signers}," +
+                   $"and status url '{StatusUrl}' ";
         }
     }
 }

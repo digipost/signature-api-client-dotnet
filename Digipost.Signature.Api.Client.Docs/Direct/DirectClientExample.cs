@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             var statusQueryToken = "0A3BQ54C...";
 
             var jobStatusResponse =
-                await directClient.GetStatus(jobResponse.ResponseUrls.Status(statusQueryToken));
+                await directClient.GetStatus(jobResponse.StatusUrl.Status(statusQueryToken));
 
             var jobStatus = jobStatusResponse.Status;
         }
@@ -61,7 +61,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
         {
             ClientConfiguration clientConfiguration = null; // As initialized earlier
             var directClient = new DirectClient(clientConfiguration);
-            
+
             // Repeat the polling until signer signs the document, but ensure to do this at a 
             // reasonable interval. If you are processing the result a few times a day in your
             // system, only poll a few times a day.
@@ -83,7 +83,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-         
+
             // Confirm status change to avoid receiving it again
             await directClient.Confirm(change.References.Confirmation);
 

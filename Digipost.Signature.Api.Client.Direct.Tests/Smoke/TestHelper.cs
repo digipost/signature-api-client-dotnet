@@ -59,9 +59,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var queryDictionary = HttpUtility.ParseQueryString(queryParams);
                 var statusQueryToken = queryDictionary.Get(0);
 
-                if (_jobResponse.ResponseUrls.HasStatusUrl())
+                if (_jobResponse.StatusUrl.HasValue())
                 {
-                    _statusReference = MorphStatusReferenceIfMayBe(_jobResponse.ResponseUrls.Status(statusQueryToken));
+                    _statusReference = MorphStatusReferenceIfMayBe(_jobResponse.StatusUrl.Status(statusQueryToken));
                 }
 
                 return this;

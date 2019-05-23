@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Schemas;
 
@@ -19,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Direct
                 jobResponse.signaturejobid,
                 jobResponse.reference,
                 jobResponse.signer.Select(signer => new SignerResponse(signer)),
-                new StatusUrl(jobResponse.statusurl)
+                jobResponse.statusurl != null ? new StatusUrl(new Uri(jobResponse.statusurl)) : null
             )
         {
         }
@@ -40,21 +41,23 @@ namespace Digipost.Signature.Api.Client.Direct
             return obj is JobResponse that
                    && JobId.Equals(that.JobId)
                    && JobReference.Equals(that.JobReference)
-                   && Signers.Equals(that.Signers);
+                   && Signers.Equals(that.Signers)
+                   && StatusUrl.Equals(that.StatusUrl);
         }
 
         public override int GetHashCode()
         {
             return JobId.GetHashCode()
                    + JobReference.GetHashCode()
-                   + Signers.GetHashCode();
+                   + Signers.GetHashCode()
+                   + StatusUrl.GetHashCode();
         }
 
         public override string ToString()
         {
             var signers = string.Join(",", Signers);
             return $"A job with id '{JobId}', reference '{JobReference}', signers '{signers}," +
-                   $"and status url '{StatusUrl}' ";
+                   $"and {StatusUrl} ";
         }
     }
 }

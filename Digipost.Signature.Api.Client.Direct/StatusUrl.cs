@@ -7,9 +7,9 @@ namespace Digipost.Signature.Api.Client.Direct
     {
         private readonly Uri _statusBaseUrl;
 
-        public StatusUrl(string statusBaseUrl)
+        public StatusUrl(Uri statusBaseUrl)
         {
-            _statusBaseUrl = statusBaseUrl != null ? new Uri(statusBaseUrl) : null;
+            _statusBaseUrl = statusBaseUrl;
         }
 
         public Uri StatusBaseUrl

@@ -41,12 +41,15 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             return obj is SignerResponse that
                    && Identifier.IsSameAs(that.Identifier)
-                   && RedirectUrl.Equals(that.RedirectUrl);
+                   && RedirectUrl.Equals(that.RedirectUrl)
+                   && SignerUrl.Equals(that.SignerUrl);
         }
 
         public override int GetHashCode()
         {
-            return Identifier.GetHashCode() + RedirectUrl.GetHashCode();
+            return Identifier.GetHashCode()
+                   + RedirectUrl.GetHashCode()
+                   + SignerUrl.GetHashCode();
         }
 
         public override string ToString()

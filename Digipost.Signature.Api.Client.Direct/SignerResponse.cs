@@ -1,10 +1,11 @@
 using System;
 using Digipost.Signature.Api.Client.Core.Identifier;
+using Digipost.Signature.Api.Client.Direct.NewRedirectUrl;
 using Schemas;
 
 namespace Digipost.Signature.Api.Client.Direct
 {
-    public class SignerResponse
+    public class SignerResponse : IWithSignerUrl
     {
         public SignerIdentifier Identifier { get; }
 
@@ -12,11 +13,11 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public Uri SignerUrl { get; }
 
-        public SignerResponse(SignerIdentifier identifier, Uri redirectUrl, Uri signerUrl)
+        public SignerResponse(SignerIdentifier identifier, Uri redirectUrl, IWithSignerUrl signerUrl)
         {
             Identifier = identifier;
             RedirectUrl = redirectUrl;
-            SignerUrl = signerUrl;
+            SignerUrl = signerUrl.SignerUrl;
         }
 
         internal SignerResponse(directsignerresponse signerResponse)

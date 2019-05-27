@@ -42,9 +42,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     source.reference,
                     new List<SignerResponse>()
                     {
-                        new SignerResponse(new PersonalIdentificationNumber(pin), new Uri(redirectUrl), new Uri(signerUrl))
+                        new SignerResponse(new PersonalIdentificationNumber(pin), new Uri(redirectUrl), NewRedirectUrlRequest.FromSignerUrl(new Uri(signerUrl)))
                     },
-                    new StatusUrl(source.statusurl)
+                    new StatusUrl(new Uri(source.statusurl))
                 );
 
                 //Act
@@ -52,7 +52,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
 
                 //Assert
                 var comparator = new Comparator();
-                comparator.AreEqual(expected.Signers, actual.Signers, out var differences);
+                comparator.AreEqual(expected, actual, out var differences);
                 Assert.Empty(differences);
             }
 
@@ -102,10 +102,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     source.reference,
                     new List<SignerResponse>()
                     {
-                        new SignerResponse(new PersonalIdentificationNumber(pin), new Uri(redirectUrl), new Uri(signerUrl)),
-                        new SignerResponse(new PersonalIdentificationNumber(pin2), new Uri(redirectUrl2), new Uri(signerUrl2)),
+                        new SignerResponse(new PersonalIdentificationNumber(pin), new Uri(redirectUrl), NewRedirectUrlRequest.FromSignerUrl(new Uri(signerUrl))),
+                        new SignerResponse(new PersonalIdentificationNumber(pin2), new Uri(redirectUrl2), NewRedirectUrlRequest.FromSignerUrl(new Uri(signerUrl2))),
                     },
-                    new StatusUrl(source.statusurl)
+                    new StatusUrl(new Uri(source.statusurl))
                 );
 
                 //Act

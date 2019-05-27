@@ -73,7 +73,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
                 new SignerResponse(
                     new PersonalIdentificationNumber("12345678910"),
                     new Uri("http://responseurl.no"),
-                    new Uri("http://signerurl.no")
+                    NewRedirectUrlRequest.FromSignerUrl(new Uri("http://signerurl.no"))
                 )
             };
         }
@@ -97,7 +97,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             var jobId = 123456789;
             var jobReference = "senders-reference";
             var signers = GetResponseSigners();
-            var statusUrl = new StatusUrl("http://statusurl.no");
+            var statusUrl = new StatusUrl(new Uri("http://statusurl.no"));
 
             return new JobResponse(
                 jobId,

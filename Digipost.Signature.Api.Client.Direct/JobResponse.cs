@@ -11,7 +11,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             JobId = jobId;
             JobReference = jobReference;
-            Signers = signers;
+            Signers = signers.ToList();
             StatusUrl = statusUrl;
         }
 
@@ -57,7 +57,7 @@ namespace Digipost.Signature.Api.Client.Direct
         {
             var signers = string.Join(",", Signers);
             return $"A job with id '{JobId}', reference '{JobReference}', signers '{signers}," +
-                   $"and {StatusUrl} ";
+                   $" and {StatusUrl} ";
         }
     }
 }

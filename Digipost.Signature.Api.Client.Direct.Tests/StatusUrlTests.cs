@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 const string statusUrl = "http://statusurl.no";
                 const string statusQueryToken = "StatusQueryToken";
 
-                var actual = new StatusUrl(statusUrl);
+                var actual = new StatusUrl(new Uri(statusUrl));
 
                 Assert.NotNull(actual.Status(statusQueryToken));
             }

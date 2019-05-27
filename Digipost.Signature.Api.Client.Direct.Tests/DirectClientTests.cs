@@ -143,13 +143,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                     HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForNewRedirectUrlResponse())
                 };
 
-                await directClient.RequestNewRedirectUrl(
-                    new SignerResponse(
-                        new PersonalIdentificationNumber("01013300001"),
-                        new Uri("http://someRedirectUrl.no"),
-                        new Uri("http://someSignerUrl.no")
-                    )
-                );
+                await directClient.RequestNewRedirectUrl(NewRedirectUrlRequest.FromSignerUrl(new Uri("http://someSignerUrl.no")));
             }
         }
     }

@@ -12,6 +12,7 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Direct.NewRedirectUrl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Schemas;
@@ -49,9 +50,9 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
-        public async Task<SignerResponse> RequestNewRedirectUrl(SignerResponse signerResponse)
+        public async Task<SignerResponse> RequestNewRedirectUrl(IWithSignerUrl signerUrl)
         {
-            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl(signerResponse.SignerUrl);
+            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl(signerUrl.SignerUrl);
             return new SignerResponse(newRedirectUrlResult);
         }
 

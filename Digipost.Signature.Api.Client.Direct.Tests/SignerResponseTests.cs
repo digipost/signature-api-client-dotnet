@@ -20,7 +20,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 ItemElementName = ItemChoiceType1.personalidentificationnumber,
                 href = signerUrl
             };
-            var expected = new SignerResponse(new PersonalIdentificationNumber(personalIdentificationNumber), new Uri(redirectUrl), new Uri(signerUrl));
+            var expected = new SignerResponse(new PersonalIdentificationNumber(personalIdentificationNumber), new Uri(redirectUrl), NewRedirectUrlRequest.FromSignerUrl(new Uri(signerUrl)));
 
             var actual = new SignerResponse(source);
 
@@ -41,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 ItemElementName = ItemChoiceType1.signeridentifier,
                 href = signerUrl
             };
-            var expected = new SignerResponse(new CustomIdentifier(customIdentifier), new Uri(redirectUrl), new Uri(signerUrl));
+            var expected = new SignerResponse(new CustomIdentifier(customIdentifier), new Uri(redirectUrl), NewRedirectUrlRequest.FromSignerUrl(new Uri(signerUrl)));
 
             var actual = new SignerResponse(source);
 

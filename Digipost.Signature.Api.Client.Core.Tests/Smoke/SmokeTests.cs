@@ -2,6 +2,6 @@
 {
     public class SmokeTests
     {
-        public static Environment Endpoint => Environment.Qa;
+        public static Environment Endpoint => Environment.Test;
     }
 }

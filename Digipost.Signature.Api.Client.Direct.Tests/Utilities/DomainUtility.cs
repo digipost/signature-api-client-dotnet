@@ -66,15 +66,16 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
             );
         }
 
-        public static ResponseUrls GetResponseUrls()
+        public static List<SignerResponse> GetResponseSigners()
         {
-            var redirectUrl = new List<RedirectReference> {new RedirectReference(new Uri("http://responseurl.no"), new PersonalIdentificationNumber("12345678910"))};
-            var statusUrl = new Uri("http://statusurl.no");
-
-            return new ResponseUrls(
-                redirectUrl,
-                statusUrl
-            );
+            return new List<SignerResponse>()
+            {
+                new SignerResponse(
+                    new PersonalIdentificationNumber("12345678910"),
+                    new Uri("http://responseurl.no"),
+                    NewRedirectUrlRequest.FromSignerUrl(new Uri("http://signerurl.no"))
+                )
+            };
         }
 
         public static ExitUrls GetExitUrls()
@@ -95,12 +96,14 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
         {
             var jobId = 123456789;
             var jobReference = "senders-reference";
-            var responseUrls = GetResponseUrls();
+            var signers = GetResponseSigners();
+            var statusUrl = new StatusUrl(new Uri("http://statusurl.no"));
 
             return new JobResponse(
                 jobId,
                 jobReference,
-                responseUrls
+                signers,
+                statusUrl
             );
         }
 

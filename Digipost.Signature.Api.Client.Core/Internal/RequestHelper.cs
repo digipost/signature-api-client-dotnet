@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,6 +10,7 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
 using Microsoft.Extensions.Logging;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Core.Internal
 {
@@ -46,6 +46,14 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             }
 
             return deserializeFunc(responseContent);
+        }
+
+        public async Task<directsignerresponse> RequestNewRedirectUrl(Uri signerUrl)
+        {
+            var responseMessage = await _httpClient.PostAsync(signerUrl, null).ConfigureAwait(false);
+            var responseContent = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            return SerializeUtility.Deserialize<directsignerresponse>(responseContent);
         }
 
         public async Task<Stream> GetStream(Uri uri)
@@ -115,6 +123,5 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         {
             return DateTime.Parse(requestResult.Headers.GetValues(BaseClient.NextPermittedPollTimeHeader).FirstOrDefault());
         }
-        
     }
 }

@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
+using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Fakes;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
@@ -129,6 +130,20 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 };
 
                 await Assert.ThrowsAsync<TooEagerPollingException>(async () => await directClient.GetStatusChange().ConfigureAwait(false)).ConfigureAwait(false);
+            }
+        }
+
+        public class RequestNewRedirectUrl : DirectClientTests
+        {
+            [Fact]
+            public async Task Can_request_new_redirect_url()
+            {
+                var directClient = new DirectClient(GetClientConfiguration())
+                {
+                    HttpClient = GetHttpClientWithHandler(new FakeHttpClientHandlerForNewRedirectUrlResponse())
+                };
+
+                await directClient.RequestNewRedirectUrl(NewRedirectUrlRequest.FromSignerUrl(new Uri("http://someSignerUrl.no")));
             }
         }
     }

@@ -92,6 +92,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         }
 
         [Fact]
+        public void Can_request_new_redirect_url()
+        {
+            var signer = new PersonalIdentificationNumber("01048200229");
+
+            _fixture.TestHelper
+                .Create_direct_job(signer)
+                .Request_new_redirect_url(signer)
+                .Sign_job(signer);
+        }
+
+        [Fact]
         public void Can_retrieve_status_by_polling()
         {
             var signer = new PersonalIdentificationNumber("12345678910");

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,8 +12,10 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Digipost.Signature.Api.Client.Direct.NewRedirectUrl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Schemas;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -50,6 +50,12 @@ namespace Digipost.Signature.Api.Client.Direct
             return directJobResponse;
         }
 
+        public async Task<SignerResponse> RequestNewRedirectUrl(IWithSignerUrl signerUrl)
+        {
+            var newRedirectUrlResult = await RequestHelper.RequestNewRedirectUrl(signerUrl.SignerUrl);
+            return new SignerResponse(newRedirectUrlResult);
+        }
+
         /// <summary>
         ///     Get the current status for the given <see cref="StatusReference" />, which references the status for a specific
         ///     job.
@@ -79,7 +85,7 @@ namespace Digipost.Signature.Api.Client.Direct
             {
                 case HttpStatusCode.OK:
                     var nextPermittedPollTime = DateTime.Now;
-                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent), nextPermittedPollTime );
+                    var jobStatusResponse = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<directsignaturejobstatusresponse>(requestContent), nextPermittedPollTime);
                     _logger.LogDebug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
                 default:
@@ -131,10 +137,10 @@ namespace Digipost.Signature.Api.Client.Direct
 
         private TooEagerPollingException CreateTooManyRequestsException(HttpResponseMessage requestResult)
         {
-            var nextPermittedPollTime = 
+            var nextPermittedPollTime =
                 RequestHelper.IsBlockedByDosFilter(requestResult, ClientConfiguration.DosFilterHeaderBlockingKey)
-                ? DateTime.Now.Add(ClientConfiguration.DosFilterBlockingPeriod)
-                : RequestHelper.GetNextPermittedPollTime(requestResult);
+                    ? DateTime.Now.Add(ClientConfiguration.DosFilterBlockingPeriod)
+                    : RequestHelper.GetNextPermittedPollTime(requestResult);
 
             var tooEagerPollingException = new TooEagerPollingException(nextPermittedPollTime);
             _logger.LogWarning(tooEagerPollingException.Message);

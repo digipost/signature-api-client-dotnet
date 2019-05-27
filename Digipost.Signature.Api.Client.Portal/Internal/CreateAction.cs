@@ -2,6 +2,7 @@
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
 using Digipost.Signature.Api.Client.Portal.DataTransferObjects;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Portal.Internal
 {

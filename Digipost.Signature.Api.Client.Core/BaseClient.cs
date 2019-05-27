@@ -8,6 +8,7 @@ using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Internal;
 using Digipost.Signature.Api.Client.Core.Internal.Enums;
 using Microsoft.Extensions.Logging;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Core
 {

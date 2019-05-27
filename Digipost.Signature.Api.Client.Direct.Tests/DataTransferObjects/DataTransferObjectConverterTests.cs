@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Enums;
 using Digipost.Signature.Api.Client.Core.Identifier;
@@ -9,6 +8,7 @@ using Digipost.Signature.Api.Client.Direct.DataTransferObjects;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
+using Schemas;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;
 
@@ -160,84 +160,11 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                         new Signature("12345678910", null, SignatureStatus.Rejected, now),
                         new Signature("10987654321", new XadesReference(new Uri("https://example.com/xades-url")), SignatureStatus.Signed, now)
                     },
-                    nextPermittedPollTime                    
+                    nextPermittedPollTime
                 );
 
                 //Act
                 var result = DataTransferObjectConverter.FromDataTransferObject(source, nextPermittedPollTime);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, result, out differences);
-                Assert.Empty(differences);
-            }
-
-            [Fact]
-            public void Converts_direct_job_successfully()
-            {
-                //Arrange
-                var redirecturl = "https://localhost:9000/redirect/#/c316e5b62df86a5d80e517b3ff4532738a9e7e43d4ae6075d427b1b58355bc63";
-                var source = new directsignaturejobresponse
-                {
-                    signaturejobid = 1444,
-                    reference = "senders-reference",
-                    redirecturl = new[] {new signerspecificurl {signer = "12345678910", Value = redirecturl}},
-                    statusurl = "https://localhost:8443/api/signature-jobs/77/status"
-                };
-
-                var expected = new JobResponse(
-                    source.signaturejobid,
-                    source.reference,
-                    new ResponseUrls(
-                        new List<RedirectReference> {new RedirectReference(new Uri(redirecturl), new PersonalIdentificationNumber("12345678910"))},
-                        new Uri(source.statusurl)
-                    )
-                );
-
-                //Act
-                var result = DataTransferObjectConverter.FromDataTransferObject(source);
-
-                //Assert
-                var comparator = new Comparator();
-                IEnumerable<IDifference> differences;
-                comparator.AreEqual(expected, result, out differences);
-                Assert.Empty(differences);
-            }
-
-            [Fact]
-            public void Converts_direct_job_with_multiple_signers_successfully()
-            {
-                //Arrange
-                var redirecturl = "https://localhost:9000/redirect/#/some-reference";
-                var redirecturl2 = "https://localhost:9000/redirect/#/some-other-reference";
-                var source = new directsignaturejobresponse
-                {
-                    signaturejobid = 1444,
-                    reference = "senders-reference",
-                    redirecturl = new[]
-                    {
-                        new signerspecificurl {signer = "12345678910", Value = redirecturl},
-                        new signerspecificurl {signer = "10987654321", Value = redirecturl2}
-                    },
-                    statusurl = "https://localhost:8443/api/signature-jobs/77/status"
-                };
-
-                var expected = new JobResponse(
-                    source.signaturejobid,
-                    source.reference,
-                    new ResponseUrls(
-                        new List<RedirectReference>
-                        {
-                            new RedirectReference(new Uri(redirecturl), new PersonalIdentificationNumber("12345678910")),
-                            new RedirectReference(new Uri(redirecturl2), new PersonalIdentificationNumber("10987654321"))
-                        },
-                        new Uri(source.statusurl)
-                    )
-                );
-
-                //Act
-                var result = DataTransferObjectConverter.FromDataTransferObject(source);
 
                 //Assert
                 var comparator = new Comparator();
@@ -481,7 +408,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
 
                 var nextPermittedPollTime = DateTime.Now;
 
-                
                 var expected = new JobStatusResponse(
                     source.signaturejobid,
                     source.reference,
@@ -557,7 +483,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
                 //Arrange
                 var now = DateTime.Now;
                 var nextPermittedPollTime = DateTime.Now;
-
 
                 var source = new directsignaturejobstatusresponse
                 {

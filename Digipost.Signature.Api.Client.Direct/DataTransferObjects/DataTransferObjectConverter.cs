@@ -6,6 +6,7 @@ using Digipost.Signature.Api.Client.Core.Extensions;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Direct.Extensions;
 using Digipost.Signature.Api.Client.Direct.Internal.AsicE;
+using Schemas;
 
 namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
 {
@@ -38,18 +39,6 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
                 errorurl = exitUrls.ErrorUrl.ToString(),
                 rejectionurl = exitUrls.RejectionUrl.ToString()
             };
-        }
-
-        public static JobResponse FromDataTransferObject(directsignaturejobresponse directsignaturejobresponse)
-        {
-            return new JobResponse(
-                directsignaturejobresponse.signaturejobid,
-                directsignaturejobresponse.reference,
-                new ResponseUrls(
-                    directsignaturejobresponse.redirecturl.Select(redirecturl => new RedirectReference(new Uri(redirecturl.Value), new PersonalIdentificationNumber(redirecturl.signer))).ToList(),
-                    directsignaturejobresponse.statusurl == null ? null : new Uri(directsignaturejobresponse.statusurl)
-                )
-            );
         }
 
         public static JobStatusResponse FromDataTransferObject(directsignaturejobstatusresponse directsignaturejobstatusresponse, DateTime nextPermittedPollTime)

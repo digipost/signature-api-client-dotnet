@@ -59,9 +59,10 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 var queryDictionary = HttpUtility.ParseQueryString(queryParams);
                 var statusQueryToken = queryDictionary.Get(0);
 
-                if (_jobResponse.ResponseUrls.HasStatusUrl())
+                var jobStatus = _jobResponse.StatusUrl;
+                if (jobStatus != null && jobStatus.HasValue())
                 {
-                    _statusReference = MorphStatusReferenceIfMayBe(_jobResponse.ResponseUrls.Status(statusQueryToken));
+                    _statusReference = MorphStatusReferenceIfMayBe(jobStatus.Status(statusQueryToken));
                 }
 
                 return this;
@@ -203,6 +204,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 throw new InvalidOperationException("Requires gradually built state. Make sure you use functions in the correct order");
             }
+        }
+
+        public TestHelper Request_new_redirect_url(PersonalIdentificationNumber signer)
+        {
+            var signerResponse = _jobResponse.Signers.First(s => s.Identifier.IsSameAs(signer));
+            var redirectUrlResponse = _directClient.RequestNewRedirectUrl(signerResponse).Result;
+            return this;
         }
     }
 }

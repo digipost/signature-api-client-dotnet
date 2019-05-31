@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Exceptions;
@@ -42,6 +43,51 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             var job = new Job(documentToSign, signers, "SendersReferenceToSignatureJob", exitUrls);
 
             var directJobResponse = await directClient.Create(job);
+        }
+
+        public async Task RequestNewRedirectUrlUsingSignerResponse()
+        {
+            ClientConfiguration clientConfiguration = null; //As initialized earlier
+            Job job = null; //As created earlier
+            var directClient = new DirectClient(clientConfiguration);
+            var directJobResponse = await directClient.Create(job);
+
+            var signerFromResponse = directJobResponse
+                .Signers
+                .First(s => s
+                    .Identifier
+                    .IsSameAs(new PersonalIdentificationNumber("12345678910"))
+                );
+
+            var signerWithUpdatedRedirectUrl = await directClient
+                .RequestNewRedirectUrl(signerFromResponse);
+            var newRedirectUrl = signerWithUpdatedRedirectUrl.RedirectUrl;
+        }
+
+        public async Task RequestNewRedirectUrlUsingSignerUrl()
+        {
+            ClientConfiguration clientConfiguration = null; //As initialized earlier
+            Job job = null; //As created earlier
+            var directClient = new DirectClient(clientConfiguration);
+            var directJobResponse = await directClient.Create(job);
+
+            // Step 1:
+            foreach (var signer in directJobResponse.Signers)
+            {
+                //Persist signer URL in sender system
+                var signerResponseSignerUrl = signer.SignerUrl;
+            }
+
+            // ... some time later ...
+
+            // Step 2: Request new redirect URL for signer
+            Uri persistedSignerUrl = null; //Persisted URL from step 1.
+            var signerWithUpdatedRedirectUrl = await directClient
+                .RequestNewRedirectUrl(
+                    NewRedirectUrlRequest
+                        .FromSignerUrl(persistedSignerUrl)
+                );
+            var newRedirectUrl = signerWithUpdatedRedirectUrl.RedirectUrl;
         }
 
         public async Task GetDirectJobStatus()

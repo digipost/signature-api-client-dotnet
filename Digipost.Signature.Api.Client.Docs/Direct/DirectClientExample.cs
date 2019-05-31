@@ -86,9 +86,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                     NewRedirectUrlRequest
                         .FromSignerUrl(persistedSignerUrl)
                 );
-
-            var signerResponse = await directClient.RequestNewRedirectUrl(signerWithUpdatedRedirectUrl);
-            var newRedirectUrl = signerResponse.RedirectUrl;
+            var newRedirectUrl = signerWithUpdatedRedirectUrl.RedirectUrl;
         }
 
         public async Task GetDirectJobStatus()

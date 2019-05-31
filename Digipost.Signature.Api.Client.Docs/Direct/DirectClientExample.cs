@@ -45,7 +45,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             var directJobResponse = await directClient.Create(job);
         }
 
-        public async Task RequestNewRedirectUrlFromResponse()
+        public async Task RequestNewRedirectUrlUsingSignerResponse()
         {
             ClientConfiguration clientConfiguration = null; //As initialized earlier
             Job job = null; //As created earlier

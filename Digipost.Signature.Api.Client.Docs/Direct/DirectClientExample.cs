@@ -59,8 +59,9 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                     .IsSameAs(new PersonalIdentificationNumber("12345678910"))
                 );
 
-            var signerResponse = await directClient.RequestNewRedirectUrl(signerFromResponse);
-            var newRedirectUrl = signerResponse.RedirectUrl;
+            var signerWithUpdatedRedirectUrl = await directClient
+                .RequestNewRedirectUrl(signerFromResponse);
+            var newRedirectUrl = signerWithUpdatedRedirectUrl.RedirectUrl;
         }
 
         public async Task RequestNewRedirectUrlFromSignerUrl()

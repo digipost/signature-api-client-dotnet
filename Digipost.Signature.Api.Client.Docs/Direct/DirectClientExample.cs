@@ -59,7 +59,8 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                     .IsSameAs(new PersonalIdentificationNumber("12345678910"))
                 );
 
-            var newRedirectUrl = await directClient.RequestNewRedirectUrl(signerFromResponse);
+            var signerResponse = await directClient.RequestNewRedirectUrl(signerFromResponse);
+            var newRedirectUrl = signerResponse.RedirectUrl;
         }
 
         public async Task RequestNewRedirectUrlFromSignerUrl()
@@ -70,10 +71,10 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             var directJobResponse = await directClient.Create(job);
 
             // Step 1:
-            foreach (var signerResponse in directJobResponse.Signers)
+            foreach (var signer in directJobResponse.Signers)
             {
                 //Persist signer URL in sender system
-                var signerResponseSignerUrl = signerResponse.SignerUrl;
+                var signerResponseSignerUrl = signer.SignerUrl;
             }
 
             // ... some time later ...
@@ -86,7 +87,8 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                         .FromSignerUrl(persistedSignerUrl)
                 );
 
-            var newRedirectUrl = await directClient.RequestNewRedirectUrl(signerWithUpdatedRedirectUrl).RedirectUrl;
+            var signerResponse = await directClient.RequestNewRedirectUrl(signerWithUpdatedRedirectUrl);
+            var newRedirectUrl = signerResponse.RedirectUrl;
         }
 
         public async Task GetDirectJobStatus()

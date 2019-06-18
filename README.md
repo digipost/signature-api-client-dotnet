@@ -6,8 +6,6 @@ This repo is the .NET client library for integrating with Posten signering. Plea
 ## 📕 Documentation
 
 Get started by [reading the documentation](http://signering-docs.rtfd.io/).
-
- The newest documentation can be found at [signering-docs](https://signering-docs.readthedocs.io/en/latest/index.html). All older versions can still be browsed [here](http://digipost.github.io/signature-api-client-dotnet/v4.x/).
  
 ## Releasing (only for Digipost members)
 

@@ -75,6 +75,9 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
             {
                 //Wait until next permitted poll time has passed before polling again.
             }
+
+            //Confirm the receipt to remove it from the queue
+            await portalClient.Confirm(change.ConfirmationReference);
         }
 
         public static async Task GetXadesAndPades()
@@ -87,14 +90,6 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
 
             //Get Pades:
             var pades = await portalClient.GetPades(jobStatusChanged.PadesReference);
-        }
-
-        public static async void Confirm()
-        {
-            PortalClient portalClient = null; //As initialized earlier
-            var jobStatusChangeResponse = await portalClient.GetStatusChange();
-
-            await portalClient.Confirm(jobStatusChangeResponse.ConfirmationReference);
         }
 
         public static async void Cancel()

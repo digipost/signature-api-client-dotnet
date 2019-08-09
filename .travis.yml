@@ -30,7 +30,7 @@ script:
   - dotnet build -c Release
 
   # Setup
-  - ./travis-deploy/add-secrets.sh
+  - ./travis-deploy/add-secrets.sh Digipost.Signature.Api.Client.Core Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
   - find /home/travis/.microsoft
   - cat /home/travis/.microsoft/usersecrets/organization-certificate/secrets.json
 

@@ -14,7 +14,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Initializes_with_properties()
             {
                 //Arrange
-                var tlsSetup = SecurityProtocolType.Tls12;
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate())
                 {
                     HttpClientTimeoutInMilliseconds = 1441
@@ -25,7 +24,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Assert
                 Assert.Equal(clientConfiguration, clientStub.ClientConfiguration);
-                Assert.Equal(tlsSetup, ServicePointManager.SecurityProtocol);
                 Assert.NotNull(clientStub.RequestHelper);
                 Assert.Equal(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
             }

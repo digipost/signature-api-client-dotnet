@@ -26,8 +26,6 @@ namespace Digipost.Signature.Api.Client.Core
             _logger = loggerFactory.CreateLogger<BaseClient>();
             _loggerFactory = loggerFactory;
 
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
             ClientConfiguration = clientConfiguration;
             HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);

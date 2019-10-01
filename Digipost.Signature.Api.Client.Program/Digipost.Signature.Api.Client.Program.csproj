@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="Digipost.Signature.Api.Client.Direct" Version="5.1.0"/>
+        <PackageReference Include="Digipost.Signature.Api.Client.Direct" Version="6.0.0"/>
         <PackageReference Include="Digipost.Signature.Api.Client.Portal" Version="5.1.0"/>
     </ItemGroup>
 

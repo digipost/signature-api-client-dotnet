@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Archive
         {
             var orgNummer = ClientConfiguration.GlobalSender.OrganizationNumber;
             var environment = ClientConfiguration.Environment.Url.ToString();
-            var uri = new Uri(environment + "api/" + orgNummer + "/archive/documents/" + archivedDocumentId + "/pades"); 
+            var uri = new Uri($"{environment}api/{orgNummer}/archive/documents/{archivedDocumentId}/pades"); 
             return await RequestHelper.GetStream(uri).ConfigureAwait(false);
         }
     }

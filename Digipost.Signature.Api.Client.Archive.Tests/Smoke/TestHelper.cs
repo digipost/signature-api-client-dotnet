@@ -1,7 +1,7 @@
 using System;
+using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 {
@@ -22,7 +22,24 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 
         public void Download_pades_and_expect_server_error(string archivedDocumentId)
         {
-            Assert.Throws<AggregateException>(() => Get_PAdES(archivedDocumentId));
+            try
+            {
+                Get_PAdES(archivedDocumentId);
+            }
+            catch (AggregateException ex)
+            {
+                if(ex.InnerException is UnexpectedResponseException)
+                {
+                    UnexpectedResponseException exception = (UnexpectedResponseException) ex.InnerException;
+                    Assert.Equal(exception.Error.Code, "ARCHIVED_DOCUMENT_NOT_FOUND");
+                }
+                else
+                {
+                    Assert.True(false, $"Expected UnexpectedResponseException, but found {ex.InnerException.GetType().Name}.");
+                }
+            }
+
+            
         }
     }
 

@@ -35,5 +35,8 @@
     <EmbeddedResource Include="Resources\**\*" />
     <EmbeddedResource Include="Schema\**\*" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Fakes\FakeHttpClientHandlerForPadesResponse.cs" />
+  </ItemGroup>
 
 </Project>

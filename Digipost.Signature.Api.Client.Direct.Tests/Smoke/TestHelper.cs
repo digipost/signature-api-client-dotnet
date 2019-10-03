@@ -155,6 +155,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             Assert_state(_status);
 
+            Console.WriteLine(_status.References.Pades);
             var pades = _directClient.GetPades(_status.References.Pades).Result;
             Assert.True(pades.CanRead);
             return this;

@@ -21,5 +21,11 @@ namespace Digipost.Signature.Api.Client.Archive
         {
             _logger = loggerFactory.CreateLogger<ArchiveClient>();
         }
+
+        public async Task<Stream> GetPades(string padesReference)
+        {
+            var uri = new Uri("https://api.test.signering.posten.no/api/988015814/archive/documents/" + padesReference + "/pades"); 
+            return await RequestHelper.GetStream(uri).ConfigureAwait(false);
+        }
     }
 }

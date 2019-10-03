@@ -41,11 +41,10 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         private readonly ArchiveSmokeTestsFixture _fixture;
 
         [Fact]
-        public void Can_download_pades()
+        public void download_pades_and_expect_server_error()
         {
             _fixture.TestHelper
-                .Get_PAdES("123");
-
+                .Download_pades_and_expect_server_error("1234");
         }
     }
     

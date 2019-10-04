@@ -65,7 +65,7 @@ namespace Digipost.Signature.Api.Client.Core
             return sender;
         }
 
-        private void ValidateSenderCertificateThrowIfInvalid()
+        internal void ValidateSenderCertificateThrowIfInvalid()
         {
             var validationResult = CertificateValidator.ValidateCertificateAndChain(ClientConfiguration.Certificate, ClientConfiguration.Environment.AllowedChainCertificates);
 

@@ -15,7 +15,6 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         {
             TestHelper = new TestHelper(ArchiveClient(Endpoint));
         }
-        
         public TestHelper TestHelper { get; }
         private static ArchiveClient ArchiveClient(Environment environment)
         {
@@ -41,10 +40,10 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         private readonly ArchiveSmokeTestsFixture _fixture;
 
         [Fact]
-        public void download_pades_and_expect_server_error()
+        public void download_pades_and_expect_error()
         {
             _fixture.TestHelper
-                .Download_pades_and_expect_server_error("1234");
+                .Download_pades_and_expect_client_error(GetClientConfiguration().GlobalSender.OrganizationNumber,"1234");
         }
     }
     

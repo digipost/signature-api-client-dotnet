@@ -13,18 +13,19 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
             _archiveClient = archiveClient;
         }
         
-        public TestHelper Get_PAdES(string reference)
+        public TestHelper Get_PAdES(string documentOwner, string reference)
         {
-            var pades = _archiveClient.GetPades(reference).Result;
+            DocumentOwner owner = new DocumentOwner(documentOwner);
+            var pades = _archiveClient.GetPades(owner, reference).Result;
             Assert.True(pades.CanRead);
             return this;
         }
 
-        public void Download_pades_and_expect_server_error(string archivedDocumentId)
+        public void Download_pades_and_expect_client_error(string archiveDocumentOwner, string archiveDocumentId)
         {
             try
             {
-                Get_PAdES(archivedDocumentId);
+                Get_PAdES(archiveDocumentOwner, archiveDocumentId);
             }
             catch (AggregateException ex)
             {

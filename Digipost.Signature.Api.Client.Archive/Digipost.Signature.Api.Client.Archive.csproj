@@ -8,14 +8,14 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.*"/>
-        <PackageReference Include="System.Net.Requests" Version="4.*"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.*" />
+        <PackageReference Include="System.Net.Requests" Version="4.*" />
 
-        <PackageReference Include="Digipost.Signature.Api.Client.Core" Version="5.*"/>
+        <PackageReference Include="Digipost.Signature.Api.Client.Core" Version="5.*" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
@@ -8,31 +9,34 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
     public class TestHelper : TestHelperBase
     {
         private readonly ArchiveClient _archiveClient;
-        public TestHelper(ArchiveClient archiveClient)
+        private readonly DocumentOwner _documentOwner;
+        private readonly ArchiveDocumentId _documentId;
+        public TestHelper(ArchiveClient archiveClient, DocumentOwner documentOwner, ArchiveDocumentId documentId)
         {
             _archiveClient = archiveClient;
+            _documentOwner = documentOwner;
+            _documentId = documentId;
         }
         
-        public TestHelper Get_PAdES(string documentOwner, string reference)
+        public TestHelper Get_PAdES()
         {
-            DocumentOwner owner = new DocumentOwner(documentOwner);
-            var pades = _archiveClient.GetPades(owner, reference).Result;
+            var pades = _archiveClient.GetPades(_documentOwner, _documentId).Result;
             Assert.True(pades.CanRead);
             return this;
         }
 
-        public void Download_pades_and_expect_client_error(string archiveDocumentOwner, string archiveDocumentId)
+        public void Download_pades_and_expect_client_error()
         {
             try
             {
-                Get_PAdES(archiveDocumentOwner, archiveDocumentId);
+                Get_PAdES();
             }
             catch (AggregateException ex)
             {
                 if(ex.InnerException is UnexpectedResponseException)
                 {
                     UnexpectedResponseException exception = (UnexpectedResponseException) ex.InnerException;
-                    Assert.Equal(exception.Error.Code, "ARCHIVED_DOCUMENT_NOT_FOUND");
+                    Assert.Equal("ARCHIVED_DOCUMENT_NOT_FOUND", exception.Error.Code);
                 }
                 else
                 {

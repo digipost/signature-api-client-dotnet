@@ -11,9 +11,12 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 {
     public class ArchiveSmokeTestsFixture : SmokeTests
     {
+        private readonly ArchiveDocumentId _documentId = new ArchiveDocumentId("1234");
+        private readonly DocumentOwner _documentOwner = new DocumentOwner(GetClientConfiguration().GlobalSender.OrganizationNumber);
+        
         public  ArchiveSmokeTestsFixture()
         {
-            TestHelper = new TestHelper(ArchiveClient(Endpoint));
+            TestHelper = new TestHelper(ArchiveClient(Endpoint), _documentOwner,_documentId);
         }
         public TestHelper TestHelper { get; }
         private static ArchiveClient ArchiveClient(Environment environment)
@@ -43,7 +46,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         public void download_pades_and_expect_error()
         {
             _fixture.TestHelper
-                .Download_pades_and_expect_client_error(GetClientConfiguration().GlobalSender.OrganizationNumber,"1234");
+                .Download_pades_and_expect_client_error();
         }
     }
     

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Environment = Digipost.Signature.Api.Client.Core.Environment;
 
 namespace Digipost.Signature.Api.Client.Archive
 {
@@ -23,9 +22,9 @@ namespace Digipost.Signature.Api.Client.Archive
             _logger = loggerFactory.CreateLogger<ArchiveClient>();
         }
 
-        public async Task<Stream> GetPades(DocumentOwner owner, string archiveDocumentId)
+        public async Task<Stream> GetPades(DocumentOwner owner, ArchiveDocumentId documentId)
         {
-            var uri = new Uri($"{ClientConfiguration.Environment.Url}api/{owner.OrganizationNumber}/archive/documents/{archiveDocumentId}/pades"); 
+            var uri = new Uri($"{ClientConfiguration.Environment.Url}api/{owner.OrganizationNumber}/archive/documents/{documentId.DocumentId}/pades"); 
             return await RequestHelper.GetStream(uri).ConfigureAwait(false);
         }
     }

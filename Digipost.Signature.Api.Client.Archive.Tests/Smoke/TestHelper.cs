@@ -1,5 +1,4 @@
 using System;
-using System.Reflection.Metadata;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
@@ -10,17 +9,17 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
     {
         private readonly ArchiveClient _archiveClient;
         private readonly DocumentOwner _documentOwner;
-        private readonly ArchiveDocumentId _documentId;
-        public TestHelper(ArchiveClient archiveClient, DocumentOwner documentOwner, ArchiveDocumentId documentId)
+        private readonly ArchiveDocument _document;
+        public TestHelper(ArchiveClient archiveClient)
         {
             _archiveClient = archiveClient;
-            _documentOwner = documentOwner;
-            _documentId = documentId;
+            _documentOwner = new DocumentOwner(_archiveClient.ClientConfiguration.GlobalSender.OrganizationNumber);
+            _document = new ArchiveDocument("1234");
         }
         
         public TestHelper Get_PAdES()
         {
-            var pades = _archiveClient.GetPades(_documentOwner, _documentId).Result;
+            var pades = _archiveClient.GetPades(_documentOwner, _document).Result;
             Assert.True(pades.CanRead);
             return this;
         }

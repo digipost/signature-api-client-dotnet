@@ -7,6 +7,6 @@ namespace Digipost.Signature.Api.Client.Archive
             OrganizationNumber = organizationNumber;
         }
 
-        public string OrganizationNumber { get; set; }
+        public string OrganizationNumber { get; }
     }
 }

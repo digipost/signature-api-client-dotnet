@@ -22,9 +22,9 @@ namespace Digipost.Signature.Api.Client.Archive
             _logger = loggerFactory.CreateLogger<ArchiveClient>();
         }
 
-        public async Task<Stream> GetPades(DocumentOwner owner, ArchiveDocumentId documentId)
+        public async Task<Stream> GetPades(DocumentOwner owner, ArchiveDocument document)
         {
-            var uri = new Uri($"{ClientConfiguration.Environment.Url}api/{owner.OrganizationNumber}/archive/documents/{documentId.DocumentId}/pades"); 
+            var uri = new Uri($"{ClientConfiguration.Environment.Url}api/{owner.OrganizationNumber}/archive/documents/{document.Id}/pades"); 
             return await RequestHelper.GetStream(uri).ConfigureAwait(false);
         }
     }

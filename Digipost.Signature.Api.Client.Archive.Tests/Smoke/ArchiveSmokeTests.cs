@@ -11,12 +11,9 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 {
     public class ArchiveSmokeTestsFixture : SmokeTests
     {
-        private readonly ArchiveDocumentId _documentId = new ArchiveDocumentId("1234");
-        private readonly DocumentOwner _documentOwner = new DocumentOwner(GetClientConfiguration().GlobalSender.OrganizationNumber);
-        
         public  ArchiveSmokeTestsFixture()
         {
-            TestHelper = new TestHelper(ArchiveClient(Endpoint), _documentOwner,_documentId);
+            TestHelper = new TestHelper(ArchiveClient(Endpoint));
         }
         public TestHelper TestHelper { get; }
         private static ArchiveClient ArchiveClient(Environment environment)

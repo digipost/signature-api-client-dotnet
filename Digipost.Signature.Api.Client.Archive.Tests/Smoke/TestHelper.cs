@@ -10,6 +10,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         private readonly ArchiveClient _archiveClient;
         private readonly DocumentOwner _documentOwner;
         private readonly ArchivedDocumentId _document;
+
         public TestHelper(ArchiveClient archiveClient)
         {
             _archiveClient = archiveClient;

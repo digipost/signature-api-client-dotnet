@@ -15,7 +15,9 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         {
             TestHelper = new TestHelper(ArchiveClient(Endpoint));
         }
+
         public TestHelper TestHelper { get; }
+
         private static ArchiveClient ArchiveClient(Environment environment)
         {
             var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();

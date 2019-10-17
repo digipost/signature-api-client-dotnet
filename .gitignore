@@ -196,6 +196,7 @@ FakesAssemblies/
 *.opt
 
 .idea
+.vscode
 
 #######################
 # Ignore certificates #

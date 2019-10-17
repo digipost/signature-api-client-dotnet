@@ -9,12 +9,12 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
     {
         private readonly ArchiveClient _archiveClient;
         private readonly DocumentOwner _documentOwner;
-        private readonly ArchiveDocument _document;
+        private readonly ArchivedDocumentId _document;
         public TestHelper(ArchiveClient archiveClient)
         {
             _archiveClient = archiveClient;
             _documentOwner = new DocumentOwner(_archiveClient.ClientConfiguration.GlobalSender.OrganizationNumber);
-            _document = new ArchiveDocument("1234");
+            _document = new ArchivedDocumentId("1234");
         }
         
         public TestHelper Get_PAdES()

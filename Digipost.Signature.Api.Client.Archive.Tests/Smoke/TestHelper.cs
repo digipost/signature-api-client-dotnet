@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
             _documentOwner = new DocumentOwner(_archiveClient.ClientConfiguration.GlobalSender.OrganizationNumber);
             _document = new ArchivedDocumentId("1234");
         }
-        
+
         public TestHelper Get_PAdES()
         {
             var pades = _archiveClient.GetPades(_documentOwner, _document).Result;
@@ -27,24 +27,9 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 
         public void Download_pades_and_expect_client_error()
         {
-            try
-            {
-                Get_PAdES();
-            }
-            catch (AggregateException ex)
-            {
-                if(ex.InnerException is UnexpectedResponseException)
-                {
-                    UnexpectedResponseException exception = (UnexpectedResponseException) ex.InnerException;
-                    Assert.Equal("ARCHIVED_DOCUMENT_NOT_FOUND", exception.Error.Code);
-                }
-                else
-                {
-                    Assert.True(false, $"Expected UnexpectedResponseException, but found {ex.InnerException.GetType().Name}.");
-                }
-            }
-
-            
+            var thrown = Assert.Throws<AggregateException>(() => Get_PAdES());
+            var actualError = Assert.IsType<UnexpectedResponseException>(thrown.InnerException);
+            Assert.Equal("ARCHIVED_DOCUMENT_NOT_FOUND", actualError.Error.Code);
         }
     }
 

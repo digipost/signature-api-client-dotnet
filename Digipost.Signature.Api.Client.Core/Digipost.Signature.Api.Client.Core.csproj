@@ -4,7 +4,7 @@
         <Title>Digipost Signature Api Client Core</Title>
         <PackageId>Digipost.Signature.Api.Client.Core</PackageId>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="api-client-shared" Version="4.0.0"/>
         <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7"/>
@@ -13,10 +13,10 @@
 
         <PackageReference Include="NLog" Version="4.6.7"/>
         <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0"/>
 
         <PackageReference Include="Digipost.Signature.Api.Client.Resources" Version="5.*"/>
         <PackageReference Include="Digipost.Signature.Api.Client.Scripts" Version="5.*"/>

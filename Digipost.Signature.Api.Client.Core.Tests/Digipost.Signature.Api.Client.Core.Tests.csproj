@@ -2,17 +2,17 @@
   <ItemGroup>
     <PackageReference Include="api-client-shared" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.*" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-      <PackageReference Include="NLog" Version="4.6.7"/>
-      <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0" />
+      <PackageReference Include="NLog" Version="4.6.7" />
+      <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-    <PackageReference Include="CompareNETObjects" Version="4.62.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.2.0" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0"/>
+    <PackageReference Include="CompareNETObjects" Version="4.63.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +34,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*" />
     <EmbeddedResource Include="Schema\**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Fakes\FakeHttpClientHandlerForPadesResponse.cs" />
   </ItemGroup>
 
 </Project>

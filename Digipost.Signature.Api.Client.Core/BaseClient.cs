@@ -21,23 +21,13 @@ namespace Digipost.Signature.Api.Client.Core
         private readonly ILogger<BaseClient> _logger;
         private readonly ILoggerFactory _loggerFactory;
 
-        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, IWebProxy proxy = null, NetworkCredential credential = null)
         {
             _logger = loggerFactory.CreateLogger<BaseClient>();
             _loggerFactory = loggerFactory;
 
             ClientConfiguration = clientConfiguration;
-            HttpClient = MutualTlsClient();
-            RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
-        }
-
-        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
-        {
-            _logger = loggerFactory.CreateLogger<BaseClient>();
-            _loggerFactory = loggerFactory;
-
-            ClientConfiguration = clientConfiguration;
-            HttpClient = MutualTlsClientWithProxy(proxy, credential);
+            HttpClient = MutualTlsClient(proxy, credential);
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
@@ -85,10 +75,10 @@ namespace Digipost.Signature.Api.Client.Core
             }
         }
 
-        private HttpClient MutualTlsClient()
+        private HttpClient MutualTlsClient(IWebProxy proxy = null, NetworkCredential credential = null)
         {
             var client = HttpClientFactory.Create(
-                MutualTlsHandler(),
+                MutualTlsHandler(proxy, credential),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler(ClientConfiguration, _loggerFactory)
@@ -100,39 +90,16 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private HttpClientHandler MutualTlsHandler()
+        private HttpClientHandler MutualTlsHandler(IWebProxy proxy = null, NetworkCredential credential = null)
         {
             HttpClientHandler handler = new HttpClientHandler();
-            var clientCertificates = new X509Certificate2Collection { ClientConfiguration.Certificate };
-            handler.ClientCertificates.AddRange(clientCertificates);
-            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
-
-            return handler;
-        }
-
-        private HttpClient MutualTlsClientWithProxy(WebProxy proxy, NetworkCredential credential)
-        {
-            var client = HttpClientFactory.Create(
-                MutualTlsHandlerWithProxy(proxy, credential),
-                new XsdRequestValidationHandler(),
-                new UserAgentHandler(),
-                new LoggingHandler(ClientConfiguration, _loggerFactory)
-            );
-
-            client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);
-            client.BaseAddress = ClientConfiguration.Environment.Url;
-
-            return client;
-        }
-
-        private HttpClientHandler MutualTlsHandlerWithProxy(WebProxy proxy, NetworkCredential credential)
-        {
-            proxy.Credentials = credential;
-            HttpClientHandler handler = new HttpClientHandler()
+            if (proxy != null)
             {
-                Proxy = proxy,
-                UseProxy = true
-            };
+                proxy.Credentials = credential;
+                handler.Proxy = proxy;
+                handler.UseProxy = true;
+                handler.UseDefaultCredentials = false;
+            }
             var clientCertificates = new X509Certificate2Collection { ClientConfiguration.Certificate };
             handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;

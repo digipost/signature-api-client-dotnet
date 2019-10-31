@@ -30,14 +30,8 @@ namespace Digipost.Signature.Api.Client.Direct
         {
         }
 
-        public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+        public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, IWebProxy proxy = null, NetworkCredential credential = null)
             : base(clientConfiguration, loggerFactory)
-        {
-            _logger = loggerFactory.CreateLogger<DirectClient>();
-        }
-
-        public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
-            : base(clientConfiguration, loggerFactory, proxy, credential)
         {
             _logger = loggerFactory.CreateLogger<DirectClient>();
         }

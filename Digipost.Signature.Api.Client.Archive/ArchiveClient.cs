@@ -17,13 +17,7 @@ namespace Digipost.Signature.Api.Client.Archive
         {
         }
 
-        public ArchiveClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
-            : base(clientConfiguration, loggerFactory)
-        {
-            _logger = loggerFactory.CreateLogger<ArchiveClient>();
-        }
-
-        public ArchiveClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
+        public ArchiveClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, IWebProxy proxy = null, NetworkCredential credential = null)
             : base(clientConfiguration, loggerFactory, proxy, credential)
         {
             _logger = loggerFactory.CreateLogger<ArchiveClient>();

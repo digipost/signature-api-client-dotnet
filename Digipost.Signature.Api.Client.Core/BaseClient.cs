@@ -31,6 +31,16 @@ namespace Digipost.Signature.Api.Client.Core
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
+        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
+        {
+            _logger = loggerFactory.CreateLogger<BaseClient>();
+            _loggerFactory = loggerFactory;
+
+            ClientConfiguration = clientConfiguration;
+            HttpClient = MutualTlsClientWithProxy(proxy, credential);
+            RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
+        }
+
         public ClientConfiguration ClientConfiguration { get; }
 
         internal HttpClient HttpClient
@@ -93,7 +103,37 @@ namespace Digipost.Signature.Api.Client.Core
         private HttpClientHandler MutualTlsHandler()
         {
             HttpClientHandler handler = new HttpClientHandler();
-            var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
+            var clientCertificates = new X509Certificate2Collection { ClientConfiguration.Certificate };
+            handler.ClientCertificates.AddRange(clientCertificates);
+            handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
+
+            return handler;
+        }
+
+        private HttpClient MutualTlsClientWithProxy(WebProxy proxy, NetworkCredential credential)
+        {
+            var client = HttpClientFactory.Create(
+                MutualTlsHandlerWithProxy(proxy, credential),
+                new XsdRequestValidationHandler(),
+                new UserAgentHandler(),
+                new LoggingHandler(ClientConfiguration, _loggerFactory)
+            );
+
+            client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);
+            client.BaseAddress = ClientConfiguration.Environment.Url;
+
+            return client;
+        }
+
+        private HttpClientHandler MutualTlsHandlerWithProxy(WebProxy proxy, NetworkCredential credential)
+        {
+            proxy.Credentials = credential;
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                Proxy = proxy,
+                UseProxy = true
+            };
+            var clientCertificates = new X509Certificate2Collection { ClientConfiguration.Certificate };
             handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 

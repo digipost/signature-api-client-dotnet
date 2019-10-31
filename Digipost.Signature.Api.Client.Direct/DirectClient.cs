@@ -36,6 +36,12 @@ namespace Digipost.Signature.Api.Client.Direct
             _logger = loggerFactory.CreateLogger<DirectClient>();
         }
 
+        public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
+            : base(clientConfiguration, loggerFactory, proxy, credential)
+        {
+            _logger = loggerFactory.CreateLogger<DirectClient>();
+        }
+
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);

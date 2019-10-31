@@ -34,6 +34,12 @@ namespace Digipost.Signature.Api.Client.Portal
             _logger = loggerFactory.CreateLogger<PortalClient>();
         }
 
+        public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy, NetworkCredential credential)
+            : base(clientConfiguration, loggerFactory, proxy, credential)
+        {
+            _logger = loggerFactory.CreateLogger<PortalClient>();
+        }
+
         public async Task<JobResponse> Create(Job job)
         {
             job.Sender = CurrentSender(job.Sender);

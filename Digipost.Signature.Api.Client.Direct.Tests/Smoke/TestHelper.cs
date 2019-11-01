@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Net;
 using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
+using Titanium.Web.Proxy;
+using Titanium.Web.Proxy.EventArguments;
+using Titanium.Web.Proxy.Models;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
@@ -24,9 +27,40 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         private JobStatusResponse _status;
         private StatusReference _statusReference;
 
+        private ProxyServer _proxyServer;
         public TestHelper(DirectClient directClient)
         {
             _directClient = directClient;
+        }
+
+        public TestHelper Create_proxy_server()
+        {
+            _proxyServer = new ProxyServer();
+            _proxyServer.CertificateManager.TrustRootCertificate(true);
+            
+            return this;
+        }
+        
+        public TestHelper Start_proxy_server()
+        {
+            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8888, false);
+            
+            _proxyServer.AddEndPoint(explicitEndPoint);
+            _proxyServer.Start();
+
+            return this;
+        }
+        
+
+        public static void  OnRequest(object sender, SessionEventArgs e)
+        {
+            Console.WriteLine(e.HttpClient.Request.Url);
+        }
+
+        public TestHelper Stop_proxy_server()
+        {
+            _proxyServer.Stop();
+            return this;
         }
 
         public TestHelper Create_direct_job(params SignerIdentifier[] signers)
@@ -210,6 +244,18 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         {
             var signerResponse = _jobResponse.Signers.First(s => s.Identifier.IsSameAs(signer));
             var redirectUrlResponse = _directClient.RequestNewRedirectUrl(signerResponse).Result;
+            return this;
+        }
+
+        public Boolean Call_proxy_server()
+        {
+            return true;
+        }
+
+        public TestHelper Assert_proxy_response()
+        {
+            var response = Call_proxy_server();
+            Assert.True(response);
             return this;
         }
     }

@@ -28,8 +28,8 @@ namespace Digipost.Signature.Api.Client.Portal
         {
         }
 
-        public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, IWebProxy proxy = null, NetworkCredential credential = null)
-            : base(clientConfiguration, loggerFactory)
+        public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy = null, NetworkCredential credential = null)
+            : base(clientConfiguration, loggerFactory, proxy, credential)
         {
             _logger = loggerFactory.CreateLogger<PortalClient>();
         }

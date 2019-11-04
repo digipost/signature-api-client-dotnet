@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Core.Identifier;
@@ -11,6 +12,7 @@ using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
+using Titanium.Web.Proxy.Network;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
@@ -36,14 +38,18 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         public TestHelper Create_proxy_server()
         {
             _proxyServer = new ProxyServer();
+            X509Certificate2 certificate = _directClient.ClientConfiguration.Certificate;
+            _proxyServer.CertificateManager.RootCertificate = certificate;
+
             _proxyServer.CertificateManager.TrustRootCertificate(true);
+
             
             return this;
         }
         
         public TestHelper Start_proxy_server()
         {
-            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8888, false);
+            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8888, true);
             
             _proxyServer.AddEndPoint(explicitEndPoint);
             _proxyServer.Start();

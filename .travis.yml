@@ -35,14 +35,15 @@ script:
   - cat /home/travis/.microsoft/usersecrets/organization-certificate/secrets.json
 
   # Test
-  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Archive.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
 
 
 deploy:
   skip_cleanup: true
   provider: script
-  script: ./travis-deploy/pack-and-push.sh $TRAVIS_TAG $NUGET_API_KEY $TRAVIS_BUILD_DIR Digipost.Signature.Api.Client.Core Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts
+  script: ./travis-deploy/pack-and-push.sh $TRAVIS_TAG $NUGET_API_KEY $TRAVIS_BUILD_DIR Digipost.Signature.Api.Client.Core Archive Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts
   on:
     tags: true

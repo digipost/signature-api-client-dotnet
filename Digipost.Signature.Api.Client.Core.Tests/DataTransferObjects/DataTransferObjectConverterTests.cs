@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Schemas;
@@ -29,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects
                 };
 
                 //Act
-                var actual = DataTransferObjectConverter.FromDataTransferObject(source);
+                var actual = DataTransferObjectConverter.FromDataTransferObject(source, new HttpStatusCode());
 
                 //Assert
                 var compartor = new Comparator();

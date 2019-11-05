@@ -2,6 +2,7 @@ using System;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 {
@@ -29,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         {
             var thrown = Assert.Throws<AggregateException>(() => Get_PAdES());
             var actualError = Assert.IsType<UnexpectedResponseException>(thrown.InnerException);
-            Assert.Equal("ARCHIVED_DOCUMENT_NOT_FOUND", actualError.Error.Code);
+            Assert.Equal("NotFound", actualError.Error.Code);
         }
     }
 

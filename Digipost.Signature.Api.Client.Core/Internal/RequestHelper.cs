@@ -42,7 +42,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             if (!responseMessage.IsSuccessStatusCode)
             {
                 _logger.LogError($"Create request sent, but failed: {responseMessage.StatusCode}, {responseMessage.ReasonPhrase})");
-                throw HandleGeneralException(responseContent, responseMessage.StatusCode);
+                throw HandleGeneralException(responseMessage.StatusCode, responseContent);
             }
 
             return deserializeFunc(responseContent);
@@ -73,7 +73,9 @@ namespace Digipost.Signature.Api.Client.Core.Internal
 
             if (!requestResult.IsSuccessStatusCode)
             {
-                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
+                var content = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+                
+                throw HandleGeneralException(requestResult.StatusCode, content);
             }
 
             return await requestResult.Content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -82,21 +84,22 @@ namespace Digipost.Signature.Api.Client.Core.Internal
         public async Task Confirm(ConfirmationReference confirmationReference)
         {
             var requestResult = await _httpClient.PostAsync(confirmationReference.Url, null).ConfigureAwait(false);
-
+            var requestResultContent = await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false);
+            
             if (!requestResult.IsSuccessStatusCode)
             {
-                throw HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
+                throw HandleGeneralException(requestResult.StatusCode, requestResultContent);
             }
 
             _logger.LogDebug($"Successfully confirmed job with confirmation reference: {confirmationReference.Url}");
         }
 
-        internal SignatureException HandleGeneralException(string requestContent, HttpStatusCode statusCode)
+        internal SignatureException HandleGeneralException(HttpStatusCode statusCode, string requestContent = null)
         {
             Error error;
             try
             {
-                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
+                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent), statusCode);
                 _logger.LogWarning($"Error occured: {error}");
             }
             catch (Exception exception)

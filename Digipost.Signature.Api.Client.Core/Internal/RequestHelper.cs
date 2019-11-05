@@ -99,7 +99,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             Error error;
             try
             {
-                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent), statusCode);
+                error = DataTransferObjectConverter.FromDataTransferObject(SerializeUtility.Deserialize<error>(requestContent));
                 _logger.LogWarning($"Error occured: {error}");
             }
             catch (Exception exception)

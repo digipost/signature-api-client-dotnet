@@ -90,7 +90,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public async Task Returns_unexpected_response_exception_without_error_and_code_on_not_xml_result()
+            public async Task Returns_unexpected_response_exception_with_unknown_error_and_code_on_not_xml_result()
             {
                 //Arrange
                 var internalServerErrorResponse = new FakeHttpClientHandlerForInternalServerErrorResponse();
@@ -101,7 +101,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
-                Assert.Null(unexpectedResponseException.Error);
+                Assert.Equal(Error.unknown, unexpectedResponseException.Error);
                 Assert.Equal(internalServerErrorResponse.ResultCode, unexpectedResponseException.StatusCode);
             }
 

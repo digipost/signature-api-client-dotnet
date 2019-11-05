@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.DataTransferObjects
                 };
 
                 //Act
-                var actual = DataTransferObjectConverter.FromDataTransferObject(source, new HttpStatusCode());
+                var actual = DataTransferObjectConverter.FromDataTransferObject(source);
 
                 //Assert
                 var compartor = new Comparator();

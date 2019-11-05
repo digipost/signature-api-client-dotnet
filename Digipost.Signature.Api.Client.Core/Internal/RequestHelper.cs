@@ -108,7 +108,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal
                 return new UnexpectedResponseException(requestContent, statusCode, exception);
             }
 
-            if (error.Code == BrokerNotAuthorized)
+            if (error != null && error.Code == BrokerNotAuthorized)
             {
                 return new BrokerNotAuthorizedException(error, statusCode);
             }

@@ -30,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         {
             var thrown = Assert.Throws<AggregateException>(() => Get_PAdES());
             var actualError = Assert.IsType<UnexpectedResponseException>(thrown.InnerException);
-            Assert.Equal("NotFound", actualError.Error.Code);
+            Assert.Equal("ARCHIVED_DOCUMENT_NOT_FOUND", actualError.Error.Code);
         }
     }
 

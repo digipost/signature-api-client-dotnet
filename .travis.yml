@@ -36,7 +36,7 @@ script:
 
   # Test
   - dotnet test Digipost.Signature.Api.Client.Core.Tests/Digipost.Signature.Api.Client.Core.Tests.csproj
-  - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Archive.Tests.csproj
+  - dotnet test Digipost.Signature.Api.Client.Archive.Tests/Digipost.Signature.Api.Client.Archive.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Direct.Tests/Digipost.Signature.Api.Client.Direct.Tests.csproj
   - dotnet test Digipost.Signature.Api.Client.Portal.Tests/Digipost.Signature.Api.Client.Portal.Tests.csproj
 

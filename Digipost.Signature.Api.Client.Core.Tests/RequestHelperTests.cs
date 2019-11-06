@@ -81,7 +81,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(errorResponse), new NullLoggerFactory());
 
                 //Act
-                var exception = requestHelper.HandleGeneralException(await errorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), errorResponse.ResultCode.Value);
+                var exception = requestHelper.HandleGeneralException(errorResponse.ResultCode.Value, await errorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false));
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
@@ -90,18 +90,18 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public async Task Returns_unexpected_response_exception_without_error_and_code_on_not_xml_result()
+            public async Task Returns_unexpected_response_exception_with_unknown_error_and_code_on_not_xml_result()
             {
                 //Arrange
                 var internalServerErrorResponse = new FakeHttpClientHandlerForInternalServerErrorResponse();
                 var requestHelper = new RequestHelper(new HttpClient(internalServerErrorResponse), new NullLoggerFactory());
 
                 //Act
-                var exception = requestHelper.HandleGeneralException(await internalServerErrorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), internalServerErrorResponse.ResultCode.Value);
+                var exception = requestHelper.HandleGeneralException(internalServerErrorResponse.ResultCode.Value, await internalServerErrorResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false));
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
-                Assert.Null(unexpectedResponseException.Error);
+                Assert.Equal(Error.Unknown, unexpectedResponseException.Error);
                 Assert.Equal(internalServerErrorResponse.ResultCode, unexpectedResponseException.StatusCode);
             }
 
@@ -113,7 +113,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var requestHelper = new RequestHelper(new HttpClient(brokerNotAuthorizedResponse), new NullLoggerFactory());
 
                 //Act
-                var exception = requestHelper.HandleGeneralException(await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false), brokerNotAuthorizedResponse.ResultCode.Value);
+                var exception = requestHelper.HandleGeneralException(brokerNotAuthorizedResponse.ResultCode.Value, await brokerNotAuthorizedResponse.GetContent().ReadAsStringAsync().ConfigureAwait(false));
 
                 //Assert
                 Assert.IsType<BrokerNotAuthorizedException>(exception);

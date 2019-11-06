@@ -88,7 +88,7 @@ namespace Digipost.Signature.Api.Client.Portal
                 case HttpStatusCode.TooManyRequests:
                     throw CreateTooManyRequestsException(requestResult);
                 default:
-                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);
             }
         }
 
@@ -184,7 +184,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     _logger.LogDebug($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
                     throw new JobCompletedException();
                 default:
-                    throw RequestHelper.HandleGeneralException(await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false), requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(requestResult.StatusCode, await requestResult.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
         }
 

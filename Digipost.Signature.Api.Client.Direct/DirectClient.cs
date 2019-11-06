@@ -89,7 +89,7 @@ namespace Digipost.Signature.Api.Client.Direct
                     _logger.LogDebug($"Requested status for JobId: {jobStatusResponse.JobId}, status was: {jobStatusResponse.Status}.");
                     return jobStatusResponse;
                 default:
-                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);
             }
         }
 
@@ -131,7 +131,7 @@ namespace Digipost.Signature.Api.Client.Direct
                 case HttpStatusCode.TooManyRequests:
                     throw CreateTooManyRequestsException(requestResult);
                 default:
-                    throw RequestHelper.HandleGeneralException(requestContent, requestResult.StatusCode);
+                    throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities.CompareObjects;
 using Schemas;

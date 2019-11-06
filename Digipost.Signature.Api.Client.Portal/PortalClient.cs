@@ -27,7 +27,7 @@ namespace Digipost.Signature.Api.Client.Portal
             : this(clientConfiguration, new NullLoggerFactory())
         {
         }
-
+        
         public PortalClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
             : base(clientConfiguration, loggerFactory)
         {

@@ -29,7 +29,7 @@ namespace Digipost.Signature.Api.Client.Direct
             : this(clientConfiguration, new NullLoggerFactory())
         {
         }
-
+        
         public DirectClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
             : base(clientConfiguration, loggerFactory)
         {

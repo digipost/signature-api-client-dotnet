@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Core
         private HttpClient MutualTlsClient()
         {
             var client = HttpClientFactory.Create(
-                MutualTlsHandler(),
+                MutualTlsHandler(ClientConfiguration.WebProxy, ClientConfiguration.Credential),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler(ClientConfiguration, _loggerFactory)
@@ -90,9 +90,16 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private HttpClientHandler MutualTlsHandler()
+        private HttpClientHandler MutualTlsHandler(WebProxy proxy = null, NetworkCredential credential = null)
         {
             HttpClientHandler handler = new HttpClientHandler();
+            if (proxy != null)
+            {
+                proxy.Credentials = credential;
+                handler.Proxy = proxy;
+                handler.UseProxy = true;
+                handler.UseDefaultCredentials = false;
+            }
             var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
             handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;

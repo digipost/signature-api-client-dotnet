@@ -44,6 +44,6 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: ./travis-deploy/pack-and-push.sh $TRAVIS_TAG $NUGET_API_KEY $TRAVIS_BUILD_DIR Digipost.Signature.Api.Client.Core Archive Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts
+  script: ./travis-deploy/pack-and-push.sh $TRAVIS_TAG $NUGET_API_KEY $TRAVIS_BUILD_DIR Digipost.Signature.Api.Client.Core Digipost.Signature.Api.Client.Archive Digipost.Signature.Api.Client.Direct Digipost.Signature.Api.Client.Portal Digipost.Signature.Api.Client.Resources Digipost.Signature.Api.Client.Scripts
   on:
     tags: true

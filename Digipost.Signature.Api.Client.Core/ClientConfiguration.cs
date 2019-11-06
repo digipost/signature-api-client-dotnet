@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Signature.Api.Client.Core.Exceptions;
@@ -19,8 +20,8 @@ namespace Digipost.Signature.Api.Client.Core
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
         ///     a <see cref="Sender" />.
         /// </param>
-        public ClientConfiguration(Environment environment, string certificateThumbprint, Sender globalSender = null)
-            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), globalSender)
+        public ClientConfiguration(Environment environment, string certificateThumbprint, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
+            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), globalSender, proxy, credential)
         {
         }
 
@@ -30,11 +31,13 @@ namespace Digipost.Signature.Api.Client.Core
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without a
         ///     <see cref="Sender" />.
         /// </param>
-        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null)
+        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null,WebProxy proxy = null, NetworkCredential credential = null)
         {
             Environment = environment;
             GlobalSender = globalSender;
             Certificate = certificate;
+            WebProxy = proxy;
+            Credential = credential;
         }
 
         public Environment Environment { get; }
@@ -46,6 +49,10 @@ namespace Digipost.Signature.Api.Client.Core
         public Sender GlobalSender { get; set; }
 
         public X509Certificate2 Certificate { get; set; }
+
+        public WebProxy WebProxy { get; set; }
+
+        public NetworkCredential Credential { get; set; }
 
         public int HttpClientTimeoutInMilliseconds { get; set; } = 10000;
 

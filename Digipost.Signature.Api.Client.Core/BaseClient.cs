@@ -21,13 +21,13 @@ namespace Digipost.Signature.Api.Client.Core
         private readonly ILogger<BaseClient> _logger;
         private readonly ILoggerFactory _loggerFactory;
 
-        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy = null, NetworkCredential credential = null)
         {
             _logger = loggerFactory.CreateLogger<BaseClient>();
             _loggerFactory = loggerFactory;
 
             ClientConfiguration = clientConfiguration;
-            HttpClient = MutualTlsClient();
+            HttpClient = MutualTlsClient(proxy, credential);
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
@@ -75,10 +75,10 @@ namespace Digipost.Signature.Api.Client.Core
             }
         }
 
-        private HttpClient MutualTlsClient()
+        private HttpClient MutualTlsClient(WebProxy proxy = null, NetworkCredential credential = null)
         {
             var client = HttpClientFactory.Create(
-                MutualTlsHandler(),
+                MutualTlsHandler(proxy, credential),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler(ClientConfiguration, _loggerFactory)
@@ -90,9 +90,16 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private HttpClientHandler MutualTlsHandler()
+        private HttpClientHandler MutualTlsHandler(WebProxy proxy = null, NetworkCredential credential = null)
         {
             HttpClientHandler handler = new HttpClientHandler();
+            if (proxy != null)
+            {
+                proxy.Credentials = credential;
+                handler.Proxy = proxy;
+                handler.UseProxy = true;
+                handler.UseDefaultCredentials = false;
+            }
             var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
             handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;

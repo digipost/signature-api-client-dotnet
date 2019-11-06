@@ -2,7 +2,7 @@
 {
     public class Error
     {
-        public static readonly Error unknown = new Error(){Code = "Unknown", Message = "Unknown", Type = "Unknown"};
+        public static readonly Error Unknown = new Error(){Code = "Unknown", Message = "Unknown", Type = "Unknown"};
      
         public string Code { get; set; }
 

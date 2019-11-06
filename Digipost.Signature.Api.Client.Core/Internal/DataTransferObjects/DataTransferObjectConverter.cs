@@ -8,7 +8,7 @@ namespace Digipost.Signature.Api.Client.Core.Internal.DataTransferObjects
         {
             if (error == null)
             {
-                return Error.unknown;
+                return Error.Unknown;
             }
 
             return new Error

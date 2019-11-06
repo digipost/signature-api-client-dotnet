@@ -2,7 +2,6 @@ using System;
 using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Smoke;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
 {

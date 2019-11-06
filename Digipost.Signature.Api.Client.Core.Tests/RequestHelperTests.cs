@@ -101,7 +101,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var unexpectedResponseException = (UnexpectedResponseException) exception;
 
                 //Assert
-                Assert.Equal(Error.unknown, unexpectedResponseException.Error);
+                Assert.Equal(Error.Unknown, unexpectedResponseException.Error);
                 Assert.Equal(internalServerErrorResponse.ResultCode, unexpectedResponseException.StatusCode);
             }
 

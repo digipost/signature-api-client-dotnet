@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Microsoft.Extensions.Logging;

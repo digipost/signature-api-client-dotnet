@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Digipost.Signature.Api.Client.Core;
 using Microsoft.Extensions.Logging;
@@ -17,8 +16,8 @@ namespace Digipost.Signature.Api.Client.Archive
         {
         }
 
-        public ArchiveClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy = null, NetworkCredential credential = null)
-            : base(clientConfiguration, loggerFactory, proxy, credential)
+        public ArchiveClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
+            : base(clientConfiguration, loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<ArchiveClient>();
         }

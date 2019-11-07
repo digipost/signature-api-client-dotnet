@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;
-using Xunit.Sdk;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Fakes
 {

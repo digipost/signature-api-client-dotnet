@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Digipost.Signature.Api.Client.Core.Exceptions;
+﻿using Digipost.Signature.Api.Client.Core.Exceptions;
 using Digipost.Signature.Api.Client.Core.Tests.Stubs;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Tests.Utilities.CoreDomainUtility;

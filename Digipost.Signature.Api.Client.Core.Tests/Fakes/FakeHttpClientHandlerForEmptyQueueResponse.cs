@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Digipost.Signature.Api.Client.Core.Tests.Utilities;

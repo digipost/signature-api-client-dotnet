@@ -1,7 +1,9 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Extensions.Logging;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Digipost.Signature.Api.Client.Core.Utilities
 {
@@ -26,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Core.Utilities
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
             loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
-            NLog.LogManager.LoadConfiguration("./../../../../Digipost.Signature.Api.Client.Core/nlog.config");
+            LogManager.LoadConfiguration("./../../../../Digipost.Signature.Api.Client.Core/nlog.config");
         }
 
     }

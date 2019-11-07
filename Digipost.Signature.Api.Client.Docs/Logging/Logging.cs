@@ -3,7 +3,9 @@ using Digipost.Signature.Api.Client.Core;
 using Digipost.Signature.Api.Client.Portal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Extensions.Logging;
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace Digipost.Signature.Api.Client.Docs.Logging
 {
@@ -28,7 +30,7 @@ namespace Digipost.Signature.Api.Client.Docs.Logging
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
 
             loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
-            NLog.LogManager.LoadConfiguration("./nlog.config");
+            LogManager.LoadConfiguration("./nlog.config");
         }
 
         static void Main(string[] args)

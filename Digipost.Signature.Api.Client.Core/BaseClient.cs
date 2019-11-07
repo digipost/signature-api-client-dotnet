@@ -21,13 +21,13 @@ namespace Digipost.Signature.Api.Client.Core
         private readonly ILogger<BaseClient> _logger;
         private readonly ILoggerFactory _loggerFactory;
 
-        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory, WebProxy proxy = null, NetworkCredential credential = null)
+        protected BaseClient(ClientConfiguration clientConfiguration, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger<BaseClient>();
             _loggerFactory = loggerFactory;
 
             ClientConfiguration = clientConfiguration;
-            HttpClient = MutualTlsClient(proxy, credential);
+            HttpClient = MutualTlsClient();
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
@@ -75,10 +75,10 @@ namespace Digipost.Signature.Api.Client.Core
             }
         }
 
-        private HttpClient MutualTlsClient(WebProxy proxy = null, NetworkCredential credential = null)
+        private HttpClient MutualTlsClient()
         {
             var client = HttpClientFactory.Create(
-                MutualTlsHandler(proxy, credential),
+                MutualTlsHandler(ClientConfiguration.WebProxy, ClientConfiguration.Credential),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler(ClientConfiguration, _loggerFactory)
@@ -100,7 +100,7 @@ namespace Digipost.Signature.Api.Client.Core
                 handler.UseProxy = true;
                 handler.UseDefaultCredentials = false;
             }
-            var clientCertificates = new X509Certificate2Collection { ClientConfiguration.Certificate };
+            var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
             handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 

@@ -31,10 +31,9 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             {
                 LogRequestAndResponse = true
             };
-            
-            WebProxy proxy = new WebProxy("http://127.0.0.1:8888");
-            NetworkCredential credential = new NetworkCredential("user1","1234");
-            var client = new DirectClient(clientConfig, serviceProvider.GetService<ILoggerFactory>(), proxy, credential);
+            clientConfig.WebProxy = new WebProxy("http://127.0.0.1:8888");
+            clientConfig.Credential = new NetworkCredential("user1","1234");
+            var client = new DirectClient(clientConfig, serviceProvider.GetService<ILoggerFactory>());
 
             return client;
         }

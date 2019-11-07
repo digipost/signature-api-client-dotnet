@@ -12,7 +12,6 @@ using Digipost.Signature.Api.Client.Direct.Tests.Utilities;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
-using Titanium.Web.Proxy.Network;
 using Xunit;
 using static Digipost.Signature.Api.Client.Core.Environment;
 using static Digipost.Signature.Api.Client.Core.Tests.Smoke.SmokeTests;
@@ -49,7 +48,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
         
         public TestHelper Start_proxy_server()
         {
-            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8888, true);
+            var explicitEndPoint = new ExplicitProxyEndPoint(IPAddress.Any, 8888, false);
             
             _proxyServer.AddEndPoint(explicitEndPoint);
             _proxyServer.Start();

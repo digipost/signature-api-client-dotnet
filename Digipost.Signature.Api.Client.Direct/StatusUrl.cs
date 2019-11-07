@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Digipost.Signature.Api.Client.Direct
 {

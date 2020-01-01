@@ -16,7 +16,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.0"/>
 
         <PackageReference Include="Digipost.Signature.Api.Client.Resources" Version="6.*"/>
         <PackageReference Include="Digipost.Signature.Api.Client.Scripts" Version="6.*"/>

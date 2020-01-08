@@ -79,13 +79,13 @@ namespace Digipost.Signature.Api.Client.Portal
 
             _logger.LogDebug($"Requesting status change on endpoint {requestResult.RequestMessage.RequestUri} ...");
 
-            switch (requestResult.StatusCode)
+            switch ((int)requestResult.StatusCode)
             {
-                case HttpStatusCode.NoContent:
+                case 204: //HttpStatusCode.NoContent
                     return CreateNoContentResponse(requestResult);
-                case HttpStatusCode.OK:
+                case 200: //HttpStatusCode.OK
                     return CreateOkResponse(requestContent, requestResult);
-                case HttpStatusCode.TooManyRequests:
+                case 429: //HttpStatusCode.TooManyRequests
                     throw CreateTooManyRequestsException(requestResult);
                 default:
                     throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);

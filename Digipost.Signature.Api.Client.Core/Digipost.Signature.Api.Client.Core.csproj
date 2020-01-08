@@ -3,6 +3,7 @@
     <PropertyGroup>
         <Title>Digipost Signature Api Client Core</Title>
         <PackageId>Digipost.Signature.Api.Client.Core</PackageId>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,7 +26,7 @@
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DocumentationFile>bin\Release\netcoreapp2.1\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\$(TargetFramework)\Digipost.Signature.Api.Client.Core.xml</DocumentationFile>
         <noWarn>1591</noWarn>
     </PropertyGroup>
 

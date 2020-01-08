@@ -2,6 +2,7 @@
     <PropertyGroup>
         <Title>Digipost Signature Api Client Scripts</Title>
         <PackageId>Digipost.Signature.Api.Client.Scripts</PackageId>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

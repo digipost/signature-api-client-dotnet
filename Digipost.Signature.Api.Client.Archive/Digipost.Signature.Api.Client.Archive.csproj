@@ -3,7 +3,7 @@
     <PropertyGroup>
         <Title>Digipost Signature Api Client Archive</Title>
         <PackageId>Digipost.Signature.Api.Client.Archive</PackageId>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;netcoreapp2.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>

@@ -3,26 +3,26 @@
     <PropertyGroup>
         <Title>Digipost Signature Api Client Core</Title>
         <PackageId>Digipost.Signature.Api.Client.Core</PackageId>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFrameworks>netstandard2.0;netcoreapp2.1</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="api-client-shared" Version="4.0.0"/>
-        <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7"/>
-        <PackageReference Include="System.Net.Requests" Version="4.3.0"/>
-        <PackageReference Include="System.Security.Cryptography.Xml" Version="4.6.0"/>
+        <PackageReference Include="api-client-shared" Version="4.0.0" />
+        <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+        <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="4.6.0" />
 
-        <PackageReference Include="NLog" Version="4.6.7"/>
-        <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4"/>
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0"/>
+        <PackageReference Include="NLog" Version="4.6.7" />
+        <PackageReference Include="NLog.Extensions.Logging" Version="1.5.4" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj"/>
-        <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj"/>
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Resources\Digipost.Signature.Api.Client.Resources.csproj" />
+        <ProjectReference Include="..\Digipost.Signature.Api.Client.Scripts\Digipost.Signature.Api.Client.Scripts.csproj" />
     </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -31,13 +31,13 @@
     </PropertyGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-        <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest"/>
+        <None Update="Internal/Xsd/**/*" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
-        <None Remove="Internal/Xsd/**/*"/>
+        <None Remove="Internal/Xsd/**/*" />
     </ItemGroup>
     <ItemGroup>
-        <EmbeddedResource Include="Internal/Xsd/**/*"/>
+        <EmbeddedResource Include="Internal/Xsd/**/*" />
     </ItemGroup>
 
 </Project>

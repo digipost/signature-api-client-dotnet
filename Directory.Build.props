@@ -1,5 +1,6 @@
 <Project>
     <PropertyGroup>
+        <!--        Common build properties of all projects-->
         <Version>0.0.0.0</Version>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
 
@@ -16,4 +17,19 @@
         <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     </PropertyGroup>
 
+    <!--    DOCKER BUILD PROPERTIES-->
+    <!--    The following two property groups ensures that container builds does not interfere with IDE builds, -->
+    <!--    by building in a separate directory as described in -->
+    <!--    https://github.com/dotnet/dotnet-docker/blob/master/samples/run-tests-in-sdk-container.md -->
+    <PropertyGroup>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)/obj/**/*</DefaultItemExcludes>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)/bin/**/*</DefaultItemExcludes>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' == 'true'">
+        <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/container/</BaseIntermediateOutputPath>
+        <BaseOutputPath>$(MSBuildProjectDirectory)/bin/container/</BaseOutputPath>
+    </PropertyGroup>
+    <!--    END DOCKER BUILD PROPERTIES-->
 </Project>

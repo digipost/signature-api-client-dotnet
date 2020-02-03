@@ -6,11 +6,11 @@
         <option name="containerName" value="docker-signering-tests" />
         <option name="entrypoint" value="" />
         <option name="imageTag" value="mcr.microsoft.com/dotnet/core/sdk:2.1" />
-        <option name="commandLineOptions" value="-w /app/" />
+        <option name="commandLineOptions" value="-w /signature-api-client-dotnet/" />
         <option name="volumeBindings">
           <list>
             <DockerVolumeBindingImpl>
-              <option name="containerPath" value="/app" />
+              <option name="containerPath" value="/signature-api-client-dotnet" />
               <option name="hostPath" value="$PROJECT_DIR$" />
             </DockerVolumeBindingImpl>
           </list>

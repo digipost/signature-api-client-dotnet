@@ -2,16 +2,36 @@
   <configuration default="false" name="Docker Run Tests" type="docker-deploy" factoryName="docker-image" server-name="Docker">
     <deployment type="docker-image">
       <settings>
-        <option name="command" value="dotnet test" />
+        <option name="command" value="bash" />
         <option name="containerName" value="docker-signering-tests" />
         <option name="entrypoint" value="" />
         <option name="imageTag" value="mcr.microsoft.com/dotnet/core/sdk:2.1" />
-        <option name="commandLineOptions" value="-w /signature-api-client-dotnet/" />
+        <option name="commandLineOptions" value="-it -w /signature-api-client-dotnet/" />
         <option name="volumeBindings">
           <list>
             <DockerVolumeBindingImpl>
               <option name="containerPath" value="/signature-api-client-dotnet" />
               <option name="hostPath" value="$PROJECT_DIR$" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/root/.microsoft/usersecrets/organization-certificate/secrets.json" />
+              <option name="hostPath" value="$USER_HOME$/.microsoft/usersecrets/organization-certificate/secrets.json" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="$USER_HOME$/Documents/sertifikater/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12" />
+              <option name="hostPath" value="$USER_HOME$/Documents/sertifikater/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/local/share/ca-certificates/Buypass_Class_3_Test4_CA_3.crt" />
+              <option name="hostPath" value="$PROJECT_DIR$/Buypass_Class_3_Test4_CA_3.pem" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/usr/local/share/ca-certificates/Buypass_Class_3_Test4_Root_CA.crt" />
+              <option name="hostPath" value="$PROJECT_DIR$/Buypass_Class_3_Test4_Root_CA.pem" />
+            </DockerVolumeBindingImpl>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/signature-api-client-dotnet/Digipost.Signature.Api.Client.Core.Tests/bin/Resources/Documents/Dokument.pdf" />
+              <option name="hostPath" value="$PROJECT_DIR$/Digipost.Signature.Api.Client.Core.Tests/Resources/Documents/Dokument.pdf" />
             </DockerVolumeBindingImpl>
           </list>
         </option>

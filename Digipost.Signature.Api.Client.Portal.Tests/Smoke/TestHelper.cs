@@ -61,9 +61,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber) signer.Identifier).Value).Result;
-            Assert.True(httpResponseMessage.IsSuccessStatusCode, "Signing through API failed. Are you trying to sign a job type " +
+            
+            
+            Assert.True(httpResponseMessage.IsSuccessStatusCode, $"Signing through API failed. Are you trying to sign a job type " +
                                                                  "that we do not offer API signing for? Remember that this is not " +
-                                                                 "possible in production!");
+                                                                 $"possible in production! Error calling {httpResponseMessage.RequestMessage.RequestUri} was {httpResponseMessage} ");
 
             return this;
         }
@@ -208,7 +210,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private void ConfirmExcessReceipt(JobStatusChanged statusChange)
         {
             var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
-            _client.Confirm(new ConfirmationReference(uri)).Wait();
+            Console.WriteLine($"Confirmation on: {uri} ");
+            _client.Confirm(new ConfirmationReference(uri)).Wait(TimeSpan.FromSeconds(3));
+            Console.WriteLine("Oh so done ...");
+            
         }
 
         private static void Assert_state(object obj)

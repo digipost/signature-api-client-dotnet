@@ -18,7 +18,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         internal static Environment Localhost => new Environment(
             CertificateChainUtility.FunksjoneltTestmiljøSertifikater(),
-            new Uri("https://localhost:8443")
+            new Uri("https://host.docker.internal:8443")
         );
 
         internal static Environment Qa => new Environment(

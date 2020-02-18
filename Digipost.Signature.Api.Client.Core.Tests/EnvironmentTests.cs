@@ -22,6 +22,21 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.Equal(url, environment.Url);
                 Assert.Equal(certificates, environment.AllowedChainCertificates);
             }
+            
+            [Fact]
+            public void Gets_initialize_docker_localhost_environment()
+            {
+                //Arrange
+                var url = new Uri("https://host.docker.internal:8443");
+                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
+
+                //Act
+                var environment = Environment.DockerLocalhost;
+
+                //Assert
+                Assert.Equal(url, environment.Url);
+                Assert.Equal(certificates, environment.AllowedChainCertificates);
+            }
 
             [Fact]
             public void Gets_initialized_difi_qa_environment()

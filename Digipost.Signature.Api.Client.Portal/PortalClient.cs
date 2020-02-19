@@ -85,11 +85,7 @@ namespace Digipost.Signature.Api.Client.Portal
                     return CreateNoContentResponse(requestResult);
                 case HttpStatusCode.OK:
                     return CreateOkResponse(requestContent, requestResult);
-#if NETCOREAPP
-                case HttpStatusCode.TooManyRequests:
-#else
                 case (HttpStatusCode)429:
-#endif
                     throw CreateTooManyRequestsException(requestResult);
                 default:
                     throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);

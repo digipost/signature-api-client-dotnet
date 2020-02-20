@@ -128,7 +128,7 @@ namespace Digipost.Signature.Api.Client.Direct
                     return CreateNoContentResponse(requestResult);
                 case HttpStatusCode.OK:
                     return CreateOkResponse(requestContent, requestResult);
-                case HttpStatusCode.TooManyRequests:
+                case (HttpStatusCode)429:
                     throw CreateTooManyRequestsException(requestResult);
                 default:
                     throw RequestHelper.HandleGeneralException(requestResult.StatusCode, requestContent);

@@ -61,9 +61,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             }
 
             var httpResponseMessage = _client.AutoSign((int) _jobResponse.JobId, ((PersonalIdentificationNumber) signer.Identifier).Value).Result;
-            Assert.True(httpResponseMessage.IsSuccessStatusCode, "Signing through API failed. Are you trying to sign a job type " +
+            
+            
+            Assert.True(httpResponseMessage.IsSuccessStatusCode, $"Signing through API failed. Are you trying to sign a job type " +
                                                                  "that we do not offer API signing for? Remember that this is not " +
-                                                                 "possible in production!");
+                                                                 $"possible in production! Error calling {httpResponseMessage.RequestMessage.RequestUri} was {httpResponseMessage} ");
 
             return this;
         }

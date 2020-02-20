@@ -5,10 +5,11 @@ namespace Digipost.Signature.Api.Client.Program
     {
         static void Main(string[] args)
         {
-//            var clientConfiguration = new ClientConfiguration(Environment.Test, certificateReader2.ReadCertificate());
-//            var portalClient = new PortalClient(clientConfiguration);
+            /*var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CertificateReader.ReadCertificate());
+            var portalClient = new PortalClient(clientConfiguration);
 
-//            var result = portalClient.GetRootResource(new Sender("988015814")).Result;
+            var result = portalClient.GetRootResource(new Sender("988015814")).Result;
+            Console.WriteLine(result);*/
         }
     }
 }

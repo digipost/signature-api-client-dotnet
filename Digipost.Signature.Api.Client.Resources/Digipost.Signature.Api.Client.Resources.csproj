@@ -3,6 +3,7 @@
     <PropertyGroup>
         <Title>Digipost Signature Api Client Resources</Title>
         <PackageId>Digipost.Signature.Api.Client.Resources</PackageId>
+        <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>

@@ -31,7 +31,7 @@ namespace Digipost.Signature.Api.Client.Core
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without a
         ///     <see cref="Sender" />.
         /// </param>
-        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null,WebProxy proxy = null, NetworkCredential credential = null)
+        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
         {
             Environment = environment;
             GlobalSender = globalSender;

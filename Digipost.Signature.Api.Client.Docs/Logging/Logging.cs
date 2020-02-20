@@ -15,22 +15,18 @@ namespace Digipost.Signature.Api.Client.Docs.Logging
 
             services.AddSingleton<ILoggerFactory, LoggerFactory>();
             services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
-            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
-
+            services.AddLogging((builder) =>
+            {
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
+            });
+            
             var serviceProvider = services.BuildServiceProvider();
-            SetUpLoggingForTesting(serviceProvider);
+            NLog.LogManager.LoadConfiguration("./nlog.config");
 
             return serviceProvider;
         }
-
-        private static void SetUpLoggingForTesting(IServiceProvider serviceProvider)
-        {
-            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-
-            loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
-            NLog.LogManager.LoadConfiguration("./nlog.config");
-        }
-
+        
         static void Main(string[] args)
         {
             ClientConfiguration clientConfiguration = null;

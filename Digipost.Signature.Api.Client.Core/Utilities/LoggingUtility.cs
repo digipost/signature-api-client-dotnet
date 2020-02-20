@@ -14,24 +14,20 @@ namespace Digipost.Signature.Api.Client.Core.Utilities
             
             services.AddSingleton<ILoggerFactory, LoggerFactory>();
             services.AddSingleton(typeof(ILogger<>), typeof(Logger<>));
-            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
+            services.AddLogging((builder) =>
+            {
+                builder.SetMinimumLevel(LogLevel.Trace);
+                builder.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
+            });
 
             var serviceProvider = services.BuildServiceProvider();
-            SetUpLoggingForTesting(serviceProvider);
-
-            return serviceProvider;
-        }
-        
-        private static void SetUpLoggingForTesting(IServiceProvider serviceProvider)
-        {
-            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-            loggerFactory.AddNLog(new NLogProviderOptions {CaptureMessageTemplates = true, CaptureMessageProperties = true});
             
             var projectName = new[]{"signature-api-client-dotnet"};
             var projectParentDirectory = System.AppDomain.CurrentDomain.BaseDirectory.Split(projectName, StringSplitOptions.None)[0];
             var nLogConfigPath = projectParentDirectory + $"/{projectName.ElementAt(0)}/Digipost.Signature.Api.Client.Core/nlog.config";
             NLog.LogManager.LoadConfiguration(nLogConfigPath);
-        }
 
+            return serviceProvider;
+        }
     }
 }

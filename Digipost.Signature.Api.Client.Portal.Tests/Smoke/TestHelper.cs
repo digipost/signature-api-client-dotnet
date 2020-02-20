@@ -210,10 +210,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         private void ConfirmExcessReceipt(JobStatusChanged statusChange)
         {
             var uri = TransformReferenceToCorrectEnvironment(statusChange.ConfirmationReference.Url);
-            Console.WriteLine($"Confirmation on: {uri} ");
-            _client.Confirm(new ConfirmationReference(uri)).Wait(TimeSpan.FromSeconds(3));
-            Console.WriteLine("Oh so done ...");
-            
+            _client.Confirm(new ConfirmationReference(uri)).Wait();
         }
 
         private static void Assert_state(object obj)

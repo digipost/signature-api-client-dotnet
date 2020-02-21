@@ -20,6 +20,12 @@ namespace Digipost.Signature.Api.Client.Core
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
         ///     a <see cref="Sender" />.
         /// </param>
+        /// <param name="proxy">
+        ///     If set, the proxy will be used for all requests. Remember to set <see cref="Credential" /> as well.
+        /// </param>
+        /// <param name="credential">
+        ///     Will be used if both this and <see cref="WebProxy" /> is set.
+        /// </param>
         public ClientConfiguration(Environment environment, string certificateThumbprint, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
             : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), globalSender, proxy, credential)
         {
@@ -30,6 +36,12 @@ namespace Digipost.Signature.Api.Client.Core
         /// <param name="globalSender">
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without a
         ///     <see cref="Sender" />.
+        /// </param>
+        /// <param name="proxy">
+        ///     If set, the proxy will be used for all requests. Remember to set <see cref="Credential" /> as well.
+        /// </param>
+        /// <param name="credential">
+        ///     Will be used if both this and <see cref="WebProxy" /> is set.
         /// </param>
         public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
         {
@@ -50,8 +62,14 @@ namespace Digipost.Signature.Api.Client.Core
 
         public X509Certificate2 Certificate { get; set; }
 
+        /// <summary>
+        ///     If set, the proxy will be used for all requests. Remember to set <see cref="Credential" /> as well.
+        /// </summary>
         public WebProxy WebProxy { get; set; }
 
+        /// <summary>
+        ///     Will be used if both this and <see cref="WebProxy" /> is set.
+        /// </summary>
         public NetworkCredential Credential { get; set; }
 
         public int HttpClientTimeoutInMilliseconds { get; set; } = 10000;

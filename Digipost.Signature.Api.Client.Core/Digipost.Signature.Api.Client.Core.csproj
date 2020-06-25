@@ -4,7 +4,16 @@
         <Title>Digipost Signature Api Client Core</Title>
         <PackageId>Digipost.Signature.Api.Client.Core</PackageId>
         <TargetFramework>netstandard2.0</TargetFramework>
-    </PropertyGroup>
+    
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
 
     <ItemGroup>
         <PackageReference Include="api-client-shared" Version="4.0.0" />

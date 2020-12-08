@@ -5,16 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.0.0"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0"/>
-    <PackageReference Include="NLog" Version="4.7.5"/>
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1"/>
+    <PackageReference Include="api-client-shared" Version="4.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.0" />
+    <PackageReference Include="NLog" Version="4.7.6" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj"/>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj"/>
-    <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj"/>
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj" />
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj" />
   </ItemGroup>
 
 </Project>

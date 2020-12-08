@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,9 +23,8 @@ namespace Digipost.Signature.Api.Client.Core.Utilities
 
             var serviceProvider = services.BuildServiceProvider();
             
-            var projectName = new[]{"signature-api-client-dotnet"};
-            var projectParentDirectory = System.AppDomain.CurrentDomain.BaseDirectory.Split(projectName, StringSplitOptions.None)[0];
-            var nLogConfigPath = projectParentDirectory + $"/{projectName.ElementAt(0)}/Digipost.Signature.Api.Client.Core/nlog.config";
+            var projectParentDirectory = AppDomain.CurrentDomain.BaseDirectory.Split(new[] {"Digipost.Signature.Api.Client"}, StringSplitOptions.None)[0];
+            var nLogConfigPath = Path.Combine(projectParentDirectory, "Digipost.Signature.Api.Client.Core", "nlog.config");
             NLog.LogManager.LoadConfiguration(nLogConfigPath);
 
             return serviceProvider;

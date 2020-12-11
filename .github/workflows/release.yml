@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.101
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      - name: Set release version
+        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      - name: Set assembly version to major semver
+        run: echo ::set-env name=ASSEMBLY_VERSION::$(echo ${GITHUB_REF:10} | cut -d '.' -f 1).0.0
+      - name: Print assembly version
+        run: echo $ASSEMBLY_VERSION
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Archive
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Direct
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Portal
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Resources
+      - name: Pack nupkg
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Scripts
+      - name: Push Client to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Core.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      - name: Push Common to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Archive.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      - name: Push Docs to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Direct.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      - name: Push Inbox to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Portal.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      - name: Push Resources to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Resources.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      - name: Push Scripts to NuGet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push "digipost/packed/Digipost.Signature.Api.Client.Scripts.$RELEASE_VERSION.nupkg" --skip-duplicate --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY

@@ -16,10 +16,10 @@ jobs:
       - name: Install dependencies
         run: dotnet restore 
       - name: Decode certificate
-        run: echo ${{ secrets.BRING_CERTIFICATE_PASSWORD_ENCRYPTION_KEY }} | base64 --decode > $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+        run: echo ${{ secrets.ENCODED_SMOKE_TEST_CERTIFICATE }} | base64 --decode > $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
       - name: Set certificate path
         run: dotnet user-secrets set Certificate:Path:Absolute $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12 --project Digipost.Signature.Api.Client.Core
       - name: Set certificate password
-        run: dotnet user-secrets set Certificate:Password ${{ secrets.BRING_CERTIFICATE_PASSWORD }} --project Digipost.Signature.Api.Client.Core >/dev/null 2>&1
+        run: dotnet user-secrets set Certificate:Password ${{ secrets.SMOKE_TEST_CERTIFICATE_PASSWORD }} --project Digipost.Signature.Api.Client.Core >/dev/null 2>&1
       - name: Test
         run: dotnet test --no-restore --verbosity normal

@@ -21,9 +21,9 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
       - name: Set release version
-        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+        run: echo "RELEASE_VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
       - name: Set assembly version to major semver
-        run: echo ::set-env name=ASSEMBLY_VERSION::$(echo ${GITHUB_REF:10} | cut -d '.' -f 1).0.0
+        run: echo "ASSEMBLY_VERSION=$(echo ${GITHUB_REF:10} | cut -d '.' -f 1).0.0" >> $GITHUB_ENV
       - name: Print assembly version
         run: echo $ASSEMBLY_VERSION
       - name: Pack nupkg

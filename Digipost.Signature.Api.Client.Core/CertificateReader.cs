@@ -47,7 +47,12 @@ namespace Digipost.Signature.Api.Client.Core
             deserializeObject.TryGetValue("Certificate:Password", out var certificatePassword);
 
             _logger.LogDebug("Reading certificate from path found in secrets file: " + certificatePath);
+            var certExists = File.Exists(certificatePath);
 
+            if (!certExists)
+            {
+                _logger.LogDebug($"Did not find file at {certificatePath}");
+            }
             return new X509Certificate2(certificatePath, certificatePassword, X509KeyStorageFlags.Exportable);
         }
     }

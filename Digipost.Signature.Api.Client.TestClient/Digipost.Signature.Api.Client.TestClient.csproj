@@ -6,6 +6,6 @@
     <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="api-client-shared" Version="4.2.0.143-beta" />
+    <PackageReference Include="Digipost.Api.Client.Shared" Version="7.0.1" />
   </ItemGroup>
 </Project>

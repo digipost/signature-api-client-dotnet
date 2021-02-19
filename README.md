@@ -6,7 +6,7 @@ This repo is the .NET client library for integrating with Posten signering. Plea
 ## 📕 Documentation
 
 Get started by [reading the documentation](http://signering-docs.rtfd.io/).
- 
+
 ## Releasing (only for Digipost members)
 
 Releasing is done via tagging with [Semver](http://semver.org) versioning scheme. For a beta-release, please add `-beta` as version suffix in tag.

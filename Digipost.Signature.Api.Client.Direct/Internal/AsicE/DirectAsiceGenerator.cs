@@ -9,14 +9,14 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
     {
         public static DocumentBundle CreateAsice(Job job, X509Certificate2 certificate, IAsiceConfiguration asiceConfiguration)
         {
-            var manifest = new Manifest(job.Sender, (Document) job.Document, job.Signers)
+            var manifest = new Manifest("Job title", job.Sender, job.Documents, job.Signers)
             {
                 AuthenticationLevel = job.AuthenticationLevel,
                 IdentifierInSignedDocuments = job.IdentifierInSignedDocuments
             };
-            var signature = new SignatureGenerator(certificate, job.Document, manifest);
+            var signature = new SignatureGenerator(certificate, job.Documents, manifest);
 
-            var asiceArchive = GetAsiceArchive(job, asiceConfiguration, job.Document, signature, manifest);
+            var asiceArchive = GetAsiceArchive(job, asiceConfiguration, job.Documents, signature, manifest);
 
             return new DocumentBundle(asiceArchive.GetBytes());
         }

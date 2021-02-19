@@ -12,12 +12,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
     {
         internal SignatureGenerator GetSignaturGenerator()
         {
-            var document = DomainUtility.GetPortalDocument();
+            var documents = DomainUtility.GetPortalDocuments();
             var sender = CoreDomainUtility.GetSender();
             var signers = DomainUtility.GetSigners(2);
-            var manifest = new Manifest(sender, document, signers);
+            var manifest = new Manifest("JobTitle", sender, documents, signers);
             var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
-            var signaturGenerator = new SignatureGenerator(x509Certificate2, document, manifest);
+            var signaturGenerator = new SignatureGenerator(x509Certificate2, documents, manifest);
             return signaturGenerator;
         }
 
@@ -27,16 +27,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Asice.AsiceSignature
             public void Initializes_with_document_portal_manifest_and_certificate()
             {
                 //Arrange
-                var document = DomainUtility.GetPortalDocument();
+                var documents = DomainUtility.GetPortalDocuments();
                 var sender = CoreDomainUtility.GetSender();
-                var manifest = new Manifest(sender, document, DomainUtility.GetSigners(3));
+                var manifest = new Manifest("JobTitle", sender, documents, DomainUtility.GetSigners(3));
                 var x509Certificate2 = CoreDomainUtility.GetTestCertificate();
 
                 //Act
-                var signatur = new SignatureGenerator(x509Certificate2, document, manifest);
+                var signatur = new SignatureGenerator(x509Certificate2, documents, manifest);
 
                 //Assert
-                Assert.Equal(document, signatur.Attachables.ElementAt(0));
+                Assert.Equal(documents.ElementAt(0), signatur.Attachables.ElementAt(0));
                 Assert.Equal(manifest, signatur.Attachables.ElementAt(1));
                 Assert.Equal(x509Certificate2, signatur.Certificate);
             }

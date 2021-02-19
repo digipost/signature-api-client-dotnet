@@ -24,7 +24,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                const string title = "JobTitle";
+
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -33,14 +35,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -77,8 +78,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                const string title = "JobTitle";
+                
+                var source = new Manifest("JobTitle", new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -90,14 +92,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -139,8 +140,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
+                const string title = "JobTitle";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer>
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer>
                 {
                     new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
                     new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
@@ -154,14 +156,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -201,8 +202,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
+                const string title = "JobTitle";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer>
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer>
                 {
                     new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
                     new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
@@ -216,14 +218,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -263,19 +264,19 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
+                const string title = "JobTitle";
 
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(), new List<Signer> {new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()) {Order = 1}, new Signer(new PersonalIdentificationNumber("99999999999"), new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer> {new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()) {Order = 1}, new Signer(new PersonalIdentificationNumber("99999999999"), new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -314,7 +315,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                const string title = "JobTitle";
+
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
@@ -329,14 +332,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -375,7 +377,9 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             {
                 //Arrange
                 const string organizationNumberSender = "12345678902";
-                var source = new Manifest(new Sender(organizationNumberSender), DomainUtility.GetPortalDocument(),
+                const string title = "JobTitle";
+
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -384,14 +388,13 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
 
                 var expected = new portalsignaturejobmanifest
                 {
+                    title = title,
                     sender = new sender {organizationnumber = organizationNumberSender},
-                    document = new portaldocument
-                    {
-                        title = source.Document.Title,
-                        description = source.Document.Message,
-                        href = source.Document.FileName,
-                        mime = source.Document.MimeType
-                    },
+                    documents = source.Documents.Select(doc => new portaldocument {
+                        title = doc.Title,
+                        href = doc.FileName,
+                        mime = doc.MimeType
+                    }).ToArray(),
                     signers = new[]
                     {
                         new portalsigner
@@ -513,12 +516,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_document_successfully()
             {
                 //Arrange
-                var source = new Document("subject", "message", FileType.Pdf, new byte[] {0xb2, 0xb3}) {NonsensitiveTitle = "NonsensitiveTitle"};
+                var source = new Document("subject", FileType.Pdf, new byte[] {0xb2, 0xb3});
                 var expected = new portaldocument
                 {
                     title = source.Title,
-                    nonsensitivetitle = source.NonsensitiveTitle,
-                    description = source.Message,
                     href = source.FileName,
                     mime = source.MimeType
                 };
@@ -537,10 +538,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_job_successfully()
             {
                 //Arrange
-                var document = DomainUtility.GetPortalDocument();
+                var documents = DomainUtility.GetPortalDocuments();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
-                var source = new Job(document, signers, reference, new Sender(BringPublicOrganizationNumber));
+                var source = new Job("JobTitle", documents, signers, reference, new Sender(BringPublicOrganizationNumber));
 
                 var expected = new portalsignaturejobrequest
                 {
@@ -561,12 +562,12 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_job_with_polling_queue_successfully()
             {
                 //Arrange
-                var document = DomainUtility.GetPortalDocument();
+                var documents = DomainUtility.GetPortalDocuments();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
                 var custompollingqueue = "CustomPollingQueue";
                 var sender = new Sender(BringPublicOrganizationNumber, new PollingQueue(custompollingqueue));
-                var source = new Job(document, signers, reference, sender);
+                var source = new Job("jobTitle", documents, signers, reference, sender);
 
                 var expected = new portalsignaturejobrequest
                 {

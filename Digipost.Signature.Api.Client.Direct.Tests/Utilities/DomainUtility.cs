@@ -16,36 +16,37 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
     {
         public static Job GetDirectJob()
         {
-            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls());
+            return new Job("Job title", GetDirectDocuments(), GetSigner(), "Reference", GetExitUrls());
         }
 
         public static Job GetDirectJob(params SignerIdentifier[] signers)
         {
-            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin) {SignatureType = SignatureType.AuthenticatedSignature}), "Reference", GetExitUrls());
+            return new Job("Job title", GetDirectDocuments(), signers.Select(pin => new Signer(pin) {SignatureType = SignatureType.AuthenticatedSignature}), "Reference", GetExitUrls());
         }
 
         public static Job GetDirectJobWithSender()
         {
-            return new Job(GetDirectDocument(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
+            return new Job("Job title", GetDirectDocuments(), GetSigner(), "Reference", GetExitUrls(), CoreDomainUtility.GetSender());
         }
 
         public static Job GetPollableDirectJob(Sender sender, params SignerIdentifier[] signers)
         {
-            return new Job(GetDirectDocument(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), sender, Polling);
+            return new Job("Job title", GetDirectDocuments(), signers.Select(pin => new Signer(pin)), "Reference", GetExitUrls(), sender, Polling);
         }
 
         internal static Manifest GetDirectManifest()
         {
             return new Manifest(
+                "Job title", 
                 CoreDomainUtility.GetSender(),
-                GetDirectDocument(),
+                GetDirectDocuments(),
                 GetSigner()
             );
         }
 
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetDirectDocument(), GetDirectManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetDirectDocuments(), GetDirectManifest());
         }
 
         public static JobStatusResponse GetJobStatusResponse()
@@ -134,7 +135,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Utilities
 
         public static Document GetDirectDocument()
         {
-            return new Document("TheTitle", "The direct document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+            return new Document("TheTitle", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+        }
+
+        public static List<Document> GetDirectDocuments()
+        {
+            return new List<Document>{ GetDirectDocument() };
         }
 
         public static List<Signer> GetSigner()

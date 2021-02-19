@@ -1,14 +1,14 @@
 ﻿namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
-    internal class DocumentStub : AbstractDocument
+    internal class DocumentStub : Document
     {
-        public DocumentStub(string title, string message, FileType fileType, byte[] documentBytes)
-            : base(title, message, fileType, documentBytes)
+        public DocumentStub(string title, FileType fileType, byte[] documentBytes)
+            : base(title, fileType, documentBytes)
         {
         }
 
-        public DocumentStub(string title, string message, FileType fileType, string documentPath)
-            : base(title, message, fileType, documentPath)
+        public DocumentStub(string title, FileType fileType, string documentPath)
+            : base(title, fileType, documentPath)
         {
         }
     }

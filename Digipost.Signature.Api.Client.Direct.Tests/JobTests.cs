@@ -12,7 +12,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public void Constructor_without_sender_exists()
             {
                 //Act
-                new Job(null, null, null, null);
+                new Job(null, null, null, null, null);
 
                 //Assert
             }
@@ -23,17 +23,17 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var id = "IdDirectJob";
                 var signers = DomainUtility.GetSigner();
-                var document = DomainUtility.GetDirectDocument();
+                var documents = DomainUtility.GetDirectDocuments();
                 var exitUrls = DomainUtility.GetExitUrls();
                 var sender = CoreDomainUtility.GetSender();
 
                 //Act
-                var directJob = new Job(document, signers, id, exitUrls, sender);
+                var directJob = new Job("Job title", documents, signers, id, exitUrls, sender);
 
                 //Assert
                 Assert.Equal(id, directJob.Reference);
                 Assert.Equal(signers, directJob.Signers);
-                Assert.Equal(document, directJob.Document);
+                Assert.Equal(documents, directJob.Documents);
                 Assert.Equal(exitUrls, directJob.ExitUrls);
                 Assert.Equal(sender, directJob.Sender);
             }

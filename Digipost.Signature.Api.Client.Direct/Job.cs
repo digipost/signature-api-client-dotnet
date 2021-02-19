@@ -8,11 +8,12 @@ namespace Digipost.Signature.Api.Client.Direct
 {
     public class Job : IRequestContent, ISignatureJob
     {
-        public Job(Document document, IEnumerable<Signer> signers, string reference, ExitUrls exitUrls, Sender sender = null, StatusRetrievalMethod statusRetrievalMethod = StatusRetrievalMethod.WaitForCallback)
+        public Job(string title, IEnumerable<Document> documents, IEnumerable<Signer> signers, string reference, ExitUrls exitUrls, Sender sender = null, StatusRetrievalMethod statusRetrievalMethod = StatusRetrievalMethod.WaitForCallback)
         {
+            Title = title;
             Reference = reference;
             Signers = signers;
-            Document = document;
+            Documents = documents;
             ExitUrls = exitUrls;
             Sender = sender;
             StatusRetrievalMethod = statusRetrievalMethod;
@@ -30,13 +31,17 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public string Reference { get; }
 
-        public AbstractDocument Document { get; }
+        public string Title { get; }
+
+        public string Description { get; }
+
+        public IEnumerable<Document> Documents { get; }
 
         public Sender Sender { get; internal set; }
 
         public override string ToString()
         {
-            return $"Signers: {Signers}, ExitUrls: {ExitUrls}, Reference: {Reference}, Document: {Document}, Sender: {Sender}, Retrieving status by {StatusRetrievalMethod}";
+            return $"Title:{Title} Description:{Description} Signers: {Signers}, ExitUrls: {ExitUrls}, Reference: {Reference}, Documents: {Documents}, Sender: {Sender}, Retrieving status by {StatusRetrievalMethod}";
         }
     }
 }

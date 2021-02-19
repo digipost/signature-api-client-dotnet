@@ -9,19 +9,26 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
 {
     internal class Manifest : IAsiceAttachable
     {
-        public Manifest(Sender sender, Document document, IEnumerable<Signer> signers)
+        public Manifest(string title, Sender sender, IEnumerable<Document> documents, IEnumerable<Signer> signers)
         {
+            Title = title;
             Sender = sender;
-            Document = document;
+            Documents = documents;
             Signers = signers;
         }
 
-        public Sender Sender { get; internal set; }
+        public string Title { get; }
+        
+        public string NonSensitiveTitle { get; set; }
+        
+        public Sender Sender { get; }
 
-        public Document Document { get; internal set; }
+        public IEnumerable<Document> Documents { get; }
 
-        public IEnumerable<Signer> Signers { get; internal set; }
-
+        public IEnumerable<Signer> Signers { get; }
+        
+        public string Description { get; set; }
+        
         public Availability Availability { get; set; }
 
         public AuthenticationLevel? AuthenticationLevel { get; set; }

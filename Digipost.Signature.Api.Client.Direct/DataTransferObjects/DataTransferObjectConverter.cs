@@ -71,8 +71,10 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
         {
             var dataTransferObject = new directsignaturejobmanifest
             {
+                title = manifest.Title,
+                description = manifest.Description,
                 sender = ToDataTransferObject(manifest.Sender),
-                document = ToDataTransferObject((Document) manifest.Document),
+                documents = manifest.Documents.Select(ToDataTransferObject).ToArray(),
                 signer = ToDataTransferObject(manifest.Signers.Cast<Signer>().ToArray())
             };
 
@@ -104,7 +106,6 @@ namespace Digipost.Signature.Api.Client.Direct.DataTransferObjects
             return new directdocument
             {
                 title = document.Title,
-                description = document.Message,
                 href = document.FileName,
                 mime = document.MimeType
             };

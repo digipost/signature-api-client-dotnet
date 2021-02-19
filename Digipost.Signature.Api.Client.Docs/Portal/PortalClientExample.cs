@@ -17,12 +17,14 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
             ClientConfiguration clientConfiguration = null; //As initialized earlier
             var portalClient = new PortalClient(clientConfiguration);
 
-            var documentToSign = new Document(
-                "Subject of Message",
-                "This is the content",
-                FileType.Pdf,
-                @"C:\Path\ToDocument\File.pdf"
-            );
+            var documentsToSign = new List<Document>
+            {
+                new Document(
+                    "Document title",
+                    FileType.Pdf,
+                    @"C:\Path\ToDocument\File.pdf"
+                )
+            };
 
             var signers = new List<Signer>
             {
@@ -39,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
                 })
             };
 
-            var portalJob = new Job(documentToSign, signers, "myReferenceToJob");
+            var portalJob = new Job("Job title", documentsToSign, signers, "myReferenceToJob");
 
             var portalJobResponse = await portalClient.Create(portalJob);
         }
@@ -109,19 +111,21 @@ namespace Digipost.Signature.Api.Client.Docs.Portal
             var organizationNumber = "123456789";
             var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
 
-            var documentToSign = new Document(
-                "Subject of Message",
-                "This is the content",
-                FileType.Pdf,
-                @"C:\Path\ToDocument\File.pdf"
-            );
+            var documentsToSign = new List<Document>
+            {
+                new Document(
+                    "Document title",
+                    FileType.Pdf,
+                    @"C:\Path\ToDocument\File.pdf"
+                )
+            };
 
             var signers = new List<Signer>
             {
                 new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup())
             };
 
-            var portalJob = new Job(documentToSign, signers, "myReferenceToJob", sender);
+            var portalJob = new Job("Job title", documentsToSign, signers, "myReferenceToJob", sender);
 
             var portalJobResponse = await portalClient.Create(portalJob);
 

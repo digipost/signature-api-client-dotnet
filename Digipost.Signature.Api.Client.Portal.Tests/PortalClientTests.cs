@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var portalClient = new PortalClient(clientConfiguration);
-                var portalJob = new Job(DomainUtility.GetPortalDocument(), DomainUtility.GetSigners(1), "SendersReference");
+                var portalJob = new Job("JobTitle", DomainUtility.GetPortalDocuments(), DomainUtility.GetSigners(1), "SendersReference");
 
                 //Act
                 await Assert.ThrowsAsync<SenderNotSpecifiedException>(async () => await portalClient.Create(portalJob).ConfigureAwait(false)).ConfigureAwait(false);

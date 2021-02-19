@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Enums;
+﻿using System.Collections.Generic;
+using Digipost.Signature.Api.Client.Core.Enums;
 
 namespace Digipost.Signature.Api.Client.Core
 {
@@ -6,7 +7,7 @@ namespace Digipost.Signature.Api.Client.Core
     {
         Sender Sender { get; }
 
-        AbstractDocument Document { get; }
+        IEnumerable<Document> Documents { get; }
 
         /// <summary>
         ///     Specify the minimum level of authentication for the signer(s) of this job. This
@@ -32,5 +33,15 @@ namespace Digipost.Signature.Api.Client.Core
         ///     A custom reference that is attached to the job.
         /// </summary>
         string Reference { get; }
+        
+        /// <summary>
+        ///     Title of the job.
+        /// </summary>
+        string Title { get; }
+        
+        /// <summary>
+        ///     Description of the job.
+        /// </summary>
+        string Description { get; }
     }
 }

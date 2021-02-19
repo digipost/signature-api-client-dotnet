@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
 
                 //Act
-                new Job(null, null, null);
+                new Job(null, null, null, null);
 
                 //Assert
             }
@@ -22,15 +22,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void Simple_constructor()
             {
                 //Arrange
-                var document = DomainUtility.GetPortalDocument();
+                var documents = DomainUtility.GetPortalDocuments();
                 var signers = DomainUtility.GetSigners(3);
                 var reference = "PortalJobReference";
-                var portalJob = new Job(document, signers, reference);
+                var title = "Title";
+                var portalJob = new Job(title, documents, signers, reference);
 
                 //Act
 
                 //Assert
-                Assert.Equal(document, portalJob.Document);
+                Assert.Equal(title, portalJob.Title);
+                Assert.Equal(documents, portalJob.Documents);
                 Assert.Equal(signers, portalJob.Signers);
                 Assert.Equal(reference, portalJob.Reference);
             }

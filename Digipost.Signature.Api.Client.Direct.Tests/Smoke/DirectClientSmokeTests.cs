@@ -134,5 +134,23 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
                 .Get_status_by_polling(senderWithQueue)
                 .Expect_job_to_have_status(JobStatus.NoChanges);
         }
+        
+        [Fact]
+        public void create_job_with_multiple_docs()
+        {
+            var signer = new PersonalIdentificationNumber("01048200229");
+
+            _fixture.TestHelper
+                .Create_direct_job_with_multiple_documents(signer)
+                .Sign_job(signer)
+                .Get_status()
+                .Expect_job_to_have_status(
+                    JobStatus.CompletedSuccessfully,
+                    ExpectedSignerStatus(signer, SignatureStatus.Signed)
+                )
+                .Get_XAdES(signer)
+                .Get_PAdES()
+                .Confirm_status();
+        }
     }
 }

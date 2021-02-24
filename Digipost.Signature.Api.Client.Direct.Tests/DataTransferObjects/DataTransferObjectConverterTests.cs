@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             [Fact]
             public void Converts_direct_job_successfully()
             {
-                var documents = DomainUtility.GetDirectDocuments();
+                var documents = DomainUtility.GetSingleDirectDocument();
                 var signer = DomainUtility.GetSigner();
                 var jobTitle = "JobTitle";
                 var reference = "reference";
@@ -63,7 +63,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             [Fact]
             public void Converts_direct_job_successfully_with_polling_queue_successfully()
             {
-                var documents = DomainUtility.GetDirectDocuments();
+                var documents = DomainUtility.GetSingleDirectDocument();
                 var signer = DomainUtility.GetSigner();
                 var reference = "reference";
                 var exitUrls = DomainUtility.GetExitUrls();

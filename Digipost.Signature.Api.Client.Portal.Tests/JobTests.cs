@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public void Simple_constructor()
             {
                 //Arrange
-                var documents = DomainUtility.GetPortalDocuments();
+                var documents = DomainUtility.GetSinglePortalDocument();
                 var signers = DomainUtility.GetSigners(3);
                 var reference = "PortalJobReference";
                 var title = "Title";

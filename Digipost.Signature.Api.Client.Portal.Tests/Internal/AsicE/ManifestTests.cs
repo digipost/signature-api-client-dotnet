@@ -17,7 +17,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
-                var documents = DomainUtility.GetPortalDocuments();
+                var documents = DomainUtility.GetSinglePortalDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var title = "JobTitle";
                 

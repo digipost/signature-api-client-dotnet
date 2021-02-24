@@ -23,7 +23,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var id = "IdDirectJob";
                 var signers = DomainUtility.GetSigner();
-                var documents = DomainUtility.GetDirectDocuments();
+                var documents = DomainUtility.GetSingleDirectDocument();
                 var exitUrls = DomainUtility.GetExitUrls();
                 var sender = CoreDomainUtility.GetSender();
 

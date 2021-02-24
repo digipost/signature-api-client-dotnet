@@ -26,7 +26,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -80,7 +80,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
                 
-                var source = new Manifest("JobTitle", new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
+                var source = new Manifest("JobTitle", new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -142,7 +142,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer>
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(), new List<Signer>
                 {
                     new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
                     new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
@@ -204,7 +204,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer>
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(), new List<Signer>
                 {
                     new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
                     new Signer(new PersonalIdentificationNumber("01043100319"), new NotificationsUsingLookup())
@@ -266,7 +266,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(), new List<Signer> {new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()) {Order = 1}, new Signer(new PersonalIdentificationNumber("99999999999"), new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(), new List<Signer> {new Signer(new PersonalIdentificationNumber("00000000000"), new NotificationsUsingLookup()) {Order = 1}, new Signer(new PersonalIdentificationNumber("99999999999"), new NotificationsUsingLookup()) {Order = 2}}); //TODO: Skal ikke bruke lookup
 
                 var expected = new portalsignaturejobmanifest
                 {
@@ -317,7 +317,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup())
@@ -379,7 +379,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
                 const string organizationNumberSender = "12345678902";
                 const string title = "JobTitle";
 
-                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetPortalDocuments(),
+                var source = new Manifest(title, new Sender(organizationNumberSender), DomainUtility.GetSinglePortalDocument(),
                     new List<Signer>
                     {
                         new Signer(new PersonalIdentificationNumber("01043100358"), new NotificationsUsingLookup()),
@@ -538,7 +538,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_job_successfully()
             {
                 //Arrange
-                var documents = DomainUtility.GetPortalDocuments();
+                var documents = DomainUtility.GetSinglePortalDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
                 var source = new Job("JobTitle", documents, signers, reference, new Sender(BringPublicOrganizationNumber));
@@ -562,7 +562,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.DataTransferObjects
             public void Converts_portal_job_with_polling_queue_successfully()
             {
                 //Arrange
-                var documents = DomainUtility.GetPortalDocuments();
+                var documents = DomainUtility.GetSinglePortalDocument();
                 var signers = DomainUtility.GetSigners(2);
                 var reference = "reference";
                 var custompollingqueue = "CustomPollingQueue";

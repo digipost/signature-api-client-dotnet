@@ -15,7 +15,7 @@ namespace Digipost.Signature.Api.Client.Core
         public Document(string title, FileType fileType, byte[] documentBytes)
         {
             Title = title;
-            FileName = $"{title}{fileType.GetExtension()}";
+            FileName = $"{Guid.NewGuid()}{fileType.GetExtension()}";
             MimeType = fileType.ToMimeType();
             Bytes = documentBytes;
             Id = "Id_" + Guid.NewGuid();

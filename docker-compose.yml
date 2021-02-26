@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile_tests
+    volumes:
+      # Smoketest requires some setup. See internal documentation.
+      - $HOME/.microsoft/usersecrets/organization-certificate/secrets.json:/root/.microsoft/usersecrets/organization-certificate/secrets.json:ro
+      - $HOME/Documents/sertifikater/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12:$HOME/Documents/sertifikater/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12:ro

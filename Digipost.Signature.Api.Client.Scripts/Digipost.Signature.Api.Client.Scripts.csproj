@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="api-client-shared" Version="4.0.0" />
+        <PackageReference Include="Digipost.Api.Client.Shared" Version="7.0.1" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">

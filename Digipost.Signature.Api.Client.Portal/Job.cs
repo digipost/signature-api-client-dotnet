@@ -7,9 +7,10 @@ namespace Digipost.Signature.Api.Client.Portal
 {
     public class Job : IRequestContent, ISignatureJob
     {
-        public Job(Document document, IEnumerable<Signer> signers, string reference, Sender sender = null)
+        public Job(string title, IEnumerable<Document> documents, IEnumerable<Signer> signers, string reference, Sender sender = null)
         {
-            Document = document;
+            Title = title;
+            Documents = documents;
             Signers = signers;
             Reference = reference;
             Sender = sender;
@@ -23,15 +24,21 @@ namespace Digipost.Signature.Api.Client.Portal
 
         public IdentifierInSignedDocuments? IdentifierInSignedDocuments { get; set; }
 
-        public AbstractDocument Document { get; }
+        public IEnumerable<Document> Documents { get; }
 
         public string Reference { get; }
+
+        public string Title { get; }
+        
+        public string NonSensitiveTitle { get; set; }
+
+        public string Description { get; set; }
 
         public Sender Sender { get; internal set; }
 
         public override string ToString()
         {
-            return $"Signers: {Signers}, Availability: {Availability}, Document: {Document}, Reference: {Reference}, Sender: {Sender}";
+            return $"Title:{Title} NonSensitiveTitle:{NonSensitiveTitle} Description:{Description} Signers: {Signers}, Availability: {Availability}, Documents: {Documents}, Reference: {Reference}, Sender: {Sender}";
         }
     }
 }

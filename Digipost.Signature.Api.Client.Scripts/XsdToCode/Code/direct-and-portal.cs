@@ -319,10 +319,6 @@ namespace Schemas {
         
         private string titleField;
         
-        private string nonsensitivetitleField;
-        
-        private string descriptionField;
-        
         private string hrefField;
         
         private string mimeField;
@@ -334,27 +330,6 @@ namespace Schemas {
             }
             set {
                 this.titleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("nonsensitive-title")]
-        public string nonsensitivetitle {
-            get {
-                return this.nonsensitivetitleField;
-            }
-            set {
-                this.nonsensitivetitleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
             }
         }
         
@@ -689,8 +664,6 @@ namespace Schemas {
         
         private string titleField;
         
-        private string descriptionField;
-        
         private string hrefField;
         
         private string mimeField;
@@ -702,16 +675,6 @@ namespace Schemas {
             }
             set {
                 this.titleField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string description {
-            get {
-                return this.descriptionField;
-            }
-            set {
-                this.descriptionField = value;
             }
         }
         
@@ -1012,7 +975,11 @@ namespace Schemas {
         
         private sender senderField;
         
-        private directdocument documentField;
+        private string titleField;
+        
+        private string descriptionField;
+        
+        private directdocument[] documentsField;
         
         private authenticationlevel requiredauthenticationField;
         
@@ -1044,12 +1011,33 @@ namespace Schemas {
         }
         
         /// <remarks/>
-        public directdocument document {
+        public string title {
             get {
-                return this.documentField;
+                return this.titleField;
             }
             set {
-                this.documentField = value;
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("document", IsNullable=false)]
+        public directdocument[] documents {
+            get {
+                return this.documentsField;
+            }
+            set {
+                this.documentsField = value;
             }
         }
         
@@ -1469,7 +1457,13 @@ namespace Schemas {
         
         private sender senderField;
         
-        private portaldocument documentField;
+        private string titleField;
+        
+        private string nonsensitivetitleField;
+        
+        private string descriptionField;
+        
+        private portaldocument[] documentsField;
         
         private authenticationlevel requiredauthenticationField;
         
@@ -1503,12 +1497,44 @@ namespace Schemas {
         }
         
         /// <remarks/>
-        public portaldocument document {
+        public string title {
             get {
-                return this.documentField;
+                return this.titleField;
             }
             set {
-                this.documentField = value;
+                this.titleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("nonsensitive-title")]
+        public string nonsensitivetitle {
+            get {
+                return this.nonsensitivetitleField;
+            }
+            set {
+                this.nonsensitivetitleField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string description {
+            get {
+                return this.descriptionField;
+            }
+            set {
+                this.descriptionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("document", IsNullable=false)]
+        public portaldocument[] documents {
+            get {
+                return this.documentsField;
+            }
+            set {
+                this.documentsField = value;
             }
         }
         
@@ -1634,6 +1660,8 @@ namespace Schemas {
         
         private string cancellationurlField;
         
+        private string deletedocumentsurlField;
+        
         private signatures signaturesField;
         
         /// <remarks/>
@@ -1686,6 +1714,17 @@ namespace Schemas {
             }
             set {
                 this.cancellationurlField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("delete-documents-url")]
+        public string deletedocumentsurl {
+            get {
+                return this.deletedocumentsurlField;
+            }
+            set {
+                this.deletedocumentsurlField = value;
             }
         }
         

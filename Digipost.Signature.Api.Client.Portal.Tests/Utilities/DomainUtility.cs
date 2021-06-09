@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
     {
         internal static SignatureGenerator GetSignature()
         {
-            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetPortalDocument(), GetPortalManifest());
+            return new SignatureGenerator(CoreDomainUtility.GetTestCertificate(), GetSinglePortalDocument(), GetPortalManifest());
         }
 
         public static Availability GetAvailability()
@@ -28,7 +28,18 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         public static Job GetPortalJob(params Signer[] signers)
         {
             return new Job(
-                GetPortalDocument(),
+                "JobTitle",
+                GetSinglePortalDocument(),
+                signers.Length == 0 ? GetSignerWithPersonalIdentificationNumber() : signers.ToList(),
+                "PortalJobReference"
+            );
+        }
+        
+        public static Job GetPortalJobWithMultipleDocuments(params Signer[] signers)
+        {
+            return new Job(
+                "JobTitle",
+                GetMultiplePortalDocuments(),
                 signers.Length == 0 ? GetSignerWithPersonalIdentificationNumber() : signers.ToList(),
                 "PortalJobReference"
             );
@@ -37,15 +48,26 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Utilities
         internal static Manifest GetPortalManifest()
         {
             return new Manifest(
+                "JobTitle",
                 CoreDomainUtility.GetSender(),
-                GetPortalDocument(),
+                GetSinglePortalDocument(),
                 GetSigners(2)
             );
         }
 
         internal static Document GetPortalDocument()
         {
-            return new Document("TheTitle", "Some cool portal document message", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+            return new Document("TheTitle", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes());
+        }
+        
+        internal static List<Document> GetSinglePortalDocument()
+        {
+            return new List<Document>{ GetPortalDocument() };
+        }
+        
+        internal static List<Document> GetMultiplePortalDocuments()
+        {
+            return new List<Document>{ GetPortalDocument(), new Document("Document 2", FileType.Pdf, CoreDomainUtility.GetPdfDocumentBytes()) };
         }
 
         public static List<Signer> GetSignerWithPersonalIdentificationNumber()

@@ -37,6 +37,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             return Create(GetPortalJob(signers));
         }
 
+        public TestHelper Create_job_with_multiple_documents(Sender sender, params Signer[] signers)
+        {
+            return Create(GetPortalJobWithMultipleDocuments(signers));
+        }
+
         private TestHelper Create(Job job, Sender optionalSender = null)
         {
             if (optionalSender != null)

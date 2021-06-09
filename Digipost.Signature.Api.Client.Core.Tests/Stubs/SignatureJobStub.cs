@@ -1,4 +1,5 @@
-﻿using Digipost.Signature.Api.Client.Core.Enums;
+﻿using System.Collections.Generic;
+using Digipost.Signature.Api.Client.Core.Enums;
 
 namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
 {
@@ -6,9 +7,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Stubs
     {
         public Sender Sender { get; }
 
-        public AbstractDocument Document { get; }
-
+        public IEnumerable<Document> Documents { get; }
+        
         public string Reference { get; set; }
+
+        public string Title { get; }
+
+        public string Description { get; }
 
         public AuthenticationLevel? AuthenticationLevel { get; set; }
 

@@ -9,7 +9,6 @@ using Digipost.Signature.Api.Client.Direct;
 using Digipost.Signature.Api.Client.Direct.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Document = Digipost.Signature.Api.Client.Direct.Document;
 
 namespace Digipost.Signature.Api.Client.Docs.Direct
 {
@@ -22,11 +21,13 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             ClientConfiguration clientConfiguration = null; //As initialized earlier
             var directClient = new DirectClient(clientConfiguration);
 
-            var documentToSign = new Document(
-                "Subject of Message",
-                "This is the content",
-                FileType.Pdf,
-                @"C:\Path\ToDocument\File.pdf");
+            var documentsToSign = new List<Document>
+            {
+                new Document(
+                    "Document title",
+                    FileType.Pdf,
+                    @"C:\Path\ToDocument\File.pdf")
+            };
 
             var exitUrls = new ExitUrls(
                 new Uri("http://redirectUrl.no/onCompletion"),
@@ -40,7 +41,7 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
                 new Signer(new PersonalIdentificationNumber("10987654321"))
             };
 
-            var job = new Job(documentToSign, signers, "SendersReferenceToSignatureJob", exitUrls);
+            var job = new Job("Job title", documentsToSign, signers, "SendersReferenceToSignatureJob", exitUrls);
 
             var directJobResponse = await directClient.Create(job);
         }
@@ -176,13 +177,14 @@ namespace Digipost.Signature.Api.Client.Docs.Direct
             var organizationNumber = "123456789";
             var sender = new Sender(organizationNumber, new PollingQueue("CustomPollingQueue"));
 
-            Document documentToSign = null; // As initialized earlier
+            List<Document> documentsToSign = null; // As initialized earlier
             ExitUrls exitUrls = null; // As initialized earlier
 
             var signer = new PersonalIdentificationNumber("00000000000");
 
             var job = new Job(
-                documentToSign,
+                "Job title",
+                documentsToSign,
                 new List<Signer> {new Signer(signer)},
                 "SendersReferenceToSignatureJob",
                 exitUrls,

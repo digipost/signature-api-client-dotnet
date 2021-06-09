@@ -7,6 +7,7 @@
     
   <ItemGroup>
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Core\Digipost.Signature.Api.Client.Core.csproj" />
+    <ProjectReference Include="..\Digipost.Signature.Api.Client.Direct\Digipost.Signature.Api.Client.Direct.csproj" />
     <ProjectReference Include="..\Digipost.Signature.Api.Client.Portal\Digipost.Signature.Api.Client.Portal.csproj" />
   </ItemGroup>
 

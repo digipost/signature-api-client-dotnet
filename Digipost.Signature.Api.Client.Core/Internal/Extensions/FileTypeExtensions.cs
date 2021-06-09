@@ -22,5 +22,24 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Extensions
 
             return mimeType;
         }
+        
+        public static string GetExtension(this FileType fileType)
+        {
+            string extension;
+
+            switch (fileType)
+            {
+                case FileType.Pdf:
+                    extension = ".pdf";
+                    break;
+                case FileType.Txt:
+                    extension = ".txt";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
+            }
+
+            return extension;
+        }
     }
 }

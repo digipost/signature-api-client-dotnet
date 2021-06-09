@@ -24,8 +24,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Initializes_all_values_with_document_bytes()
             {
                 //Arrange
-                const string subject = "subject";
-                const string message = "message";
+                const string title = "documentTitle";
                 const FileType fileType = FileType.Pdf;
                 const string expectedMimeType = "application/pdf";
 
@@ -33,15 +32,13 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Act
                 var document = new DocumentStub(
-                    subject,
-                    message,
+                    title,
                     fileType,
                     pdfDocumentBytes
                 );
 
                 //Assert
-                Assert.Equal(subject, document.Title);
-                Assert.Equal(message, document.Message);
+                Assert.Equal(title, document.Title);
                 Assert.Equal(expectedMimeType, document.MimeType);
                 Assert.True(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
@@ -50,8 +47,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Initializes_all_values_with_document_path()
             {
                 //Arrange
-                const string subject = "subject";
-                const string message = "message";
+                const string title = "documentTitle";
                 const FileType fileType = FileType.Txt;
                 const string expectedMimeType = "text/plain";
 
@@ -59,8 +55,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
 
                 //Act
                 var document = new DocumentStub(
-                    subject,
-                    message,
+                    title,
                     fileType,
                     documentPath
                 );
@@ -68,50 +63,17 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 var pdfDocumentBytes = File.ReadAllBytes(documentPath);
 
                 //Assert
-                Assert.Equal(subject, document.Title);
-                Assert.Equal(message, document.Message);
+                Assert.Equal(title, document.Title);
                 Assert.Equal(expectedMimeType, document.MimeType);
                 Assert.True(pdfDocumentBytes.SequenceEqual(document.Bytes));
             }
 
             private static string DocumentFilePath()
             {
-                var executingAssembly = Assembly.GetExecutingAssembly();
-                var directoryInfo = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+                var directoryInfo = Directory.GetParent(Directory.GetCurrentDirectory()).Parent?.Parent?.FullName;
                 var documentPath = Path.Combine(directoryInfo, "Resources", "Documents", "Dokument.pdf").Replace("file:", "");
 
                 return documentPath;
-            }
-        }
-
-        public class IdMethod : AbstractDocumentTests
-        {
-            [Fact]
-            public void Returns_correct_static_string()
-            {
-                //Arrange
-                var id = "Id_0";
-
-                //Act
-                var document = CoreDomainUtility.GetDocument();
-
-                //Assert
-                Assert.Equal(id, document.Id);
-            }
-        }
-
-        public class FileNameMethod : AbstractDocumentTests
-        {
-            [Fact]
-            public void Returns_file_name_with_date()
-            {
-                //Arrange
-
-                //Act
-                var document = new DocumentStub("title", "message", FileType.Txt, new byte[] {0xb});
-
-                //Assert
-                Assert.True(document.FileName.Contains(DateTime.Now.ToString("yyyyMMdd")) && document.FileName.Contains("document"));
             }
         }
     }

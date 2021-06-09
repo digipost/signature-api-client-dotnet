@@ -1,6 +1,6 @@
 # Running for the first time:
 # Install Powershell with command ...
-# brew cask install powershell
+# brew install --cask powershell
 
 
 function GenerateCode($XsdDirectory, $RootXsd, $OutDir)

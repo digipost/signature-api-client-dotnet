@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
@@ -13,10 +15,10 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         private SignedXml _signatureNode;
         private XmlDocument _xml;
 
-        public SignatureGenerator(X509Certificate2 certificate, params IAsiceAttachable[] attachables)
+        public SignatureGenerator(X509Certificate2 certificate, IEnumerable<IAsiceAttachable> documents, IAsiceAttachable manifest)
         {
             Certificate = certificate;
-            Attachables = attachables;
+            Attachables = documents.Append(manifest).ToArray();
         }
 
         public X509Certificate2 Certificate { get; }

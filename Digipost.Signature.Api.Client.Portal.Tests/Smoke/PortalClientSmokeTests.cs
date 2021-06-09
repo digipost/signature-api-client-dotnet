@@ -89,5 +89,17 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
             _fixture.TestHelper
                 .Create_job(new Sender(BringPrivateOrganizationNumber), signer);
         }
+        
+        [Fact]
+        public void Can_create_portal_job_with_multiple_documents()
+        {
+            var signer = new Signer(new PersonalIdentificationNumber("01048200229"), new Notifications(new Email("email@example.com"))) {OnBehalfOf = OnBehalfOf.Other};
+
+            _fixture.TestHelper
+                .Create_job_with_multiple_documents(new Sender(BringPublicOrganizationNumber), signer)
+                .Cancel_job()
+                .ExpectJobStatusForSenderIs(Failed)
+                .Confirm_job();
+        }
     }
 }

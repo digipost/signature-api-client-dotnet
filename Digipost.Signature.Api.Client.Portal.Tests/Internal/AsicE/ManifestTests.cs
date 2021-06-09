@@ -17,15 +17,16 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Internal.AsicE
             {
                 //Arrange
                 var sender = CoreDomainUtility.GetSender();
-                var document = DomainUtility.GetPortalDocument();
+                var documents = DomainUtility.GetSinglePortalDocument();
                 var signers = DomainUtility.GetSigners(2);
-
+                var title = "JobTitle";
+                
                 //Act
-                var manifest = new Manifest(sender, document, signers);
+                var manifest = new Manifest(title, sender, documents, signers);
 
                 //Assert
                 Assert.Equal(sender, manifest.Sender);
-                Assert.Equal(document, manifest.Document);
+                Assert.Equal(documents, manifest.Documents);
                 Assert.Equal(signers, manifest.Signers);
             }
         }

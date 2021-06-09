@@ -40,7 +40,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 //Arrange
                 var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
                 var directClient = new DirectClient(clientConfiguration);
-                var directJob = new Job(DomainUtility.GetDirectDocument(), DomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
+                var directJob = new Job("Job title", DomainUtility.GetSingleDirectDocument(), DomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
 
                 //Act
                 await Assert.ThrowsAsync<SenderNotSpecifiedException>(async () => await directClient.Create(directJob).ConfigureAwait(false)).ConfigureAwait(false);

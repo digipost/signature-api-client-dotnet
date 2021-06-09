@@ -34,6 +34,13 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
             _jobResponse = _directClient.Create(job).Result;
             return this;
         }
+        
+        public TestHelper Create_direct_job_with_multiple_documents(params SignerIdentifier[] signers)
+        {
+            var job = DomainUtility.GetDirectJobWithMultipleDocuments(signers);
+            _jobResponse = _directClient.Create(job).Result;
+            return this;
+        }
 
         public TestHelper Create_pollable_direct_job(Sender sender, params SignerIdentifier[] signers)
         {

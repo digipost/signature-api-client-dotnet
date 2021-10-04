@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - '*'
+      - "*"
 
 jobs:
   release:
@@ -25,17 +25,17 @@ jobs:
       - name: Print assembly version
         run: echo $ASSEMBLY_VERSION
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Archive
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Archive
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Direct
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Direct
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Portal
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Portal
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Resources
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Resources
       - name: Pack nupkg
-        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Scripts
+        run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Scripts
       - name: Push Client to NuGet
         env:
           NUGET_API_KEY: ${{ secrets.NUGETAPIKEY }}

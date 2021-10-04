@@ -11,16 +11,16 @@ namespace Digipost.Signature.Api.Client.Core.Internal
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.Add("User-Agent", GetAssemblyVersion());
+            request.Headers.Add("User-Agent", GetInformationalVersion());
 
             return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
-
-        private static string GetAssemblyVersion()
+        
+        private static string GetInformationalVersion()
         {
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var informationalVersion = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
 
-            return $"posten-signature-api-client-dotnet/{assemblyVersion} (netcore/{GetNetCoreVersion()})";
+            return $"posten-signature-api-client-dotnet/{informationalVersion} (netcore/{GetNetCoreVersion()})";
         }
 
         private static string GetNetCoreVersion()

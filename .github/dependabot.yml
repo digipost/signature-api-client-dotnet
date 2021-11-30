@@ -1,0 +1,21 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: NLog.Extensions.Logging
+    versions:
+    - 1.7.0
+  - dependency-name: NLog
+    versions:
+    - 4.7.7
+  - dependency-name: CompareNETObjects
+    versions:
+    - 4.71.0
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.8.3

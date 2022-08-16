@@ -38,7 +38,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var parameterSender = new Sender(PostenOrganizationNumber);
                 var clientConfigurationSender = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), clientConfigurationSender);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), clientConfigurationSender)
+                {
+                    CertificateValidationPreferences = { ValidateSenderCertificate = false }
+                };
                 var fakeHttpClientHandlerChecksCorrectSender = new FakeHttpClientHandlerChecksCorrectSenderResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {

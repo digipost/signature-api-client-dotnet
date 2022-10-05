@@ -12,7 +12,8 @@ namespace Digipost.Signature.Api.Client.Direct.Internal.AsicE
             var manifest = new Manifest(job.Title, job.Sender, job.Documents, job.Signers)
             {
                 AuthenticationLevel = job.AuthenticationLevel,
-                IdentifierInSignedDocuments = job.IdentifierInSignedDocuments
+                IdentifierInSignedDocuments = job.IdentifierInSignedDocuments,
+                Description = job.Description
             };
             var signature = new SignatureGenerator(certificate, job.Documents, manifest);
 

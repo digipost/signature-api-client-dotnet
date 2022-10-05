@@ -33,7 +33,7 @@ namespace Digipost.Signature.Api.Client.Direct
 
         public string Title { get; }
 
-        public string Description { get; }
+        public string Description { get; set; }
 
         public IEnumerable<Document> Documents { get; }
 

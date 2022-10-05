@@ -26,9 +26,12 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 var documents = DomainUtility.GetSingleDirectDocument();
                 var exitUrls = DomainUtility.GetExitUrls();
                 var sender = CoreDomainUtility.GetSender();
-
+                var description = "Description";
                 //Act
-                var directJob = new Job("Job title", documents, signers, id, exitUrls, sender);
+                var directJob = new Job("Job title", documents, signers, id, exitUrls, sender)
+                {
+                    Description = description
+                };
 
                 //Assert
                 Assert.Equal(id, directJob.Reference);
@@ -36,6 +39,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
                 Assert.Equal(documents, directJob.Documents);
                 Assert.Equal(exitUrls, directJob.ExitUrls);
                 Assert.Equal(sender, directJob.Sender);
+                Assert.Equal(description, directJob.Description);
             }
         }
     }

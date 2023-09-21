@@ -5,8 +5,8 @@
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
 
         <Authors>Digipost AS</Authors>
-        <Company>Posten Norge AS</Company>
-        <Copyright>Copyright © 2020 Posten Norge AS</Copyright>
+        <Company>Posten Bring AS</Company>
+        <Copyright>Copyright © 2023 Posten Bring AS</Copyright>
 
         <PackageProjectUrl>https://github.com/digipost/signature-api-client-dotnet/</PackageProjectUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

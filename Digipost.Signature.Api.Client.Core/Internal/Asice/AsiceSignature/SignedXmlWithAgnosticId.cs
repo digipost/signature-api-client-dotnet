@@ -71,12 +71,12 @@ namespace Digipost.Signature.Api.Client.Core.Internal.Asice.AsiceSignature
         }
 
 
-        private static RSA ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
+        private static AsymmetricAlgorithm ExtractValidPrivateKeyOrThrow(X509Certificate2 certificate)
         {
-            var targetKey = certificate.GetRSAPrivateKey();
-            if (targetKey == null)
+            var targetKey = certificate.GetRSAPrivateKey() ?? (AsymmetricAlgorithm)certificate.GetECDsaPrivateKey();
 
-                throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} is not a valid RSA asymetric key.");
+            if (targetKey == null)
+                throw new SecurityException($"Specified certificate with fingerprint {certificate.Thumbprint} is not a valid RSA or ECD asymmetric key.");
 
             return targetKey;
         }

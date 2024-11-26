@@ -28,7 +28,8 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Smoke
 
             var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), new Sender(BringPublicOrganizationNumber))
             {
-                LogRequestAndResponse = true
+                LogRequestAndResponse = true,
+                CertificateValidationPreferences = {ValidateSenderCertificate = false} 
             };
             var client = new DirectClient(clientConfig, serviceProvider.GetService<ILoggerFactory>());
 

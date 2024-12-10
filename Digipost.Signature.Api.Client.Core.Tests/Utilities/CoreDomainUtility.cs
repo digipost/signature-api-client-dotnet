@@ -28,7 +28,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), GetSender());
+            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), GetSender())
+            {
+                CertificateValidationPreferences = {ValidateSenderCertificate = false}
+            };
         }
 
         public static Document GetDocument()

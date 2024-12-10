@@ -32,7 +32,11 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
             var sender = new Sender(BringPublicOrganizationNumber);
-            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender) {HttpClientTimeoutInMilliseconds = 30000, LogRequestAndResponse = true};
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender)
+            {
+                HttpClientTimeoutInMilliseconds = 30000, LogRequestAndResponse = true,
+                CertificateValidationPreferences = {ValidateSenderCertificate = false} 
+            };
             var client = new PortalClient(clientConfig, serviceProvider.GetService<ILoggerFactory>());
             return client;
         }

@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 3.1.101
+          dotnet-version: 8.0.403
       - name: Install dependencies
         run: dotnet restore
       - name: Build
@@ -24,6 +24,10 @@ jobs:
         run: echo "ASSEMBLY_VERSION=$(echo ${GITHUB_REF:10} | cut -d '.' -f 1).0.0" >> $GITHUB_ENV
       - name: Print assembly version
         run: echo $ASSEMBLY_VERSION
+      - name: Sed InformationalVersion number for build purposes
+        run: sed -i -e "s|0.0.0.0<\/Version>|$RELEASE_VERSION<\/Version>|g" Directory.Build.props
+      - name: Sed AssemblyVersion number for build purposes
+        run: sed -i -e "s|0.0.0.0<\/AssemblyVersion>>|$RELEASE_VERSION<\/AssemblyVersion>>|g" Directory.Build.props
       - name: Pack nupkg
         run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
       - name: Pack nupkg

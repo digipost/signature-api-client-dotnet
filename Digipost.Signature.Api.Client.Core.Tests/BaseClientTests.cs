@@ -53,7 +53,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), expected);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), expected)
+                {
+                    CertificateValidationPreferences = {ValidateSenderCertificate = false}
+                };
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
@@ -69,7 +72,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
                 var clientConfigurationSender = new Sender(PostenOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), clientConfigurationSender);
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), clientConfigurationSender)
+                {
+                    CertificateValidationPreferences = {ValidateSenderCertificate = false}
+                };
                 var client = new ClientStub(clientConfiguration);
 
                 //Act
@@ -84,7 +90,10 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate())
+                {
+                    CertificateValidationPreferences = {ValidateSenderCertificate = false}
+                };
                 var client = new ClientStub(clientConfiguration);
 
                 //Act

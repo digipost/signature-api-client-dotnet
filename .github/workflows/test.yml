@@ -10,13 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 3.1.101
+          dotnet-version: 8.0.403
       - name: Install dependencies
         run: dotnet restore 
       - name: Decode certificate
         run: echo -n $(echo ${{ secrets.ENCODED_SMOKE_TEST_CERTIFICATE }}) | base64 -d > $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
+      - name: checksum p12 (for debug-purposes)
+        run: sha256sum $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12
       - name: Set certificate path
         run: dotnet user-secrets set Certificate:Path:Absolute $(echo ${GITHUB_WORKSPACE})/Bring_Digital_Signature_Key_Encipherment_Data_Encipherment.p12 --project Digipost.Signature.Api.Client.Core
       - name: Set certificate password

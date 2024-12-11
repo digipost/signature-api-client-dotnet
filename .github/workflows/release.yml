@@ -14,10 +14,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.403
-      - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
       - name: Set release version
         run: echo "RELEASE_VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
       - name: Set assembly version to major semver
@@ -28,6 +24,10 @@ jobs:
         run: sed -i -e "s|0.0.0.0<\/Version>|$RELEASE_VERSION<\/Version>|g" Directory.Build.props
       - name: Sed AssemblyVersion number for build purposes
         run: sed -i -e "s|0.0.0.0<\/AssemblyVersion>>|$RELEASE_VERSION<\/AssemblyVersion>>|g" Directory.Build.props
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
       - name: Pack nupkg
         run: dotnet pack --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
       - name: Pack nupkg

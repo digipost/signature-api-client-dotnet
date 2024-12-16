@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-restore
       - name: Pack nupkg
         run: dotnet pack -p:PackageVersion=$RELEASE_VERSION -p:AssemblyVersion=$ASSEMBLY_VERSION -p:InformationalVersion=$RELEASE_VERSION --configuration Release --no-build --output digipost/packed Digipost.Signature.Api.Client.Core
       - name: Pack nupkg

@@ -132,7 +132,7 @@ namespace Digipost.Signature.Api.Client.Program
                 }
                 catch (Exception e)
                 {
-                    Log.LogError("Exception: ", e.Message);
+                    Log.LogError("Exception: {ExceptionMessage}", e.Message);
                 }
             }
         }

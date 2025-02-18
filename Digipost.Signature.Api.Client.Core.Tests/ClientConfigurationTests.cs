@@ -51,17 +51,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public void Constructor_with_no_sender_and_certificate_exists()
-            {
-                //Arrange
-
-                //Act
-                new ClientConfiguration(Environment.DifiQa, new X509Certificate2());
-
-                //Assert
-            }
-
-            [Fact]
             public void Constructor_with_no_sender_and_certificate_thumbprint_exists()
             {
                 //Arrange

@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Program
 
         private static void Main(string[] args)
         {
-            var stringPrivateOrganizationNumber = "088015814";
+            //var stringPrivateOrganizationNumber = "088015814";
             var stringPublicOrganizationNumber = "988015814";
 
             var testEnvironment = Environment.Test;
@@ -132,7 +132,7 @@ namespace Digipost.Signature.Api.Client.Program
                 }
                 catch (Exception e)
                 {
-                    Log.LogError("Exception: ", e.Message);
+                    Log.LogError("Exception: {ExceptionMessage}", e.Message);
                 }
             }
         }

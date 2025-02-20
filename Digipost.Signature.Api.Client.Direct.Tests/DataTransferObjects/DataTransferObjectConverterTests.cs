@@ -181,7 +181,6 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.DataTransferObjects
             {
                 //Arrange
                 const string title = "JobTitle";
-                const string message = "Message";
                 const FileType fileType = FileType.Pdf;
                 var documentBytes = new byte[] {0x21, 0x22};
 

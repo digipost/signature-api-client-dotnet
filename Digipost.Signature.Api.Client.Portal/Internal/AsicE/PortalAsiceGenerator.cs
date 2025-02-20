@@ -15,6 +15,7 @@ namespace Digipost.Signature.Api.Client.Portal.Internal.AsicE
                 Availability = job.Availability,
                 AuthenticationLevel = job.AuthenticationLevel,
                 IdentifierInSignedDocuments = job.IdentifierInSignedDocuments,
+                NonSensitiveTitle = job.NonSensitiveTitle,
                 Description = job.Description
             };
 

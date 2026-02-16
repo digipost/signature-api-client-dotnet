@@ -175,11 +175,15 @@ namespace Digipost.Signature.Api.Client.Portal
         public async Task Cancel(CancellationReference cancellationReference)
         {
             var requestResult = await HttpClient.PostAsync(cancellationReference.Url, null).ConfigureAwait(false);
+
+            if (requestResult.IsSuccessStatusCode)
+            {
+                _logger.LogDebug($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
+                return;
+            }
+
             switch (requestResult.StatusCode)
             {
-                case HttpStatusCode.OK:
-                    _logger.LogDebug($"PortalJob cancelled successfully [CancellationReference: {cancellationReference.Url}].");
-                    break;
                 case HttpStatusCode.Conflict:
                     _logger.LogDebug($"PortalJob was not cancelled. Job was already completed [CancellationReference: {cancellationReference.Url}].");
                     throw new JobCompletedException();

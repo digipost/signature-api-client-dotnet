@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
@@ -27,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Core
             _loggerFactory = loggerFactory;
 
             ClientConfiguration = clientConfiguration;
-            HttpClient = MutualTlsClient();
+            HttpClient = CreateHttpClient();
             RequestHelper = new RequestHelper(HttpClient, _loggerFactory);
         }
 
@@ -75,13 +76,21 @@ namespace Digipost.Signature.Api.Client.Core
             }
         }
 
-        private HttpClient MutualTlsClient()
+        private HttpClient CreateHttpClient()
         {
-            var client = HttpClientFactory.Create(
-                MutualTlsHandler(ClientConfiguration.WebProxy, ClientConfiguration.Credential),
+            var tokenProvider = new TokenProvider(ClientConfiguration);
+
+            var delegatingHandlers = new List<DelegatingHandler>
+            {
+                new BearerTokenAuthenticationHandler(tokenProvider),
                 new XsdRequestValidationHandler(),
                 new UserAgentHandler(),
                 new LoggingHandler(ClientConfiguration, _loggerFactory)
+            };
+
+            var client = HttpClientFactory.Create(
+                CreateHttpClientHandler(ClientConfiguration.WebProxy, ClientConfiguration.Credential),
+                delegatingHandlers.ToArray()
             );
 
             client.Timeout = TimeSpan.FromMilliseconds(ClientConfiguration.HttpClientTimeoutInMilliseconds);
@@ -90,7 +99,7 @@ namespace Digipost.Signature.Api.Client.Core
             return client;
         }
 
-        private HttpClientHandler MutualTlsHandler(WebProxy proxy = null, NetworkCredential credential = null)
+        private HttpClientHandler CreateHttpClientHandler(WebProxy proxy = null, NetworkCredential credential = null)
         {
             HttpClientHandler handler = new HttpClientHandler();
             if (proxy != null)
@@ -100,8 +109,6 @@ namespace Digipost.Signature.Api.Client.Core
                 handler.UseProxy = true;
                 handler.UseDefaultCredentials = false;
             }
-            var clientCertificates = new X509Certificate2Collection {ClientConfiguration.Certificate};
-            handler.ClientCertificates.AddRange(clientCertificates);
             handler.ServerCertificateCustomValidationCallback = ValidateServerCertificateThrowIfInvalid;
 
             return handler;

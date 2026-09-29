@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -129,15 +130,25 @@ namespace Digipost.Signature.Api.Client.Core.Internal
             return SerializeHeaders(response.Content.Headers);
         }
 
+        private const string AuthorizationHeaderName = "Authorization";
+        private const string RedactedHeaderValue = "<redacted>";
+
         private static List<KeyValuePair<string, string>> SerializeHeaders(HttpHeaders headers)
         {
             var keyValuePairs = new List<KeyValuePair<string, string>>();
 
             keyValuePairs
                 .AddRange(headers
-                    .Select(header => new KeyValuePair<string, string>(header.Key, string.Join(",", header.Value))));
+                    .Select(header => new KeyValuePair<string, string>(header.Key, SerializeHeaderValue(header))));
 
             return keyValuePairs;
+        }
+
+        private static string SerializeHeaderValue(KeyValuePair<string, IEnumerable<string>> header)
+        {
+            return string.Equals(header.Key, AuthorizationHeaderName, StringComparison.OrdinalIgnoreCase)
+                ? RedactedHeaderValue
+                : string.Join(",", header.Value);
         }
 
         private static string FormatHttpData(IEnumerable<KeyValuePair<string, string>> keyValuePairs)

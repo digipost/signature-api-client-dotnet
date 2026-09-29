@@ -31,6 +31,8 @@ namespace Digipost.Signature.Api.Client.Program
 
             var clientConfiguration = new ClientConfiguration(testEnvironment,
                 CertificateReader.ReadCertificate(),
+                "your-client-id",
+                new AccountId("your-account-id"),
                 sender);
             var documentsToSign = new List<Document>
             {

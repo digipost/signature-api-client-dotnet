@@ -16,6 +16,8 @@ namespace Digipost.Signature.Api.Client.Core
         ///     have a thumbprint which uniquely identifies them. If installed in certificate store of current user, the thumbprint
         ///     can be used to retreieve it. Remember to add it to the store as  exportable to use it in Signature client.
         /// </param>
+        /// <param name="clientId">The OAuth2 client id registered together with your certificate at mIdP.</param>
+        /// <param name="accountId">The <see cref="Core.AccountId" /> to acquire access tokens as.</param>
         /// <param name="globalSender">
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
         ///     a <see cref="Sender" />.
@@ -26,16 +28,24 @@ namespace Digipost.Signature.Api.Client.Core
         /// <param name="credential">
         ///     Will be used if both this and <see cref="WebProxy" /> is set.
         /// </param>
-        public ClientConfiguration(Environment environment, string certificateThumbprint, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
-            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), globalSender, proxy, credential)
+        public ClientConfiguration(Environment environment, string certificateThumbprint, string clientId, AccountId accountId, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
+            : this(environment, CertificateUtility.SenderCertificate(certificateThumbprint), clientId, accountId, globalSender, proxy, credential)
         {
         }
 
         /// <param name="environment">The environment which all requests with this instance of the configuration connects to.</param>
-        /// <param name="certificate">Certificate of the <see cref="Sender" />.</param>
+        /// <param name="certificate">
+        ///     Certificate of the <see cref="Sender" />. Used both to sign the document bundle and to authenticate
+        ///     against mIdP - it is not presented on requests to the Signature API itself, which is authenticated
+        ///     with the access token acquired using JWT/mTLS authentication instead.
+        /// </param>
+        /// <param name="clientId">
+        ///     The OAuth2 client id registered together with your certificate at mIdP. 
+        /// </param>
+        /// <param name="accountId">The <see cref="Core.AccountId" /> to acquire access tokens as.</param>
         /// <param name="globalSender">
-        ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without a
-        ///     <see cref="Sender" />.
+        ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
+        ///     a <see cref="Sender" />.
         /// </param>
         /// <param name="proxy">
         ///     If set, the proxy will be used for all requests. Remember to set <see cref="Credential" /> as well.
@@ -43,16 +53,40 @@ namespace Digipost.Signature.Api.Client.Core
         /// <param name="credential">
         ///     Will be used if both this and <see cref="WebProxy" /> is set.
         /// </param>
-        public ClientConfiguration(Environment environment, X509Certificate2 certificate, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
+        public ClientConfiguration(Environment environment, X509Certificate2 certificate, string clientId, AccountId accountId, Sender globalSender = null, WebProxy proxy = null, NetworkCredential credential = null)
         {
+            if (string.IsNullOrWhiteSpace(clientId))
+            {
+                throw new ArgumentException("The client id must not be blank", nameof(clientId));
+            }
+
             Environment = environment;
             GlobalSender = globalSender;
             Certificate = certificate;
+            ClientId = clientId;
+            AccountId = accountId ?? throw new ArgumentNullException(nameof(accountId));
             WebProxy = proxy;
             Credential = credential;
         }
 
         public Environment Environment { get; }
+
+        /// <summary>
+        ///     The OAuth2 client id registered together with your certificate at mIdP, used for JWT/mTLS
+        ///     authentication.
+        /// </summary>
+        public string ClientId { get; }
+
+        /// <summary>
+        ///     The <see cref="Core.AccountId" /> to acquire access tokens as.
+        /// </summary>
+        public AccountId AccountId { get; }
+
+        /// <summary>
+        ///     The mIdP token endpoint to request access tokens from. Derived automatically from
+        ///     <see cref="Environment" /> unless explicitly set here.
+        /// </summary>
+        public Uri TokenEndpoint { get; set; }
 
         /// <summary>
         ///     If set, it will be used for all <see cref="ISignatureJob">SignatureJobs</see> created without
@@ -95,7 +129,7 @@ namespace Digipost.Signature.Api.Client.Core
 
         public override string ToString()
         {
-            return $"Environment: {Environment}, GlobalSender: {GlobalSender}, Certificate: {Certificate.Subject}, HttpClientTimeoutInMilliseconds: {HttpClientTimeoutInMilliseconds}, ServerCertificateOrganizationNumber: {ServerCertificateOrganizationNumber}";
+            return $"Environment: {Environment}, GlobalSender: {GlobalSender}, Certificate: {Certificate.Subject}, ClientId: {ClientId}, AccountId: {AccountId}, HttpClientTimeoutInMilliseconds: {HttpClientTimeoutInMilliseconds}, ServerCertificateOrganizationNumber: {ServerCertificateOrganizationNumber}";
         }
 
         /// <summary>

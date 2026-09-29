@@ -64,7 +64,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var loggerFactory = new RecordingLoggerFactory();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId(), CoreDomainUtility.GetSender()) {LogRequestAndResponse = true};
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId(), CoreDomainUtility.GetSender()) {LogRequestAndResponse = true};
 
                 var loggingHandler = new LoggingHandler(clientConfiguration, loggerFactory) {InnerHandler = new FakeInnerHandler()};
                 var client = new HttpClient(loggingHandler) {BaseAddress = new Uri("https://api.example.no")};

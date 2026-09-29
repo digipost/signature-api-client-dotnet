@@ -206,7 +206,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var handler = new QueuedResponsesHandler(TokenResponse("{\"access_token\": \"the-token\", \"expires_in\": 3600}"));
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
 
                 //Act
                 var firstToken = await tokenProvider.GetTokenAsync().ConfigureAwait(false);
@@ -226,7 +226,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
                     TokenResponse("{\"access_token\": \"first-token\", \"expires_in\": 3600}"),
                     TokenResponse("{\"access_token\": \"second-token\", \"expires_in\": 3600}")
                 );
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
 
                 //Act
                 var firstToken = await tokenProvider.GetTokenAsync().ConfigureAwait(false);
@@ -244,7 +244,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var handler = new QueuedResponsesHandler(TokenResponse("{\"access_token\": \"the-token\", \"expires_in\": 3600}"));
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
                 var currentToken = await tokenProvider.GetTokenAsync().ConfigureAwait(false);
 
                 //Act
@@ -261,7 +261,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var handler = new QueuedResponsesHandler(TokenResponse("error", HttpStatusCode.BadRequest));
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
 
                 //Act
                 //Assert
@@ -298,18 +298,18 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             public async Task Sends_resource_without_trailing_slash()
             {
                 // Uri.AbsoluteUri always renders a trailing "/" for a bare-authority URL such as
-                // Environment.DifiQa.Url, even though the literal has none. mIdP matches "resource" as an
+                // Environment.DifiTest.Url, even though the literal has none. mIdP matches "resource" as an
                 // exact string and rejects one with a trailing slash as an unknown target.
                 //Arrange
                 var handler = new CapturingHandler(TokenResponse("{\"access_token\": \"the-token\", \"expires_in\": 3600}"));
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
 
                 //Act
                 await tokenProvider.GetTokenAsync().ConfigureAwait(false);
 
                 //Assert
                 var sentParameters = ParseFormBody(handler.CapturedRequestBody);
-                Assert.Equal("https://api.difiqa.signering.posten.no", sentParameters["resource"]);
+                Assert.Equal("https://api.difitest.signering.posten.no", sentParameters["resource"]);
             }
 
             [Fact]
@@ -317,7 +317,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
             {
                 //Arrange
                 var handler = new CapturingHandler(TokenResponse("{\"access_token\": \"the-token\", \"expires_in\": 3600}"));
-                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiQa), new HttpClient(handler));
+                var tokenProvider = new TokenProvider(GetClientConfiguration(Environment.DifiTest), new HttpClient(handler));
 
                 //Act
                 await tokenProvider.GetTokenAsync().ConfigureAwait(false);

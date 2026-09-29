@@ -39,23 +39,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             }
 
             [Fact]
-            public void Gets_initialized_difi_qa_environment()
-            {
-                //Arrange
-                var url = new Uri("https://api.difiqa.signering.posten.no");
-                var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
-                var tokenEndpoint = new Uri("https://midp.qa.digipost.no/oauth2/token");
-
-                //Act
-                var environment = Environment.DifiQa;
-
-                //Assert
-                Assert.Equal(url, environment.Url);
-                Assert.Equal(certificates, environment.AllowedChainCertificates);
-                Assert.Equal(tokenEndpoint, environment.TokenEndpoint);
-            }
-
-            [Fact]
             public void Gets_initialized_difi_test_environment()
             {
                 //Arrange

@@ -21,7 +21,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Throws_exception_on_no_sender()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), JwtClientId, GetAccountId());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, GetPostenTestCertificate(), JwtClientId, GetAccountId());
                 var portalClient = new PortalClient(clientConfiguration);
                 var portalJob = new Job("JobTitle", DomainUtility.GetSinglePortalDocument(), DomainUtility.GetSigners(1), "SendersReference");
 
@@ -38,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
                 //Arrange
                 var parameterSender = new Sender(PostenOrganizationNumber);
                 var clientConfigurationSender = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), JwtClientId, GetAccountId(), clientConfigurationSender)
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, GetPostenTestCertificate(), JwtClientId, GetAccountId(), clientConfigurationSender)
                 {
                     CertificateValidationPreferences = { ValidateSenderCertificate = false }
                 };
@@ -60,7 +60,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             {
                 //Arrange
                 var sender = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId(), sender)
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, GetBringCertificate(), JwtClientId, GetAccountId(), sender)
                 {
                     CertificateValidationPreferences = {ValidateSenderCertificate = false}
                 };
@@ -119,7 +119,7 @@ namespace Digipost.Signature.Api.Client.Portal.Tests
             public async Task Throws_exception_on_sender_not_specified()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), JwtClientId, GetAccountId());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, GetPostenTestCertificate(), JwtClientId, GetAccountId());
                 var jobStatusChangeResponse = new FakeHttpClientHandlerForJobStatusChangeResponse();
                 var portalClient = new PortalClient(clientConfiguration)
                 {

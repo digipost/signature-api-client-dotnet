@@ -28,7 +28,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId(), GetSender())
+            return new ClientConfiguration(Environment.DifiTest, GetBringCertificate(), JwtClientId, GetAccountId(), GetSender())
             {
                 CertificateValidationPreferences = {ValidateSenderCertificate = false}
             };

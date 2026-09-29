@@ -56,7 +56,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Internal
 
         private static HttpClient GetClient(RecordingApiHandler apiHandler, params string[] accessTokens)
         {
-            var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId(), CoreDomainUtility.GetSender());
+            var clientConfiguration = new ClientConfiguration(Environment.DifiTest, CoreDomainUtility.GetTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId(), CoreDomainUtility.GetSender());
             var tokenProvider = new TokenProvider(clientConfiguration, new HttpClient(new QueuedTokenResponsesHandler(accessTokens)));
 
             var bearerTokenHandler = new BearerTokenAuthenticationHandler(tokenProvider) {InnerHandler = apiHandler};

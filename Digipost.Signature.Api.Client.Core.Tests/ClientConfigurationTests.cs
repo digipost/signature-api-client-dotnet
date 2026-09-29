@@ -16,7 +16,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Constructor_with_certificate_thumbprint()
             {
                 //Arrange
-                var environment = Environment.DifiQa;
+                var environment = Environment.DifiTest;
                 var sender = CoreDomainUtility.GetSender();
 
                 var certificate = CertificateUtility.SenderCertificate("2d 7f 30 dd 05 d3 b7 fc 7a e5 97 3a 73 f8 49 08 3b 20 40 ed");
@@ -38,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
 
                 //Act
-                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
+                new ClientConfiguration(Environment.DifiTest, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
 
                 //Assert
             }
@@ -47,7 +47,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Constructor_with_client_id_and_account_id()
             {
                 //Arrange
-                var environment = Environment.DifiQa;
+                var environment = Environment.DifiTest;
                 var sender = CoreDomainUtility.GetSender();
                 var x509Certificate = CoreDomainUtility.GetTestCertificate();
                 var accountId = new AccountId("123456");
@@ -78,7 +78,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
                 //Assert
                 Assert.Throws<ArgumentException>(() => new ClientConfiguration(
-                    Environment.DifiQa,
+                    Environment.DifiTest,
                     CoreDomainUtility.GetTestCertificate(),
                     clientId,
                     new AccountId("123456")));
@@ -91,7 +91,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
                 //Assert
                 Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(
-                    Environment.DifiQa,
+                    Environment.DifiTest,
                     CoreDomainUtility.GetTestCertificate(),
                     "client-id",
                     null));
@@ -104,7 +104,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Adds_document_bundle_to_disk_processor()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
 
                 //Act
                 clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");

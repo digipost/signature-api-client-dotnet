@@ -47,12 +47,6 @@ namespace Digipost.Signature.Api.Client.Core
             new Uri("https://midp.difitest.digipost.no/oauth2/token")
         );
 
-        public static Environment DifiQa => new Environment(
-            CertificateChainUtility.FunksjoneltTestmiljøSertifikater(),
-            new Uri("https://api.difiqa.signering.posten.no"),
-            new Uri("https://midp.qa.digipost.no/oauth2/token")
-        );
-
         public static Environment Production => new Environment(
             CertificateChainUtility.ProduksjonsSertifikater(),
             new Uri("https://api.signering.posten.no"),

@@ -38,7 +38,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests
             public async Task Throws_exception_on_no_sender()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), JwtClientId, GetAccountId());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiTest, GetPostenTestCertificate(), JwtClientId, GetAccountId());
                 var directClient = new DirectClient(clientConfiguration);
                 var directJob = new Job("Job title", DomainUtility.GetSingleDirectDocument(), DomainUtility.GetSigner(), "SendersReference", DomainUtility.GetExitUrls());
 

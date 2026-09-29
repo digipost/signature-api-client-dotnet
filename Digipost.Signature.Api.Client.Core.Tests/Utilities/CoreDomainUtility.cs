@@ -28,10 +28,17 @@ namespace Digipost.Signature.Api.Client.Core.Tests.Utilities
 
         public static ClientConfiguration GetClientConfiguration()
         {
-            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), GetSender())
+            return new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId(), GetSender())
             {
                 CertificateValidationPreferences = {ValidateSenderCertificate = false}
             };
+        }
+
+        public static string JwtClientId => "client-id";
+
+        public static AccountId GetAccountId()
+        {
+            return new AccountId("123456");
         }
 
         public static Document GetDocument()

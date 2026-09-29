@@ -32,7 +32,10 @@ namespace Digipost.Signature.Api.Client.Portal.Tests.Smoke
         {
             var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
             var sender = new Sender(BringPublicOrganizationNumber);
-            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), sender)
+
+            // TODO: replace with a real client_id/account_id registered for JWT/mTLS authentication against this
+            // environment - see docs/adr/0005-jwt-auth-is-the-only-supported-scheme.md.
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), "01a0e847-c963-7f4e-96d2-2580d2ed6610", new AccountId("13"), sender)
             {
                 HttpClientTimeoutInMilliseconds = 30000, LogRequestAndResponse = true,
                 CertificateValidationPreferences = {ValidateSenderCertificate = false} 

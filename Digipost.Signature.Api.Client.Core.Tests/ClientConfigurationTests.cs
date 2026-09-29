@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using Digipost.Api.Client.Shared.Certificate;
 using Digipost.Signature.Api.Client.Core.Internal.Asice;
@@ -11,25 +12,6 @@ namespace Digipost.Signature.Api.Client.Core.Tests
     {
         public class ConstructorMethod : ClientConfigurationTests
         {
-            [Fact]
-            public void Constructor_with_certificate()
-            {
-                //Arrange
-                var environment = Environment.DifiQa;
-                var sender = CoreDomainUtility.GetSender();
-                var x509Certificate = CoreDomainUtility.GetTestCertificate();
-
-                //Act
-                var clientConfiguration = new ClientConfiguration(
-                    environment,
-                    x509Certificate, sender);
-
-                //Assert
-                Assert.Equal(environment, clientConfiguration.Environment);
-                Assert.Equal(sender, clientConfiguration.GlobalSender);
-                Assert.Equal(x509Certificate, clientConfiguration.Certificate);
-            }
-
             [Fact(Skip = "Skipping - does not run on Linux yet.")]
             public void Constructor_with_certificate_thumbprint()
             {
@@ -42,7 +24,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Act
                 var clientConfiguration = new ClientConfiguration(
                     environment,
-                    certificate.Thumbprint, sender);
+                    certificate.Thumbprint, CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId(), sender);
 
                 //Assert
                 Assert.Equal(environment, clientConfiguration.Environment);
@@ -56,9 +38,63 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
 
                 //Act
-                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
 
                 //Assert
+            }
+
+            [Fact]
+            public void Constructor_with_client_id_and_account_id()
+            {
+                //Arrange
+                var environment = Environment.DifiQa;
+                var sender = CoreDomainUtility.GetSender();
+                var x509Certificate = CoreDomainUtility.GetTestCertificate();
+                var accountId = new AccountId("123456");
+
+                //Act
+                var clientConfiguration = new ClientConfiguration(
+                    environment,
+                    x509Certificate,
+                    "client-id",
+                    accountId,
+                    sender);
+
+                //Assert
+                Assert.Equal(environment, clientConfiguration.Environment);
+                Assert.Equal(sender, clientConfiguration.GlobalSender);
+                Assert.Equal(x509Certificate, clientConfiguration.Certificate);
+                Assert.Equal("client-id", clientConfiguration.ClientId);
+                Assert.Equal(accountId, clientConfiguration.AccountId);
+            }
+
+            [Theory]
+            [InlineData(null)]
+            [InlineData("")]
+            [InlineData("   ")]
+            public void Throws_on_blank_client_id(string clientId)
+            {
+                //Arrange
+                //Act
+                //Assert
+                Assert.Throws<ArgumentException>(() => new ClientConfiguration(
+                    Environment.DifiQa,
+                    CoreDomainUtility.GetTestCertificate(),
+                    clientId,
+                    new AccountId("123456")));
+            }
+
+            [Fact]
+            public void Throws_on_null_account_id()
+            {
+                //Arrange
+                //Act
+                //Assert
+                Assert.Throws<ArgumentNullException>(() => new ClientConfiguration(
+                    Environment.DifiQa,
+                    CoreDomainUtility.GetTestCertificate(),
+                    "client-id",
+                    null));
             }
         }
 
@@ -68,7 +104,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Adds_document_bundle_to_disk_processor()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId());
 
                 //Act
                 clientConfiguration.EnableDocumentBundleDiskDump(@"\\vmware-host\Shared Folders\Downloads");

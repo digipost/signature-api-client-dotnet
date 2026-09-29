@@ -13,7 +13,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Initializes_with_properties()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate())
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId())
                 {
                     HttpClientTimeoutInMilliseconds = 1441
                 };
@@ -26,6 +26,20 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 Assert.NotNull(clientStub.RequestHelper);
                 Assert.Equal(clientConfiguration.HttpClientTimeoutInMilliseconds, clientStub.HttpClient.Timeout.TotalMilliseconds);
             }
+
+            [Fact]
+            public void Initializes_with_jwt_auth_config()
+            {
+                //Arrange
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), "client-id", new AccountId("123456"), new Sender(BringPublicOrganizationNumber));
+
+                //Act
+                var clientStub = new ClientStub(clientConfiguration);
+
+                //Assert
+                Assert.Equal(clientConfiguration, clientStub.ClientConfiguration);
+                Assert.NotNull(clientStub.RequestHelper);
+            }
         }
 
         public class CurrentSenderMethod : BaseClientTests
@@ -36,7 +50,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var sender = new Sender(BringPublicOrganizationNumber);
                 var incorrectSenderCertificate = GetPostenTestCertificate();
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate)
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, incorrectSenderCertificate, JwtClientId, GetAccountId())
                 {
                     CertificateValidationPreferences = {ValidateSenderCertificate = false}
                 };
@@ -53,7 +67,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), expected)
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId(), expected)
                 {
                     CertificateValidationPreferences = {ValidateSenderCertificate = false}
                 };
@@ -72,7 +86,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
                 var clientConfigurationSender = new Sender(PostenOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), clientConfigurationSender)
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId(), clientConfigurationSender)
                 {
                     CertificateValidationPreferences = {ValidateSenderCertificate = false}
                 };
@@ -90,7 +104,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             {
                 //Arrange
                 var expected = new Sender(BringPublicOrganizationNumber);
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate())
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetBringCertificate(), JwtClientId, GetAccountId())
                 {
                     CertificateValidationPreferences = {ValidateSenderCertificate = false}
                 };
@@ -107,7 +121,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
             public void Throws_exception_on_no_sender()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate());
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, GetPostenTestCertificate(), JwtClientId, GetAccountId());
                 var client = new ClientStub(clientConfiguration);
 
                 //Act

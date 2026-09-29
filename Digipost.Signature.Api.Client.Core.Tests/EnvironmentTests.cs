@@ -44,6 +44,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var url = new Uri("https://api.difiqa.signering.posten.no");
                 var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
+                var tokenEndpoint = new Uri("https://midp.qa.digipost.no/oauth2/token");
 
                 //Act
                 var environment = Environment.DifiQa;
@@ -51,6 +52,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.Equal(url, environment.Url);
                 Assert.Equal(certificates, environment.AllowedChainCertificates);
+                Assert.Equal(tokenEndpoint, environment.TokenEndpoint);
             }
 
             [Fact]
@@ -59,6 +61,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var url = new Uri("https://api.difitest.signering.posten.no");
                 var certificates = CertificateChainUtility.FunksjoneltTestmiljøSertifikater();
+                var tokenEndpoint = new Uri("https://midp.difitest.digipost.no/oauth2/token");
 
                 //Act
                 var environment = Environment.DifiTest;
@@ -66,6 +69,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.Equal(url, environment.Url);
                 Assert.Equal(certificates, environment.AllowedChainCertificates);
+                Assert.Equal(tokenEndpoint, environment.TokenEndpoint);
             }
 
             [Fact]
@@ -74,6 +78,7 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Arrange
                 var url = new Uri("https://api.signering.posten.no");
                 var certificates = CertificateChainUtility.ProduksjonsSertifikater();
+                var tokenEndpoint = new Uri("https://midp.digipost.no/oauth2/token");
 
                 //Act
                 var environment = Environment.Production;
@@ -81,6 +86,18 @@ namespace Digipost.Signature.Api.Client.Core.Tests
                 //Assert
                 Assert.Equal(url, environment.Url);
                 Assert.Equal(certificates, environment.AllowedChainCertificates);
+                Assert.Equal(tokenEndpoint, environment.TokenEndpoint);
+            }
+
+            [Fact]
+            public void Localhost_environment_has_no_token_endpoint()
+            {
+                //Arrange
+                //Act
+                var environment = Environment.Localhost;
+
+                //Assert
+                Assert.Null(environment.TokenEndpoint);
             }
         }
     }

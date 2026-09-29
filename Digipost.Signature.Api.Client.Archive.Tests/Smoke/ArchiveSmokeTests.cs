@@ -22,7 +22,7 @@ namespace Digipost.Signature.Api.Client.Archive.Tests.Smoke
         {
             var serviceProvider = LoggingUtility.CreateServiceProviderAndSetUpLogging();
 
-            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), new Sender(BringPublicOrganizationNumber))
+            var clientConfig = new ClientConfiguration(environment, GetBringCertificate(), "01a0e847-c963-7f4e-96d2-2580d2ed6610", new AccountId("13"), new Sender(BringPublicOrganizationNumber))
             {
                 LogRequestAndResponse = true
             };

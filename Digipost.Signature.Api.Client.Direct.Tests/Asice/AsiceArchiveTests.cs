@@ -69,7 +69,7 @@ namespace Digipost.Signature.Api.Client.Direct.Tests.Asice
             public void SendsBytesThroughDocumentBundleProcessor()
             {
                 //Arrange
-                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate())
+                var clientConfiguration = new ClientConfiguration(Environment.DifiQa, CoreDomainUtility.GetPostenTestCertificate(), CoreDomainUtility.JwtClientId, CoreDomainUtility.GetAccountId())
                 {
                     DocumentBundleProcessors = new List<IDocumentBundleProcessor>
                     {
